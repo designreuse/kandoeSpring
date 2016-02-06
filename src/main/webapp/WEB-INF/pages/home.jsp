@@ -6,7 +6,7 @@
   <title>Kandoe</title>
 </head>
 <body>
-<h2>Hello World! kandoe</h2>
+<h2>Hello World!</h2>
 <p>${org.organisationName}</p>
 </body>
 </html>
