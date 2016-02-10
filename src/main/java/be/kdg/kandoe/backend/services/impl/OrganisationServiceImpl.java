@@ -27,4 +27,9 @@ public class OrganisationServiceImpl implements OrganisationService{
     public Organisation saveOrganisation(Organisation organisation) {
         return organisationRepository.save(organisation);
     }
+
+    @Override
+    public Organisation findOrganisationById(int Id) {
+        return organisationRepository.findOrganisationById(Id);
+    }
 }

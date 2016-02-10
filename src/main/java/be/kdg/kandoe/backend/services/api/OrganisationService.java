@@ -4,6 +4,8 @@ import be.kdg.kandoe.backend.dom.Organisation;
 
 public interface OrganisationService {
 
+    Organisation findOrganisationById(int Id);
+
     Organisation findOrganisationByName(String name);
 
     Organisation saveOrganisation(Organisation organisation);

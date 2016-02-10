@@ -166,6 +166,13 @@
       <artifactId>json</artifactId>
       <version>20141113</version>
     </dependency>
+    <!-- selenium for frontend Testing -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>2.44.0</version>
+      <scope>test</scope>
+    </dependency>
 
     <!-- Json Dependencies -->
     <!-- Since Spring 4 required as explicit dependency since Spring 4 uses JackonsMapper 2.0 -->
