@@ -30,6 +30,6 @@ public class OrganisationServiceImpl implements OrganisationService{
 
     @Override
     public Organisation findOrganisationById(int Id) {
-        return organisationRepository.findOrganisationById(Id);
+        return organisationRepository.findOrganisationByOrganisationId(Id);
     }
 }
