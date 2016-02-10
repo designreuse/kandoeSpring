@@ -1,33 +1,30 @@
 package be.kdg.kandoe.frontend.controllers;
 
-import be.kdg.kandoe.frontend.DTO.*;
 import be.kdg.kandoe.backend.dom.Organisation;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
+import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Created by Jordan on 10/02/2016.
+ */
 @Controller
-public class HelloWorldController {
+@RequestMapping(value = "/api")
+public class RestController {
 
     private final OrganisationService organisationService;
 
     @Autowired
-    public HelloWorldController(OrganisationService organisationService) {
+    public RestController(OrganisationService organisationService) {
         this.organisationService = organisationService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView index() {
-        Organisation org = organisationService.saveOrganisation(new Organisation("KdG"));
-
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("org", org);
-        mav.setViewName("home");
-
-        return mav;
+    @RequestMapping(value="/",method = RequestMethod.GET)
+    public String getOrganisation(){
+        return "Dit komt van de API normaal gezien";
     }
 }
