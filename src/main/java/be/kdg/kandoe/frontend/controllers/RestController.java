@@ -23,12 +23,8 @@ public class RestController {
         this.organisationService = organisationService;
     }
 
-    @RequestMapping(value="/getOrganisation",method = RequestMethod.GET)
-    public OrganisationDTO getOrganisation(@RequestParam(value="organisationId") String organisation){
-        OrganisationDTO organisationDTO;
-        Organisation org = organisationService.findOrganisationByName(organisation);
-        organisationDTO = new OrganisationDTO(org.getOrganisationName());
-        organisationDTO.setOmschrijving("Komt van de API");
-        return organisationDTO;
+    @RequestMapping(value="/",method = RequestMethod.GET)
+    public Organisation getOrganisation(){
+        return organisationService.findOrganisationByName("KDG");
     }
 }
