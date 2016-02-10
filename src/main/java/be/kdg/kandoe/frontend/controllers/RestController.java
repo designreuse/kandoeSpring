@@ -24,7 +24,7 @@ public class RestController {
     }
 
     @RequestMapping(value="/",method = RequestMethod.GET)
-    public Organisation getOrganisation(){
-        return organisationService.findOrganisationByName("KDG");
+    public String getOrganisation(){
+        return "Dit komt van de API";
     }
 }
