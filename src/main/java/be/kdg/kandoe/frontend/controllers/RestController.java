@@ -25,6 +25,6 @@ public class RestController {
 
     @RequestMapping(value="/",method = RequestMethod.GET)
     public String getOrganisation(){
-        return "Dit komt van de API";
+        return "Dit komt van de API normaal gezien";
     }
 }
