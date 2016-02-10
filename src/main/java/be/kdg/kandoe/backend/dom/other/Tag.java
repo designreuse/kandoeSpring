@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by amy on 10/02/2016.
  */
+@Entity
 public class Tag implements Serializable, Identifiable<Integer>{
 
     @Id

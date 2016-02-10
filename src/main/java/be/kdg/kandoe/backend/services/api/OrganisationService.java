@@ -1,6 +1,6 @@
 package be.kdg.kandoe.backend.services.api;
 
-import be.kdg.kandoe.backend.dom.Organisation;
+import be.kdg.kandoe.backend.dom.other.Organisation;
 
 public interface OrganisationService {
 

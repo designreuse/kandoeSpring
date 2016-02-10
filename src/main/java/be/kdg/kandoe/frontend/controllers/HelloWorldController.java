@@ -1,7 +1,7 @@
 package be.kdg.kandoe.frontend.controllers;
 
 import be.kdg.kandoe.frontend.DTO.*;
-import be.kdg.kandoe.backend.dom.Organisation;
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

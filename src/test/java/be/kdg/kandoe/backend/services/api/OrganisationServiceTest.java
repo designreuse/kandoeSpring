@@ -1,7 +1,7 @@
 package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.config.BackendContextConfig;
-import be.kdg.kandoe.backend.dom.Organisation;
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

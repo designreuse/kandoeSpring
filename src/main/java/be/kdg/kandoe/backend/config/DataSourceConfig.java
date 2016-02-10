@@ -34,7 +34,7 @@ public class DataSourceConfig {
     public DataSourceInitializer dataSourceInitializer(final DataSource dataSource)
     {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        //populator.addScript(organisation);
+       // populator.addScript(organisation);
 
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);

@@ -1,6 +1,6 @@
 package be.kdg.kandoe.backend.services.impl;
 
-import be.kdg.kandoe.backend.dom.Organisation;
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.persistence.api.OrganisationRepository;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import org.springframework.beans.factory.annotation.Autowired;
