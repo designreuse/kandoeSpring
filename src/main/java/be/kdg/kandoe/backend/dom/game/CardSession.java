@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.dom.game;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;

@@ -2,7 +2,9 @@ package be.kdg.kandoe.backend.dom.users;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.dom.game.Session;
+import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.users.Roles.Role;
+import org.hibernate.annotations.Fetch;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -23,14 +25,19 @@ public class User implements Serializable, Identifiable<Integer> {
     @Column(name = "UserName", nullable = false)
     private String userName;
 
-    @Column(name = "Surname", nullable = false)
-    private String surname;
-
-    @Column(name = "FirstName", nullable = false)
-    private String firstName;
+    @Column(name = "Password", nullable = false)
+    private String password;
 
     @Column(name = "Email", nullable = false)
     private String email;
+
+    @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "PersonId", nullable = false)
+    private Person person;
+
+    @OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<Role> roles;
 
     @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
     private List<Organisation> organisations;
@@ -41,6 +48,30 @@ public class User implements Serializable, Identifiable<Integer> {
     @ManyToMany(targetEntity = Session.class)
     private List<Session> sessions;
 
+    public User()
+    {
+        this.person = new Person();
+    }
+
+    public User(String userName, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<Session> sessions) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.person = person;
+        this.roles = roles;
+        this.organisations = organisations;
+        this.themes = themes;
+        this.sessions = sessions;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -49,20 +80,12 @@ public class User implements Serializable, Identifiable<Integer> {
         this.userName = userName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -71,6 +94,22 @@ public class User implements Serializable, Identifiable<Integer> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public List<Organisation> getOrganisations() {

@@ -1,5 +1,8 @@
-package be.kdg.kandoe.backend.dom.game;
+package be.kdg.kandoe.backend.dom.game.CircleSession;
 
+import be.kdg.kandoe.backend.dom.game.CardSession;
+import be.kdg.kandoe.backend.dom.game.Message;
+import be.kdg.kandoe.backend.dom.game.Snapshot;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import org.springframework.hateoas.Identifiable;
