@@ -5,7 +5,12 @@ import be.kdg.kandoe.backend.persistence.api.UserRespository;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+@Service
+@Transactional
 public class UserServiceImpl implements UserService{
 
     private final UserRespository userRepository;
