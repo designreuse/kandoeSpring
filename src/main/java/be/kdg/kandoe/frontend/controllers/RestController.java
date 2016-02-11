@@ -7,6 +7,8 @@ import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import javax.validation.constraints.Null;
+
 /**
  * Created by Jordan on 10/02/2016.
  */
@@ -21,8 +23,16 @@ public class RestController {
         this.organisationService = organisationService;
     }
 
-    @RequestMapping(value="/",method = RequestMethod.GET)
-    public String getOrganisation(){
-        return "Dit komt van de API normaal gezien";
+    @RequestMapping(value="/getOrganisation/{organisationId}",method = RequestMethod.GET)
+    public OrganisationDTO getOrganisation(@PathVariable(value = "organisationId") String orgName){
+        OrganisationDTO orgDto;
+        Organisation org;
+        org = organisationService.findOrganisationByName(orgName);
+        if(org== null){
+            org = new Organisation(orgName);
+            organisationService.saveOrganisation(org);
+        }
+        orgDto=new OrganisationDTO(org.getOrganisationName());
+        return orgDto;
     }
 }

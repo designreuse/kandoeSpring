@@ -27,6 +27,10 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     @ManyToMany(targetEntity =  User.class, fetch = FetchType.EAGER)
     private List<User> users;
 
+    //TODO
+    public Organisation() {
+    }
+
     public Organisation(String organisationName) {
         this.organisationName = organisationName;
     }
