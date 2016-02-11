@@ -24,9 +24,10 @@ public class OrganisationServiceTest {
     @Autowired
     private OrganisationService organisationService;
 
+    //todo delete this
     @Test
     public void testSaveOrganisation() throws Exception {
-        organisationService.saveOrganisation(new Organisation("KdG"));
+        organisationService.saveOrganisation(new Organisation("KdG"), 1);
         Organisation org = organisationService.findOrganisationByName("KdG");
 
         System.out.println(org.getId());

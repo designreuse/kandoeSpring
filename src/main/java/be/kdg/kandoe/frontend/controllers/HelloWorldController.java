@@ -22,10 +22,7 @@ public class HelloWorldController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
-        Organisation org = organisationService.saveOrganisation(new Organisation("KdG"));
-
         ModelAndView mav = new ModelAndView();
-        mav.addObject("org", org);
         mav.setViewName("home");
 
         return mav;
