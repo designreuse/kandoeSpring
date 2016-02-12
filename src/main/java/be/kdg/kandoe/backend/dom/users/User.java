@@ -45,6 +45,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
     private List<Organisation> organisations;
 
+    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
+    private List<Organisation> ownOrganisations;
+
     @OneToMany(targetEntity = Theme.class)
     private List<Theme> themes;
 
@@ -163,6 +166,14 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
+    }
+
+    public List<Organisation> getOwnOrganisations() {
+        return ownOrganisations;
+    }
+
+    public void setOwnOrganisations(List<Organisation> ownOrganisations) {
+        this.ownOrganisations = ownOrganisations;
     }
 
     @Override

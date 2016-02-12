@@ -1,0 +1,1 @@
+INSERT INTO Organisation (OrganisationId,OrganisationName) VALUES (1, 'TestOrganisation');

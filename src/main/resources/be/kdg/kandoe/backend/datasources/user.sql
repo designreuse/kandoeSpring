@@ -1,0 +1,1 @@
+INSERT INTO User (UserId, UserName, Surname, FirstName, Email) VALUES (1, 'ArneLauryssens', 'Lauryssens', 'Arne', 'arne.lauryssens@student.kdg.be');

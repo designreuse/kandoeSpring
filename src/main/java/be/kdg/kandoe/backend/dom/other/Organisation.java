@@ -27,6 +27,9 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     @ManyToMany(targetEntity =  User.class, fetch = FetchType.EAGER)
     private List<User> users;
 
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+    private List<User> organisers;
+
     //TODO
     public Organisation() {
     }
@@ -65,6 +68,14 @@ public class Organisation implements Serializable, Identifiable<Integer>{
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<User> getOrganisers() {
+        return organisers;
+    }
+
+    public void setOrganisers(List<User> organisers) {
+        this.organisers = organisers;
     }
 
     @Override

@@ -23,6 +23,7 @@ public class RestController {
         this.organisationService = organisationService;
     }
 
+    //todo delete this
     @RequestMapping(value="/getOrganisation/{organisationId}",method = RequestMethod.GET)
     public OrganisationDTO getOrganisation(@PathVariable(value = "organisationId") String orgName){
         OrganisationDTO orgDto;
@@ -30,7 +31,7 @@ public class RestController {
         org = organisationService.findOrganisationByName(orgName);
         if(org== null){
             org = new Organisation(orgName);
-            organisationService.saveOrganisation(org);
+            organisationService.saveOrganisation(org, 1);
         }
         orgDto=new OrganisationDTO(org.getOrganisationName());
         return orgDto;

@@ -1,14 +1,36 @@
 package be.kdg.kandoe.frontend.DTO;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.hateoas.ResourceSupport;
+
+import java.io.Serializable;
+
 /**
  * Created by Jordan on 10/02/2016.
  */
-public class OrganisationDTO {
+public class OrganisationDTO extends ResourceSupport implements Serializable{
     private Integer organisationId;
+
+    @NotEmpty
     private String organisationName;
-    private String omschrijving;
+
+    private String address;
+
+    private String logoUrl;
+
+    public OrganisationDTO() {
+    }
+
     public OrganisationDTO(String organisationName) {
         this.organisationName = organisationName;
+    }
+
+    public Integer getOrganisationId() {
+        return organisationId;
+    }
+
+    public void setOrganisationId(Integer organisationId) {
+        this.organisationId = organisationId;
     }
 
     public String getOrganisationName() {
@@ -19,15 +41,19 @@ public class OrganisationDTO {
         this.organisationName = organisationName;
     }
 
-    public Integer getId() {
-        return organisationId;
+    public String getAddress() {
+        return address;
     }
 
-    public void setOrganisationId(int id){
-        this.organisationId=id;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setOmschrijving(String omschrijving){
-        this.omschrijving=omschrijving;
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 }
