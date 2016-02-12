@@ -70,6 +70,13 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.sessions = sessions;
     }
 
+    public User(Person p, String userName, String password, List<Role> identities) {
+        this.person = new Person();
+        this.userName = userName;
+        this.password = password;
+        this.roles = identities;
+    }
+
     public Integer getUserId() {
         return userId;
     }

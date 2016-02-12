@@ -1,7 +1,7 @@
 package be.kdg.kandoe.backend.dom.users.Roles;
 
 import be.kdg.kandoe.backend.dom.users.User;
-import be.kdg.kandoe.backend.services.Exceptions.UserServiceException;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;
 

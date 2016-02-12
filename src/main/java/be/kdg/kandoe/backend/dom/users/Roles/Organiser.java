@@ -16,6 +16,8 @@ import java.util.Collection;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("ROLE_ORGANISER")
 public class Organiser extends Role {
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
