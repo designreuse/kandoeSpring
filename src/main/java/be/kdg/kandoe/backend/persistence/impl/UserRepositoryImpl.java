@@ -14,7 +14,7 @@ import java.util.List;
  * Created by amy on 12/02/2016.
  */
 
-@Repository("userRepository")
+@Repository("UserRepository")
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @PersistenceContext

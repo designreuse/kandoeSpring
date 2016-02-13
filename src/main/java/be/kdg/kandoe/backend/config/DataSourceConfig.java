@@ -21,6 +21,9 @@ public class DataSourceConfig {
     @Value("classpath:/be/kdg/kandoe/backend/datasources/user.sql")
     private Resource user;
 
+    @Value("classpath:/be/kdg/kandoe/backend/datasources/person.sql")
+    private Resource person;
+
     @Bean(name = "datasource")
     public DriverManagerDataSource datasource()
     {
@@ -38,6 +41,7 @@ public class DataSourceConfig {
     {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(organisation);
+        populator.addScript(person);
         populator.addScript(user);
 
         final DataSourceInitializer initializer = new DataSourceInitializer();

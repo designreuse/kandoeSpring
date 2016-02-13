@@ -44,7 +44,7 @@ public class UserServiceTest {
         @Value("fakeuser@hotmail.com")
         private String fakeUsername;
 
-        @Value("amy_peerlinck@hotmail.com")
+        @Value("arne.lauryssens@student.kdg.be")
         private String realUsername;
 
         @Autowired
@@ -59,8 +59,8 @@ public class UserServiceTest {
         @Test
         public void getExistingUserTest() throws UserServiceException
         {
-                User clarence = userService.findUserByUsername(realUsername);
-                assertThat(clarence, notNullValue());
+                User arne = userService.findUserByUsername(realUsername);
+                assertThat(arne, notNullValue());
         }
 
         @Test(expected = UserServiceException.class)
