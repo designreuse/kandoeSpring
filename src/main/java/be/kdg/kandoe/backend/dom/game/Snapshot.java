@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.dom.game;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Snapshot implements Serializable, Identifiable<Integer>{
     @ManyToOne(targetEntity = Session.class)
     private Session session;
 
-    //todo state off sesion
+    //todo state of session
 
 
     public Session getSession() {

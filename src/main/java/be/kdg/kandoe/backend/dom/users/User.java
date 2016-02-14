@@ -2,7 +2,9 @@ package be.kdg.kandoe.backend.dom.users;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.dom.game.Session;
+import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.users.Roles.Role;
+import org.hibernate.annotations.Fetch;
 import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,27 +17,33 @@ import java.util.List;
 /**
  * Created by amy on 10/02/2016.
  */
+
 @Entity
-public class User implements Serializable, Identifiable<Integer>,UserDetails {
+public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     @Id
     @Column(name = "UserId", nullable = false)
     @GeneratedValue
     private Integer userId;
 
-    @Column(name = "UserName", nullable = false)
-    private String userName;
+    @Column(name = "Username", nullable = false)
+    private String username;
 
-    @Column(name = "Surname", nullable = false)
-    private String surname;
+    @Column(name = "Password", nullable = false)
+    private String password;
 
-    @Column(name = "FirstName", nullable = false)
-    private String firstName;
-
-    @Column(name = "Email", nullable = false)
+    @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "PersonId", nullable = false)
+    private Person person;
+
+    @OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<Role> roles;
+
+/*    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
     private List<Organisation> organisations;
 
     @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
@@ -45,33 +53,79 @@ public class User implements Serializable, Identifiable<Integer>,UserDetails {
     private List<Theme> themes;
 
     @ManyToMany(targetEntity = Session.class)
-    private List<Session> sessions;
+    private List<Session> sessions;*/
 
-    @Transient
-    List<GrantedAuthority> roles;
-
-    public String getUserName() {
-        return userName;
+    public User()
+    {
+        this.person = new Person();
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public User(String username, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<Session> sessions) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.person = person;
+        this.roles = roles;
+/*        this.organisations = organisations;
+        this.themes = themes;
+        this.sessions = sessions;*/
     }
 
-    public String getSurname() {
-        return surname;
+    public User(Person p, String username, String password, List<Role> identities) {
+        this.person = new Person();
+        this.username = username;
+        this.password = password;
+        this.roles = identities;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+/*    public Integer getUserId() {
+        return userId;
+    }*/
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -82,7 +136,23 @@ public class User implements Serializable, Identifiable<Integer>,UserDetails {
         this.email = email;
     }
 
-    public List<Organisation> getOrganisations() {
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+/*    public List<Organisation> getOrganisations() {
         return organisations;
     }
 
@@ -112,57 +182,10 @@ public class User implements Serializable, Identifiable<Integer>,UserDetails {
 
     public void setOwnOrganisations(List<Organisation> ownOrganisations) {
         this.ownOrganisations = ownOrganisations;
-    }
-
-    public List<GrantedAuthority> getRoles() {
-        return roles;
-    }
-
-    public void addRole(GrantedAuthority role) {
-        this.roles.add(role);
-    }
-
-    public void removeRole(GrantedAuthority role){
-        this.roles.remove(role);
-    }
+    }*/
 
     @Override
     public Integer getId() {
         return userId;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return this.userName;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

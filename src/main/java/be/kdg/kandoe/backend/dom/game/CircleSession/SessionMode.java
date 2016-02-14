@@ -1,4 +1,4 @@
-package be.kdg.kandoe.backend.dom.game;
+package be.kdg.kandoe.backend.dom.game.CircleSession;
 
 /**
  * Created by amy on 10/02/2016.

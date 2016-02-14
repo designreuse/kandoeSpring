@@ -29,6 +29,7 @@ public class OrikaBeanMapper extends ConfigurableMapper{
     @Override
     protected void configure(MapperFactory factory)
     {
+        this.mapperFactory = factory;
         addCustomMapperAndConvertors();
     }
 
