@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -40,11 +41,23 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    @Override
+    public List<User> findUsers() {
+        return userRepository.findAll();
+    }
+
     public User saveUser(User user) throws UserServiceException
     {
+        User existingUser = userRepository.findUserByEmail(user.getEmail());
+
+        if(existingUser != null)
+            throw new UserServiceException("Email already in use");
+
         User u = userRepository.save(user);
+
         if (u == null)
             throw new UserServiceException("User not saved");
+
         return u;
     }
 
@@ -59,7 +72,7 @@ public class UserServiceImpl implements UserService{
     public void checkLogin(Integer userId, String password) throws UserServiceException {
         User u = userRepository.findOne(userId);
 
-        if(u == null || !(password.equals(u.getPassword()))){
+        if(u == null || !password.equals(u.getPassword())){
             throw new UserServiceException("Foutieve gebruikersnaam of paswoord.");
         }
     }

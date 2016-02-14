@@ -2,6 +2,7 @@ package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.UserAssembler;
 import ma.glasnost.orika.MapperFacade;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by amy on 13/02/2016.
@@ -36,6 +38,29 @@ public class UserRestController {
         this.userAssembler = userAssembler;
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<UserDTO>> findUsers(){
+        List<User> users = userService.findUsers();
+
+        return new ResponseEntity<>(userAssembler.toResources(users), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO)
+    {
+        User user_in = mapperFacade.map(userDTO, User.class);
+
+        try{
+
+            User user_out = userService.saveUser(user_in);
+            logger.info(this.getClass().toString() + ": adding new user " + user_out.getId());
+            return new ResponseEntity<>(userAssembler.toResource(user_out), HttpStatus.CREATED);
+
+        } catch (UserServiceException e){
+            logger.warn(this.getClass().toString() + ": error adding new user \n" + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> findUserById(@PathVariable int userId)
@@ -44,15 +69,5 @@ public class UserRestController {
         User user = userService.findUserById(userId);
         UserDTO userDTO = userAssembler.toResource(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO)
-    {
-        User user_in = mapperFacade.map(userDTO, User.class);
-        User user_out = userService.saveUser(user_in);
-
-        logger.info(this.getClass().toString() + ": adding new user " + user_out.getId());
-        return new ResponseEntity<>(userAssembler.toResource(user_out), HttpStatus.OK);
     }
 }

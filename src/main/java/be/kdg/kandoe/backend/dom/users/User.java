@@ -32,7 +32,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Column(name = "Password", nullable = false)
     private String password;
 
-    @Column(name = "Email", nullable = false)
+    @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
     @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)

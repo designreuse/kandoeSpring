@@ -41,35 +41,32 @@ import static org.hamcrest.Matchers.*;
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class})*/
 public class UserServiceTest {
-        @Value("fakeuser@hotmail.com")
-        private String fakeUsername;
+    @Value("fakeuser@hotmail.com")
+    private String fakeUsername;
 
-        @Value("arne.lauryssens@student.kdg.be")
-        private String realUsername;
+    @Value("ArneLauryssens")
+    private String realUsername;
 
-        @Autowired
-        private UserService userService;
+    @Autowired
+    private UserService userService;
 
-        @Test(expected = UserServiceException.class)
-        public void getFalseUserTest() throws UserServiceException
-        {
-                userService.findUserByUsername(fakeUsername);
-        }
+    @Test(expected = UserServiceException.class)
+    public void getFalseUserTest() throws UserServiceException {
+        userService.findUserByUsername(fakeUsername);
+    }
 
-        @Test
-        public void getExistingUserTest() throws UserServiceException
-        {
-                User arne = userService.findUserByUsername(realUsername);
-                assertThat(arne, notNullValue());
-        }
+    @Test
+    public void getExistingUserTest() throws UserServiceException {
+        User arne = userService.findUserByUsername(realUsername);
+        assertThat(arne, notNullValue());
+    }
 
-        @Test(expected = UserServiceException.class)
-        public void testCheckLogin() throws Exception
-        {
-                User clarence = userService.findUserById(1);
-                userService.checkLogin(clarence.getId(), realUsername);
-                userService.checkLogin(clarence.getId(), fakeUsername);
-        }
+    @Test(expected = UserServiceException.class)
+    public void testCheckLogin() throws Exception {
+        User clarence = userService.findUserById(1);
+        userService.checkLogin(clarence.getId(), realUsername);
+        userService.checkLogin(clarence.getId(), fakeUsername);
+    }
 
 /*
         @Test

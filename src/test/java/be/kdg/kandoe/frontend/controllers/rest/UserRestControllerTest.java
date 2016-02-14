@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by amy on 13/02/2016.
@@ -53,6 +54,7 @@ public class UserRestControllerTest {
     public void testGetAllUsers() throws Exception
     {
         mockMvc.perform(get("/api/users")).
+                andExpect(status().is2xxSuccessful()).
                 andDo(print());
     }
 
@@ -70,7 +72,7 @@ public class UserRestControllerTest {
     {
         JSONObject userResource = new JSONObject();
         JSONObject personResource = new JSONObject();
-        JSONObject addressResource = new JSONObject();
+
         personResource.put("firstName", "Amy");
         personResource.put("lastName", "Peerlinck");
         userResource.put("person", personResource);
@@ -85,8 +87,30 @@ public class UserRestControllerTest {
                 content(userResource.toString()).
                 contentType(MediaType.APPLICATION_JSON)).
                 andExpect(jsonPath("$.userId", notNullValue())).
+                andExpect(status().isCreated()).
                 andDo(print());
     }
 
+    @Test
+    public void testCreateUserWithExistingEmail() throws Exception {
+        JSONObject userResource = new JSONObject();
+        JSONObject personResource = new JSONObject();
 
+        personResource.put("firstName", "Arne");
+        personResource.put("lastName", "Lauryssens");
+        userResource.put("person", personResource);
+        userResource.put("username", "arne.lauryssens@student.kdg.be");
+        userResource.put("password", "test123");
+        userResource.put("email", "arne.lauryssens@student.kdg.be");
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(0, "ROLE_PLAYER");
+        jsonArray.put(1, "ROLE_ORGANISER");
+        userResource.put("roles", jsonArray);
+
+        mockMvc.perform(post("/api/users").
+                content(userResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andDo(print());
+    }
 }

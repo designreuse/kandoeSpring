@@ -2,7 +2,9 @@ package be.kdg.kandoe.frontend.DTO;
 
 import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.security.access.annotation.Secured;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
 public class UserDTO extends ResourceSupport implements Serializable {
     private Integer userId;
 
+    @NotEmpty
     private String username;
 
     private String password;
@@ -20,6 +23,7 @@ public class UserDTO extends ResourceSupport implements Serializable {
     private String oldPassword;
 
     @Email
+    @NotEmpty
     private String email;
 
     private List<Role.RoleType> roleTypes;

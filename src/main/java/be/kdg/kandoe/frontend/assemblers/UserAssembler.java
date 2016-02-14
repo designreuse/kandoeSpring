@@ -1,6 +1,8 @@
 package be.kdg.kandoe.frontend.assemblers;
 
 import be.kdg.kandoe.backend.dom.users.User;
+import be.kdg.kandoe.frontend.DTO.AddressDTO;
+import be.kdg.kandoe.frontend.DTO.PersonDTO;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.controllers.rest.UserRestController;
 import ma.glasnost.orika.MapperFacade;
@@ -32,6 +34,7 @@ public class UserAssembler extends ResourceAssemblerSupport<User, UserDTO> {
         UserDTO userDTO = mapper.map(user, UserDTO.class);
 
         userDTO.setUserId(user.getId());
+
         return userDTO;
     }
 }
