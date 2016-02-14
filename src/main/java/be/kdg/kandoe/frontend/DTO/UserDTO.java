@@ -13,7 +13,7 @@ import java.util.List;
 public class UserDTO extends ResourceSupport implements Serializable {
     private Integer userId;
 
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -25,11 +25,11 @@ public class UserDTO extends ResourceSupport implements Serializable {
     private List<Role.RoleType> roleTypes;
 
     // Person and Address properties
-    private PersonDTO personDTO;
+    private PersonDTO person;
 
     public UserDTO()
     {
-        this.personDTO = new PersonDTO();
+        this.person = new PersonDTO();
     }
 
     public Integer getUserId()
@@ -42,14 +42,14 @@ public class UserDTO extends ResourceSupport implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserName()
+    public String getUsername()
     {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName)
+    public void setUsername(String username)
     {
-        this.userName = userName;
+        this.username = username;
     }
 
     public String getPassword()
@@ -90,13 +90,13 @@ public class UserDTO extends ResourceSupport implements Serializable {
         this.roleTypes = roleTypes;
     }
 
-    public PersonDTO getPersonDTO()
+    public PersonDTO getPerson()
     {
-        return personDTO;
+        return person;
     }
 
-    public void setPersonDTO(PersonDTO personDTO)
+    public void setPerson(PersonDTO person)
     {
-        this.personDTO = personDTO;
+        this.person = person;
     }
 }

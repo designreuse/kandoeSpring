@@ -8,7 +8,9 @@ public interface UserService {
 
     User findUserById(Integer userId) throws UserServiceException;
 
-    User findUserByUsername(String userName) throws UserServiceException;
+    User findUserByUsername(String username) throws UserServiceException;
+
+    User saveUser(User user) throws UserServiceException;
 
     void checkLogin(Integer userId, String password) throws UserServiceException;
 

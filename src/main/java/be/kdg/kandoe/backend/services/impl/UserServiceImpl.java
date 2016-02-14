@@ -31,14 +31,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findUserByUsername(String userName) throws UserServiceException {
-        User user = userRepository.findUserByUserName(userName);
+    public User findUserByUsername(String username) throws UserServiceException {
+        User user = userRepository.findUserByUsername(username);
 
         if (user == null)
             throw new UserServiceException("User not found");
 
         return user;
     }
+
+    public User saveUser(User user) throws UserServiceException
+    {
+        User u = userRepository.save(user);
+        if (u == null)
+            throw new UserServiceException("User not saved");
+        return u;
+    }
+
+/*    @Override
+    public User addUser(User user) throws UserServiceException
+    {
+        user.setEncryptedPassword(passwordEncoder.encode(user.getEncryptedPassword()));
+        return this.saveUser(user);
+    }*/
 
     @Override
     public void checkLogin(Integer userId, String password) throws UserServiceException {

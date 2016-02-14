@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * Created by amy on 10/02/2016.
  */
+
 @Entity
 public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
@@ -25,8 +26,8 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @GeneratedValue
     private Integer userId;
 
-    @Column(name = "UserName", nullable = false)
-    private String userName;
+    @Column(name = "Username", nullable = false)
+    private String username;
 
     @Column(name = "Password", nullable = false)
     private String password;
@@ -59,8 +60,8 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.person = new Person();
     }
 
-    public User(String userName, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<Session> sessions) {
-        this.userName = userName;
+    public User(String username, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<Session> sessions) {
+        this.username = username;
         this.password = password;
         this.email = email;
         this.person = person;
@@ -70,9 +71,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.sessions = sessions;*/
     }
 
-    public User(Person p, String userName, String password, List<Role> identities) {
+    public User(Person p, String username, String password, List<Role> identities) {
         this.person = new Person();
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.roles = identities;
     }
@@ -85,8 +86,8 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.userId = userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -100,7 +101,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override

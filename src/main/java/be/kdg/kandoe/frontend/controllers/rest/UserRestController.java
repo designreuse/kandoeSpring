@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * Created by amy on 13/02/2016.
  */
@@ -42,5 +44,15 @@ public class UserRestController {
         User user = userService.findUserById(userId);
         UserDTO userDTO = userAssembler.toResource(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO)
+    {
+        User user_in = mapperFacade.map(userDTO, User.class);
+        User user_out = userService.saveUser(user_in);
+
+        logger.info(this.getClass().toString() + ": adding new user " + user_out.getId());
+        return new ResponseEntity<>(userAssembler.toResource(user_out), HttpStatus.OK);
     }
 }

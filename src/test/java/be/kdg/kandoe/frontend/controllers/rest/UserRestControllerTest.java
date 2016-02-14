@@ -57,6 +57,15 @@ public class UserRestControllerTest {
     }
 
     @Test
+    public void testFindUserById() throws Exception
+    {
+        mockMvc.perform(get("/api/users/1")).
+                andExpect(jsonPath("$.username", is("ArneLauryssens"))).
+                //andExpect(jsonPath("$.links[*].href",hasItem(endsWith("/api/users/1")))).
+                        andDo(print());
+    }
+
+    @Test
     public void testCreateUser() throws Exception
     {
         JSONObject userResource = new JSONObject();
@@ -65,7 +74,7 @@ public class UserRestControllerTest {
         personResource.put("firstName", "Amy");
         personResource.put("lastName", "Peerlinck");
         userResource.put("person", personResource);
-        userResource.put("userName", "amy_peerlinck@hotmail.com");
+        userResource.put("username", "amy_peerlinck@hotmail.com");
         userResource.put("password", "test123");
         userResource.put("email", "amy_peerlinck@hotmail.com");
         JSONArray jsonArray = new JSONArray();
@@ -75,17 +84,9 @@ public class UserRestControllerTest {
         mockMvc.perform(post("/api/users").
                 content(userResource.toString()).
                 contentType(MediaType.APPLICATION_JSON)).
-                andExpect(jsonPath("$.userName", is("amy_peerlinck@hotmail.com"))).
                 andExpect(jsonPath("$.userId", notNullValue())).
                 andDo(print());
     }
 
-    @Test
-    public void testFindUserById() throws Exception
-    {
-        mockMvc.perform(get("/api/users/1")).
-                andExpect(jsonPath("$.userName", is("ArneLauryssens"))).
-                //andExpect(jsonPath("$.links[*].href",hasItem(endsWith("/api/users/1")))).
-                        andDo(print());
-    }
+
 }
