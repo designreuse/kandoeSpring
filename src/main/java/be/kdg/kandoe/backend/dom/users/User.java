@@ -4,16 +4,19 @@ import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.game.Session;
 import org.springframework.hateoas.Identifiable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by amy on 10/02/2016.
  */
 @Entity
-public class User implements Serializable, Identifiable<Integer> {
+public class User implements Serializable, Identifiable<Integer>,UserDetails {
 
     @Id
     @Column(name = "UserId", nullable = false)
@@ -43,6 +46,9 @@ public class User implements Serializable, Identifiable<Integer> {
 
     @ManyToMany(targetEntity = Session.class)
     private List<Session> sessions;
+
+    @Transient
+    List<GrantedAuthority> roles;
 
     public String getUserName() {
         return userName;
@@ -108,8 +114,55 @@ public class User implements Serializable, Identifiable<Integer> {
         this.ownOrganisations = ownOrganisations;
     }
 
+    public List<GrantedAuthority> getRoles() {
+        return roles;
+    }
+
+    public void addRole(GrantedAuthority role) {
+        this.roles.add(role);
+    }
+
+    public void removeRole(GrantedAuthority role){
+        this.roles.remove(role);
+    }
+
     @Override
     public Integer getId() {
         return userId;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
+    }
+
+    @Override
+    public String getPassword() {
+        return getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

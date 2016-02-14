@@ -259,7 +259,7 @@
     </dependency>
   </dependencies>
 
-  <!-- add Spring Security 4 Milestone Repos for Spring Security Test -->
+  <!-- add Spring security 4 Milestone Repos for Spring security Test -->
   <repositories>
     <repository>
       <id>spring-snasphot</id>
