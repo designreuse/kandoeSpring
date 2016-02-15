@@ -1,5 +1,6 @@
 package be.kdg.kandoe.frontend.config.orika.custom.mappers;
 
+import be.kdg.kandoe.backend.dom.users.Address;
 import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
@@ -35,6 +36,11 @@ public class UserMapper extends CustomMapper<User, UserDTO>{
         if (source.getPassword() != null) destination.setPassword(source.getPassword());
         mapperFacade.map(source.getPerson(), destination.getPerson());
         if(source.getPerson().getaddressDTO() != null)
+        {
+            if(destination.getPerson().getAddress() == null){
+                destination.getPerson().setAddress(new Address());
+            }
+        }
             mapperFacade.map(source.getPerson().getaddressDTO(), destination.getPerson().getAddress());
     }
 }

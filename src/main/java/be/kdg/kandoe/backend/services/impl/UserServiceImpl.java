@@ -55,11 +55,10 @@ public class UserServiceImpl implements UserService{
     {
         User existingUser = userRepository.findUserByEmail(user.getEmail());
 
-        if(existingUser != null)
+        if(existingUser != null && user.getId() == null)
             throw new UserServiceException("Email already in use");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println(user.getPassword());
         User u = userRepository.save(user);
 
         if (u == null)

@@ -24,6 +24,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,7 +50,7 @@ public class UserRestControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-
+/*
     @Test
     public void testGetAllUsers() throws Exception
     {
@@ -111,6 +112,23 @@ public class UserRestControllerTest {
                 content(userResource.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError())
+                .andDo(print());
+    }*/
+
+    @Test
+    public void testUpdateUserById() throws Exception
+    {
+        JSONObject userResource = new JSONObject();
+        JSONObject personResource = new JSONObject();
+        personResource.put("firstname", "Jo");
+        personResource.put("lastname", "Lauryssens");
+        userResource.put("person",personResource);
+
+        mockMvc.perform(post("/api/users/1")
+                .content(userResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.person.firstname", is("Jo")))
+                .andExpect(status().isCreated())
                 .andDo(print());
     }
 }

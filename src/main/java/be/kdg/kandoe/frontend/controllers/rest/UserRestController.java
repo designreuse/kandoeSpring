@@ -1,5 +1,6 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
+import be.kdg.kandoe.backend.dom.users.Person;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
@@ -69,5 +70,15 @@ public class UserRestController {
         User user = userService.findUserById(userId);
         UserDTO userDTO = userAssembler.toResource(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value ="/{userId}", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO>  updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO)
+    {
+        User userIn = userService.findUserById(userId);
+        mapperFacade.map(userDTO, userIn);
+        User userOut = userService.saveUser(userIn);
+
+        return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
     }
 }

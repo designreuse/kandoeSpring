@@ -15,7 +15,6 @@ import java.util.List;
 public class UserDTO extends ResourceSupport implements Serializable {
     private Integer userId;
 
-    @NotEmpty
     private String username;
 
     private String password;
@@ -23,7 +22,6 @@ public class UserDTO extends ResourceSupport implements Serializable {
     private String oldPassword;
 
     @Email
-    @NotEmpty
     private String email;
 
     private List<Role.RoleType> roleTypes;

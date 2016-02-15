@@ -61,12 +61,6 @@ public class UserServiceTest {
         assertThat(arne, notNullValue());
     }
 
-    @Test(expected = UserServiceException.class)
-    public void testCheckLogin() throws Exception {
-        User clarence = userService.findUserById(1);
-        userService.checkLogin(clarence.getId(), realUsername);
-        userService.checkLogin(clarence.getId(), fakeUsername);
-    }
 
 /*
         @Test
