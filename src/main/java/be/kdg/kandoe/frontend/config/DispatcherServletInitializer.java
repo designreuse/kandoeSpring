@@ -1,7 +1,7 @@
 package be.kdg.kandoe.frontend.config;
 
 
-import be.kdg.kandoe.frontend.config.Security.WebSecurityConfig;
+import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
