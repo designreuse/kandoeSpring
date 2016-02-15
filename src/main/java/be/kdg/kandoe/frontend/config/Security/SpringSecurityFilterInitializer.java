@@ -1,4 +1,4 @@
-package be.kdg.kandoe.frontend.config.security;
+package be.kdg.kandoe.frontend.config.Security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

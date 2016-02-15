@@ -1,4 +1,4 @@
-package be.kdg.kandoe.frontend.config.security;
+package be.kdg.kandoe.frontend.config.Security;
 
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.UserRepository;
