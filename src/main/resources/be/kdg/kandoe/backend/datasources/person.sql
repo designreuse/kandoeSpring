@@ -1,1 +1,1 @@
-INSERT INTO Person (PersonId, FirstName, LastName) VALUES (1,'Arne', 'Lauryssens');
+INSERT INTO Person (PersonId, Firstname, Lastname) VALUES (1,'Arne', 'Lauryssens');

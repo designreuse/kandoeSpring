@@ -1,15 +1,18 @@
 package be.kdg.kandoe.frontend.DTO;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.hateoas.ResourceSupport;
+
+import java.io.Serializable;
 
 /**
  * Created by amy on 13/02/2016.
  */
-public class PersonDTO {
+public class PersonDTO extends ResourceSupport implements Serializable {
     @NotEmpty
-    private String firstName;
+    private String firstname;
     @NotEmpty
-    private String lastName;
+    private String lastname;
     private AddressDTO addressDTO;
 
     public PersonDTO()
@@ -17,24 +20,24 @@ public class PersonDTO {
         this.addressDTO = new AddressDTO();
     }
 
-    public String getFirstName()
+    public String getFirstname()
     {
-        return firstName;
+        return firstname;
     }
 
-    public void setFirstName(String firstName)
+    public void setFirstname(String firstname)
     {
-        this.firstName = firstName;
+        this.firstname = firstname;
     }
 
-    public String getLastName()
+    public String getLastname()
     {
-        return lastName;
+        return lastname;
     }
 
-    public void setLastName(String lastName)
+    public void setLastname(String lastname)
     {
-        this.lastName = lastName;
+        this.lastname = lastname;
     }
 
     public AddressDTO getaddressDTO()

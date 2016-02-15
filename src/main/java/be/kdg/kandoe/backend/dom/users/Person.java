@@ -22,10 +22,10 @@ public class Person implements Serializable, Identifiable<Integer> {
     @JoinColumns({@JoinColumn(name = "AddressId")})
     private Address address;
 
-    @Column(name = "FirstName")
+    @Column(name = "Firstname")
     private String firstname;
 
-    @Column(name = "LastName")
+    @Column(name = "Lastname")
     private String lastname;
 
     public Person()

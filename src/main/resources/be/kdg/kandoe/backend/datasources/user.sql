@@ -1,1 +1,1 @@
-INSERT INTO User (UserId, Username, PersonId, Email, Password) VALUES (1, 'ArneLauryssens', 1, 'arne.lauryssens@student.kdg.be', 'KAASschotel');
+INSERT INTO User (UserId, Username, PersonId, Email, Password) VALUES (1, 'ArneLauryssens', 1, 'arne.lauryssens@student.kdg.be', '$2a$10$fBUSwu1uD8Vidt4qAxSmc.4ea6zgOrnu018a.N7xV2h76vjITw4.2');

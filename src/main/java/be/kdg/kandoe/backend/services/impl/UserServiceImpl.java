@@ -5,6 +5,9 @@ import be.kdg.kandoe.backend.persistence.api.UserRepository;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,10 +18,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRespository) {
+    public UserServiceImpl(UserRepository userRespository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRespository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -53,6 +58,8 @@ public class UserServiceImpl implements UserService{
         if(existingUser != null)
             throw new UserServiceException("Email already in use");
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println(user.getPassword());
         User u = userRepository.save(user);
 
         if (u == null)
@@ -75,5 +82,14 @@ public class UserServiceImpl implements UserService{
         if(u == null || !password.equals(u.getPassword())){
             throw new UserServiceException("Foutieve gebruikersnaam of paswoord.");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User u = userRepository.findUserByUsername(s);
+
+        if (u == null) throw new UsernameNotFoundException("No such user: " + s);
+
+        return u;
     }
 }

@@ -73,8 +73,8 @@ public class UserRestControllerTest {
         JSONObject userResource = new JSONObject();
         JSONObject personResource = new JSONObject();
 
-        personResource.put("firstName", "Amy");
-        personResource.put("lastName", "Peerlinck");
+        personResource.put("firstname", "Amy");
+        personResource.put("lastname", "Peerlinck");
         userResource.put("person", personResource);
         userResource.put("username", "amy_peerlinck@hotmail.com");
         userResource.put("password", "test123");
@@ -96,8 +96,8 @@ public class UserRestControllerTest {
         JSONObject userResource = new JSONObject();
         JSONObject personResource = new JSONObject();
 
-        personResource.put("firstName", "Arne");
-        personResource.put("lastName", "Lauryssens");
+        personResource.put("firstname", "Arne");
+        personResource.put("lastname", "Lauryssens");
         userResource.put("person", personResource);
         userResource.put("username", "arne.lauryssens@student.kdg.be");
         userResource.put("password", "test123");
