@@ -12,6 +12,12 @@ import java.util.List;
  */
 @Entity
 public class Theme implements Serializable, Identifiable<Integer> {
+    public Theme(String themeName) {
+        this.themeName = themeName;
+    }
+
+    public Theme() {
+    }
 
     @Id
     @Column(name = "ThemeId", nullable = false)
