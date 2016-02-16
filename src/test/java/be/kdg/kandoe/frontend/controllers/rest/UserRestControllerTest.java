@@ -50,7 +50,7 @@ public class UserRestControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-/*
+
     @Test
     public void testGetAllUsers() throws Exception
     {
@@ -113,7 +113,7 @@ public class UserRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError())
                 .andDo(print());
-    }*/
+    }
 
     @Test
     public void testUpdateUserById() throws Exception

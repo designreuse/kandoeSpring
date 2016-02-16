@@ -43,17 +43,17 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Role> roles;
 
-/*    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Organisation.class)
     private List<Organisation> organisations;
 
-    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Organisation.class)
     private List<Organisation> ownOrganisations;
 
     @OneToMany(targetEntity = Theme.class)
     private List<Theme> themes;
 
     @ManyToMany(targetEntity = Session.class)
-    private List<Session> sessions;*/
+    private List<Session> sessions;
 
     public User()
     {
@@ -66,13 +66,13 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.email = email;
         this.person = person;
         this.roles = roles;
-/*        this.organisations = organisations;
+        this.organisations = organisations;
         this.themes = themes;
-        this.sessions = sessions;*/
+        this.sessions = sessions;
     }
 
     public User(Person p, String username, String password, List<Role> identities) {
-        this.person = new Person();
+        this.person = p;
         this.username = username;
         this.password = password;
         this.roles = identities;
@@ -152,7 +152,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.roles = roles;
     }
 
-/*    public List<Organisation> getOrganisations() {
+    public List<Organisation> getOrganisations() {
         return organisations;
     }
 
@@ -182,7 +182,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     public void setOwnOrganisations(List<Organisation> ownOrganisations) {
         this.ownOrganisations = ownOrganisations;
-    }*/
+    }
 
     @Override
     public Integer getId() {
