@@ -2,20 +2,21 @@ import 'rxjs/add/operator/map'
 import {Observable} from "rxjs/Observable";
 import {Organisation} from "../DOM/organisation";
 import {Http, Response, HTTP_PROVIDERS} from 'angular2/http'
-import {Injectable} from 'angular2/core'
+import {Injectable, Inject} from 'angular2/core'
 
 @Injectable()
 export class Service{
     private http: Http=null;
-    public static PATH: string= "http://wildfly-teamiip2kdgbe.rhcloud.com/api/";
+    private path: string;
 
 
-    constructor(http:Http) {
+    constructor(http:Http, @Inject('App.DevPath') path: string) {
         this.http = http;
+        this.path = path;
     }
 
     public getOrganisations() : Observable<Organisation[]>{
-        return this.http.get(Service.PATH + 'organisations')
+        return this.http.get(this.path + 'organisations')
             .map(res => res.json())
             .map((organisations:Array<Organisation>) => organisations.map((organisation:Organisation) => Organisation.fromJson(organisation)));
     }

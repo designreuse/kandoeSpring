@@ -1,4 +1,7 @@
 import {Component} from "angular2/core";
+import {RegisterComponent} from "./register.component";
+import {OrganisationsComponent} from "./organisations.component";
+import {RouteConfig, Router} from "angular2/router";
 
 @Component({
     selector: 'home',
@@ -28,7 +31,7 @@ import {Component} from "angular2/core";
              <form method="post">
                 <input type="text" name="username" />
                 <input type="password" name="password"/>
-                <input type="submit" name="login" value="submit"/>
+                <input type="submit" name="login" value="submit" (click)="onRegister()"/>
             </form>
         </div>
     </div>
@@ -37,28 +40,27 @@ import {Component} from "angular2/core";
 })
 
 export class Home {
-    loginFormVisible:boolean
-    registerFormVisible:boolean
+    loginFormVisible:boolean;
+    registerFormVisible:boolean;
 
-    constructor(){
+    private router: Router = null;
+
+    constructor(router: Router){
         this.loginFormVisible=false;
         this.registerFormVisible=false;
+        this.router = router;
     }
 
     login() {
-        if(this.loginFormVisible){
-            this.loginFormVisible=false;
-        } else {
-            this.loginFormVisible=true;
-        }
+        this.loginFormVisible = !this.loginFormVisible;
     }
 
     register() {
-        if(this.registerFormVisible){
-            this.registerFormVisible=false;
-        } else {
-            this.registerFormVisible=true;
-        }
+        this.registerFormVisible = !this.registerFormVisible;
+    }
+
+    onRegister() {
+        this.router.navigate(['/Register']);
     }
 
 }

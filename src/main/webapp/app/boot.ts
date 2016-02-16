@@ -14,17 +14,21 @@ import {
 } from 'angular2/router'
 import {HTTP_PROVIDERS} from 'angular2/http'
 import {Service} from "./service/service";
-import {Home} from "./components/home";
+import {UserService} from "./service/userService";
+import {AppComponent} from "./components/app";
 
-bootstrap(Home,
+bootstrap(AppComponent,
     [
         // dependency injection
         Service,
+        UserService,
         // http
         HTTP_PROVIDERS,
         // routing
         ROUTER_PROVIDERS,
-        provide(ROUTER_PRIMARY_COMPONENT, {useValue: Home}),
+        provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
         provide(APP_BASE_HREF, {useValue: "/"}),
-        provide(LocationStrategy, {useClass: HashLocationStrategy})
+        provide(LocationStrategy, {useClass: HashLocationStrategy}),
+        provide('App.BackEndPath', {useValue: "http://wildfly-teamiip2kdgbe.rhcloud.com/api/"}),
+        provide('App.DevPath', {useValue: "http://localhost:9966/Kandoe/api/"})
     ]);
