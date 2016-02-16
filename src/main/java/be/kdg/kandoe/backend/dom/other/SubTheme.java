@@ -11,6 +11,14 @@ import java.io.Serializable;
 @Entity
 public class SubTheme extends Theme implements Serializable, Identifiable<Integer> {
 
+    public SubTheme(String themeName) {
+        super(themeName);
+    }
+
+    public SubTheme(Theme theme) {
+        this.theme = theme;
+    }
+
     @ManyToOne(targetEntity = Theme.class, fetch = FetchType.EAGER)
     private Theme theme;
 
