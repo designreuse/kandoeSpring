@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.dom.other;
 
 import be.kdg.kandoe.backend.dom.game.Card;
+import be.kdg.kandoe.backend.dom.users.User;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -14,6 +15,9 @@ import java.util.List;
 public class Theme implements Serializable, Identifiable<Integer> {
     public Theme(String themeName) {
         this.themeName = themeName;
+    }
+
+    public Theme() {
     }
 
     public Theme() {
@@ -44,6 +48,13 @@ public class Theme implements Serializable, Identifiable<Integer> {
 
     @ManyToMany(targetEntity = Tag.class)
     private List<Tag> tags;
+
+    @ManyToOne(targetEntity = User.class)
+    private User creator;
+
+    public Theme(String themeName) {
+        this.themeName=themeName;
+    }
 
     public String getThemeName() {
         return themeName;
@@ -99,6 +110,14 @@ public class Theme implements Serializable, Identifiable<Integer> {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     @Override

@@ -28,7 +28,7 @@ import {RouteConfig, Router} from "angular2/router";
             <button class="col-md-3 col-md-offset-1" (click)="register()">Register</button>
         </div>
         <div *ngIf="registerFormVisible == true">
-             <form method="post">
+             <form method="post" action="/login">
                 <input type="text" name="username" />
                 <input type="password" name="password"/>
                 <input type="submit" name="login" value="submit" (click)="onRegister()"/>
