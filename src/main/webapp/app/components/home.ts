@@ -25,7 +25,7 @@ import {Component} from "angular2/core";
             <button class="col-md-3 col-md-offset-1" (click)="register()">Register</button>
         </div>
         <div *ngIf="registerFormVisible == true">
-             <form method="post">
+             <form method="post" action="/login">
                 <input type="text" name="username" />
                 <input type="password" name="password"/>
                 <input type="submit" name="login" value="submit"/>
