@@ -1,38 +1,43 @@
 <html>
 <head>
-  <title>Angular 2 QuickStart</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Kandoe</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.write('<base href="' + document.location + '" />');</script>
 
-  <!-- 1. Load libraries -->
-  <!-- IE required polyfills, in this exact order -->
-  <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-  <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="resources/angular2-polyfills.js"></script>
+    <script src="resources/system.src.js"></script>
+    <script src="resources/Rx.js"></script>
+    <script src="resources/angular2.dev.js"></script>
+    <script src="resources/es6-shim.js"></script>
 
-  <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
-  <script src="node_modules/rxjs/bundles/Rx.js"></script>
-  <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="resources/router.dev.js"></script>
+    <script src="resources/http.dev.js"></script>
 
-  <!-- 2. Configure SystemJS -->
-  <script>
-    System.config({
-      packages: {
-        app: {
-          format: 'register',
-          defaultExtension: 'js'
-        }
-      }
-    });
-    System.import('app/main')
-            .then(null, console.error.bind(console));
-  </script>
+    <link rel="stylesheet" href="./app/css/bootstrap.css">
+    <link rel="stylesheet" href="./app/css/main.css">
+    <link rel="stylesheet" href="./app/css/home.css">
+    <!-- 2. Configure SystemJS -->
+    <script>
+        System.config({
+            packages: {
+                app: {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('app/boot').then(null, console.error.bind(console));
+    </script>
 
 </head>
 
 <!-- 3. Display the application -->
 <body>
-<h1>From home.jsp in web-inf</h1>
-<my-app>Loading...</my-app>
+<home>Loading home...</home>
+
 </body>
 
 </html>
