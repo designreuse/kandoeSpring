@@ -23,18 +23,18 @@ import static org.junit.Assert.assertNotNull;
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class SubThemeServiceTest {
-/*
-    @Autowired
-    private SubThemeService subThemeService;
+
+   /* @Autowired
+    private SubThemeService subThemeService;          */
 
     //todo delete this
     @Test
     public void testSaveSubTheme() throws Exception {
-        subThemeService.saveSubTheme(new SubTheme("KdGsub"), new Theme("KDG"));
+       /* subThemeService.saveSubTheme(new SubTheme("KdGsub"), new Theme("KDG"));
         SubTheme subTheme = subThemeService.findSubThemeByName("KdGsub");
 
         System.out.println(subTheme.getId());
         System.out.println(subTheme.getOrganisationName());
-        assertNotNull("The new subthema should have an id", subTheme.getId());
-    }*/
+        assertNotNull("The new subthema should have an id", subTheme.getId());    */
+    }
 }
