@@ -81,4 +81,9 @@ public class UserRestController {
 
         return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public void loginUser(@RequestBody String credentials ){
+
+    }
 }
