@@ -13,11 +13,11 @@ public class PersonDTO extends ResourceSupport implements Serializable {
     private String firstname;
     @NotEmpty
     private String lastname;
-    private AddressDTO addressDTO;
+    private AddressDTO address;
 
     public PersonDTO()
     {
-        this.addressDTO = new AddressDTO();
+        this.address = new AddressDTO();
     }
 
     public String getFirstname()
@@ -42,12 +42,12 @@ public class PersonDTO extends ResourceSupport implements Serializable {
 
     public AddressDTO getaddressDTO()
     {
-        return addressDTO;
+        return address;
     }
 
     public void setaddressDTO(AddressDTO addressDTO)
     {
-        this.addressDTO = addressDTO;
+        this.address = addressDTO;
     }
 
 }
