@@ -61,6 +61,12 @@ public class UserServiceTest {
         assertThat(arne, notNullValue());
     }
 
+        @Test
+        public void isNewUser() throws UserServiceException {
+                User arne = userService.findUserByUsername(realUsername);
+                assertThat(arne.isNewUser(), equalTo(true));
+        }
+
 
 /*
         @Test

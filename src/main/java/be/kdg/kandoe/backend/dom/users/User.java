@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
+    @Column(name= "NewUser", nullable = false)
+    private boolean newUser;
+
     @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PersonId", nullable = false)
     private Person person;
@@ -58,6 +62,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     public User()
     {
         this.person = new Person();
+        this.newUser = true;
     }
 
     public User(String username, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<Session> sessions) {
@@ -69,6 +74,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.organisations = organisations;
         this.themes = themes;
         this.sessions = sessions;
+        this.newUser = true;
     }
 
     public User(Person p, String username, String password, List<Role> identities) {
@@ -76,6 +82,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.username = username;
         this.password = password;
         this.roles = identities;
+        this.newUser = true;
     }
 
 /*    public Integer getUserId() {
@@ -92,7 +99,10 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        roles.forEach(role -> authorities.addAll(role.getAuthorities()));
+        return authorities;
     }
 
     public String getPassword() {
@@ -134,6 +144,14 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(boolean newUser) {
+        this.newUser = newUser;
     }
 
     public Person getPerson() {
@@ -189,3 +207,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         return userId;
     }
 }
+
+
+
+
+
+
