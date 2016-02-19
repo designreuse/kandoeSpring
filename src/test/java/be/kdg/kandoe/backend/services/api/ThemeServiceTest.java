@@ -12,7 +12,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by Jordan on 16/02/2016.
@@ -25,17 +25,31 @@ public class ThemeServiceTest {
 
     @Autowired
     private ThemeService themeService;
+    @Autowired
+    private UserService userService;
 
     //todo delete this
     @Test
     public void testSaveTheme() throws Exception {
-        themeService.saveTheme(new Theme("KdG"), 1);
+        Theme toBeSaved = new Theme("KdG");
+        toBeSaved.setDescription("Dit is een KDG thema");
+        themeService.saveTheme(toBeSaved,1);
+        assertEquals(themeService.findThemes().size(),1);
         Theme theme = themeService.findTHemeByName("KdG");
 
-        System.out.println(theme.getId());
-        System.out.println(theme.getThemeName());
         assertNotNull("The new theme should have an id", theme.getId());
+        assertEquals(theme.getCreator(),userService.findUserById(1));
+
+        Theme updatedTheme = theme;
+        updatedTheme.setDescription("Updated description");
+        themeService.updateTheme(updatedTheme);
+        assertEquals(updatedTheme.getDescription(),"Updated description");
+
+        int themeId=updatedTheme.getId();
+
+        themeService.removeTheme(themeId);
+        assertNull(themeService.findThemeById(themeId));
+
+        assertEquals(themeService.findThemes().size(),0);
     }
-
-
 }

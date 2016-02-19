@@ -54,4 +54,9 @@ public class ThemeServiceImpl implements ThemeService {
     public Theme updateTheme(Theme theme) {
         return themeRepository.save(theme);
     }
+
+    @Override
+    public void removeTheme(int id) {
+        themeRepository.delete(id);
+    }
 }

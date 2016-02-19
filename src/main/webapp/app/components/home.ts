@@ -40,7 +40,7 @@ import {UserService} from "../service/userService";
                                             <label>Password</label>
                                             <input type="password" name="password" class="form-control"/>
                                         </div>
-                                        <button type="button" class="btn btn-lg btn-info" (click)="submit()">Submit</button>
+                                        <input type="submit" class="btn btn-lg btn-info">
                                     </form>
                                     <register id="register-form" style="display: none"></register>
                                 </div>
@@ -74,5 +74,9 @@ export class Home {
         var register = document.getElementById("register-form");
         login.style.display = "none";
         register.style.display = "block";
+    }
+
+    submit(){
+        alert("Submitted")
     }
 }

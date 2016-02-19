@@ -82,8 +82,8 @@ public class UserRestController {
         return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/home", method = RequestMethod.POST)
     public void loginUser(@RequestBody String credentials ){
-
+        System.out.println("You tried to log in");
     }
 }

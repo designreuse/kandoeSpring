@@ -19,4 +19,6 @@ public interface ThemeService {
     List<Theme> findThemes();
 
     Theme updateTheme(Theme theme);
+
+    void removeTheme(int id);
 }

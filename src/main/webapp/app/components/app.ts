@@ -4,6 +4,7 @@ import {OrganisationsComponent} from "./organisations.component";
 import {RegisterComponent} from "./register.component";
 import {Home} from "./home";
 import {LoggedInHome} from "./loggedInHome.component";
+import {ThemeComponent} from "./ThemeComponent";
 
 
 @Component({
@@ -19,7 +20,8 @@ import {LoggedInHome} from "./loggedInHome.component";
     {path: '/home', as: 'Home', component: Home, useAsDefault: true},
     {path: '/loggedIn', as: 'LoggedInHome', component: LoggedInHome},
     {path: '/organisations', name: 'Organisations', component: OrganisationsComponent},
-    {path: '/register', as: 'Register', component: RegisterComponent}
+    {path: '/register', as: 'Register', component: RegisterComponent},
+    {path: '/theme',as :'Theme',component:ThemeComponent}
 
 ])
 export class AppComponent {
