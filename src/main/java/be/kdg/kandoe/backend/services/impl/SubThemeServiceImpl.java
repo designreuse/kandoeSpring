@@ -52,7 +52,7 @@ public class SubThemeServiceImpl implements SubThemeService {
     }
 
     @Override
-    public SubTheme updateSubThemeById(SubTheme subTheme) {
+    public SubTheme updateSubTheme(SubTheme subTheme) {
                      return subThemeRepository.save(subTheme);
     }
 }

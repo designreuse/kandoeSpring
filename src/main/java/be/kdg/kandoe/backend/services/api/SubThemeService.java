@@ -16,6 +16,6 @@ public interface SubThemeService {
     List<SubTheme> findSubThemes();
 
     void deleteSubThemeById(int id);
-    SubTheme updateSubThemeById(SubTheme subTheme);
+    SubTheme updateSubTheme(SubTheme subTheme);
 
 }

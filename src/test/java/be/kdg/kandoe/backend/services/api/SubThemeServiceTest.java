@@ -47,7 +47,7 @@ public class SubThemeServiceTest {
         assertEquals(theme.getId().toString(),"1");
 
         subtheme.setThemeName("KdGsubUpdate");
-        subThemeService.updateSubThemeById(subtheme);
+        subThemeService.updateSubTheme(subtheme);
         System.out.println(subTheme);
 
         System.out.println(subTheme.getId());
