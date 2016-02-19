@@ -29,13 +29,13 @@ public class ThemeServiceTest {
     //todo delete this
     @Test
     public void testSaveTheme() throws Exception {
-/*        themeService.saveTheme(new Theme("KdG"), 1);
+        themeService.saveTheme(new Theme("KdG"), 1);
         Theme theme = themeService.findTHemeByName("KdG");
 
         System.out.println(theme.getId());
         System.out.println(theme.getThemeName());
         assertNotNull("The new theme should have an id", theme.getId());
-    */}
+    }
 
 
 }

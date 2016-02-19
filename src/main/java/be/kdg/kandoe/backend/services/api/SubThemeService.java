@@ -2,6 +2,7 @@ package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
+import javafx.scene.media.SubtitleTrack;
 
 import java.util.List;
 
@@ -10,10 +11,11 @@ import java.util.List;
  */
 public interface SubThemeService {
     SubTheme findSubThemeById(int id);
-
     SubTheme findSubThemeByName(String name);
-
-    SubTheme saveSubTheme(SubTheme subTheme, Theme headthemeId);
-
+    SubTheme saveSubTheme(SubTheme subTheme, Integer headThemeId);
     List<SubTheme> findSubThemes();
+
+    void deleteSubThemeById(int id);
+    SubTheme updateSubThemeById(SubTheme subTheme);
+
 }

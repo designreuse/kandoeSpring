@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by Annelies on 19/02/2016.
  */
 public interface SubThemeRepository extends JpaRepository<SubTheme, Integer> {
-    SubTheme findSubThemeBySubThemeName(String subThemeName);
+    SubTheme findSubThemeByThemeName(String subThemeName);
 }
