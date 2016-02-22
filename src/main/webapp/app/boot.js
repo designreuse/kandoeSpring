@@ -1,5 +1,5 @@
-System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', 'angular2/http', "./service/service", "./service/userService", "./components/app"], function(exports_1) {
-    var browser_1, core_1, router_1, http_1, service_1, userService_1, app_1;
+System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', 'angular2/http', "./service/service", "./service/userService", "./components/app", "./security/securityService"], function(exports_1) {
+    var browser_1, core_1, router_1, http_1, service_1, userService_1, app_1, securityService_1;
     return {
         setters:[
             function (browser_1_1) {
@@ -22,12 +22,16 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
             },
             function (app_1_1) {
                 app_1 = app_1_1;
+            },
+            function (securityService_1_1) {
+                securityService_1 = securityService_1_1;
             }],
         execute: function() {
             browser_1.bootstrap(app_1.AppComponent, [
                 // dependency injection
                 service_1.Service,
                 userService_1.UserService,
+                securityService_1.SecurityService,
                 // http
                 http_1.HTTP_PROVIDERS,
                 // routing

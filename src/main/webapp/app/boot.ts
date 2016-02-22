@@ -16,12 +16,14 @@ import {HTTP_PROVIDERS} from 'angular2/http'
 import {Service} from "./service/service";
 import {UserService} from "./service/userService";
 import {AppComponent} from "./components/app";
+import {SecurityService} from "./security/securityService";
 
 bootstrap(AppComponent,
     [
         // dependency injection
         Service,
         UserService,
+        SecurityService,
         // http
         HTTP_PROVIDERS,
         // routing
