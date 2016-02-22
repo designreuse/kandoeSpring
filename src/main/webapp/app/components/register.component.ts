@@ -9,7 +9,9 @@ import {UserService} from "../service/userService";
 @Component({
     selector: 'register',
     template: `
-    <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
+    <form  class="col-lg-offset-3 col-lg-6" method="post" role="form">
+        <div class="form-pad">
+        <h3>Register</h3>
         <div class="form-group">
             <label>Username</label>
             <input type="text" placeholder="Enter username" class="form-control" [(ngModel)]="user.username">
@@ -62,7 +64,9 @@ import {UserService} from "../service/userService";
                 <input type="text" placeholder="Enter zip code" class="form-control" [(ngModel)]="user.person.address.zip">
             </div>
         </div>
-        <button type="button" class="btn btn-lg btn-info" (click)="onSubmit()">Submit</button>
+
+        <button type="button" class="btn btn-lg btn-info" (click)="onSubmit()">Register</button>
+        </div>
     </form>
     `,
 
