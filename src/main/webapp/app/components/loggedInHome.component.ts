@@ -10,11 +10,28 @@ import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES} from "angular2/route
     selector: 'loggedin-home',
     directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
-        <div class="home">
-            <section class="settings">
-                    <a [routerLink]="['/Organisations']" class="glyphicon glyphicon-inbox large-screen"> My Organisations</a>
-            </section>
+<div class="home col-md-10">
+    <section class="settings">
+         <a [routerLink]="['/Organisations']" class="glyphicon glyphicon-inbox large-screen"> My Organisations</a>
+    </section>
+    <div class="row col-md-offset-2">
+         <div class="col-md-4">
+            <div class="card">
+            </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="card">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+            </div>
+        </div>
+
+    </div>
+ </div>
         `
 })
 

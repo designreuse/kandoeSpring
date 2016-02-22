@@ -10,7 +10,7 @@ import {UserService} from "../service/userService";
 @Component({
     selector: 'kandoeCard',
     template: `
-            <div class="col-md-3">
+         <div class="col-md-4">
             <div class="card">
                 <div class="card-image">
                     <img src="http://www.keenthemes.com/preview/conquer/assets/plugins/jcrop/demos/demo_files/image2.jpg" class="img-responsive">
@@ -30,7 +30,7 @@ import {UserService} from "../service/userService";
                    <div class="col-sm-2"><label><span class="glyphicon glyphicon-user"></span> 4</label></div>
                     <div class="col-sm-4"><label><span class="glyphicon glyphicon-time"></span> 5h20m</label></div>
                     <div class="col-sm-4"><label><span class="glyphicon glyphicon-bookmark"></span> Birds</label></div>
-                    <div class="col-sm-2"><button type="button" class="btn btn-custom pull-right"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <div class="col-sm-2"><button type="button" class="btn btn-custom pull-right"><span class="glyphicon glyphicon-chevron-right"></span></button></div>
                 </div><!-- card actions -->
                 </div>
                <div class="card-reveal" data-rel="1">
