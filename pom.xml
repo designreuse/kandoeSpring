@@ -257,6 +257,13 @@
       <version>2.0.0</version>
       <scope>test</scope>
     </dependency>
+
+      <!-- Jwt Dependencies -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>0.6.0</version>
+    </dependency>
   </dependencies>
 
   <!-- add Spring security 4 Milestone Repos for Spring security Test -->
