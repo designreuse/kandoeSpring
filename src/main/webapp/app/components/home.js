@@ -1,9 +1,11 @@
 System.register(["angular2/core", "./register.component", "angular2/router"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -45,11 +47,12 @@ System.register(["angular2/core", "./register.component", "angular2/router"], fu
                     core_1.Component({
                         selector: 'home',
                         directives: [register_component_1.RegisterComponent],
-                        template: "\n<div class=\"home\">\n    <h1 class=\"jumbotron\">Welcome to Kandoe</h1>\n\n    <div class=\"background-img\">\n    <h2 class=\"col-md-12 intro\">Free platform for making decisions <br>\n        Easy to use<br>\n        You can participate with a lot of people</h2>\n\n        <div class=\"container well\">\n            <div class=\"row\">\n                <div class=\"panel panel-login\">\n                    <div class=\"panel-heading\">\n                        <div class=\"row\">\n                            <div class=\"col-lg-12 intro\">\n                                <button type=\"button\" class=\"btn-info btn-sm col-lg-offset-3 col-lg-2\" (click)=\"login()\">Log in</button>\n                                <button type=\"button\" class=\"btn-info btn-sm col-lg-offset-1 col-lg-2\" (click)=\"register()\">Register</button>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"panel-body\">\n                        <div class=\"row\">\n                            \t<div class=\"col-lg-12\">\n                                    <form id=\"login-form\" class=\"col-lg-offset-2 col-lg-8\" method=\"post\" role=\"form\" style=\"display: block;\">\n                                        <div class=\"form-group\">\n                                            <label>Username</label>\n                                            <input type=\"text\" name=\"username\" class=\"form-control\" />\n                                        </div>\n                                        <div class=\"form-group\">\n                                            <label>Password</label>\n                                            <input type=\"password\" name=\"password\" class=\"form-control\"/>\n                                        </div>\n                                        <input type=\"submit\" class=\"btn btn-lg btn-info\">\n                                    </form>\n                                    <register id=\"register-form\" style=\"display: none\"></register>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n        "
+                        templateUrl: 'app/components/home.html'
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], Home);
                 return Home;
+                var _a;
             })();
             exports_1("Home", Home);
         }
