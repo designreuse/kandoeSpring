@@ -1,4 +1,4 @@
-System.register(["angular2/core", "./register.component", "angular2/router"], function(exports_1) {
+System.register(["angular2/core", "./register.component", "angular2/router", "../service/userService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "./register.component", "angular2/router"], fu
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, register_component_1, router_1;
+    var core_1, register_component_1, router_1, userService_1;
     var Home;
     return {
         setters:[
@@ -22,11 +22,15 @@ System.register(["angular2/core", "./register.component", "angular2/router"], fu
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (userService_1_1) {
+                userService_1 = userService_1_1;
             }],
         execute: function() {
             Home = (function () {
-                function Home(router) {
+                function Home(router, userService) {
                     this.router = router;
+                    this.userService = userService;
                 }
                 Home.prototype.login = function () {
                     var login = document.getElementById("login-form");
@@ -40,8 +44,19 @@ System.register(["angular2/core", "./register.component", "angular2/router"], fu
                     login.style.display = "none";
                     register.style.display = "block";
                 };
-                Home.prototype.submit = function () {
-                    alert("Submitted");
+                Home.prototype.onSubmit = function () {
+                    var _this = this;
+                    this.userService.login(this.username, this.password)
+                        .subscribe(function (res) {
+                        if (res.status == 200) {
+                            console.log(res.text());
+                            localStorage.setItem("id_token", res.text());
+                            console.log(localStorage.getItem("id_token"));
+                            _this.router.navigate(['/LoggedInHome']);
+                        }
+                        else {
+                        }
+                    });
                 };
                 Home = __decorate([
                     core_1.Component({
@@ -49,10 +64,9 @@ System.register(["angular2/core", "./register.component", "angular2/router"], fu
                         directives: [register_component_1.RegisterComponent],
                         templateUrl: 'app/components/home.html'
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService])
                 ], Home);
                 return Home;
-                var _a;
             })();
             exports_1("Home", Home);
         }

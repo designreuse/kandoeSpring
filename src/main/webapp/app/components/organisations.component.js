@@ -41,10 +41,9 @@ System.register(['angular2/core', 'angular2/router', "../service/service"], func
                         template: "\n    <p>test</p>\n    <div class=\"panel-body\">\n            <div *ngFor=\"#organisation of organisations\" class=\"col-1-4\">\n                  <p>OrganisationID : {{organisation.organisationId}}</p>\n            </div>\n    </div>",
                         inputs: ['organisations']
                     }), 
-                    __metadata('design:paramtypes', [service_1.Service, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [service_1.Service, router_1.Router])
                 ], OrganisationsComponent);
                 return OrganisationsComponent;
-                var _a;
             })();
             exports_1("OrganisationsComponent", OrganisationsComponent);
         }

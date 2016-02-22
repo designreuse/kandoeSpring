@@ -41,13 +41,17 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "ang
                     return this.http.post(this.path + 'users', JSON.stringify(user), { headers: headers })
                         .map(function (res) { return res.json(); });
                 };
+                UserService.prototype.login = function (username, password) {
+                    var headers = new http_2.Headers();
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    return this.http.post(this.path + 'login', "username=" + username + "&password=" + password, { headers: headers });
+                };
                 UserService = __decorate([
                     core_1.Injectable(),
                     __param(1, core_1.Inject('App.DevPath')), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, String])
+                    __metadata('design:paramtypes', [http_1.Http, String])
                 ], UserService);
                 return UserService;
-                var _a;
             })();
             exports_1("UserService", UserService);
         }

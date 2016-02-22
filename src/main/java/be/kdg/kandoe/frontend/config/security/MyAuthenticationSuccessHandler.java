@@ -1,5 +1,8 @@
 package be.kdg.kandoe.frontend.config.security;
 
+import be.kdg.kandoe.backend.dom.users.User;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -19,38 +22,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-       /* String targetUrl = determineTargetUrl(authentication);
-        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-        redirectStrategy.sendRedirect(request, response, targetUrl);
-        clearAuthenticationAttributes(request);*/
-
-        PrintWriter writer = response.getWriter();
-        writer.flush();
-    }
-
-    private String determineTargetUrl(Authentication authentication) {
-       /* boolean isAdmin=false;
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
-                isAdmin = true;
-            }
-        }
-        if (isAdmin) {
-            return "/add_user.jsp";
-        } else {
-            return "/add_favorite.jsp";
-        }*/
-
-        return "";
-
-    }
-
-    private void clearAuthenticationAttributes(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return;
-        }
-        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        User user = (User)authentication.getPrincipal();
+        String token = Jwts.builder().setSubject(user.getUsername())
+                .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getOutputStream().println(token);
     }
 }

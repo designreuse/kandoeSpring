@@ -32,10 +32,9 @@ System.register(["angular2/core", "angular2/router"], function(exports_1) {
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         template: "\n        <div class=\"home\">\n            <section class=\"settings\">\n                    <a [routerLink]=\"['/Organisations']\" class=\"glyphicon glyphicon-inbox large-screen\"> My Organisations</a>\n            </section>\n        </div>\n        "
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [router_1.Router])
                 ], LoggedInHome);
                 return LoggedInHome;
-                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }

@@ -50,10 +50,9 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/http'
                 Service = __decorate([
                     core_1.Injectable(),
                     __param(1, core_1.Inject('App.DevPath')), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, String])
+                    __metadata('design:paramtypes', [http_1.Http, String])
                 ], Service);
                 return Service;
-                var _a;
             })();
             exports_1("Service", Service);
         }
