@@ -4,6 +4,7 @@ import {OrganisationsComponent} from "./organisations.component";
 import {RouteConfig, Router} from "angular2/router";
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
+import {Response} from "angular2/http";
 
 @Component({
     selector: 'home',
@@ -13,9 +14,14 @@ import {UserService} from "../service/userService";
 
 export class Home {
     private router:Router;
+    private userService: UserService;
 
-    constructor(router:Router) {
+    private username: string;
+    private password: string;
+
+    constructor(router:Router, userService: UserService) {
         this.router = router;
+        this.userService = userService;
     }
 
     login() {
@@ -33,7 +39,18 @@ export class Home {
         register.style.display = "block";
     }
 
-    submit(){
-        alert("Submitted")
+    onSubmit(){
+        this.userService.login(this.username, this.password)
+            .subscribe((res: Response) => {
+                if(res.status == 200){
+                    console.log(res.text());
+                    localStorage.setItem("id_token", res.text());
+                    console.log(localStorage.getItem("id_token"));
+                    this.router.navigate(['/LoggedInHome']);
+                }
+                else {
+                    //todo failure message
+                }
+            });
     }
 }
