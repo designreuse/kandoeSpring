@@ -1,8 +1,6 @@
 package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.dom.other.SubTheme;
-import be.kdg.kandoe.backend.dom.other.Theme;
-import javafx.scene.media.SubtitleTrack;
 
 import java.util.List;
 
