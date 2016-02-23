@@ -24,6 +24,16 @@ public class Card implements Serializable, Identifiable<Integer> {
     @Column(name = "Image")
     private String imageURL;
 
+
+    public Card(String description) {
+        this.description = description;
+    }
+
+    public Card(String description, String imageURL) {
+        this.description = description;
+        this.imageURL = imageURL;
+    }
+
     @ManyToOne(targetEntity = Theme.class)
     private Theme theme;
 
@@ -33,6 +43,8 @@ public class Card implements Serializable, Identifiable<Integer> {
     public List<CardSession> getCardSessions() {
         return cardSessions;
     }
+
+
 
     public void setCardSessions(List<CardSession> cardSessions) {
         this.cardSessions = cardSessions;
