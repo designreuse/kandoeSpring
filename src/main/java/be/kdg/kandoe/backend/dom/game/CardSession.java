@@ -20,11 +20,17 @@ public class CardSession implements Serializable, Identifiable<Integer> {
     @Column(name = "Position", nullable = false)
     private int position;
 
-    @ManyToOne(targetEntity = Card.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Card.class)
     private Card card;
 
-    @ManyToOne(targetEntity = Session.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Session.class)
     private Session session;
+
+    public CardSession(int position, Card card, Session session) {
+        this.position = position;
+        this.card = card;
+        this.session = session;
+    }
 
     @Override
     public Integer getId() {

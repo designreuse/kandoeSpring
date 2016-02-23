@@ -1,7 +1,9 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
+import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
 import ma.glasnost.orika.MapperFacade;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,12 +27,14 @@ public class OrganisationRestController {
     private final OrganisationService organisationService;
     private final OrganisationAssembler organisationAssembler;
     private final MapperFacade mapper;
+    private final UserService userService;
 
     @Autowired
-    public OrganisationRestController(OrganisationService organisationService, OrganisationAssembler organisationAssembler, MapperFacade mapper) {
+    public OrganisationRestController(OrganisationService organisationService, OrganisationAssembler organisationAssembler, MapperFacade mapper, UserService userService) {
         this.organisationService = organisationService;
         this.organisationAssembler = organisationAssembler;
         this.mapper = mapper;
+        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -55,5 +60,16 @@ public class OrganisationRestController {
         logger.info(this.getClass().toString() + ": adding new organisation " + org_out.getId());
 
         return new ResponseEntity<>(organisationAssembler.toResource(org_out), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public ResponseEntity<List<OrganisationDTO>> getOrganisationsCurrentUser(@AuthenticationPrincipal User user){
+        if(user != null && user.getUsername() != null){
+            List<Organisation> orgs = userService.findOrganisations(user);
+
+            return new ResponseEntity<List<OrganisationDTO>>(organisationAssembler.toResources(orgs), HttpStatus.OK);
+        }
+        return new ResponseEntity<List<OrganisationDTO>>(HttpStatus.UNAUTHORIZED);
+
     }
 }

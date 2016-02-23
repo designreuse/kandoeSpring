@@ -31,8 +31,8 @@ public class Session implements Serializable, Identifiable<Integer> {
     @Column(name = "Size")
     private int size;
 
-    @Column(name = "CurrentUser")
-    private User user;
+    @OneToMany(targetEntity = UserSession.class)
+    private List<UserSession> userSessions;
 
     @OneToMany(targetEntity = CardSession.class)
     private List<CardSession> cardSessions;
@@ -40,22 +40,11 @@ public class Session implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Theme.class)
     private Theme theme;
 
-    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
-    private List<User> users;
-
     @OneToMany(targetEntity = Snapshot.class)
     private List<Snapshot> snapshots;
 
     @OneToMany(targetEntity = Message.class)
     private List<Message> chat;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public int getSize() {
         return size;
@@ -89,20 +78,20 @@ public class Session implements Serializable, Identifiable<Integer> {
         this.cardSessions = cardSessions;
     }
 
+    public List<UserSession> getUserSessions() {
+        return userSessions;
+    }
+
+    public void setUserSessions(List<UserSession> userSessions) {
+        this.userSessions = userSessions;
+    }
+
     public Theme getTheme() {
         return theme;
     }
 
     public void setTheme(Theme theme) {
         this.theme = theme;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public List<Snapshot> getSnapshots() {
