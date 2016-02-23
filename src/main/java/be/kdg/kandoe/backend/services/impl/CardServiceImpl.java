@@ -53,10 +53,11 @@ public class CardServiceImpl implements CardService {
         return cardRepository.findAll();
     }
 
- /*   @Override
-    public List<Card> findCardsByTheme(Integer themeId) {
-        Theme theme = themeService.findThemeById(themeId);
+    @Override
+    public Card updateCard(Card card) {
+        return cardRepository.save(card);
+    }
 
-        return cardRepository.findCardsByTheme(theme);
-    }*/
+
+
 }

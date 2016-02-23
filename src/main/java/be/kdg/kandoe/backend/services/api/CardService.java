@@ -13,6 +13,8 @@ public interface CardService {
     Card findCardByDescription(String description);
     Card saveCard(Card card, Integer themeId);
     List<Card> findCards();
-  /*  List<Card> findCardsByTheme(Integer themeId);
-*/
+
+
+    Card updateCard(Card card);
+
 }
