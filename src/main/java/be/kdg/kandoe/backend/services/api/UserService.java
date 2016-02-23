@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.services.api;
 
 
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,5 +20,5 @@ public interface UserService  extends UserDetailsService {
 
     void checkLogin(Integer userId, String password) throws UserServiceException;
 
-
+    List<Organisation> findOrganisations(User user);
 }

@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.services.impl;
 
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.UserRepository;
 import be.kdg.kandoe.backend.services.api.UserService;
@@ -81,6 +82,12 @@ public class UserServiceImpl implements UserService{
         if(u == null || !password.equals(u.getPassword())){
             throw new UserServiceException("Foutieve gebruikersnaam of paswoord.");
         }
+    }
+
+    @Override
+    public List<Organisation> findOrganisations(User user) {
+        User currUser = userRepository.findUserByUsername(user.getUsername());
+        return currUser.getOrganisations();
     }
 
     @Override

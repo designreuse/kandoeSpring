@@ -24,10 +24,10 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     @Column(name="Logo")
     private String logoURL;
 
-    @ManyToMany(targetEntity =  User.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity =  User.class)
     private List<User> users;
 
-    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = User.class)
     private List<User> organisers;
 
     //TODO

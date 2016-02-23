@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.dom.users;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
@@ -47,7 +48,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Role> roles;
 
-    @ManyToMany(targetEntity = Organisation.class)
+    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
     private List<Organisation> organisations;
 
     @ManyToMany(targetEntity = Organisation.class)
@@ -56,8 +57,8 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @OneToMany(targetEntity = Theme.class)
     private List<Theme> themes;
 
-    @ManyToMany(targetEntity = Session.class)
-    private List<Session> sessions;
+    @OneToMany(targetEntity = UserSession.class)
+    private List<UserSession> userSessions;
 
     public User()
     {
@@ -65,7 +66,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.newUser = true;
     }
 
-    public User(String username, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<Session> sessions) {
+    public User(String username, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<UserSession> userSessions) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -73,7 +74,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.roles = roles;
         this.organisations = organisations;
         this.themes = themes;
-        this.sessions = sessions;
+        this.userSessions = userSessions;
         this.newUser = true;
     }
 
@@ -186,12 +187,12 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.themes = themes;
     }
 
-    public List<Session> getSessions() {
-        return sessions;
+    public List<UserSession> getSessions() {
+        return userSessions;
     }
 
-    public void setSessions(List<Session> sessions) {
-        this.sessions = sessions;
+    public void setSessions(List<UserSession> sessions) {
+        this.userSessions = sessions;
     }
 
     public List<Organisation> getOwnOrganisations() {

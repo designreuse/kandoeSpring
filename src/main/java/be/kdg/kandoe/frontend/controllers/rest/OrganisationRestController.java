@@ -68,4 +68,15 @@ public class OrganisationRestController {
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public ResponseEntity<List<OrganisationDTO>> getOrganisationsCurrentUser(@AuthenticationPrincipal User user){
+        if(user != null && user.getUsername() != null){
+            List<Organisation> orgs = userService.findOrganisations(user);
+
+            return new ResponseEntity<List<OrganisationDTO>>(organisationAssembler.toResources(orgs), HttpStatus.OK);
+        }
+        return new ResponseEntity<List<OrganisationDTO>>(HttpStatus.UNAUTHORIZED);
+
+    }
 }
