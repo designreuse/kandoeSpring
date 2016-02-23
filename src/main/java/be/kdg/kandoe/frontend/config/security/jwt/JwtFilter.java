@@ -54,9 +54,6 @@ public class JwtFilter extends GenericFilterBean{
             Base64.Encoder encoder= Base64.getEncoder();
             String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
                     .parseClaimsJws(token).getBody().getSubject();
-            System.out.println(username);
-            System.out.println(userService.findUserByUsername(username));
-            //System.out.println(SecurityContextHolder.getContext());
             SecurityContextHolder.getContext().setAuthentication(new UserAuthentication(userService.findUserByUsername(username)));
         }
 
