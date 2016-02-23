@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -59,7 +60,7 @@ public class OrganisationRestControllerTest {
                 .andDo(print());
     }
 
-    @Test
+    /*@Test
     public void testCreateOrganisation() throws Exception {
         JSONObject orgResource = new JSONObject();
         orgResource.put("organisationName", "KdG");
@@ -73,5 +74,5 @@ public class OrganisationRestControllerTest {
                 .andExpect(jsonPath("$.address", is("Nationalestraat 5")))
                 .andExpect(jsonPath("$.organisationId", notNullValue()))
                 .andDo(print());
-    }
+    }*/
 }
