@@ -30,6 +30,15 @@ public class Card implements Serializable, Identifiable<Integer> {
     @OneToMany(targetEntity = CardSession.class)
     private List<CardSession> cardSessions;
 
+    public Card(String description, String imageURL) {
+        this.description = description;
+        this.imageURL = imageURL;
+    }
+
+    public Card(String description) {
+        this.description = description;
+    }
+
     public List<CardSession> getCardSessions() {
         return cardSessions;
     }
