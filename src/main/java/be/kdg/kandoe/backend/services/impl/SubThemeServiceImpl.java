@@ -46,10 +46,6 @@ public class SubThemeServiceImpl implements SubThemeService {
         return subThemeRepository.findAll();
     }
 
-    @Override
-    public void deleteSubThemeById(int id) {
-        subThemeRepository.delete(id);
-    }
 
     @Override
     public SubTheme updateSubTheme(SubTheme subTheme) {
