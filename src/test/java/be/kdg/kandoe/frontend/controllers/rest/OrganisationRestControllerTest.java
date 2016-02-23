@@ -59,20 +59,4 @@ public class OrganisationRestControllerTest {
                 .andExpect(jsonPath("$.organisationId", is(1)))
                 .andDo(print());
     }
-
-    /*@Test
-    public void testCreateOrganisation() throws Exception {
-        JSONObject orgResource = new JSONObject();
-        orgResource.put("organisationName", "KdG");
-        orgResource.put("address", "Nationalestraat 5");
-
-        System.out.println(orgResource.toString());
-        mockMvc.perform(post("/api/organisations")
-                .content(orgResource.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.organisationName", is("KdG")))
-                .andExpect(jsonPath("$.address", is("Nationalestraat 5")))
-                .andExpect(jsonPath("$.organisationId", notNullValue()))
-                .andDo(print());
-    }*/
 }

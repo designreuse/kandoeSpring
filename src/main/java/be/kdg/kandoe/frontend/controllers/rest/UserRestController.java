@@ -36,14 +36,12 @@ public class UserRestController {
     private final UserService userService;
     private final UserAssembler userAssembler;
     private final MapperFacade mapperFacade;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserRestController(UserService userService,  UserAssembler userAssembler, MapperFacade mapperFacade, BCryptPasswordEncoder passwordEncoder) {
+    public UserRestController(UserService userService,  UserAssembler userAssembler, MapperFacade mapperFacade) {
         this.userService = userService;
         this.mapperFacade = mapperFacade;
         this.userAssembler = userAssembler;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -80,17 +78,15 @@ public class UserRestController {
     }
 
     @RequestMapping(value ="/{userId}", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO>  updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO)
+    public ResponseEntity<UserDTO>  updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO, @AuthenticationPrincipal User user)
     {
-        User userIn = userService.findUserById(userId);
-        mapperFacade.map(userDTO, userIn);
-        User userOut = userService.saveUser(userIn);
+        if(user != null && user.getId() == userId){
+            User userIn = userService.findUserById(userId);
+            mapperFacade.map(userDTO, userIn);
+            User userOut = userService.saveUser(userIn);
 
-        return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
-    }
-
-    @RequestMapping(value = "/home", method = RequestMethod.POST)
-    public void loginUser(@RequestBody String credentials ){
-        System.out.println("You tried to log in");
+            return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
     }
 }
