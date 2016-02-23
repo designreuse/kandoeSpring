@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.services.convertors;
 
 import be.kdg.kandoe.backend.dom.game.Card;
+import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
 
 import java.util.Collection;
 
