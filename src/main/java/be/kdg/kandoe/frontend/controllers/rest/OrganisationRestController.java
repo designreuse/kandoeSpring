@@ -6,6 +6,7 @@ import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
+import be.kdg.kandoe.frontend.config.security.jwt.UserAuthentication;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,28 +39,34 @@ public class OrganisationRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<OrganisationDTO>> getOrganisations(){
-        List<Organisation> orgs = organisationService.findOrganisations();
+    public ResponseEntity<List<OrganisationDTO>> getOrganisations(@AuthenticationPrincipal User user) {
+        if (user != null) {
+            List<Organisation> orgs = organisationService.findOrganisations();
 
-        return new ResponseEntity<>(organisationAssembler.toResources(orgs), HttpStatus.OK);
+            return new ResponseEntity<>(organisationAssembler.toResources(orgs), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @RequestMapping(value = "/{organisationId}", method = RequestMethod.GET)
-    public ResponseEntity<OrganisationDTO> getOrganisationById(@PathVariable(value = "organisationId") int orgId){
+    public ResponseEntity<OrganisationDTO> getOrganisationById(@PathVariable(value = "organisationId") int orgId) {
         Organisation org = organisationService.findOrganisationById(orgId);
-
         return new ResponseEntity<>(organisationAssembler.toResource(org), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<OrganisationDTO> createOrganisation(@Valid @RequestBody OrganisationDTO organisationDTO){
-        Organisation org_in = mapper.map(organisationDTO, Organisation.class);
+    public ResponseEntity<OrganisationDTO> createOrganisation(@Valid @RequestBody OrganisationDTO organisationDTO, @AuthenticationPrincipal User user) {
+        if (user != null && user.getUsername() != null) {
+            Organisation org_in = mapper.map(organisationDTO, Organisation.class);
 
-        //todo change to currently logged in user
-        Organisation org_out = organisationService.saveOrganisation(org_in, 1);
-        logger.info(this.getClass().toString() + ": adding new organisation " + org_out.getId());
+            Organisation org_out = organisationService.saveOrganisation(org_in, user.getId());
+            logger.info(this.getClass().toString() + ": adding new organisation " + org_out.getId());
 
-        return new ResponseEntity<>(organisationAssembler.toResource(org_out), HttpStatus.CREATED);
+            return new ResponseEntity<>(organisationAssembler.toResource(org_out), HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)

@@ -38,25 +38,17 @@ public class JwtFilter extends GenericFilterBean{
         String authHeader = req.getHeader("Authorization");
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-            HttpServletResponse res = (HttpServletResponse) response;
-            /*res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            res.getWriter().flush();   */
-
-           /* res.setContentType("application/json");
-            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            res.getOutputStream().println("{ \"error\": \"no token\" }");
-            res.getOutputStream().flush(); */
             SecurityContextHolder.getContext().setAuthentication(null);
 
         } else {
             String token = authHeader.substring(7);
             token=token.replace("\"","");
-            Base64.Encoder encoder= Base64.getEncoder();
             String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
                     .parseClaimsJws(token).getBody().getSubject();
             SecurityContextHolder.getContext().setAuthentication(new UserAuthentication(userService.findUserByUsername(username)));
-        }
 
+        }
         chain.doFilter(request, response);
+
     }
 }
