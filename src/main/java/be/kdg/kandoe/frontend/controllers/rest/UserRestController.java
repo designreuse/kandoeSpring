@@ -4,8 +4,11 @@ import be.kdg.kandoe.backend.dom.users.Person;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
+import be.kdg.kandoe.frontend.DTO.LoginDTO;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.UserAssembler;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.internal.constraintvalidators.EmailValidator;
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +36,14 @@ public class UserRestController {
     private final UserService userService;
     private final UserAssembler userAssembler;
     private final MapperFacade mapperFacade;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserRestController(UserService userService,  UserAssembler userAssembler, MapperFacade mapperFacade) {
+    public UserRestController(UserService userService,  UserAssembler userAssembler, MapperFacade mapperFacade, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.mapperFacade = mapperFacade;
         this.userAssembler = userAssembler;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(method = RequestMethod.GET)

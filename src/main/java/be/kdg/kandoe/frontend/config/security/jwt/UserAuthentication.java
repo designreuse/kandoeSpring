@@ -14,6 +14,7 @@ public class UserAuthentication implements Authentication {
 
     public UserAuthentication(User user) {
         this.user = user;
+        authenticated = true;
     }
 
     @Override

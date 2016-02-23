@@ -59,13 +59,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .antMatchers("/api/**").authenticated().and()
-                .formLogin()
+                /*.formLogin()
                 .loginProcessingUrl("/api/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(new MyAuthenticationSuccessHandler())
-                .failureHandler(new MyAuthenticationFailureHandler()).and()
-                .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .failureHandler(new MyAuthenticationFailureHandler()).and()*/
+                .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable();
     }
 

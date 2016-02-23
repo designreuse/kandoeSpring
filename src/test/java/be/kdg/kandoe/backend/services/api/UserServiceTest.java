@@ -1,11 +1,6 @@
 package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.config.BackendContextConfig;
-import be.kdg.kandoe.backend.dom.users.Address;
-import be.kdg.kandoe.backend.dom.users.Person;
-import be.kdg.kandoe.backend.dom.users.Roles.Organiser;
-import be.kdg.kandoe.backend.dom.users.Roles.Player;
-import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.junit.Test;
