@@ -28,7 +28,9 @@ export class UserService {
 
     public login(username: string, password: string): Observable<Response>{
         var headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post(this.path + 'login', "username=" + username + "&password=" + password, {headers: headers});
+        //headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        //return this.http.post(this.path + 'login', "username=" + username + "&password=" + password, {headers: headers});
+        headers.append('Content-Type', 'application/json');
+        return this.http.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", {headers: headers})
     }
 }
