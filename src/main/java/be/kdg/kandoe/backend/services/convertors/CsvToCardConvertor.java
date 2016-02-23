@@ -43,24 +43,16 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
 
             String text = null;
             while ((text = csvReader.readLine()) != null) {
-                StringTokenizer st = new StringTokenizer(text, ";", false);
-                List<String> rowValues = new ArrayList<>(st.countTokens());
                 int index = 0;
-                    while (st.hasMoreTokens()) {
-                        String next = st.nextToken();
-                            rowValues.add(index++, next);
-
-                }
-
                 if (line == 0) { // Header row
+                            String[] values = text.split(";");
+                            for(String col : values) {
+                                if (!values[0].equals("Description")) {
+                                    ConvertorException ex = new ConvertorException("No header values");
+                                    throw ex;
+                                }
 
-                    for (String col : rowValues) {
-                            if (!rowValues.get(0).equals("Description")) {
-                                ConvertorException ex = new ConvertorException("No header values");
-                                throw ex;
-                            }
-
-                        headers.add(col);
+                                headers.add(col);
                     }
 
                 } else {
@@ -68,25 +60,35 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
                     String description = null;
                     String imageURL = null;
 
-                    for (int col = 0; col < headers.size(); col++) {
-                        String header = headers.get(col);
+                        if(text.endsWith(";")){
+                            text = text.replace(";","");
+                            description = text;
+                            imageURL = null;
+                        }
+                        else {
+                            String[] columns = text.split(";");
 
-                        if (header.equals("Description")) {
-                            description = rowValues.get(col);
-                        } else if (header.equals("ImageURL")) {
-                            if(rowValues.get(col).equals(" ")) {
-                                imageURL = null;
-                            } else{
-                                imageURL = rowValues.get(col);
+                            for (int col = 0; col < headers.size(); col++) {
+                                String header = headers.get(col);
+
+                                if (header.equals("Description")) {
+                                    description = columns[col];
+                                } else if (header.equals("ImageURL")) {
+                                    imageURL = columns[col];
+                                }
                             }
                         }
-                    }
-                    if(imageURL != null) {
-                        card = new Card(description, imageURL);
-                    } else{
-                        card = new Card(description);
-                    }
-                    cards.add(card);
+
+                            if (imageURL != null) {
+                                card = new Card(description, imageURL);
+                            } else {
+                                card = new Card(description);
+                            }
+                    System.out.println(card.getDescription());
+                    System.out.println(card.getImageURL());
+                            cards.add(card);
+
+                    //}
                 }
                 line++;
             }
