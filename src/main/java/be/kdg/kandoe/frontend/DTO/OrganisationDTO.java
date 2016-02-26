@@ -16,7 +16,7 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     private String address;
 
-    private String logoUrl;
+    private String logoURL;
 
     public OrganisationDTO() {
     }
@@ -50,10 +50,10 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
     }
 
     public String getLogoUrl() {
-        return logoUrl;
+        return logoURL;
     }
 
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+    public void setLogoUrl(String logoURL) {
+        this.logoURL = logoURL;
     }
 }
