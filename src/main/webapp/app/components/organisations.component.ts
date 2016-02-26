@@ -21,12 +21,11 @@ import {Service} from "../service/service";
 export class OrganisationsComponent implements OnInit {
     public organisations:Organisation[] = [];
 
-
     constructor(private _service:Service, private _router:Router) {
     }
 
     ngOnInit() {
-        this._service.getOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
+        this._service.getAllOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
        console.log(this.organisations.length);
     }
 

@@ -25,16 +25,13 @@ export class Service{
     }
 
     public getUserOrganisations() : Observable<Organisation[]>{
-        /*return this.securityService.get(this.path + 'organisations', true)
-        .map(res => res.json())
-        .map(((user) => localStorage.getItem("id_token")).call());*/
         return this.securityService.get(this.path + 'organisations/currentUser', true)
             .map(res => res.json())
             .map((organisations:Array<Organisation>) => organisations.map((organisation:Organisation) => Organisation.fromJson(organisation)));
     }
 
     public getThemes():Observable<Theme[]>{
-        return this.http.get(this.path+'themes')
+        return this.securityService.get(this.path + 'themes', true)
             .map(res => res.json())
             .map((themes:Array<Theme>) => themes.map((theme:Theme) => Theme.fromJson(theme)));
     }

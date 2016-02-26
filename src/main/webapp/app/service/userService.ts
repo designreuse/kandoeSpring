@@ -7,30 +7,26 @@ import {Http, Response, HTTP_PROVIDERS} from 'angular2/http'
 import {Injectable, Inject} from 'angular2/core'
 import {User} from "../DOM/users/user";
 import {Headers} from "angular2/http";
+import {SecurityService} from "../security/securityService";
 
 @Injectable()
 export class UserService {
     private http: Http = null;
     private path: string;
+    private securityService: SecurityService;
 
-    public constructor(http: Http, @Inject('App.DevPath') path: string){
+    public constructor(http: Http, @Inject('App.DevPath') path: string, securityService: SecurityService){
         this.http = http;
         this.path = path;
+        this.securityService = securityService;
     }
 
     public createUser(user: User): Observable<User>{
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        console.log(JSON.stringify(user));
-        return this.http.post(this.path + 'users', JSON.stringify(user), {headers: headers})
-            .map((res: Response) => res.json());
+        return this.securityService.post(this.path + 'users', JSON.stringify(user), false)
+            .map(res => res.json());
     }
 
     public login(username: string, password: string): Observable<Response>{
-        var headers = new Headers();
-        //headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        //return this.http.post(this.path + 'login', "username=" + username + "&password=" + password, {headers: headers});
-        headers.append('Content-Type', 'application/json');
-        return this.http.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", {headers: headers})
+        return this.securityService.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", false);
     }
 }

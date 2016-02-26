@@ -32,8 +32,15 @@ export class SecurityService{
 
         return this.http.get(url,{headers:headers});
     }
-/*
-    public post():Observable<Response>{
 
+    public post(url: string, body: string, withSecurity: boolean):Observable<Response>{
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        if(withSecurity){
+            if(tokenNotExpired()){
+                headers.append('Authorization', "Bearer " + localStorage.getItem("id_token"));
+            }
+        }
+        return this.http.post(url, body, {headers: headers});
     }
-*/}
+}

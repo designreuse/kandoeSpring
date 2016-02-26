@@ -32,7 +32,7 @@ System.register(['angular2/core', 'angular2/router', "../service/service"], func
                 }
                 OrganisationsComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._service.getOrganisations().subscribe(function (organisations) { return _this.organisations = organisations; });
+                    this._service.getAllOrganisations().subscribe(function (organisations) { return _this.organisations = organisations; });
                     console.log(this.organisations.length);
                 };
                 OrganisationsComponent = __decorate([
