@@ -16,7 +16,7 @@ import {Service} from "../service/service";
 				    <div *ngFor="#organisation of organisations" class="event-list col-1-4">
                     <!--<p>OrganisationID : {{organisation.organisationId}}</p>-->
 					<li>
-						<img alt="KdG" src="organisation.logoUrl" />
+						<img alt="KdG" [src]="organisation.logoUrl" />
 						<div class="info">
 							<h2 class="title">{{organisation.organisationId}} {{organisation.organisationName}}</h2>
 							<p class="desc">{{organisation.address}}</p>
