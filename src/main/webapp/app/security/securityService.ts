@@ -8,6 +8,7 @@ import {Injectable, Inject} from 'angular2/core'
 import {tokenNotExpired} from "./TokenHelper";
 import {Headers} from "angular2/http";
 import {Router} from "angular2/router";
+
 @Injectable()
 export class SecurityService{
     private http: Http=null;

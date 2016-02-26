@@ -21,9 +21,8 @@ export class UserService {
         this.securityService = securityService;
     }
 
-    public createUser(user: User): Observable<User>{
-        return this.securityService.post(this.path + 'users', JSON.stringify(user), false)
-            .map(res => res.json());
+    public createUser(user: User): Observable<Response>{
+        return this.securityService.post(this.path + 'users', JSON.stringify(user), false);
     }
 
     public login(username: string, password: string): Observable<Response>{

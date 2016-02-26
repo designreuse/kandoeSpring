@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "../security/TokenHelper"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "angular2/router"], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
+    var core_1, router_1, TokenHelper_1;
     var LoggedInHome;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(["angular2/core", "angular2/router"], function(exports_1) {
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (TokenHelper_1_1) {
+                TokenHelper_1 = TokenHelper_1_1;
             }],
         execute: function() {
             LoggedInHome = (function () {
@@ -27,6 +30,7 @@ System.register(["angular2/core", "angular2/router"], function(exports_1) {
                     this.router = router;
                 }
                 LoggedInHome = __decorate([
+                    router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'loggedin-home',
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],

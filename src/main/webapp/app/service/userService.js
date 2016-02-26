@@ -36,8 +36,7 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
                     this.securityService = securityService;
                 }
                 UserService.prototype.createUser = function (user) {
-                    return this.securityService.post(this.path + 'users', JSON.stringify(user), false)
-                        .map(function (res) { return res.json(); });
+                    return this.securityService.post(this.path + 'users', JSON.stringify(user), false);
                 };
                 UserService.prototype.login = function (username, password) {
                     return this.securityService.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", false);

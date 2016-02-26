@@ -37,11 +37,8 @@ public class LoginRestController {
 
             if(passwordEncoder.matches(loginDTO.getPassword(), u.getPassword())){
                 String token = null;
-
-                    Base64.Encoder encoder = Base64.getEncoder();
-                    token = Jwts.builder().setSubject(u.getUsername())
-                            .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
-
+                token = Jwts.builder().setSubject(u.getUsername())
+                        .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
                 return new ResponseEntity<String>(token, HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>("Wrong username or password", HttpStatus.UNAUTHORIZED);

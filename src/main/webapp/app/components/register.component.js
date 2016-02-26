@@ -43,10 +43,11 @@ System.register(['angular2/core', 'angular2/router', "../DOM/users/user", "../se
                         console.log("passwords not matching");
                     }
                     else {
-                        this.userService.createUser(this.user).subscribe(function (u) {
-                            console.log(JSON.stringify(u));
-                            //todo navigate to page
-                            _this.router.navigate(['/LoggedInHome']);
+                        this.userService.createUser(this.user).subscribe(function (res) {
+                            if (res.status == 201) {
+                                localStorage.setItem("id_token", res.text());
+                                _this.router.navigate(['/LoggedInHome']);
+                            }
                         });
                     }
                 };

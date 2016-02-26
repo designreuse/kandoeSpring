@@ -43,9 +43,7 @@ export class Home {
         this.userService.login(this.username, this.password)
             .subscribe((res: Response) => {
                 if(res.status == 200){
-                    console.log(res.text());
                     localStorage.setItem("id_token", res.text());
-                    console.log(localStorage.getItem("id_token"));
                     this.router.navigate(['/LoggedInHome']);
                 }
                 else {

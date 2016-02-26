@@ -52,15 +52,18 @@ public class UserRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO)
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO)
     {
         User user_in = mapperFacade.map(userDTO, User.class);
 
         try{
-
             User user_out = userService.saveUser(user_in);
             logger.info(this.getClass().toString() + ": adding new user " + user_out.getId());
-            return new ResponseEntity<>(userAssembler.toResource(user_out), HttpStatus.CREATED);
+
+            String token = Jwts.builder().setSubject(user_out.getUsername())
+                    .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
+
+            return new ResponseEntity<>(token, HttpStatus.CREATED);
 
         } catch (UserServiceException e){
             logger.warn(this.getClass().toString() + ": error adding new user \n" + e.getMessage());

@@ -4,6 +4,7 @@ import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
 import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
+import org.hamcrest.Matchers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -94,12 +95,13 @@ public class UserRestControllerTest {
         jsonArray.put(0, "ROLE_PLAYER");
         jsonArray.put(1, "ROLE_ORGANISER");
         userResource.put("roles", jsonArray);
-        mockMvc.perform(post("/api/users").
-                content(userResource.toString()).
-                contentType(MediaType.APPLICATION_JSON)).
-                andExpect(jsonPath("$.userId", notNullValue())).
-                andExpect(status().isCreated()).
-                andDo(print());
+
+        mockMvc.perform(post("/api/users")
+                .content(userResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXlfcGVlcmxpbmNrQGhvdG1haWwuY29tIn0.UlYd5co9iMo7U2yisZikmfRb5OL9ncwu68j1OZPtxFA")))
+                .andExpect(status().isCreated())
+                .andDo(print());
     }
 
     @Test

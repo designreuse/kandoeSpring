@@ -49,9 +49,7 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     this.userService.login(this.username, this.password)
                         .subscribe(function (res) {
                         if (res.status == 200) {
-                            console.log(res.text());
                             localStorage.setItem("id_token", res.text());
-                            console.log(localStorage.getItem("id_token"));
                             _this.router.navigate(['/LoggedInHome']);
                         }
                         else {

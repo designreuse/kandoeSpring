@@ -5,6 +5,7 @@ import {Component, OnInit} from 'angular2/core'
 import {Router} from 'angular2/router'
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
+import {Response} from "angular2/http";
 
 @Component({
     selector: 'register',
@@ -92,10 +93,12 @@ export class RegisterComponent implements OnInit {
             console.log("passwords not matching");
         } else {
             this.userService.createUser(this.user).subscribe(
-                (u: User) => {
-                    console.log(JSON.stringify(u));
-                    //todo navigate to page
-                    this.router.navigate(['/LoggedInHome']);
+                (res: Response) => {
+
+                    if(res.status == 201) {
+                        localStorage.setItem("id_token", res.text());
+                        this.router.navigate(['/LoggedInHome']);
+                    }
                 }
             );
         }
