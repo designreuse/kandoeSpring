@@ -32,24 +32,16 @@ System.register(['angular2/core', 'angular2/router', "../service/service"], func
                     var _this = this;
                     this._service.getAllOrganisations().subscribe(function (organisations) { return _this.organisations = organisations; });
                     console.log(this.organisations.length);
-                    $('#input-search').on('keyup', function () {
-                        var rex = new RegExp($(this).val(), 'i');
-                        $('.searchable-container .items').hide();
-                        $('.searchable-container .items').filter(function () {
-                            return rex.test($(this).text());
-                        }).show();
-                    });
                 };
                 OrganisationsComponent = __decorate([
                     core_1.Component({
                         selector: 'organisations',
-                        template: "\n\n    <div class=\"container\">\n        <div class=\"input-append\">\n            <input class=\"span2 search-query\" id=\"input-search\" type=\"search\" placeholder=\"Search organisations...\" >\n            <div class=\"btn-group\">\n                <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" id =\"filter\" data-toggle=\"dropdown\">\n                <span class=\"glyphicon glyphicon-filter\"></span>\n                <span class=\"caret\"></span>Filter</button>\n                <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Name</a></li>\n                    <li><a href=\"#\">Id</a></li>\n                    <li><a href=\"#\">Address</a></li>\n                </ul>\n            </div>\n        </div>\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t\t<ul class=\"searchable-container\">\n\t\t\t\t    <div *ngFor=\"#organisation of organisations\" class=\"event-list col-1-4\">\n                    <!--<p>OrganisationID : {{organisation.organisationId}}</p>-->\n\t\t\t\t\t<li class=\"items\">\n\t\t\t\t\t    <div class=\"id\"><p>{{organisation.organisationId}}</p></div>\n\t\t\t\t\t\t<img alt=\"KdG\" src=\"organisation.logoUrl\" />\n\t\t\t\t\t\t<div class=\"info\">\n\t\t\t\t\t\t\t<h2 class=\"title\">{{organisation.organisationName}}</h2>\n\t\t\t\t\t\t\t<p class=\"desc\">{{organisation.address}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"social\">\n\t\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t\t<li class=\"facebook\" style=\"width:33%;\"><a href=\"#facebook\"><span class=\"fa fa-facebook\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"twitter\" style=\"width:34%;\"><a href=\"#twitter\"><span class=\"fa fa-twitter\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"google-plus\" style=\"width:33%;\"><a href=\"#google-plus\"><span class=\"fa fa-google-plus\"></span></a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</li>\n\t\t\t\t\t</div>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\n    </div>",
+                        template: "\n    <div class=\"panel-body container\">\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t\t<ul>\n\t\t\t\t    <div *ngFor=\"#organisation of organisations\" class=\"event-list col-1-4\">\n                    <!--<p>OrganisationID : {{organisation.organisationId}}</p>-->\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<img alt=\"KdG\" src=\"organisation.logoUrl\" />\n\t\t\t\t\t\t<div class=\"info\">\n\t\t\t\t\t\t\t<h2 class=\"title\">{{organisation.organisationId}} {{organisation.organisationName}}</h2>\n\t\t\t\t\t\t\t<p class=\"desc\">{{organisation.address}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"social\">\n\t\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t\t<li class=\"facebook\" style=\"width:33%;\"><a href=\"#facebook\"><span class=\"fa fa-facebook\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"twitter\" style=\"width:34%;\"><a href=\"#twitter\"><span class=\"fa fa-twitter\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"google-plus\" style=\"width:33%;\"><a href=\"#google-plus\"><span class=\"fa fa-google-plus\"></span></a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</li>\n\t\t\t\t\t</div>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\n    </div>",
                         inputs: ['organisations']
                     }), 
-                    __metadata('design:paramtypes', [service_1.Service, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [service_1.Service, router_1.Router])
                 ], OrganisationsComponent);
                 return OrganisationsComponent;
-                var _a;
             })();
             exports_1("OrganisationsComponent", OrganisationsComponent);
         }
