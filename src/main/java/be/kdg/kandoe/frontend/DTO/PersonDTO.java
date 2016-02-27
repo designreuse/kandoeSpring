@@ -9,9 +9,7 @@ import java.io.Serializable;
  * Created by amy on 13/02/2016.
  */
 public class PersonDTO extends ResourceSupport implements Serializable {
-    @NotEmpty
     private String firstname;
-    @NotEmpty
     private String lastname;
     private AddressDTO address;
 
@@ -40,14 +38,14 @@ public class PersonDTO extends ResourceSupport implements Serializable {
         this.lastname = lastname;
     }
 
-    public AddressDTO getaddressDTO()
+    public AddressDTO getAddress()
     {
         return address;
     }
 
-    public void setaddressDTO(AddressDTO addressDTO)
+    public void setAddress(AddressDTO address)
     {
-        this.address = addressDTO;
+        this.address = address;
     }
 
 }

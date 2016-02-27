@@ -16,6 +16,7 @@ import {tokenNotExpired} from "../security/TokenHelper";
 <div class="home col-md-10">
     <section class="settings">
          <a [routerLink]="['/Organisations']" class="glyphicon glyphicon-inbox large-screen"> My Organisations</a>
+         <a [routerLink]="['/Userprofile']" class="glyphicon">Edit profile</a>
          <a class="glyphicon glyphicon-log-out" (click)="logout()">Logout</a>
     </section>
     <div class="row col-md-offset-2">

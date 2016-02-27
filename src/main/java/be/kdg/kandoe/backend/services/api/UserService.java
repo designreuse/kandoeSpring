@@ -20,5 +20,21 @@ public interface UserService  extends UserDetailsService {
 
     void checkLogin(Integer userId, String password) throws UserServiceException;
 
+    /**
+     * Finds the organisations the user is part of or is organiser of
+     * @param user the user to find the organisations for
+     * @return a list of organisations
+     */
     List<Organisation> findOrganisations(User user);
+
+    User updateUser(User user) throws UserServiceException;
+
+    /**
+     * Changes password off user if oldPassword matches existing password
+     * @param oldPassword the current password
+     * @param newPassword the new password
+     * @param userId
+     * @throws UserServiceException thrown when the passwords don't match
+     */
+    void changePassword(String oldPassword, String newPassword, Integer userId) throws UserServiceException;
 }

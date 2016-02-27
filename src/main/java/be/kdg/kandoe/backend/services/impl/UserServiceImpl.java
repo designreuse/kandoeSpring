@@ -12,10 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -58,9 +55,13 @@ public class UserServiceImpl implements UserService{
     public User saveUser(User user) throws UserServiceException
     {
         User existingUser = userRepository.findUserByEmail(user.getEmail());
+        User existingUsername = userRepository.findUserByUsername(user.getUsername());
 
         if(existingUser != null && user.getId() == null)
             throw new UserServiceException("Email already in use");
+
+        if(existingUsername != null && user.getId() == null)
+            throw new UserServiceException("Username already in use");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User u = userRepository.save(user);
@@ -71,12 +72,34 @@ public class UserServiceImpl implements UserService{
         return u;
     }
 
-/*    @Override
-    public User addUser(User user) throws UserServiceException
-    {
-        user.setEncryptedPassword(passwordEncoder.encode(user.getEncryptedPassword()));
-        return this.saveUser(user);
-    }*/
+    public User updateUser(User user) throws UserServiceException {
+        User existingUser = userRepository.findUserByEmail(user.getEmail());
+        User existingUsername = userRepository.findUserByUsername(user.getUsername());
+
+        if(existingUser == null || !existingUser.getEmail().equals(user.getEmail()))
+            throw new UserServiceException("Can't change email");
+
+        if(existingUsername == null || !existingUsername.getUsername().equals(user.getUsername()))
+            throw new UserServiceException("Can't change username");
+
+        existingUser.setPerson(user.getPerson());
+        User u = userRepository.save(user);
+
+        if (u == null)
+            throw new UserServiceException("User not saved");
+
+        return u;
+    }
+
+    public void changePassword(String oldPassword, String newPassword, Integer userId) throws UserServiceException {
+        User existingUser = findUserById(userId);
+
+        if(!passwordEncoder.matches(oldPassword, existingUser.getPassword()))
+            throw new UserServiceException("Passwords don't match");
+
+        existingUser.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(existingUser);
+    }
 
     @Override
     public void checkLogin(Integer userId, String password) throws UserServiceException {

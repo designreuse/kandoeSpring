@@ -24,6 +24,15 @@ System.register(["./person", "./address"], function(exports_1) {
                     user.person = person;
                     return user;
                 };
+                User.fromJson = function (json) {
+                    var user = new User();
+                    user.username = json.username;
+                    user.email = json.email;
+                    var person = new person_1.Person();
+                    person.firstname = json.person.firstname;
+                    user.person = person;
+                    return user;
+                };
                 return User;
             })();
             exports_1("User", User);

@@ -137,7 +137,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void testUpdateUserByIdWithSecurity() throws Exception
+    public void testUpdateUserWithSecurity() throws Exception
     {
         JSONObject userResource = new JSONObject();
         JSONObject personResource = new JSONObject();
@@ -147,13 +147,13 @@ public class UserRestControllerTest {
 
         String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
 
-        mockMvc.perform(post("/api/users/1")
+        mockMvc.perform(post("/api/users/updateUser")
                 .header("Authorization", token)
                 .content(userResource.toString())
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(jsonPath("$.person.firstname", is("Jo")))
-                .andExpect(status().isCreated())
-                .andDo(print());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -171,5 +171,65 @@ public class UserRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError())
                 .andDo(print());
+    }
+
+    @Test
+    public void testChangePassword() throws Exception {
+        JSONObject login = new JSONObject();
+        login.put("username", "ArneLauryssens");
+        login.put("password", "test123");
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(login.toString()))
+                .andDo(print())
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+
+        JSONObject userResource = new JSONObject();
+        userResource.put("oldPassword","test123");
+        userResource.put("password", "test");
+
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(post("/api/users/changePassword")
+                .header("Authorization", token)
+                .content(userResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        login.put("password", "test");
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(login.toString()))
+                .andDo(print())
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+    }
+
+    @Test
+    public void testChangePasswordWithWrongPassword() throws Exception {
+        JSONObject login = new JSONObject();
+        login.put("username", "ArneLauryssens");
+        login.put("password", "test123");
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(login.toString()))
+                .andDo(print())
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+
+        JSONObject userResource = new JSONObject();
+        userResource.put("oldPassword","test");
+        userResource.put("password", "test");
+
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(post("/api/users/changePassword")
+                .header("Authorization", token)
+                .content(userResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 }

@@ -21,7 +21,7 @@ public class UserMapper extends CustomMapper<User, UserDTO>{
 
         mapperFacade.map(source.getPerson(), destination.getPerson());
         if(source.getPerson().getAddress() != null)
-            mapperFacade.map(source.getPerson().getAddress(), destination.getPerson().getaddressDTO());
+            mapperFacade.map(source.getPerson().getAddress(), destination.getPerson().getAddress());
 
         //because we don't want to expose password
         destination.setPassword(null);
@@ -35,12 +35,12 @@ public class UserMapper extends CustomMapper<User, UserDTO>{
 
         if (source.getPassword() != null) destination.setPassword(source.getPassword());
         mapperFacade.map(source.getPerson(), destination.getPerson());
-        if(source.getPerson().getaddressDTO() != null)
+        if(source.getPerson().getAddress() != null)
         {
             if(destination.getPerson().getAddress() == null){
                 destination.getPerson().setAddress(new Address());
             }
         }
-            mapperFacade.map(source.getPerson().getaddressDTO(), destination.getPerson().getAddress());
+            mapperFacade.map(source.getPerson().getAddress(), destination.getPerson().getAddress());
     }
 }

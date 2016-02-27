@@ -7,6 +7,7 @@ export class User {
     public username: string;
     public password: string;
     public passwordConfirm: string;
+    public oldPassword: string;
     public email: string;
     public person: Person;
 
@@ -20,6 +21,17 @@ export class User {
         var address = new Address();
         person.address = address;
         user.person = person;
+        return user;
+    }
+
+    static fromJson(json: any): User {
+        var user = new User();
+        user.username = json.username;
+        user.email = json.email;
+        var person = new Person();
+        person.firstname = json.person.firstname;
+        user.person = person;
+
         return user;
     }
 }

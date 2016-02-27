@@ -1,21 +1,12 @@
 package be.kdg.kandoe.frontend.DTO;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.hateoas.ResourceSupport;
-
-import java.io.Serializable;
-
 /**
  * Created by amy on 13/02/2016.
  */
 public class AddressDTO {
-    @NotEmpty
     private String street;
-    @NotEmpty
-    private String nr;
-    @NotEmpty
+    private String number;
     private String zip;
-    @NotEmpty
     private String city;
 
     public String getStreet()
@@ -28,14 +19,14 @@ public class AddressDTO {
         this.street = street;
     }
 
-    public String getNr()
+    public String getNumber()
     {
-        return nr;
+        return number;
     }
 
-    public void setNr(String nr)
+    public void setNumber(String number)
     {
-        this.nr = nr;
+        this.number = number;
     }
 
     public String getZip()

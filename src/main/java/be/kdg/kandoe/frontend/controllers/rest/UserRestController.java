@@ -85,19 +85,34 @@ public class UserRestController {
 
         } catch (UserServiceException e){
             logger.warn(this.getClass().toString() + ": error adding new user \n" + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value ="/{userId}", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO>  updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO, @AuthenticationPrincipal User user)
+    @RequestMapping(value ="/updateUser", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO>  updateUser(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User user)
     {
-        if(user != null && user.getId() == userId){
-            User userIn = userService.findUserById(userId);
+        if(user != null){
+            User userIn = userService.findUserById(user.getId());
             mapperFacade.map(userDTO, userIn);
-            User userOut = userService.saveUser(userIn);
+            User userOut = userService.updateUser(userIn);
 
             return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value ="/changePassword", method = RequestMethod.POST)
+    public ResponseEntity<String> changePassword(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User user)
+    {
+        if(user != null){
+            try{
+                userService.changePassword(userDTO.getOldPassword(), userDTO.getPassword(), user.getId());
+
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (UserServiceException e){
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+            }
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }

@@ -47,13 +47,12 @@ export class Home {
     onSubmit(){
         this.userService.login(this.username, this.password)
             .subscribe((res: Response) => {
-                if(res.status == 200){
                     localStorage.setItem("id_token", res.text());
                     this.router.navigate(['/LoggedInHome']);
-                }
-                else {
-                    //todo failure message
-                }
+            },
+            error => {
+                //todo display proper error
+                alert(error.text());
             });
     }
 }

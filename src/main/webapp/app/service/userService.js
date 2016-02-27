@@ -41,6 +41,17 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
                 UserService.prototype.login = function (username, password) {
                     return this.securityService.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", false);
                 };
+                UserService.prototype.getCurrentUser = function () {
+                    return this.securityService.get(this.path + 'users/currentUser', true)
+                        .map(function (res) { return res.json(); });
+                };
+                UserService.prototype.updateUser = function (user) {
+                    return this.securityService.post(this.path + 'users/updateUser', JSON.stringify(user), true)
+                        .map(function (res) { return res.json(); });
+                };
+                UserService.prototype.changePassword = function (user) {
+                    return this.securityService.post(this.path + 'users/changePassword', JSON.stringify(user), true);
+                };
                 UserService = __decorate([
                     core_1.Injectable(),
                     __param(1, core_1.Inject('App.DevPath')), 

@@ -6,6 +6,7 @@ import {Home} from "./home";
 import {LoggedInHome} from "./loggedInHome.component";
 import {ThemeComponent} from "./ThemeComponent";
 import {KandoeCard} from "./kandoeCard";
+import {UserProfileComponent} from "./userprofile.component";
 
 
 @Component({
@@ -23,7 +24,8 @@ import {KandoeCard} from "./kandoeCard";
     {path: '/organisations', name: 'Organisations', component: OrganisationsComponent},
     {path: '/register', as: 'Register', component: RegisterComponent},
     {path: '/theme',as :'Theme',component:ThemeComponent},
-    {path: '/card', as: 'KandoeCard', component:KandoeCard}
+    {path: '/card', as: 'KandoeCard', component:KandoeCard},
+    {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent}
 
 ])
 export class AppComponent {

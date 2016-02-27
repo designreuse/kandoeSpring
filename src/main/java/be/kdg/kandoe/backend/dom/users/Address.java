@@ -22,7 +22,7 @@ public class Address implements Serializable, Identifiable<Integer> {
     private String street;
 
     @Column(name = "Nr", nullable = true, length = 255)
-    private String nr;
+    private String number;
 
     @Column(name = "Zip", nullable = true, length = 255)
     private String zip;
@@ -34,10 +34,10 @@ public class Address implements Serializable, Identifiable<Integer> {
     {
     }
 
-    public Address(String street, String nr, String zip, String city)
+    public Address(String street, String number, String zip, String city)
     {
         this.street = street;
-        this.nr = nr;
+        this.number = number;
         this.zip = zip;
         this.city = city;
     }
@@ -52,14 +52,14 @@ public class Address implements Serializable, Identifiable<Integer> {
         this.street = street;
     }
 
-    public String getNr()
+    public String getNumber()
     {
-        return this.nr;
+        return this.number;
     }
 
-    public void setNr(String nr)
+    public void setNumber(String number)
     {
-        this.nr = nr;
+        this.number = number;
     }
 
     public String getZip()

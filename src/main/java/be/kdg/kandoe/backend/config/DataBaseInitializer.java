@@ -11,12 +11,9 @@ import be.kdg.kandoe.backend.services.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @Transactional
@@ -41,7 +38,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if(userRepository.findUserByUsername("ArneLauryssens") == null){
             Address address = new Address();
             address.setCity("TestCity");
-            address.setNr("1");
+            address.setNumber("1");
             address.setStreet("TestStreet");
             address.setZip("2000");
 

@@ -28,4 +28,18 @@ export class UserService {
     public login(username: string, password: string): Observable<Response>{
         return this.securityService.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", false);
     }
+
+    public getCurrentUser(): Observable<User> {
+        return this.securityService.get(this.path + 'users/currentUser', true)
+                .map((res: Response) => res.json());
+    }
+
+    public updateUser(user: User): Observable<User> {
+        return this.securityService.post(this.path + 'users/updateUser', JSON.stringify(user), true)
+                .map(res => res.json());
+    }
+
+    public changePassword(user: User): Observable<Response> {
+        return this.securityService.post(this.path + 'users/changePassword', JSON.stringify(user), true);
+    }
 }

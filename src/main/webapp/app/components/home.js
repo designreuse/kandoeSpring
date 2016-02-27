@@ -54,12 +54,11 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     var _this = this;
                     this.userService.login(this.username, this.password)
                         .subscribe(function (res) {
-                        if (res.status == 200) {
-                            localStorage.setItem("id_token", res.text());
-                            _this.router.navigate(['/LoggedInHome']);
-                        }
-                        else {
-                        }
+                        localStorage.setItem("id_token", res.text());
+                        _this.router.navigate(['/LoggedInHome']);
+                    }, function (error) {
+                        //todo display proper error
+                        alert(error.text());
                     });
                 };
                 Home = __decorate([

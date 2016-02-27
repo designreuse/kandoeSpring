@@ -39,15 +39,21 @@ System.register(['angular2/core', 'angular2/router', "../DOM/users/user", "../se
                 RegisterComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.user.password != this.user.passwordConfirm) {
-                        //todo do something
+                        //todo change this
+                        alert('Passwords don\'t match');
                         console.log("passwords not matching");
+                    }
+                    else if (this.user.email == null || this.user.password == null || this.user.username == null) {
+                        //todo change this
+                        alert("Fill in required fields!");
                     }
                     else {
                         this.userService.createUser(this.user).subscribe(function (res) {
-                            if (res.status == 201) {
-                                localStorage.setItem("id_token", res.text());
-                                _this.router.navigate(['/LoggedInHome']);
-                            }
+                            localStorage.setItem("id_token", res.text());
+                            _this.router.navigate(['/LoggedInHome']);
+                        }, function (error) {
+                            //todo proper error display
+                            alert(error.text());
                         });
                     }
                 };

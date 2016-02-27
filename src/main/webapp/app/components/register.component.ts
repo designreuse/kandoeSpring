@@ -89,16 +89,21 @@ export class RegisterComponent implements OnInit {
 
     public onSubmit() {
         if (this.user.password != this.user.passwordConfirm) {
-            //todo do something
+            //todo change this
+            alert('Passwords don\'t match');
             console.log("passwords not matching");
+        } else if(this.user.email == null || this.user.password == null || this.user.username == null) {
+            //todo change this
+            alert("Fill in required fields!");
         } else {
             this.userService.createUser(this.user).subscribe(
                 (res: Response) => {
-
-                    if(res.status == 201) {
-                        localStorage.setItem("id_token", res.text());
-                        this.router.navigate(['/LoggedInHome']);
-                    }
+                    localStorage.setItem("id_token", res.text());
+                    this.router.navigate(['/LoggedInHome']);
+                },
+                error => {
+                    //todo proper error display
+                    alert(error.text());
                 }
             );
         }
