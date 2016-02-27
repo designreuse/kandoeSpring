@@ -5,6 +5,7 @@ import {RouteConfig, Router} from "angular2/router";
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
 import {Response} from "angular2/http";
+import {tokenNotExpired} from "../security/TokenHelper";
 
 @Component({
     selector: 'home',
@@ -22,6 +23,10 @@ export class Home {
     constructor(router:Router, userService: UserService) {
         this.router = router;
         this.userService = userService;
+
+        if(tokenNotExpired()){
+            this.router.navigate(['/LoggedInHome']);
+        }
     }
 
     login() {

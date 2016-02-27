@@ -6,6 +6,7 @@ import {Injectable, Inject} from 'angular2/core'
 import {Theme} from "../DOM/Theme";
 import {User} from "../DOM/users/user";
 import {SecurityService} from "../security/securityService";
+
 @Injectable()
 export class Service{
     private http: Http=null;

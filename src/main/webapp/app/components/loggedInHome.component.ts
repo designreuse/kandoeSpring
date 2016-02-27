@@ -16,6 +16,7 @@ import {tokenNotExpired} from "../security/TokenHelper";
 <div class="home col-md-10">
     <section class="settings">
          <a [routerLink]="['/Organisations']" class="glyphicon glyphicon-inbox large-screen"> My Organisations</a>
+         <a class="glyphicon glyphicon-log-out" (click)="logout()">Logout</a>
     </section>
     <div class="row col-md-offset-2">
          <div class="col-md-4">
@@ -45,5 +46,8 @@ export class LoggedInHome {
         this.router = router;
     }
 
-
+    logout(){
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
+    }
 }

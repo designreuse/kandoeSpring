@@ -1,9 +1,11 @@
 System.register(["angular2/core", "angular2/router", "../security/TokenHelper"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -27,12 +29,16 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper"],
                     this.router = null;
                     this.router = router;
                 }
+                LoggedInHome.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
+                };
                 LoggedInHome = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'loggedin-home',
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
-                        template: "\n<div class=\"home col-md-10\">\n    <section class=\"settings\">\n         <a [routerLink]=\"['/Organisations']\" class=\"glyphicon glyphicon-inbox large-screen\"> My Organisations</a>\n    </section>\n    <div class=\"row col-md-offset-2\">\n         <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n        <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n        <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n    </div>\n </div>\n        "
+                        template: "\n<div class=\"home col-md-10\">\n    <section class=\"settings\">\n         <a [routerLink]=\"['/Organisations']\" class=\"glyphicon glyphicon-inbox large-screen\"> My Organisations</a>\n         <a class=\"glyphicon glyphicon-log-out\" (click)=\"logout()\">Logout</a>\n    </section>\n    <div class=\"row col-md-offset-2\">\n         <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n        <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n        <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n    </div>\n </div>\n        "
                     }), 
                     __metadata('design:paramtypes', [router_1.Router])
                 ], LoggedInHome);
