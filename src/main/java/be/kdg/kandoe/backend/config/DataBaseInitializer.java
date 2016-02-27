@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.config;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.users.Address;
 import be.kdg.kandoe.backend.dom.users.Person;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.OrganisationRepository;
@@ -38,9 +39,16 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
 
         User user = new User();
         if(userRepository.findUserByUsername("ArneLauryssens") == null){
+            Address address = new Address();
+            address.setCity("TestCity");
+            address.setNr("1");
+            address.setStreet("TestStreet");
+            address.setZip("2000");
+
             Person p = new Person();
             p.setFirstname("Arne");
             p.setLastname("Lauryssens");
+            p.setAddress(address);
 
             user.setPerson(p);
             user.setPassword("test123");
@@ -57,10 +65,6 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             org.setOrganisationName("Karel De Grote");
             org.setAddress("Groenplaats 5 2000 Antwerpen");
             org.setLogoURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
-            /*List<User> users = new ArrayList<>();
-            users.add(user);
-            org.setOrganisers(users);
-            org.setUsers(new ArrayList<>());  */
             organisationService.saveOrganisation(org, user.getId());
         }
     }

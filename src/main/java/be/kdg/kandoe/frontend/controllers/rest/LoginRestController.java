@@ -2,6 +2,7 @@ package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import be.kdg.kandoe.frontend.DTO.LoginDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,17 +34,21 @@ public class LoginRestController {
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO, @AuthenticationPrincipal User user){
         if(user == null){
-            User u = userService.findUserByUsername(loginDTO.getUsername());
+            try{
+                User u = userService.findUserByUsername(loginDTO.getUsername());
 
-            if(passwordEncoder.matches(loginDTO.getPassword(), u.getPassword())){
-                String token = null;
-                token = Jwts.builder().setSubject(u.getUsername())
-                        .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
-                return new ResponseEntity<String>(token, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<String>("Wrong username or password", HttpStatus.UNAUTHORIZED);
+                if(passwordEncoder.matches(loginDTO.getPassword(), u.getPassword())){
+                    String token = Jwts.builder().setSubject(u.getUsername())
+                            .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
+                    return new ResponseEntity<>(token, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("Wrong username or password", HttpStatus.UNAUTHORIZED);
+                }
+            }
+            catch (UserServiceException e){
+                return new ResponseEntity<>("Wrong username or password", HttpStatus.UNAUTHORIZED);
             }
         }
-        return new ResponseEntity<String>("Already logged in", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Already logged in", HttpStatus.BAD_REQUEST);
     }
 }

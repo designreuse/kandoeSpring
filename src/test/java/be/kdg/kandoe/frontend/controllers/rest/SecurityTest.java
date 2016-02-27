@@ -41,6 +41,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,6 +68,45 @@ public class SecurityTest {
     }
 
     @Test
+    public void testLogin() throws Exception {
+        JSONObject login = new JSONObject();
+        login.put("username", "ArneLauryssens");
+        login.put("password", "test123");
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(login.toString()))
+                .andDo(print())
+                .andExpect(jsonPath("$", is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+    }
+
+    @Test
+    public void testLoginWrongUsername() throws Exception {
+        JSONObject login = new JSONObject();
+        login.put("username", "ArneLauryssen");
+        login.put("password", "test123");
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(login.toString()))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testLoginWrongPassword() throws Exception {
+        JSONObject login = new JSONObject();
+        login.put("username", "ArneLauryssens");
+        login.put("password", "azer");
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(login.toString()))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     public void testgetOrganisationWithSecurity() throws Exception {
         JSONObject orgResource = new JSONObject();
         orgResource.put("organisationName", "KdG");
@@ -81,8 +121,7 @@ public class SecurityTest {
 
         System.out.println(orgResource.toString());
         mockMvc.perform(get("/api/organisations")
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_JSON))
+                .headers(headers))
                 .andExpect(status().is2xxSuccessful())
                 .andDo(print());
     }

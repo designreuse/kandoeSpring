@@ -51,6 +51,24 @@ public class UserRestController {
         return new ResponseEntity<>(userAssembler.toResources(users), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<UserDTO> findUserById(@PathVariable int userId)
+    {
+        logger.info(this.getClass().toString() + ":" + userId);
+        User user = userService.findUserById(userId);
+        UserDTO userDTO = userAssembler.toResource(user);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public ResponseEntity<UserDTO> findCurrentUser(@AuthenticationPrincipal User user) {
+        if (user != null && user.getUsername() != null) {
+            UserDTO userDTO = userAssembler.toResource(user);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO)
     {
@@ -71,15 +89,6 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<UserDTO> findUserById(@PathVariable int userId)
-    {
-        logger.info(this.getClass().toString() + ":" + userId);
-        User user = userService.findUserById(userId);
-        UserDTO userDTO = userAssembler.toResource(user);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
-
     @RequestMapping(value ="/{userId}", method = RequestMethod.POST)
     public ResponseEntity<UserDTO>  updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO, @AuthenticationPrincipal User user)
     {
@@ -90,6 +99,6 @@ public class UserRestController {
 
             return new ResponseEntity<>(userAssembler.toResource(userOut), HttpStatus.CREATED);
         }
-        return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

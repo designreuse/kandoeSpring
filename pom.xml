@@ -167,12 +167,6 @@
       <version>20141113</version>
     </dependency>
     <!-- selenium for frontend Testing -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>2.44.0</version>
-      <scope>test</scope>
-    </dependency>
 
     <!-- Json Dependencies -->
     <!-- Since Spring 4 required as explicit dependency since Spring 4 uses JackonsMapper 2.0 -->
@@ -297,6 +291,7 @@
           <warSourceExcludes>node_modules/</warSourceExcludes>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -310,6 +305,7 @@
           <useIncrementalCompilation>false</useIncrementalCompilation>
         </configuration>
       </plugin>
+
       <!-- extra plugin to make deployment to embedded Tomcat possible from Maven -->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>

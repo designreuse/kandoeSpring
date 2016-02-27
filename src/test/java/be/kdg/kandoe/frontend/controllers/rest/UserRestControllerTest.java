@@ -80,6 +80,15 @@ public class UserRestControllerTest {
     }
 
     @Test
+    public void testFindLoggedInUser() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/users/currentUser").header("Authorization", token)).
+                andExpect(jsonPath("$.username", is("ArneLauryssens")))
+                .andDo(print());
+    }
+
+    @Test
     public void testCreateUser() throws Exception
     {
         JSONObject userResource = new JSONObject();
