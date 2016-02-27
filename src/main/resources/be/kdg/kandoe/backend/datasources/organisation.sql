@@ -1,1 +1,0 @@
-INSERT INTO Organisation (OrganisationId,OrganisationName, Address, Logo) VALUES (1, 'Karel De Grote', 'Groenplaats 5 2000 Antwerpen', 'http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png');

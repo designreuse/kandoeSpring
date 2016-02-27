@@ -25,9 +25,11 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     private String logoURL;
 
     @ManyToMany(targetEntity =  User.class)
+    @JoinTable(name = "org_users")
     private List<User> users;
 
     @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "org_owners", joinColumns = @JoinColumn(name = "OrganisationId"), inverseJoinColumns = @JoinColumn(name = "UserId"))
     private List<User> organisers;
 
     //TODO

@@ -12,7 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -87,7 +90,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<Organisation> findOrganisations(User user) {
         User currUser = userRepository.findUserByUsername(user.getUsername());
-        return currUser.getOrganisations();
+        Set<Organisation> orgs = new HashSet<>();
+        orgs.addAll(currUser.getOrganisations());
+        orgs.addAll(currUser.getOwnOrganisations());
+        return new ArrayList<>(orgs);
     }
 
     @Override

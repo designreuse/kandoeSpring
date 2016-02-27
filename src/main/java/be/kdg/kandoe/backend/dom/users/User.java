@@ -28,7 +28,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @GeneratedValue
     private Integer userId;
 
-    @Column(name = "Username", nullable = false)
+    @Column(name = "Username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "Password", nullable = false)
@@ -49,9 +49,11 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     private List<Role> roles;
 
     @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "org_users")
     private List<Organisation> organisations;
 
     @ManyToMany(targetEntity = Organisation.class)
+    @JoinTable(name = "org_owners", joinColumns = @JoinColumn(name = "UserId"), inverseJoinColumns = @JoinColumn(name = "OrganisationId"))
     private List<Organisation> ownOrganisations;
 
     @OneToMany(targetEntity = Theme.class)
@@ -86,9 +88,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
         this.newUser = true;
     }
 
-/*    public Integer getUserId() {
+    public Integer getUserId() {
         return userId;
-    }*/
+    }
 
     public void setUserId(Integer userId) {
         this.userId = userId;

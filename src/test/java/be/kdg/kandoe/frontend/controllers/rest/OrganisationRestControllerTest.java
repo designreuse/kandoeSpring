@@ -2,6 +2,7 @@ package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
+import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Before;

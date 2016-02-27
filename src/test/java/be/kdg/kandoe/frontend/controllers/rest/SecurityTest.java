@@ -125,4 +125,16 @@ public class SecurityTest {
                 .andExpect(status().is4xxClientError())
                 .andDo(print());
     }
+
+    @Test
+    public void testGetOrganisationByCurrentUser() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations/currentUser")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.[0].organisationName", is("Karel De Grote")))
+                .andExpect(status().isOk());
+    }
 }

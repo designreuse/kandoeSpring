@@ -15,15 +15,6 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
-    @Value("classpath:/be/kdg/kandoe/backend/datasources/organisation.sql")
-    private Resource organisation;
-
-    @Value("classpath:/be/kdg/kandoe/backend/datasources/user.sql")
-    private Resource user;
-
-    @Value("classpath:/be/kdg/kandoe/backend/datasources/person.sql")
-    private Resource person;
-
     @Bean(name = "datasource")
     public DriverManagerDataSource datasource()
     {
@@ -40,9 +31,6 @@ public class DataSourceConfig {
     public DataSourceInitializer dataSourceInitializer(final DataSource dataSource)
     {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(organisation);
-        populator.addScript(person);
-        populator.addScript(user);
 
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
