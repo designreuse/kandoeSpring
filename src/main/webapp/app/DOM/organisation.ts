@@ -7,14 +7,15 @@ export class Organisation {
     logoUrl:string;
     links:Link[];
 
+    constructor(){
 
-    constructor(organisationId:number, organisationName:string) {
-        this.organisationId = organisationId;
-        this.organisationName = organisationName;
     }
 
+
     static fromJson(json:any):Organisation {
-        var organisation = new Organisation(json.organisationId, json.organisationName);
+        var organisation = new Organisation();
+        organisation.organisationId = json.organisationId;
+        organisation.organisationName = json.organisationName;
         organisation.address = json.address;
         organisation.logoUrl = json.logoUrl;
 
@@ -23,5 +24,10 @@ export class Organisation {
         }
 
         return organisation;
+    }
+
+    static createEmpty(): Organisation {
+        var org = new Organisation();
+        return org;
     }
 }

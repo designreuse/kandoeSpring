@@ -1,16 +1,14 @@
-System.register(['angular2/core', "../DOM/users/user", "../service/userService", 'angular2/router'], function(exports_1) {
+System.register(['angular2/core', "../DOM/users/user", "../service/userService", 'angular2/router', '../security/TokenHelper'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-        switch (arguments.length) {
-            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-        }
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, user_1, userService_1, router_1;
+    var core_1, user_1, userService_1, router_1, TokenHelper_1;
     var UserProfileComponent;
     return {
         setters:[
@@ -25,6 +23,9 @@ System.register(['angular2/core', "../DOM/users/user", "../service/userService",
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (TokenHelper_1_1) {
+                TokenHelper_1 = TokenHelper_1_1;
             }],
         execute: function() {
             UserProfileComponent = (function () {
@@ -87,6 +88,7 @@ System.register(['angular2/core', "../DOM/users/user", "../service/userService",
                     }
                 };
                 UserProfileComponent = __decorate([
+                    router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'userprofile',
                         template: "\n     <form  class=\"col-lg-offset-3 col-lg-6\" method=\"post\" role=\"form\">\n        <div class=\"form-pad\">\n        <h3>Profile</h3>\n        <div *ngIf=\"!showChangePassword\">\n            <div class=\"form-group\">\n                <label>Username</label>\n                <input disabled type=\"text\" placeholder=\"Enter username\" class=\"form-control\" [(ngModel)]=\"user.username\">\n            </div>\n            <div class=\"form-group\">\n                <label>Email Address</label>\n                <input disabled type=\"text\" placeholder=\"Enter email address\" class=\"form-control\" [(ngModel)]=\"user.email\">\n            </div>\n            <div class=\"row\">\n                <div class=\"col-sm-4 form-group\">\n                    <label>First Name</label>\n                    <input type=\"text\" placeholder=\"Enter first name\" class=\"form-control\" [(ngModel)]=\"user.person.firstname\">\n                </div>\n                <div class=\"col-sm-8 form-group\">\n                    <label>Last Name</label>\n                    <input type=\"text\" placeholder=\"Enter last name\" class=\"form-control\" [(ngModel)]=\"user.person.lastname\">\n                </div>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-sm-8 form-group\">\n                    <label>Street</label>\n                    <input type=\"text\" placeholder=\"Enter street\" class=\"form-control\" [(ngModel)]=\"user.person.address.street\">\n                </div>\n                <div class=\"col-sm-4 form-group\">\n                    <label>Number</label>\n                    <input type=\"text\" placeholder=\"Enter streetnumber\" class=\"form-control\" [(ngModel)]=\"user.person.address.number\">\n                </div>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-sm-8 form-group\">\n                    <label>City</label>\n                    <input type=\"text\" placeholder=\"Enter city name\" class=\"form-control\" [(ngModel)]=\"user.person.address.city\">\n                </div>\n                <div class=\"col-sm-4 form-group\">\n                    <label>Zip</label>\n                    <input type=\"text\" placeholder=\"Enter zip code\" class=\"form-control\" [(ngModel)]=\"user.person.address.zip\">\n                </div>\n            </div>\n        </div>\n        <div *ngIf=\"showChangePassword\">\n            <div class=\"form-group\">\n                <label>Old password</label>\n                <input type=\"password\" placeholder=\"Enter password\" class=\"form-control\" [(ngModel)]=\"user.oldPassword\">\n            </div>\n\n            <div class=\"form-group\">\n                <label>New password</label>\n                <input type=\"password\" placeholder=\"Enter password\" class=\"form-control\" [(ngModel)]=\"user.password\">\n            </div>\n            <div class=\"form-group\">\n                <label>Password confirmation</label>\n                <input type=\"password\" placeholder=\"Enter password again\" class=\"form-control\" [(ngModel)]=\"user.passwordConfirm\">\n            </div>\n        </div>\n\n\n        <button type=\"button\" class=\"btn btn-lg btn-info\" (click)=\"onSubmit()\">Save changes</button>\n        <button *ngIf=\"!showChangePassword\" type=\"button\" class=\"btn btn-lg btn-info\" (click)=\"changePassword()\">Change password</button>\n        <button type=\"button\" class=\"btn btn-lg btn-info\" (click)=\"cancel()\">Cancel</button>\n        </div>\n    </form>\n\n    "

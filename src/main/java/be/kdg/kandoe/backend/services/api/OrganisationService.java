@@ -10,4 +10,5 @@ public interface OrganisationService {
     Organisation findOrganisationByName(String name);
     Organisation saveOrganisation(Organisation organisation, Integer userId);
     List<Organisation> findOrganisations();
+    Organisation updateOrganisations(Organisation org);
 }

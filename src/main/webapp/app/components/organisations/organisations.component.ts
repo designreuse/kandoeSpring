@@ -3,9 +3,10 @@
  */
 import {Component, OnInit} from 'angular2/core'
 import {Router, CanActivate} from 'angular2/router'
-import {Organisation} from "../DOM/organisation";
-import {Service} from "../service/service";
-import {tokenNotExpired} from "../security/TokenHelper";
+import {Organisation} from "../../DOM/organisation";
+import {Service} from "../../service/service";
+import {tokenNotExpired} from "../../security/TokenHelper";
+import {OrganisationService} from "../../service/organisationService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -34,7 +35,7 @@ import {tokenNotExpired} from "../security/TokenHelper";
                         <!--<p>OrganisationID : {{organisation.organisationId}}</p>-->
                         <li class="items">
                             <div class="id"><p>{{i+1}}</p></div>
-                            <img alt="logo" [src]="organisation.logoUrl" />
+                            <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisations.organisationId)" />
                             <div class="info">
                                 <h2 class="title">{{organisation.organisationName}}</h2>
                                 <p class="desc">{{organisation.address}}</p>
@@ -59,11 +60,11 @@ import {tokenNotExpired} from "../security/TokenHelper";
 export class OrganisationsComponent implements OnInit {
     public organisations:Organisation[] = [];
 
-    constructor(private _service:Service, private _router:Router) {
+    constructor(private _organisationService:OrganisationService , private _router:Router) {
     }
 
     ngOnInit() {
-        this._service.getUserOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
+        this._organisationService.getUserOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
         console.log(this.organisations.length);
 
         $('#input-search').on('keyup', function () {
@@ -74,5 +75,13 @@ export class OrganisationsComponent implements OnInit {
             }).show();
         });
 
+    }
+
+    private getImageSrc(url: string, id: number): string {
+        if(url.indexOf("http://") > -1){
+            return url;
+        } else {
+            return url.replace(/"/g, "");
+        }
     }
 }

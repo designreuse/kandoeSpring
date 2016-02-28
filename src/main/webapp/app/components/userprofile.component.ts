@@ -1,8 +1,11 @@
 import {Component, OnInit} from 'angular2/core';
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
-import {Router} from 'angular2/router';
+import {Router, CanActivate} from 'angular2/router';
 import {Response} from "angular2/http";
+import {tokenNotExpired} from '../security/TokenHelper';
+
+@CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'userprofile',

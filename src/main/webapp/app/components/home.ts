@@ -1,6 +1,5 @@
 import {Component} from "angular2/core";
 import {RegisterComponent} from "./register.component";
-import {OrganisationsComponent} from "./organisations.component";
 import {RouteConfig, Router} from "angular2/router";
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";

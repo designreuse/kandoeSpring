@@ -1,5 +1,5 @@
-System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', 'angular2/http', "./service/service", "./service/userService", "./components/app", "./security/securityService"], function(exports_1) {
-    var browser_1, core_1, router_1, http_1, service_1, userService_1, app_1, securityService_1;
+System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', 'angular2/http', "./service/service", "./service/userService", "./components/app", "./security/securityService", "./service/organisationService", "./service/uploadService"], function(exports_1) {
+    var browser_1, core_1, router_1, http_1, service_1, userService_1, app_1, securityService_1, organisationService_1, uploadService_1;
     return {
         setters:[
             function (browser_1_1) {
@@ -25,6 +25,12 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
             },
             function (securityService_1_1) {
                 securityService_1 = securityService_1_1;
+            },
+            function (organisationService_1_1) {
+                organisationService_1 = organisationService_1_1;
+            },
+            function (uploadService_1_1) {
+                uploadService_1 = uploadService_1_1;
             }],
         execute: function() {
             browser_1.bootstrap(app_1.AppComponent, [
@@ -32,6 +38,8 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
                 service_1.Service,
                 userService_1.UserService,
                 securityService_1.SecurityService,
+                organisationService_1.OrganisationService,
+                uploadService_1.UploadService,
                 // http
                 http_1.HTTP_PROVIDERS,
                 // routing

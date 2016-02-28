@@ -3,7 +3,7 @@
  */
 import {Component} from "angular2/core";
 import {RegisterComponent} from "./register.component";
-import {OrganisationsComponent} from "./organisations.component";
+import {OrganisationsComponent} from "./organisations/organisations.component.ts";
 import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../security/TokenHelper";
 

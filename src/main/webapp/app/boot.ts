@@ -17,20 +17,25 @@ import {Service} from "./service/service";
 import {UserService} from "./service/userService";
 import {AppComponent} from "./components/app";
 import {SecurityService} from "./security/securityService";
+import {OrganisationService} from "./service/organisationService";
+import {UploadService} from "./service/uploadService";
+
 
 bootstrap(AppComponent,
-    [
-        // dependency injection
-        Service,
-        UserService,
-        SecurityService,
-        // http
-        HTTP_PROVIDERS,
-        // routing
-        ROUTER_PROVIDERS,
-        provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
-        provide(APP_BASE_HREF, {useValue: "/"}),
-        provide(LocationStrategy, {useClass: HashLocationStrategy}),
-        provide('App.BackEndPath', {useValue: "http://wildfly-teamiip2kdgbe.rhcloud.com/api/"}),
-        provide('App.DevPath', {useValue: "http://localhost:9966/Kandoe/api/"})
-    ]);
+[
+    // dependency injection
+    Service,
+    UserService,
+    SecurityService,
+    OrganisationService,
+    UploadService,
+    // http
+    HTTP_PROVIDERS,
+    // routing
+    ROUTER_PROVIDERS,
+    provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
+    provide(APP_BASE_HREF, {useValue: "/"}),
+    provide(LocationStrategy, {useClass: HashLocationStrategy}),
+    provide('App.BackEndPath', {useValue: "http://wildfly-teamiip2kdgbe.rhcloud.com/api/"}),
+    provide('App.DevPath', {useValue: "http://localhost:9966/Kandoe/api/"})
+]);

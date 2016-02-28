@@ -15,7 +15,7 @@ export class UserService {
     private path: string;
     private securityService: SecurityService;
 
-    public constructor(http: Http, @Inject('App.DevPath') path: string, securityService: SecurityService){
+    public constructor(http: Http, @Inject('App.BackEndPath') path: string, securityService: SecurityService){
         this.http = http;
         this.path = path;
         this.securityService = securityService;
