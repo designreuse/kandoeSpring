@@ -43,6 +43,7 @@ System.register(['rxjs/add/operator/map', "rxjs/Observable", 'angular2/http', 'a
                     this.path = path;
                 }
                 UploadService.prototype.createOrganisation = function (body, file) {
+                    var _this = this;
                     return new Observable_1.Observable(function (responseObserver) {
                         //http://stackoverflow.com/questions/21329426/spring-mvc-multipart-request-with-json/25183266#25183266
                         if (file.type.split("/")[0] != "image") {
@@ -80,7 +81,7 @@ System.register(['rxjs/add/operator/map', "rxjs/Observable", 'angular2/http', 'a
                                 var responseOptions = new http_3.ResponseOptions({ body: err, type: http_4.ResponseType.Error });
                                 responseObserver.error(new http_1.Response(responseOptions));
                             };
-                            request.open("POST", "http://localhost:9966/Kandoe/api/" + "organisations/image", true);
+                            request.open("POST", _this.path + "organisations/image", true);
                             request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("id_token"));
                             request.send(formdata);
                         }

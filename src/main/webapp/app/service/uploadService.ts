@@ -63,7 +63,7 @@ export class UploadService {
                     responseObserver.error(new Response(responseOptions));
                 };
 
-                request.open("POST", "http://localhost:9966/Kandoe/api/" + "organisations/image", true);
+                request.open("POST", this.path + "organisations/image", true);
                 request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("id_token"));
                 request.send(formdata);
             }
