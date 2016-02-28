@@ -42,9 +42,10 @@ System.register(["angular2/core", "../service/service", "angular2/router"], func
                         template: "\n        <div>\n            <h1>Current themes</h1>\n        </div>\n        <div class=\"panel-body\">\n            <div *ngFor=\"#theme of themes\" class=\"col-1-4\">\n                  <p>themeId : {{theme.themeId}}</p>\n            </div>\n        </div>\n    ",
                         inputs: ['']
                     }), 
-                    __metadata('design:paramtypes', [service_1.Service, router_1.Router])
+                    __metadata('design:paramtypes', [service_1.Service, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], ThemeComponent);
                 return ThemeComponent;
+                var _a;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }

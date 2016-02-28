@@ -38,9 +38,10 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper"],
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         template: "\n<div class=\"home col-md-10\">\n    <section class=\"settings\">\n         <a [routerLink]=\"['/Organisations']\" class=\"glyphicon glyphicon-inbox large-screen\"> My Organisations</a>\n         <a [routerLink]=\"['/Userprofile']\" class=\"glyphicon\">Edit profile</a>\n         <a class=\"glyphicon glyphicon-log-out\" (click)=\"logout()\">Logout</a>\n    </section>\n    <div class=\"row col-md-offset-2\">\n         <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n        <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n        <div class=\"col-md-4\">\n            <div class=\"card\">\n            </div>\n        </div>\n\n    </div>\n </div>\n        "
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], LoggedInHome);
                 return LoggedInHome;
+                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }
