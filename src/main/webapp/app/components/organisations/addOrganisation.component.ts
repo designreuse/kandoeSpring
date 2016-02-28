@@ -1,7 +1,10 @@
 import {Component, OnInit} from 'angular2/core'
 import {Organisation} from "../../DOM/organisation";
 import {OrganisationService} from "../../service/organisationService";
-import {Router} from 'angular2/router';
+import {Router, CanActivate} from 'angular2/router';
+import {tokenNotExpired} from "../../security/TokenHelper";
+
+@CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-organisation',
@@ -45,8 +48,10 @@ export class AddOrganisationComponent {
     onSubmit() {
         this.organisationService.createOrganisation(this.organisation, this.file).subscribe(res => {
             this.router.navigate(['/Organisations']);
+            this.file = null;
         }, error => {
             //todo change error display
+            this.file = null;
             alert(error.text());
         });
     }

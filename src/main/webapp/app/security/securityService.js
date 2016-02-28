@@ -63,7 +63,7 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "./T
                 };
                 SecurityService = __decorate([
                     core_1.Injectable(),
-                    __param(1, core_1.Inject('App.DevPath')), 
+                    __param(1, core_1.Inject('App.BackEndPath')), 
                     __metadata('design:paramtypes', [http_1.Http, String, router_1.Router])
                 ], SecurityService);
                 return SecurityService;
