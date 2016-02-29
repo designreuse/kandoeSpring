@@ -35,6 +35,9 @@ public class Card implements Serializable, Identifiable<Integer> {
         this.imageURL = imageURL;
     }
 
+    public Card() {
+    }
+
     public Card(String description) {
         this.description = description;
     }

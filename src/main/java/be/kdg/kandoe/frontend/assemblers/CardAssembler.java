@@ -35,8 +35,6 @@ public class CardAssembler extends ResourceAssemblerSupport<Card, CardDTO> {
         CardDTO cardDTO = mapper.map(entity, CardDTO.class);
 
         cardDTO.setCardId(entity.getId());
-        cardDTO.setImageURL(entity.getImageURL());
-        cardDTO.setDescription(entity.getDescription());
 
         return cardDTO;
     }

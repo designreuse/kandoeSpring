@@ -34,7 +34,7 @@ public class Theme implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Organisation.class)
     private Organisation organisation;
 
-    @OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Card.class)
     private List<Card> cards;
 
     @ManyToMany(targetEntity = Tag.class)
@@ -117,5 +117,13 @@ public class Theme implements Serializable, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return themeId;
+    }
+
+    public Integer getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(Integer themeId) {
+        this.themeId = themeId;
     }
 }

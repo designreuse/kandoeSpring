@@ -1,22 +1,30 @@
 package be.kdg.kandoe.frontend.DTO;
 
 
-import org.hibernate.validator.constraints.NotEmpty;
+import be.kdg.kandoe.backend.dom.game.CardSession;
+import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.hateoas.ResourceSupport;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
+
 
 public class CardDTO extends ResourceSupport implements Serializable {
     private Integer cardId;
-
-    @NotEmpty
+    @NotNull
     private String description;
-
-    @NotEmpty
+    @NotNull
     private String imageURL;
+    private ThemeDTO theme;
+    private List<CardSession> cardSessions;
+    private Integer themeId;
+
+    public CardDTO() {
+    }
 
     public Integer getCardId() {
-        return cardId;
+        return this.cardId;
     }
 
     public void setCardId(Integer cardId) {
@@ -24,7 +32,7 @@ public class CardDTO extends ResourceSupport implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -32,10 +40,34 @@ public class CardDTO extends ResourceSupport implements Serializable {
     }
 
     public String getImageURL() {
-        return imageURL;
+        return this.imageURL;
     }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public ThemeDTO getTheme() {
+        return this.theme;
+    }
+
+    public void setTheme(ThemeDTO theme) {
+        this.theme = theme;
+    }
+
+    public List<CardSession> getCardSessions() {
+        return this.cardSessions;
+    }
+
+    public void setCardSessions(List<CardSession> cardSessions) {
+        this.cardSessions = cardSessions;
+    }
+
+    public Integer getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(Integer themeId) {
+        this.themeId = themeId;
     }
 }

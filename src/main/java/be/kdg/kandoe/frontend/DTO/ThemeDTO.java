@@ -24,7 +24,45 @@ public class ThemeDTO extends ResourceSupport implements Serializable {
 
     private String iconURL;
 
-    private Organisation organisation;
+    private OrganisationDTO organisation;
 
+    public Integer getThemeId() {
+        return themeId;
+    }
 
+    public void setThemeId(Integer themeId) {
+        this.themeId = themeId;
+    }
+
+    public String getThemeName() {
+        return themeName;
+    }
+
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIconURL() {
+        return iconURL;
+    }
+
+    public void setIconURL(String iconURL) {
+        this.iconURL = iconURL;
+    }
+
+    public OrganisationDTO getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(OrganisationDTO organisation) {
+        this.organisation = organisation;
+    }
 }
