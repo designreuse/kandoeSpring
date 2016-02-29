@@ -51,4 +51,12 @@ public class LoginRestController {
         }
         return new ResponseEntity<>("Already logged in", HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "/api/login/check", method = RequestMethod.GET)
+    public ResponseEntity<String> checkToken(@AuthenticationPrincipal User user){
+        if(user != null){
+            return new ResponseEntity<String>(HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+    }
 }
