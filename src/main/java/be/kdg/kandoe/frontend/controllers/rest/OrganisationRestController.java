@@ -7,6 +7,7 @@ import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
 import be.kdg.kandoe.frontend.config.security.jwt.UserAuthentication;
+import be.kdg.kandoe.frontend.util.FileUtils;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,19 +89,15 @@ public class OrganisationRestController {
                 Organisation org_out = organisationService.saveOrganisation(org_in, user.getId());
 
                 String newFilename = String.format("%d.%s", org_out.getId(), file.getOriginalFilename().split("\\.")[1]);
-                String filePath = request.getServletContext().getRealPath("/resources/images/organisation/");
-                File f = new File(filePath);
-                if(!f.exists()){
-                    f.mkdirs();
-                }
-                f = new File(filePath + "/" + newFilename);
+                String filePath = request.getServletContext().getRealPath("/resources/images/organisations/");
+
                 try {
-                    file.transferTo(f);
+                    FileUtils.saveFile(filePath, newFilename, file);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    return new ResponseEntity<>("Failed to save image", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
-                org_out.setLogoURL("resources/images/organisation/" + newFilename);
+                org_out.setLogoURL("resources/images/organisations/" + newFilename);
                 organisationService.updateOrganisations(org_out);
 
                 return new ResponseEntity<>(HttpStatus.CREATED);

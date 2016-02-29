@@ -28,7 +28,6 @@ public class ThemeServiceTest {
     @Autowired
     private UserService userService;
 
-    //todo delete this
     @Test
     public void testSaveTheme() throws Exception {
         Theme toBeSaved = new Theme("KdG");

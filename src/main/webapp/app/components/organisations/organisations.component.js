@@ -44,12 +44,15 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                     });
                 };
                 OrganisationsComponent.prototype.getImageSrc = function (url, id) {
-                    if (url.indexOf("http://") > -1) {
-                        return url;
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
                     }
-                    else {
-                        return url.replace(/"/g, "");
-                    }
+                    return url;
                 };
                 OrganisationsComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

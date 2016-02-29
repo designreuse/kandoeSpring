@@ -14,6 +14,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Transactional
@@ -53,7 +55,6 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user.setNewUser(true);
             user.setUsername("ArneLauryssens");
             user = userService.saveUser(user);
-            System.out.println("User created");
         }
 
         Organisation org = new Organisation();
@@ -62,7 +63,29 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             org.setOrganisationName("Karel De Grote");
             org.setAddress("Groenplaats 5 2000 Antwerpen");
             org.setLogoURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
-            organisationService.saveOrganisation(org, user.getId());
+            org = organisationService.saveOrganisation(org, user.getId());
         }
+
+        User user2 = new User();
+        if(userRepository.findUserByUsername("SenneWens") == null){
+            Person p = new Person();
+            p.setFirstname("Senne");
+            p.setLastname("Wens");
+
+            user2.setPerson(p);
+            user2.setPassword("test123");
+            user2.setEmail("senne.wens@student.kdg.be");
+            user2.setNewUser(true);
+            user2.setUsername("SenneWens");
+            List<Organisation> orgs = new ArrayList<>();
+            orgs.add(org);
+            user2.setOrganisations(orgs);
+            user2 = userService.saveUser(user2);
+        }
+
+        /*List<User> users = new ArrayList<>();
+        users.add(user2);
+        org.setUsers(users);
+        organisationService.updateOrganisations(org);*/
     }
 }

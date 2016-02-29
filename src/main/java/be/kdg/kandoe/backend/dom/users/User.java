@@ -49,7 +49,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     private List<Role> roles;
 
     @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
-    @JoinTable(name = "org_users")
+    @JoinTable(name = "org_users", joinColumns = @JoinColumn(name = "UserId"), inverseJoinColumns = @JoinColumn(name = "OrganisationId"))
     private List<Organisation> organisations;
 
     @ManyToMany(targetEntity = Organisation.class)

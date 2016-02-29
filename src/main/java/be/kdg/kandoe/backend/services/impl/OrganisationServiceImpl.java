@@ -52,6 +52,7 @@ public class OrganisationServiceImpl implements OrganisationService{
 
     @Override
     public Organisation updateOrganisations(Organisation org){
+
         return organisationRepository.save(org);
     }
 }
