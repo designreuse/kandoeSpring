@@ -67,6 +67,34 @@ section {
     margin: 0 auto;
 }
 
+
+.form-padadd-org {
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
+}
+
+.form-padadd-org h3 {
+    text-align: center;
+}
+
+
+.form-padadd-org button {
+    text-align: center;
+    margin: 0 auto;
+    width: 100px;
+}
+.add-orgimg{
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 article {
     display: block;
     margin: 0 auto;
