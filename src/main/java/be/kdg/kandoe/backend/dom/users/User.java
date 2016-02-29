@@ -48,7 +48,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Role> roles;
 
-    @ManyToMany(targetEntity = Organisation.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Organisation.class)
     @JoinTable(name = "org_users", joinColumns = @JoinColumn(name = "UserId"), inverseJoinColumns = @JoinColumn(name = "OrganisationId"))
     private List<Organisation> organisations;
 
@@ -104,7 +104,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        roles.forEach(role -> authorities.addAll(role.getAuthorities()));
+if(roles != null) {
+    roles.forEach(role -> authorities.addAll(role.getAuthorities()));
+}
         return authorities;
     }
 

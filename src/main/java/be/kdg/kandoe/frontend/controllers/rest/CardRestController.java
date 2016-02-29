@@ -1,7 +1,6 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.game.Card;
-import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.CardService;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
@@ -36,35 +35,36 @@ public class CardRestController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+
+    @RequestMapping(method = {RequestMethod.GET})
     public ResponseEntity<List<CardDTO>> getCards(@AuthenticationPrincipal User user) {
         if (user != null) {
-            List<Card> cards = cardService.findCards();
-
-            return new ResponseEntity<>(cardAssembler.toResources(cards), HttpStatus.OK);
-        } else {
+            List<Card> cards = this.cardService.findCards();
+            return new ResponseEntity<>(this.cardAssembler.toResources(cards), HttpStatus.OK);
+        }else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-    }
-
-
-    @RequestMapping(value = "/{cardId}", method = RequestMethod.GET)
-    public ResponseEntity<CardDTO> getCardById(@PathVariable(value = "cardId") int cardId) {
-        Card card = cardService.findCardById(cardId);
-        return new ResponseEntity<>(cardAssembler.toResource(card), HttpStatus.OK);
-    }
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<CardDTO> createCard(@Valid @RequestBody CardDTO cardDTO, @AuthenticationPrincipal User user, Theme theme) {
-        if (user != null && user.getId() != null) {
-            Card card_in = mapper.map(cardDTO, Card.class);
-
-            Card card_out = cardService.saveCard(card_in, theme.getId());
-            logger.info(this.getClass().toString() + ": adding new card " + card_out.getId());
-
-            return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    @RequestMapping(value = {"/{cardId}"},method = {RequestMethod.GET})
+    public ResponseEntity<CardDTO> getCardById(@PathVariable("cardId") int cardId, @AuthenticationPrincipal User user) {
+        if(user != null){
+            Card card = this.cardService.findCardById(cardId);
+            return new ResponseEntity<>(cardAssembler.toResource(card), HttpStatus.OK);
+        }
+        return new ResponseEntity<CardDTO>(HttpStatus.UNAUTHORIZED);
     }
 
+    @RequestMapping(method = {RequestMethod.POST})
+    public ResponseEntity<CardDTO> createCard(@Valid @RequestBody CardDTO cardDTO,  @AuthenticationPrincipal User user) {
+        if (user != null && user.getId() != null) {
+            Card card_in = mapper.map(cardDTO, Card.class);
+            Card card_out = cardService.saveCard(card_in, cardDTO.getThemeId());
+            logger.info(this.getClass().toString() + ": adding new card " + card_out.getId());
+            return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        }
+    }
 }

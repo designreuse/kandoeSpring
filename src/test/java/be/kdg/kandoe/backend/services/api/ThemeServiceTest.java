@@ -33,7 +33,7 @@ public class ThemeServiceTest {
         Theme toBeSaved = new Theme("KdG");
         toBeSaved.setDescription("Dit is een KDG thema");
         themeService.saveTheme(toBeSaved,1);
-        assertEquals(themeService.findThemes().size(),1);
+        assertEquals(themeService.findThemes().size(),2);
         Theme theme = themeService.findTHemeByName("KdG");
 
         assertNotNull("The new theme should have an id", theme.getId());
@@ -49,6 +49,6 @@ public class ThemeServiceTest {
         themeService.removeTheme(themeId);
         assertNull(themeService.findThemeById(themeId));
 
-        assertEquals(themeService.findThemes().size(),0);
+        assertEquals(1,themeService.findThemes().size());
     }
 }
