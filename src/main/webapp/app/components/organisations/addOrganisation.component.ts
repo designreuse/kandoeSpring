@@ -22,10 +22,10 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                 </div>
                 <div class="form-group">
                     <label>Logo</label>
-                    <div class="col-sm-10 add-orgimg"></div>
                     <input type="file" multiple="false" (change)="onFileChange($event)">
                 </div>
-                <div class="items">
+                <div class="event-list">
+                <li class="items">
                     <div class="id"><p>1</p></div>
                             <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisation.organisationId)" />
                             <div class="info">
@@ -39,8 +39,8 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                                     <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
                                 </ul>
                             </div>
-                </div>
-                <button type="button" class="btn btn-lg btn-info glyphicon glyphicon-plus" (click)="onSubmit()">Add</button>
+                </li></div>
+                <button type="button" class="btn btn-lg btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Add</button>
             </div>
         </form>
     `
