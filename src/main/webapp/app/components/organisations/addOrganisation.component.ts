@@ -10,7 +10,7 @@ import {tokenNotExpired} from "../../security/TokenHelper";
     selector: 'add-organisation',
     template: `
         <form  class="col-lg-offset-3 col-lg-6" method="post" role="form">
-            <div class="form-pad">
+            <div class="form-padadd-org">
                 <h3>Add new organisation</h3>
                 <div class="form-group">
                     <label>Name</label>
@@ -24,24 +24,40 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                     <label>Logo</label>
                     <input type="file" multiple="false" (change)="onFileChange($event)">
                 </div>
-                <button type="button" class="btn btn-lg btn-info" (click)="onSubmit()">Add</button>
+                <div class="event-list">
+                <li class="items">
+                    <div class="id"><p>1</p></div>
+                            <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisation.organisationId)" />
+                            <div class="info">
+                                <h2 class="title">{{organisation.organisationName}}</h2>
+                                <p class="desc">{{organisation.address}}</p>
+                            </div>
+                            <div class="social">
+                                <ul>
+                                    <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+                                    <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+                                    <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                                </ul>
+                            </div>
+                </li></div>
+                <button type="button" class="btn btn-lg btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Add</button>
             </div>
         </form>
     `
 })
 
 export class AddOrganisationComponent {
-    private organisation: Organisation = Organisation.createEmpty();
-    private organisationService: OrganisationService;
-    private router: Router;
-    private file: File = null;
+    private organisation:Organisation = Organisation.createEmpty();
+    private organisationService:OrganisationService;
+    private router:Router;
+    private file:File = null;
 
-    constructor(orgService: OrganisationService, router: Router) {
+    constructor(orgService:OrganisationService, router:Router) {
         this.organisationService = orgService;
         this.router = router;
     }
 
-    onFileChange($event){
+    onFileChange($event) {
         this.file = $event.target.files[0];
     }
 
