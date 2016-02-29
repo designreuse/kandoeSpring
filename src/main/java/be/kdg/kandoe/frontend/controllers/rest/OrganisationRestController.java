@@ -120,28 +120,4 @@ public class OrganisationRestController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
-
-    @RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest request){
-        System.out.println(file.getName());
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getContentType());
-
-        String filePath = request.getServletContext().getRealPath("/resources/images/organisation/");
-        System.out.println(filePath);
-        File f = new File(filePath);
-        if(!f.exists()){
-            f.mkdirs();
-        }
-
-        f = new File(filePath + "/" + file.getOriginalFilename());
-        System.out.println(f.getAbsolutePath());
-        try {
-            file.transferTo(f);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<>("resources/images/organisation/" + file.getOriginalFilename(), HttpStatus.OK);
-    }
 }

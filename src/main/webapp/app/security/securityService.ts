@@ -15,7 +15,7 @@ export class SecurityService{
     private path: string;
     private router: Router;
 
-    constructor(http:Http, @Inject('App.DevPath') path: string,router:Router) {
+    constructor(http:Http, @Inject('App.BackEndPath') path: string,router:Router) {
         this.http = http;
         this.path = path;
         this.router=router;

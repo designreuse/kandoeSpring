@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../DOM/organisation", "../../service/organisationService", 'angular2/router'], function(exports_1) {
+System.register(['angular2/core', "../../DOM/organisation", "../../service/organisationService", 'angular2/router', "../../security/TokenHelper"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, organisation_1, organisationService_1, router_1;
+    var core_1, organisation_1, organisationService_1, router_1, TokenHelper_1;
     var AddOrganisationComponent;
     return {
         setters:[
@@ -23,6 +23,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (TokenHelper_1_1) {
+                TokenHelper_1 = TokenHelper_1_1;
             }],
         execute: function() {
             AddOrganisationComponent = (function () {
@@ -39,12 +42,15 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     var _this = this;
                     this.organisationService.createOrganisation(this.organisation, this.file).subscribe(function (res) {
                         _this.router.navigate(['/Organisations']);
+                        _this.file = null;
                     }, function (error) {
                         //todo change error display
+                        _this.file = null;
                         alert(error.text());
                     });
                 };
                 AddOrganisationComponent = __decorate([
+                    router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'add-organisation',
                         template: "\n        <form  class=\"col-lg-offset-3 col-lg-6\" method=\"post\" role=\"form\">\n            <div class=\"form-pad\">\n                <h3>Add new organisation</h3>\n                <div class=\"form-group\">\n                    <label>Name</label>\n                    <input type=\"text\" placeholder=\"Enter organisation name\" class=\"form-control\" [(ngModel)]=\"organisation.organisationName\">\n                </div>\n                <div class=\"form-group\">\n                    <label>Address</label>\n                    <input type=\"text\" placeholder=\"Enter address\" class=\"form-control\" [(ngModel)]=\"organisation.address\">\n                </div>\n                <div class=\"form-group\">\n                    <label>Logo</label>\n                    <input type=\"file\" multiple=\"false\" (change)=\"onFileChange($event)\">\n                </div>\n                <button type=\"button\" class=\"btn btn-lg btn-info\" (click)=\"onSubmit()\">Add</button>\n            </div>\n        </form>\n    "
