@@ -34,7 +34,7 @@ public class ThemeServiceTest {
         toBeSaved.setDescription("Dit is een KDG thema");
         themeService.saveTheme(toBeSaved,1);
         assertEquals(themeService.findThemes().size(),2);
-        Theme theme = themeService.findTHemeByName("KdG");
+        Theme theme = themeService.findThemeByName("KdG");
 
         assertNotNull("The new theme should have an id", theme.getId());
         assertEquals(theme.getCreator(),userService.findUserById(1));

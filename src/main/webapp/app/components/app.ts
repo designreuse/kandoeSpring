@@ -10,6 +10,7 @@ import {UserProfileComponent} from "./userprofile.component";
 import {AddOrganisationComponent} from "./organisations/addOrganisation.component";
 import {AddThemeComponent} from "./themes/addThemeComponent";
 import {OrganisationDetailComponent} from "./organisations/organisationDetail.component";
+import {ThemeDetailComponent} from "./themes/themeDetailComponent";
 
 
 @Component({
@@ -28,8 +29,9 @@ import {OrganisationDetailComponent} from "./organisations/organisationDetail.co
     {path: '/organisations/addOrganisation', as: 'AddOrganisation', component: AddOrganisationComponent},
     {path: '/organisations/:id', as: 'OrganisationDetail', component: OrganisationDetailComponent},
     {path: '/register', as: 'Register', component: RegisterComponent},
-    {path: '/themes',as :'Theme',component:ThemeComponent},
-    {path: '/card', as: 'KandoeCard', component:KandoeCard},
+    {path: '/themes', as: 'Themes', component: ThemeComponent},
+    {path: 'themes/:id', as: 'ThemeDetail', component: ThemeDetailComponent},
+    {path: '/card', as: 'KandoeCard', component: KandoeCard},
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent}
 ])

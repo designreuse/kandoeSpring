@@ -1,10 +1,10 @@
-System.register(["./link"], function(exports_1) {
-    var link_1;
+System.register(["./organisation"], function(exports_1) {
+    var organisation_1;
     var Theme;
     return {
         setters:[
-            function (link_1_1) {
-                link_1 = link_1_1;
+            function (organisation_1_1) {
+                organisation_1 = organisation_1_1;
             }],
         execute: function() {
             /**
@@ -14,15 +14,14 @@ System.register(["./link"], function(exports_1) {
                 function Theme() {
                 }
                 Theme.fromJson = function (json) {
+                    console.log(json);
                     var theme = new Theme();
-                    theme.iconUrl = json.iconUrl;
+                    theme.iconURL = json.iconURL;
                     theme.themeId = json.themeId;
                     theme.themeName = json.themeName;
                     theme.description = json.description;
-                    theme.organisation = json.organisation;
-                    for (var i = 0; i < json.links.length; i++) {
-                        theme.links[i] = link_1.Link.fromJson(json.links[i]);
-                    }
+                    theme.organisation = organisation_1.Organisation.fromJson(json.organisation);
+                    console.log(theme);
                     return theme;
                 };
                 Theme.createEmpty = function () {

@@ -25,7 +25,7 @@ import java.util.List;
 
 @Component
 @Transactional
-public class DataBaseInitializer implements ApplicationListener<ContextRefreshedEvent>{
+public class DataBaseInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
     private UserRepository userRepository;
@@ -52,7 +52,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         User user = new User();
-        if(userRepository.findUserByUsername("ArneLauryssens") == null){
+        if (userRepository.findUserByUsername("ArneLauryssens") == null) {
             Address address = new Address();
             address.setCity("TestCity");
             address.setNumber("1");
@@ -72,8 +72,8 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user = userService.saveUser(user);
         }
 
-        if(userRepository.findUserByUsername("MailUser") == null){
-            User mailUser = new User();
+        User mailUser = new User();
+        if (userRepository.findUserByUsername("MailUser") == null) {
             mailUser.setEmail("demoodooconf@gmail.com");
             mailUser.setUsername("MailUser");
             mailUser.setNewUser(true);
@@ -82,33 +82,39 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         }
 
         Organisation org = new Organisation();
-
-        if(organisationRepository.findOrganisationByOrganisationName("Karel De Grote") == null && user.getId() != null){
+        if (organisationRepository.findOrganisationByOrganisationName("Karel De Grote") == null && user.getId() != null) {
             org.setOrganisationName("Karel De Grote");
             org.setAddress("Groenplaats 5 2000 Antwerpen");
             org.setLogoURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             org = organisationService.saveOrganisation(org, user.getId());
         }
 
-        Theme theme =new Theme();
+        Organisation org2 = new Organisation();
+        if (organisationRepository.findOrganisationByOrganisationName("TestOrganisation") == null && mailUser.getId() != null) {
+            org2.setOrganisationName("TestOrganisation");
+            org2.setAddress("Groenplaats 5 2000 Antwerpen");
+            org2.setLogoURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            org2 = organisationService.saveOrganisation(org2, mailUser.getId());
+        }
 
-        if(themeRepository.findThemeByThemeName("KdGTheme") ==null  && user.getId() != null){
+        Theme theme = new Theme();
+        if (themeRepository.findThemeByThemeName("KdGTheme") == null && user.getId() != null) {
             theme.setThemeName("KdGTheme");
             theme.setDescription("KdG Theme description");
             theme.setIconURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            theme.setOrganisation(org);
             theme = themeService.saveTheme(theme, user.getUserId());
         }
 
         Card card = new Card();
-
-        if(cardRepository.findCardByDescription("KdGCard") ==null  && user.getId() != null){
-          card.setDescription("KdGCard");
+        if (cardRepository.findCardByDescription("KdGCard") == null && user.getId() != null) {
+            card.setDescription("KdGCard");
             card.setImageURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
-          cardService.saveCard(card, theme.getId());
+            cardService.saveCard(card, theme.getId());
         }
 
         User user2 = new User();
-        if(userRepository.findUserByUsername("SenneWens") == null){
+        if (userRepository.findUserByUsername("SenneWens") == null) {
             Person p = new Person();
             p.setFirstname("Senne");
             p.setLastname("Wens");

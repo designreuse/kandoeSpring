@@ -33,7 +33,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public Theme findTHemeByName(String name) {
+    public Theme findThemeByName(String name) {
         return themeRepository.findThemeByThemeName(name);
     }
 

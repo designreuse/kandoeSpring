@@ -39,4 +39,10 @@ export class ThemeService {
         console.log(theme);
         return this.securityService.post(this.path + 'themes', JSON.stringify(theme), true);
     }
+
+    public getTheme(id:number):Observable<Theme>{
+        return this.securityService.get(this.path + 'themes/' + id,true)
+            .map(res => res.json())
+            .map((theme:Theme) => Theme.fromJson(theme))
+    }
 }

@@ -61,6 +61,5 @@ export class ThemeComponent  implements OnInit {
 
     ngOnInit() {
         this._themeService.getAllThemes().subscribe((themes:Theme[])=> this.themes = themes);
-        console.log(this.themes.length);
     }
 }

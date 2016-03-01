@@ -19,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 
 /**
@@ -51,13 +52,13 @@ public class ThemeRestController {
     @RequestMapping(value = "/{themeId}", method = RequestMethod.GET)
     public ResponseEntity<ThemeDTO> getOrganisationById(@PathVariable(value = "themeId") int themeId){
         Theme theme = themeService.findThemeById(themeId);
-
+        System.out.println(theme.getOrganisation().getOrganisationName());
         return new ResponseEntity<>(themeAssembler.toResource(theme), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ThemeDTO> createOrganisation(@Valid @RequestBody ThemeDTO themeDTO,
-                                                              @AuthenticationPrincipal User user) {
+                                                       @AuthenticationPrincipal User user) {
         if (user != null && user.getId() != null) {
             Theme theme_in = mapper.map(themeDTO, Theme.class);
 

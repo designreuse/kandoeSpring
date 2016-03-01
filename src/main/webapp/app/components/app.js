@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', "./organisations/organisations.component", "./register.component", "./home", "./loggedInHome.component", "./themes/themeComponent", "./kandoeCard", "./userprofile.component", "./organisations/addOrganisation.component", "./themes/addThemeComponent", "./organisations/organisationDetail.component"], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', "./organisations/organisations.component", "./register.component", "./home", "./loggedInHome.component", "./themes/themeComponent", "./kandoeCard", "./userprofile.component", "./organisations/addOrganisation.component", "./themes/addThemeComponent", "./organisations/organisationDetail.component", "./themes/themeDetailComponent"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, organisations_component_1, register_component_1, home_1, loggedInHome_component_1, themeComponent_1, kandoeCard_1, userprofile_component_1, addOrganisation_component_1, addThemeComponent_1, organisationDetail_component_1;
+    var core_1, router_1, organisations_component_1, register_component_1, home_1, loggedInHome_component_1, themeComponent_1, kandoeCard_1, userprofile_component_1, addOrganisation_component_1, addThemeComponent_1, organisationDetail_component_1, themeDetailComponent_1;
     var AppComponent;
     return {
         setters:[
@@ -47,6 +47,9 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
             },
             function (organisationDetail_component_1_1) {
                 organisationDetail_component_1 = organisationDetail_component_1_1;
+            },
+            function (themeDetailComponent_1_1) {
+                themeDetailComponent_1 = themeDetailComponent_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -67,7 +70,8 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
                         { path: '/organisations/addOrganisation', as: 'AddOrganisation', component: addOrganisation_component_1.AddOrganisationComponent },
                         { path: '/organisations/:id', as: 'OrganisationDetail', component: organisationDetail_component_1.OrganisationDetailComponent },
                         { path: '/register', as: 'Register', component: register_component_1.RegisterComponent },
-                        { path: '/themes', as: 'Theme', component: themeComponent_1.ThemeComponent },
+                        { path: '/themes', as: 'Themes', component: themeComponent_1.ThemeComponent },
+                        { path: 'themes/:id', as: 'ThemeDetail', component: themeDetailComponent_1.ThemeDetailComponent },
                         { path: '/card', as: 'KandoeCard', component: kandoeCard_1.KandoeCard },
                         { path: '/userprofile', as: 'Userprofile', component: userprofile_component_1.UserProfileComponent },
                         { path: '/themes/addTheme', name: 'AddTheme', component: addThemeComponent_1.AddThemeComponent }

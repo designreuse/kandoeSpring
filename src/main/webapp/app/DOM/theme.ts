@@ -1,4 +1,5 @@
 import {Link} from "./link";
+import {Organisation} from "./organisation";
 /**
  * Created by Jordan on 19/02/2016.
  */
@@ -6,26 +7,24 @@ export class Theme{
     themeId:number;
     themeName:string;
     description:string;
-    organisation:string;
-    iconUrl:string;
-    links:Link[];
+    organisation:Organisation;
+    iconURL:string;
 
     constructor() {
 
     }
 
     static fromJson(json:any):Theme{
+        console.log(json);
         var theme = new Theme();
-        theme.iconUrl=json.iconUrl;
+        theme.iconURL=json.iconURL;
         theme.themeId = json.themeId;
         theme.themeName = json.themeName;
         theme.description = json.description;
-        theme.organisation = json.organisation;
 
-        for (var i = 0; i < json.links.length; i++){
-            theme.links[i] = Link.fromJson(json.links[i])
-        }
+        theme.organisation = Organisation.fromJson(json.organisation);
 
+        console.log(theme);
         return theme;
     }
 

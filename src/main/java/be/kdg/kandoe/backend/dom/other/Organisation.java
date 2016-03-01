@@ -82,7 +82,16 @@ public class Organisation implements Serializable, Identifiable<Integer>{
         this.organisers = organisers;
     }
 
+    public Integer getOrganisationId() {
+        return organisationId;
+    }
+
+    public void setOrganisationId(Integer organisationId) {
+        this.organisationId = organisationId;
+    }
+
     @Override
+
     public Integer getId() {
         return organisationId;
     }

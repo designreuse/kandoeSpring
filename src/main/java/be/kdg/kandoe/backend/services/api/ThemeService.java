@@ -12,7 +12,7 @@ public interface ThemeService {
 
     Theme findThemeById(int Id);
 
-    Theme findTHemeByName(String name);
+    Theme findThemeByName(String name);
 
     Theme saveTheme(Theme theme, Integer userId);
 
