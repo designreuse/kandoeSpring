@@ -4,7 +4,6 @@
 import {Component, OnInit} from 'angular2/core'
 import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Organisation} from "../../DOM/organisation";
-import {Service} from "../../service/service";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {OrganisationService} from "../../service/organisationService";
 

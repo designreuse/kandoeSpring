@@ -2,6 +2,7 @@ package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.users.User;
+import be.kdg.kandoe.backend.services.exceptions.OrganisationServiceException;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface OrganisationService {
     Organisation updateOrganisations(Organisation org);
     List<User> findOrganisationOrganisers(Integer id);
     List<User> findOrganisationMembers(Integer id);
+    User addMemberToOrganisation(Integer orgId, String mail, Integer organiserId) throws OrganisationServiceException;
 }

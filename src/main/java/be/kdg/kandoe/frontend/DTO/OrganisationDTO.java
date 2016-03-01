@@ -19,6 +19,8 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     private String logoURL;
 
+    private boolean isOrganiser;
+
     public OrganisationDTO() {
     }
 
@@ -56,5 +58,13 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     public void setLogoURL(String logoURL) {
         this.logoURL = logoURL;
+    }
+
+    public boolean isOrganiser() {
+        return isOrganiser;
+    }
+
+    public void setIsOrganiser(boolean isOrganiser) {
+        this.isOrganiser = isOrganiser;
     }
 }

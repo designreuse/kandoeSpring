@@ -59,11 +59,18 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         }
                     }
                 };
+                OrganisationDetailComponent.prototype.addMember = function () {
+                    var _this = this;
+                    this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
+                        _this.members.push(u);
+                        console.log("member added");
+                    });
+                };
                 OrganisationDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: "organisation-detail",
-                        template: "\n        <p>{{organisation.organisationName}}</p>\n        <p>{{organisation.address}}</p>\n        <img [src]=\"getImageSrc(organisation.logoUrl)\">\n        <p>organisers</p>\n        <ul>\n          <li *ngFor=\"#organiser of organisers\">\n            {{ organiser.username }}\n          </li>\n        </ul>\n        <p>members</p>\n        <ul>\n          <li *ngFor=\"#member of members\">\n            {{ member.username }}\n          </li>\n        </ul>\n    "
+                        template: "\n        <p>{{organisation.organisationName}}</p>\n        <p>{{organisation.address}}</p>\n        <img [src]=\"getImageSrc(organisation.logoUrl)\">\n        <p>organisers</p>\n        <ul>\n          <li *ngFor=\"#organiser of organisers\">\n            {{ organiser.username }}\n          </li>\n        </ul>\n        <p>members</p>\n        <ul>\n          <li *ngFor=\"#member of members\">\n            {{ member.username }}\n          </li>\n        </ul>\n        <div *ngIf=\"organisation.organiser\">\n            <input type=\"text\" [(ngModel)]=\"newMember\">\n            <button type=\"button\" (click)=\"addMember()\">Add member</button>\n        </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams])
                 ], OrganisationDetailComponent);

@@ -4,6 +4,8 @@ import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.exceptions.OrganisationServiceException;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
@@ -60,9 +62,16 @@ public class OrganisationRestController {
     }
 
     @RequestMapping(value = "/{organisationId}", method = RequestMethod.GET)
-    public ResponseEntity<OrganisationDTO> getOrganisationById(@PathVariable(value = "organisationId") int orgId) {
+    public ResponseEntity<OrganisationDTO> getOrganisationById(@PathVariable(value = "organisationId") int orgId,
+                                                               @AuthenticationPrincipal User user) {
         Organisation org = organisationService.findOrganisationById(orgId);
-        return new ResponseEntity<>(organisationAssembler.toResource(org), HttpStatus.OK);
+
+        OrganisationDTO orgdto = organisationAssembler.toResource(org);
+        if(org.getOrganisers().stream().anyMatch(u -> u.getUsername().equals(user.getUsername()))){
+            orgdto.setIsOrganiser(true);
+        }
+
+        return new ResponseEntity<>(orgdto, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -123,7 +132,8 @@ public class OrganisationRestController {
     }
 
     @RequestMapping(value = "/{orgId}/organisers")
-    public ResponseEntity<List<UserDTO>> getOrganisationOrganisers(@AuthenticationPrincipal User user, @PathVariable(value = "orgId") Integer orgId){
+    public ResponseEntity<List<UserDTO>> getOrganisationOrganisers(@AuthenticationPrincipal User user,
+                                                                   @PathVariable(value = "orgId") Integer orgId){
         if(user != null){
             List<User> organisers = organisationService.findOrganisationOrganisers(orgId);
 
@@ -134,7 +144,9 @@ public class OrganisationRestController {
     }
 
     @RequestMapping(value = "/{orgId}/members")
-    public ResponseEntity<List<UserDTO>> getOrganisationMembers(@AuthenticationPrincipal User user, @PathVariable(value = "orgId") Integer orgId){
+    public ResponseEntity<List<UserDTO>> getOrganisationMembers(@AuthenticationPrincipal User user,
+                                                                @PathVariable(value = "orgId") Integer orgId)
+    {
         if(user != null){
             List<User> organisers = organisationService.findOrganisationMembers(orgId);
 
@@ -142,5 +154,25 @@ public class OrganisationRestController {
         }
 
         return new ResponseEntity<List<UserDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{orgId}/addMember", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> addMemberToOrganisation(@PathVariable(value = "orgId") Integer orgId,
+                                                          @RequestParam(value = "mail", required = true) String mail,
+                                                          @AuthenticationPrincipal User user)
+    {
+        if(user != null){
+            try {
+                User u = organisationService.addMemberToOrganisation(orgId, mail, user.getId());
+                Organisation org = organisationService.findOrganisationById(orgId);
+
+                System.out.println(org.getOrganisers().size());
+
+                return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
+            } catch (OrganisationServiceException | UserServiceException e) {
+                return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
     }
 }

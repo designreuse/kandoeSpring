@@ -25,6 +25,10 @@ import {User} from "../../DOM/users/user";
             {{ member.username }}
           </li>
         </ul>
+        <div *ngIf="organisation.organiser">
+            <input type="text" [(ngModel)]="newMember">
+            <button type="button" (click)="addMember()">Add member</button>
+        </div>
     `
 })
 
@@ -34,6 +38,7 @@ export class OrganisationDetailComponent implements OnInit{
     private organisers: User[] = [];
     private members: User[] = [];
     private orgId: number;
+    private newMember: string;
 
     constructor(orgService: OrganisationService, routeParams: RouteParams){
         this.organisationService = orgService;
@@ -62,5 +67,12 @@ export class OrganisationDetailComponent implements OnInit{
                 return url.replace(/"/g, "");
             }
         }
+    }
+
+    private addMember() {
+        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
+            this.members.push(u);
+            console.log("member added");
+        })
     }
 }

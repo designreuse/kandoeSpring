@@ -59,4 +59,11 @@ export class OrganisationService{
             .map(res => res.json())
             .map((users: Array<User>) => users.map((u: User) => User.fromJson(u)));
     }
+
+    public addMemberToOrganisation(orgId: number, mail: string): Observable<User> {
+        var requestparam = "?mail=" + mail;
+        return this.securityService.post(this.path + 'organisations/' + orgId + "/addMember" + requestparam, "", true)
+            .map(res => res.json())
+            .map(u => User.fromJson(u));
+    }
 }

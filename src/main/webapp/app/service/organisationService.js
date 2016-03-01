@@ -71,6 +71,12 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                         .map(function (res) { return res.json(); })
                         .map(function (users) { return users.map(function (u) { return user_1.User.fromJson(u); }); });
                 };
+                OrganisationService.prototype.addMemberToOrganisation = function (orgId, mail) {
+                    var requestparam = "?mail=" + mail;
+                    return this.securityService.post(this.path + 'organisations/' + orgId + "/addMember" + requestparam, "", true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (u) { return user_1.User.fromJson(u); });
+                };
                 OrganisationService = __decorate([
                     core_1.Injectable(),
                     __param(0, core_1.Inject('App.BackEndPath')), 

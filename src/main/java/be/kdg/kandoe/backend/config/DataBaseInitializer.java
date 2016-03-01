@@ -81,8 +81,6 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             userService.saveUser(mailUser);
         }
 
-
-
         Organisation org = new Organisation();
 
         if(organisationRepository.findOrganisationByOrganisationName("Karel De Grote") == null && user.getId() != null){
@@ -124,6 +122,20 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             orgs.add(org);
             user2.setOrganisations(orgs);
             user2 = userService.saveUser(user2);
+        }
+
+        User user3 = new User();
+        if(userRepository.findUserByUsername("JordanParezys") == null){
+            Person p = new Person();
+            p.setFirstname("Jordan");
+            p.setLastname("Parezys");
+
+            user3.setPerson(p);
+            user3.setPassword("test123");
+            user3.setEmail("jordan.parezys@student.kdg.be");
+            user3.setNewUser(true);
+            user3.setUsername("JordanParezys");
+            user3 = userService.saveUser(user3);
         }
     }
 }

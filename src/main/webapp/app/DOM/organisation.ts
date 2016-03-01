@@ -5,6 +5,7 @@ export class Organisation {
     organisationName:string;
     address:string;
     logoUrl:string;
+    organiser: boolean;
     links:Link[];
 
     constructor(){
@@ -18,6 +19,10 @@ export class Organisation {
         organisation.organisationName = json.organisationName;
         organisation.address = json.address;
         organisation.logoUrl = json.logoURL;
+
+        if(json.organiser){
+            organisation.organiser = json.organiser;
+        }
 
         if(json.links){
             for (var i = 0; i < json.links.length; i++){

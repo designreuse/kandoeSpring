@@ -31,30 +31,30 @@ public class MailServiceTest {
 
     @Test
     public void sendMailToOneUser()throws Exception{
-        mailService.sendMailToUser("MailUser","testSubject","I really hope this text shows up. I really do");
+       // mailService.sendMailToUser("MailUser","testSubject","I really hope this text shows up. I really do");
     }
 
     @Test
     public void sendMailToMulipleUsers(){
-        List<String> recipients = new ArrayList<>();
+     /*   List<String> recipients = new ArrayList<>();
         recipients.add("MailUser");
        // recipients.add("ArneLauryssens");
         //recipients.add("SenneWens");
         mailService.sendMailToUsers(recipients,"TestSubject","This should have gone out to 3 users: \n -Demo User \n -Arne \n -Senne \n enjoy boys :p");
-    }
+   */ }
 
     @Test
     public void sendMailToUserById(){
-        mailService.sendMailToUserByUserId(userService.findUserByUsername("MailUser").getId(),"TestSubject Id","This mail has been sent by the userId");
+  //      mailService.sendMailToUserByUserId(userService.findUserByUsername("MailUser").getId(),"TestSubject Id","This mail has been sent by the userId");
     }
 
     @Test
     public void sendMailToUsersById(){
-        List<Integer> recipients = new ArrayList<>();
+  /*      List<Integer> recipients = new ArrayList<>();
         recipients.add(userService.findUserByUsername("MailUser").getId());
         //recipients.add(userService.findUserByUsername("ArneLauryssens").getId());
         //recipients.add(userService.findUserByUsername("SenneWens").getId());
 
         mailService.sendMailToUsersByUserId(recipients,"TestSubject Mailed By Id","This should have gone out to 3 users: \n -Demo User \n -Arne \n -Senne \n enjoy boys :p");
-    }
+ */   }
 }

@@ -38,8 +38,6 @@ public class OrganisationAssembler extends ResourceAssemblerSupport<Organisation
     public OrganisationDTO toResource(Organisation entity) {
         OrganisationDTO organisationDTO = mapper.map(entity, OrganisationDTO.class);
 
-        organisationDTO.setOrganisationId(entity.getId());
-        //organisationDTO.setLogoUrl(entity.getLogoURL());
 
         return organisationDTO;
     }

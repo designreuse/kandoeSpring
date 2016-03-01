@@ -48,6 +48,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User findUserByEmail(String email) throws UserServiceException {
+        User u = userRepository.findUserByEmail(email);
+
+        if(u == null){
+            throw new UserServiceException("User not found");
+        }
+
+        return u;
+    }
+
+    @Override
     public List<User> findUsers() {
         return userRepository.findAll();
     }
@@ -82,7 +93,7 @@ public class UserServiceImpl implements UserService{
         if(existingUsername == null || !existingUsername.getUsername().equals(user.getUsername()))
             throw new UserServiceException("Can't change username");
 
-        existingUser.setPerson(user.getPerson());
+       // existingUser.setPerson(user.getPerson());
         User u = userRepository.save(user);
 
         if (u == null)

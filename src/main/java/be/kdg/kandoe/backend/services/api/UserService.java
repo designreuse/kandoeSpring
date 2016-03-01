@@ -14,6 +14,8 @@ public interface UserService  extends UserDetailsService {
 
     User findUserByUsername(String username) throws UserServiceException;
 
+    User findUserByEmail(String email) throws UserServiceException;
+
     List<User> findUsers();
 
     User saveUser(User user) throws UserServiceException;

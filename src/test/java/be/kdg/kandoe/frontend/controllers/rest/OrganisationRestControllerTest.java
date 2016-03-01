@@ -69,8 +69,10 @@ public class OrganisationRestControllerTest {
 
         mockMvc.perform(get("/api/organisations/1")
                 .header("Authorization", token))
+                .andDo(print())
                 .andExpect(jsonPath("$.organisationId", is(1)))
-                .andDo(print());
+                .andExpect(jsonPath("$.organiser", is(true)));
+
     }
 
     @Test
@@ -91,5 +93,40 @@ public class OrganisationRestControllerTest {
                 .header("Authorization", token))
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].username", is("SenneWens")));
+    }
+
+    @Test
+    public void testAddMemberToOrganisation() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(post("/api/organisations/1/addMember?mail=jordan.parezys@student.kdg.be")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void testAddMemberToOrganisationWrongOrganiser() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTZW5uZVdlbnMifQ.jBZ7bYVVhH-5BkBbWrHow7L4AvUQYMXeQyveC1GrrEU\"";
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(post("/api/organisations/1/addMember?mail=jordan.parezys@student.kdg.be")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 }

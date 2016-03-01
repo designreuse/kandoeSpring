@@ -6,6 +6,8 @@ import org.springframework.hateoas.Identifiable;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 public class Organisation implements Serializable, Identifiable<Integer>{
@@ -26,11 +28,11 @@ public class Organisation implements Serializable, Identifiable<Integer>{
 
     @ManyToMany(targetEntity =  User.class, fetch = FetchType.EAGER)
     @JoinTable(name = "org_users", joinColumns = @JoinColumn(name = "OrganisationId"), inverseJoinColumns = @JoinColumn(name = "UserId"))
-    private List<User> users;
+    private Set<User> users;
 
     @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinTable(name = "org_owners", joinColumns = @JoinColumn(name = "OrganisationId"), inverseJoinColumns = @JoinColumn(name = "UserId"))
-    private List<User> organisers;
+    private Set<User> organisers;
 
     //TODO
     public Organisation() {
@@ -64,24 +66,32 @@ public class Organisation implements Serializable, Identifiable<Integer>{
         this.logoURL = logoURL;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
-    public List<User> getOrganisers() {
+    public Set<User> getOrganisers() {
         return organisers;
     }
 
-    public void setOrganisers(List<User> organisers) {
+    public void setOrganisers(Set<User> organisers) {
         this.organisers = organisers;
     }
 
     @Override
     public Integer getId() {
         return organisationId;
+    }
+
+    public Integer getOrganisationId() {
+        return organisationId;
+    }
+
+    public void setOrganisationId(Integer organisationId) {
+        this.organisationId = organisationId;
     }
 }
