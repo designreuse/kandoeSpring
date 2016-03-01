@@ -38,8 +38,8 @@ public class MailServiceTest {
     public void sendMailToMulipleUsers(){
         List<String> recipients = new ArrayList<>();
         recipients.add("MailUser");
-        recipients.add("ArneLauryssens");
-        recipients.add("SenneWens");
+       // recipients.add("ArneLauryssens");
+        //recipients.add("SenneWens");
         mailService.sendMailToUsers(recipients,"TestSubject","This should have gone out to 3 users: \n -Demo User \n -Arne \n -Senne \n enjoy boys :p");
     }
 
@@ -52,8 +52,8 @@ public class MailServiceTest {
     public void sendMailToUsersById(){
         List<Integer> recipients = new ArrayList<>();
         recipients.add(userService.findUserByUsername("MailUser").getId());
-        recipients.add(userService.findUserByUsername("ArneLauryssens").getId());
-        recipients.add(userService.findUserByUsername("SenneWens").getId());
+        //recipients.add(userService.findUserByUsername("ArneLauryssens").getId());
+        //recipients.add(userService.findUserByUsername("SenneWens").getId());
 
         mailService.sendMailToUsersByUserId(recipients,"TestSubject Mailed By Id","This should have gone out to 3 users: \n -Demo User \n -Arne \n -Senne \n enjoy boys :p");
     }
