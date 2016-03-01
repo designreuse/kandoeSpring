@@ -65,9 +65,10 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         selector: "organisation-detail",
                         template: "\n        <p>{{organisation.organisationName}}</p>\n        <p>{{organisation.address}}</p>\n        <img [src]=\"getImageSrc(organisation.logoUrl)\">\n        <p>organisers</p>\n        <ul>\n          <li *ngFor=\"#organiser of organisers\">\n            {{ organiser.username }}\n          </li>\n        </ul>\n        <p>members</p>\n        <ul>\n          <li *ngFor=\"#member of members\">\n            {{ member.username }}\n          </li>\n        </ul>\n    "
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
+                var _a;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }
