@@ -1,15 +1,17 @@
-import {Component, OnInit} from 'angular2/core'
-import {Organisation} from "../../DOM/organisation";
-import {OrganisationService} from "../../service/organisationService";
-import {Router, CanActivate} from 'angular2/router';
 import {tokenNotExpired} from "../../security/TokenHelper";
+import {OnInit} from "angular2/core";
+import {Component, OnInit} from 'angular2/core'
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
+import {Card} from "../../DOM/card";
+import {CardService} from "../../service/cardService";
+
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-organisation',
     template: `
-    <header>
+     <header>
         <div class="container clearfix">
             <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new organisation</h3>
         </div>
@@ -19,24 +21,21 @@ import {tokenNotExpired} from "../../security/TokenHelper";
             <div class="form-padadd-org">
 
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" placeholder="Enter organisation name" class="form-control" [(ngModel)]="organisation.organisationName">
+                    <label>Description</label>
+                    <input type="text" placeholder="Enter card description" class="form-control" [(ngModel)]="card.description">
                 </div>
+
                 <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" placeholder="Enter address" class="form-control" [(ngModel)]="organisation.address">
-                </div>
-                <div class="form-group">
-                    <label>Logo</label>
+                    <label>Image</label>
                     <input type="file" multiple="false" (change)="onFileChange($event)">
                 </div>
                 <div class="items">
                     <div class="item">
                         <div class="id"><p>1</p></div>
-                        <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisation.organisationId)" />
+                        <img alt="logo" [src]="getImageSrc(card.imageURL, card.cardId)" />
                         <div class="info">
-                            <h2 class="title">{{organisation.organisationName}}</h2>
-                            <p class="desc">{{organisation.address}}</p>
+                            <h2 class="title">{{card.description}}</h2>
+
                         </div>
                         <div class="social">
                             <ul>
@@ -47,7 +46,7 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-lg btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
+                <button type="button" class="btn btn-lg btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Create new card</button>
             </div>
         </form>
 
@@ -57,17 +56,20 @@ import {tokenNotExpired} from "../../security/TokenHelper";
         <img id="blah" src="http://i.imgur.com/zAyt4lX.jpg" alt="your image" height="100" />
     </form>
     </div>
-    `
+            `
+
 })
 
-export class AddOrganisationComponent {
-    private organisation:Organisation = Organisation.createEmpty();
-    private organisationService:OrganisationService;
+
+export class AddCardComponent {
+    private card:Card = Card.createEmpty();
+    private cardService:CardService;
     private router:Router;
     private file:File = null;
 
-    constructor(orgService:OrganisationService, router:Router) {
-        this.organisationService = orgService;
+
+    constructor(cardService:CardService, router:Router) {
+        this.cardService = cardService;
         this.router = router;
     }
 
@@ -76,8 +78,8 @@ export class AddOrganisationComponent {
     }
 
     onSubmit() {
-        this.organisationService.createOrganisation(this.organisation, this.file).subscribe(res => {
-            this.router.navigate(['/Organisations']);
+        this.cardService.createCard(this.card, this.file).subscribe(res => {
+            this.router.navigate(['/Cards']);
             this.file = null;
         }, error => {
             //todo change error display
@@ -87,18 +89,3 @@ export class AddOrganisationComponent {
     }
 }
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$("#imgInp").change(function(){
-    readURL(this);
-});

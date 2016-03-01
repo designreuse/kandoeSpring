@@ -1,9 +1,11 @@
 System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper", "../../service/themeService", "../../DOM/theme", "../../service/organisationService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -69,9 +71,10 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                         selector: 'add-theme',
                         template: "\n        <form  class=\"col-lg-offset-3 col-lg-6\" method=\"post\" role=\"form\">\n            <div class=\"form-pad\">\n                <h3>Add new theme</h3>\n                <div class=\"form-group\">\n                    <label>Name</label>\n                    <input type=\"text\" placeholder=\"Enter theme name\" class=\"form-control\" [(ngModel)]=\"theme.themeName\">\n                </div>\n                <div class=\"form-group\">\n                    <label>Description</label>\n                    <input type=\"text\" placeholder=\"Enter Description\" class=\"form-control\" [(ngModel)]=\"theme.description\">\n                </div>\n                <div class=\"form-group\">\n                    <select (change)=\"selectOrganisation($event)\">\n                        <option *ngFor=\"#organisation of currentOrganisations\" value=\"{{organisation.organisationName}}\">{{organisation.organisationName}}</option>\n                    </select>\n                </div>\n                <button type=\"button\" class=\"btn btn-lg btn-info\" (click)=\"onSubmit()\">Add</button>\n            </div>\n        </form>\n    "
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, organisationService_1.OrganisationService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, organisationService_1.OrganisationService])
                 ], AddThemeComponent);
                 return AddThemeComponent;
+                var _a;
             })();
             exports_1("AddThemeComponent", AddThemeComponent);
         }

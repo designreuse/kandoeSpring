@@ -1,24 +1,20 @@
-/**
- * Created by michaelkees on 12/02/16.
- */
+import {tokenNotExpired} from "../../security/TokenHelper";
 import {Component, OnInit} from 'angular2/core'
 import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
-import {Organisation} from "../../DOM/organisation";
-import {tokenNotExpired} from "../../security/TokenHelper";
-import {OrganisationService} from "../../service/organisationService";
+import {Card} from "../../DOM/card";
+import {CardService} from "../../service/cardService";
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
-    selector: 'organisations',
+    selector: 'cards',
     directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
-    <header>
-        <div class="container clearfix">
+ <div class="container clearfix">
             <div class="col-xs-12 col-sm-offset-3 col-sm-6">
                 <form class="form-search">
                     <div class="input-group dropdown">
-                        <input id="input-search" class="form-control"  placeholder="Search cards..." >
+                        <input id="input-search" class="form-control"  placeholder="Search organisations..." >
                         <div class="btn-group input-group-btn" role="group">
                             <button type="button" class="btn btn-default dropdown-toggle" id ="filter" data-toggle="dropdown" >
                             <span class="glyphicon glyphicon-filter"></span>
@@ -38,14 +34,14 @@ import {OrganisationService} from "../../service/organisationService";
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-10">
 				<ul class="searchable-container">
-				<div class="organisation-list col-1-4">
+				<div class="card-list col-1-4">
 						<li>
-						    <a [routerLink]="['/AddOrganisation']" >
+						    <a [routerLink]="['/AddCard']" >
                                 <div class="id"><p>0</p></div>
                                 <span class="add glyphicon glyphicon-plus-sign"></span>
                                 <div class="info">
-                                    <h2 class="title">Add an organisation</h2>
-                                    <p class="desc">Create your own group, add people and themes, and link a session. Make sure you're in control!</p>
+                                    <h2 class="title">Add a card</h2>
+                                    <p class="desc">Create your own card!</p>
                                 </div>
                                 <div class="social">
                                     <ul>
@@ -57,15 +53,14 @@ import {OrganisationService} from "../../service/organisationService";
                             </a>
                         </li>
 
-				    <div *ngFor="#organisation of organisations; #i = index" id="sort-list">
+				    <div *ngFor="#card of cards; #i = index" id="sort-list">
 
                         <li class="items">
-                        <a [routerLink]="['/OrganisationDetail', {id:organisation.organisationId}]">
+                        <a [routerLink]="['/CardDetail', {id:card.cardId}]">
                             <div class="id"><p>{{i+1}}</p></div>
-                            <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisations.organisationId)" />
+                            <img alt="logo" [src]="getImageSrc(card.imageURL, card.cardId)" />
                             <div class="info">
-                                <h2 class="title">{{organisation.organisationName}}</h2>
-                                <p class="desc">{{organisation.address}}</p>
+                                <h2 class="desc">{{card.description}}</h2>
                             </div>
                             <div class="social">
                                 <ul>
@@ -83,18 +78,21 @@ import {OrganisationService} from "../../service/organisationService";
 			</div>
 		</div>
 
-    </div>`,
-    inputs: ['organisations']
+    </div>
+
+    `,
+    inputs: ['cards']
+
 })
 
-export class OrganisationsComponent implements OnInit {
-    public organisations:Organisation[] = [];
+export class CardsComponent implements OnInit {
+    public cards:Card[] = [];
 
-    constructor(private _organisationService:OrganisationService , private _router:Router) {
+    constructor(private _cardService:CardService , private _router:Router) {
     }
 
     ngOnInit() {
-        this._organisationService.getUserOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
+        this._cardService.getAllCards().subscribe((cards:Card[])=> this.cards = cards);
 
         $('#input-search').on('keyup', function () {
             var rex = new RegExp($(this).val(), 'i');
@@ -105,7 +103,7 @@ export class OrganisationsComponent implements OnInit {
         });
     }
 
-    private getImageSrc(url: string, id: number): string {
+  private getImageSrc(url: string, id: number): string {
         if(url){
             if(url.indexOf("http://") > -1){
                 return url;

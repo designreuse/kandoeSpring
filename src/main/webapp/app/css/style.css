@@ -86,6 +86,7 @@ header div{
     height: inherit;
 }
 
+
 .login-section {
     text-align: left;
 }
@@ -118,7 +119,8 @@ header div{
 .form-padadd-org button {
     text-align: center;
     margin: 0 auto;
-    width: 100px;
+    width: 100%;
+    background-color: #ff9c44;
 }
 .add-orgimg{
     display: inline-block;
@@ -276,7 +278,52 @@ footer {
     padding: 10px;
 }
 
+#profile-picturenav{
+    max-width: 50px;
+}
+.img-responsivenav {
+    display: block;
+    max-width: 100%;
+    height: auto
+}
+
+.img-thumbnailnav {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out
+}
 .center-container{
     text-align: center;
     margin-bottom: 30px;
+}
+
+
+
+
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+    background-color: #555;
 }
