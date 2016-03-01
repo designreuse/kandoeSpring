@@ -40,23 +40,27 @@ import {OrganisationService} from "../../service/organisationService";
 				<ul class="searchable-container">
 				<div class="organisation-list col-1-4">
 						<li>
-                            <div class="id"><p>0</p></div>
-                            <a class="add" [routerLink]="['/AddOrganisation']" ><span class="add glyphicon glyphicon-plus-sign"></span></a>
-                            <div class="info">
-                                <h2 class="title">Add an organisation</h2>
-                                <p class="desc">Create your own group, add people and themes, and link a session. Make sure you're in control!</p>
-                            </div>
-                            <div class="social">
-                                <ul>
-                                    <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                                    <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                                    <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-                                </ul>
-                            </div>
+						    <a [routerLink]="['/AddOrganisation']" >
+                                <div class="id"><p>0</p></div>
+                                <span class="add glyphicon glyphicon-plus-sign"></span>
+                                <div class="info">
+                                    <h2 class="title">Add an organisation</h2>
+                                    <p class="desc">Create your own group, add people and themes, and link a session. Make sure you're in control!</p>
+                                </div>
+                                <div class="social">
+                                    <ul>
+                                        <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+                                        <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+                                        <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                                    </ul>
+                                </div>
+                            </a>
                         </li>
 
 				    <div *ngFor="#organisation of organisations; #i = index" id="sort-list">
+
                         <li class="items">
+                        <a [routerLink]="['/OrganisationDetail', {id:organisation.organisationId}]">
                             <div class="id"><p>{{i+1}}</p></div>
                             <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisations.organisationId)" />
                             <div class="info">
@@ -70,6 +74,7 @@ import {OrganisationService} from "../../service/organisationService";
                                     <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
                                 </ul>
                             </div>
+                            </a>
                         </li>
 					</div>
 					</div>

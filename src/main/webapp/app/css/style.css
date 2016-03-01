@@ -270,8 +270,10 @@ footer {
     font-size: 11px;
 }
 
-#profile-picture{
+#profile-picture,
+#org-logo{
     max-width: 150px;
+    padding: 10px;
 }
 
 .center-container{

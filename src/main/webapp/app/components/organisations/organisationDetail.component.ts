@@ -10,21 +10,39 @@ import {User} from "../../DOM/users/user";
 @Component({
     selector: "organisation-detail",
     template: `
-        <p>{{organisation.organisationName}}</p>
-        <p>{{organisation.address}}</p>
-        <img [src]="getImageSrc(organisation.logoUrl)">
-        <p>organisers</p>
-        <ul>
-          <li *ngFor="#organiser of organisers">
-            {{ organiser.username }}
-          </li>
-        </ul>
-        <p>members</p>
-        <ul>
-          <li *ngFor="#member of members">
-            {{ member.username }}
-          </li>
-        </ul>
+    <header>
+        <div class="container clearfix">
+            <h2><span class="glyphicon glyphicon-book"></span> {{organisation.organisationName}}</h2>
+        </div>
+    </header>
+    <div class="container main">
+            <div class="center-container col-lg-offset-2 col-lg-8">
+                <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
+            </div>
+            <div class="row">
+                <div class="well well-lg col-lg-offset-2 col-lg-4">
+                    <p>{{organisation.address}}</p>
+                </div>
+                <div class="well well-lg col-lg-4">
+                    <p>members</p>
+                    <ul>
+                      <li *ngFor="#member of members">
+                        {{ member.username }}
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="well well-lg col-lg-offset-2 col-lg-8">
+                    <p>organisers</p>
+                    <ul>
+                      <li *ngFor="#organiser of organisers">
+                        {{ organiser.username }}
+                      </li>
+                    </ul>
+                </div>
+           </div>
+    </div>
         <div *ngIf="organisation.organiser">
             <input type="text" [(ngModel)]="newMember">
             <button type="button" (click)="addMember()">Add member</button>
@@ -72,7 +90,7 @@ export class OrganisationDetailComponent implements OnInit{
     private addMember() {
         this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
             this.members.push(u);
-            console.log("member added");
+            this.newMember = "";
         })
     }
 }
