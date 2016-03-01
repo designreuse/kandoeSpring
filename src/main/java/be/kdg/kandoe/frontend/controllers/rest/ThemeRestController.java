@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping(value = "/api/themes")
 @ExposesResourceFor(ThemeDTO.class)
 public class ThemeRestController {
-    
+
     private final Logger logger = Logger.getLogger(OrganisationRestController.class);
     private final ThemeService themeService;
     private final ThemeAssembler themeAssembler;
