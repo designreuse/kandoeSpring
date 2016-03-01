@@ -49,7 +49,8 @@ body {
     padding: 0;
 }
 .organisation-list > div > li,
-.organisation-list > li{
+.organisation-list > li,
+div.item{
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
     padding: 0;
@@ -57,7 +58,8 @@ body {
 }
 
 .organisation-list > li > .id,
-.organisation-list > div > li > .id{
+.organisation-list > div > li > a > .id,
+div.item > div.id{
     display: inline-block;
     background-color: #1E8BC3;
     width: 100%;
@@ -70,8 +72,9 @@ body {
     background-color: slategrey;
 }
 
-.organisation-list > div > li > .id > p,
-.organisation-list > li > .id > p{
+.organisation-list > div > li > a > .id > p,
+.organisation-list > li > .id > p,
+div.item > div.id > p {
     color: rgb(255, 255, 255);
     text-decoration: none;
     padding: 5px;
@@ -84,32 +87,37 @@ body {
     background-color: #ff9c44;
 }
 
-.organisation-list > div > li > img,
-.organisation-list > li > a > .add {
+.organisation-list > div > li > a > img,
+.organisation-list > li > a > .add,
+div.item > img{
     width: 100%;
 }
 .organisation-list > li > .info,
-.organisation-list > div > li > .info{
+.organisation-list > div > li > a > .info,
+div.item > div.info {
     padding-top: 10px;
     text-align: center;
 }
 .organisation-list > li > .info > .title,
-.organisation-list > div > li > .info > .title{
+.organisation-list > div > li > a > .info > .title,
+div.item > div.info > .title{
     font-size: 17pt;
     font-weight: 700;
     margin: 0;
 }
 .organisation-list > li > .info > .desc,
-.organisation-list > div > li > .info > .desc {
+.organisation-list > div > li > a > .info > .desc,
+div.item > div.info > .desc{
     font-size: 13pt;
     font-weight: 300;
     margin: 0;
 }
 .organisation-list > li > .info > ul,
 .organisation-list > li > .social > ul,
-.organisation-list > div > li > .info > ul,
-.organisation-list > div > li > .social > ul
-{
+.organisation-list > div > li > a > .info > ul,
+.organisation-list > div > li > a > .social > ul,
+div.item > div.info > ul,
+div.item > div.social > ul{
     display: table;
     list-style: none;
     margin: 10px 0 0;
@@ -118,13 +126,16 @@ body {
     text-align: center;
 }
 .organisation-list > li > .social > ul,
-.organisation-list > div > li > .social > ul{
+.organisation-list > div > li > a > .social > ul,
+div.item > div.social > ul{
     margin: 0;
 }
 .organisation-list > li > .info > ul > li,
 .organisation-list > li > .social > ul > li,
-.organisation-list > div > li > .info > ul > li,
-.organisation-list > div > li > .social > ul > li{
+.organisation-list > div > li > a > .info > ul > li,
+.organisation-list > div > li > a > .social > ul > li,
+div.item > div.info > ul > li,
+div.item > div.social > ul > li{
     display: table-cell;
     cursor: pointer;
     color: rgb(30, 30, 30);
@@ -133,24 +144,29 @@ body {
     padding: 3px 0;
 }
 .organisation-list > li > .info > ul > li > a,
-.organisation-list > div > li > .info > ul > li > a{
+.organisation-list > div > li > a > .info > ul > li > a,
+div.item > div.info > ul > li > a{
     display: block;
     width: 100%;
     color: rgb(30, 30, 30);
     text-decoration: none;
 }
 .organisation-list > li > .social > ul > li,
-.organisation-list > div > li > .social > ul > li {
+.organisation-list > div > li > a > .social > ul > li,
+div.item > div.social > ul > li{
     padding: 0;
 }
 .organisation-list > li > .social > ul > li > a,
-.organisation-list > div > li > .social > ul > li > a {
+.organisation-list > div > li > a > .social > ul > li > a,
+div.item > div.social > ul > li > a{
     padding: 3px 0;
 }
 .organisation-list > li > .info > ul > li:hover,
 .organisation-list > li > .social > ul > li:hover,
-.organisation-list > div > li > .info > ul > li:hover,
-.organisation-list > div > li > .social > ul > li:hover{
+.organisation-list > div > li > a > .info > ul > li:hover,
+.organisation-list > div > li > a > .social > ul > li:hover,
+div.item > div.info > ul > li:hover,
+div.item > div.social > ul > li:hover{
     color: rgb(30, 30, 30);
 }
 .facebook a,
@@ -206,7 +222,8 @@ header:after {
         text-decoration: none;
     }
     .organisation-list > li,
-    .organisation-list > div > li{
+    .organisation-list > div > li,
+    div.item{
         position: relative;
         display: block;
         width: 100%;
@@ -215,75 +232,74 @@ header:after {
     }
 
     .organisation-list > li > .id,
-    .organisation-list > div > li > .id,
-    .organisation-list > div > li > img,
-    .organisation-list > li > a > .add{
+    .organisation-list > div > li > a > .id,
+    .organisation-list > div > li > a > img,
+    .organisation-list > li > a > .add,
+    div.item > img{
         display: inline-block;
     }
 
     .organisation-list > li > .id,
-    .organisation-list > div > li > .id {
+    .organisation-list > div > li > a > .id,
+    div.item > div.id{
         width: 60px;
         float: left;
-    }
-
-    .organisation-list > div > li > img,
-    .organisation-list > li > a > .add{
-        width: 120px;
-        float: left;
-    }
-    .organisation-list > li > .info,
-    .organisation-list > div > li > .info {
-        /*background-color: rgb(245, 245, 245);*/
-        overflow: hidden;
-    }
-
-    .organisation-list > li > .id,
-    .organisation-list > div > li > .id {
-        width: 60px;
         height: 120px;
         padding: 0;
         margin: 0;
     }
 
-    .organisation-list > li > .id > p,
-    .organisation-list > div > li > .id > p{
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .organisation-list > div > li > img,
-    .organisation-list > li > a > .add {
+    .organisation-list > div > li > a > img,
+    .organisation-list > li > a > .add,
+    div.item > img {
         width: 120px;
+        float: left;
         height: 120px;
         padding: 20px;
         margin: 0;
     }
-    .organisation-list > li > a > .add{
-        padding: 30px;
-    }
     .organisation-list > li > .info,
-    .organisation-list > div > li > .info{
+    .organisation-list > div > li > a > .info,
+    div.item > div.info{
+        /*background-color: rgb(245, 245, 245);*/
+        overflow: hidden;
         position: relative;
         height: 120px;
         text-align: left;
         padding-right: 40px;
     }
+
+    .organisation-list > li > a > .add{
+        padding: 30px;
+    }
+
+    .organisation-list > li > .id > p,
+    .organisation-list > div > li > a > .id > p,
+    div.item > div.id > p{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
     .organisation-list > li > .info > .title,
     .organisation-list > li > .info > .desc,
-    .organisation-list > div > li > .info > .title,
-    .organisation-list > div > li > .info > .desc{
+    .organisation-list > div > li > a > .info > .title,
+    .organisation-list > div > li > a > .info > .desc,
+    div.item > div.info > .title,
+    div.item > div.info > .desc {
         padding: 0 10px;
     }
-    .organisation-list > li > .info > ul,
-    .organisation-list > div > li > .info > ul {
+/*    .organisation-list > li > .info > ul,
+    .organisation-list > div > li > a > .info > ul,
+    div.item > div.info > ul{
         position: absolute;
         left: 0;
         bottom: 0;
-    }
+    }*/
+
     .organisation-list > li > .social,
-    .organisation-list > div > li > .social {
+    .organisation-list > div > li > a > .social,
+    div.item > div.social {
         position: absolute;
         top: 0;
         right: 0;
@@ -291,16 +307,19 @@ header:after {
         width: 40px;
     }
     .organisation-list > li > .social > ul,
-    .organisation-list > div > li > .social > ul {
+    .organisation-list > div > li > a > .social > ul,
+    div.item > div.social > ul {
         border-left: 1px solid rgb(230, 230, 230);
     }
     .organisation-list > li > .social > ul > li,
-    .organisation-list > div > li > .social > ul > li{
+    .organisation-list > div > li > a > .social > ul > li,
+    div.item > div.social > ul > li{
         display: block;
         padding: 0;
     }
     .organisation-list > li > .social > ul > li > a,
-    .organisation-list > div > li > .social > ul > li > a{
+    .organisation-list > div > li > a > .social > ul > li > a,
+    div.item > div.social > ul > li > a{
         display: block;
         width: 40px;
         padding: 10px 0 9px;

@@ -57,7 +57,9 @@ import {OrganisationService} from "../../service/organisationService";
                         </li>
 
 				    <div *ngFor="#organisation of organisations; #i = index" id="sort-list">
+
                         <li class="items">
+                        <a [routerLink]="['/OrganisationDetail', {id:organisation.organisationId}]">
                             <div class="id"><p>{{i+1}}</p></div>
                             <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisations.organisationId)" />
                             <div class="info">
@@ -71,6 +73,7 @@ import {OrganisationService} from "../../service/organisationService";
                                     <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
                                 </ul>
                             </div>
+                            </a>
                         </li>
 					</div>
 					</div>
