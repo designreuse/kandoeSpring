@@ -72,6 +72,13 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user = userService.saveUser(user);
         }
 
+        User mailUser = new User();
+        mailUser.setEmail("demoodooconf@gmail.com");
+        mailUser.setUsername("MailUser");
+        mailUser.setNewUser(true);
+        mailUser.setPassword("test123");
+        userService.saveUser(mailUser);
+
         Organisation org = new Organisation();
 
         if(organisationRepository.findOrganisationByOrganisationName("Karel De Grote") == null && user.getId() != null){

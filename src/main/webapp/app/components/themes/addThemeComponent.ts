@@ -46,7 +46,7 @@ export class AddThemeComponent {
 
     onSubmit() {
         this.themeService.createTheme(this.theme).subscribe(res => {
-            this.router.navigate(['/Themes']);
+            this.router.navigate(['/themes']);
         }, error => {
             //todo change error display
             this.file = null;
