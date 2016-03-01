@@ -15,7 +15,7 @@ System.register(["./link"], function(exports_1) {
                     organisation.organisationId = json.organisationId;
                     organisation.organisationName = json.organisationName;
                     organisation.address = json.address;
-                    organisation.logoUrl = json.logoUrl;
+                    organisation.logoUrl = json.logoURL;
                     for (var i = 0; i < json.links.length; i++) {
                         organisation.links[i] = link_1.Link.fromJson(json.links[i]);
                     }
