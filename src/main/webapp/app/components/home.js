@@ -65,9 +65,10 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                         directives: [register_component_1.RegisterComponent],
                         templateUrl: 'app/components/home.html'
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService])
                 ], Home);
                 return Home;
+                var _a;
             })();
             exports_1("Home", Home);
         }

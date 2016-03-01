@@ -14,11 +14,11 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                 <h3>Add new organisation</h3>
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" placeholder="Enter organisation name" class="form-control" [(ngModel)]="organisation.organisationName">
+                    <input id="name" type="text" placeholder="Enter organisation name" class="form-control" [(ngModel)]="organisation.organisationName" (change)="onNameChange($event)">
                 </div>
                 <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" placeholder="Enter address" class="form-control" [(ngModel)]="organisation.address">
+                    <label>Description</label>
+                    <input id="desc" type="text" placeholder="Enter description" class="form-control" [(ngModel)]="organisation.address" (change)="onDescChange($event)">
                 </div>
                 <div class="form-group">
                     <label>Logo</label>
@@ -27,7 +27,7 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                 <div class="event-list">
                 <li class="items">
                     <div class="id"><p>1</p></div>
-                            <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisation.organisationId)" />
+                            <img alt="logo" src="" id="logo" />
                             <div class="info">
                                 <h2 class="title">{{organisation.organisationName}}</h2>
                                 <p class="desc">{{organisation.address}}</p>
@@ -59,6 +59,14 @@ export class AddOrganisationComponent {
 
     onFileChange($event) {
         this.file = $event.target.files[0];
+      //  var img = $("#logo").attr($src, )
+    }
+
+    onNameChange($event){
+        var name=$("#name").attr($event);
+    }
+    onDescChange($event){
+        var desc=$("#desc").attr($event);
     }
 
     onSubmit() {
@@ -70,5 +78,15 @@ export class AddOrganisationComponent {
             this.file = null;
             alert(error.text());
         });
+    }
+    private getImageSrc(url: string, id: number): string {
+        if(url){
+            if(url.indexOf("http://") > -1){
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        }
+        return url;
     }
 }
