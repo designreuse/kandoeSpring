@@ -4,10 +4,11 @@ import {OrganisationsComponent} from "./organisations/organisations.component";
 import {RegisterComponent} from "./register.component";
 import {Home} from "./home";
 import {LoggedInHome} from "./loggedInHome.component";
-import {ThemeComponent} from "./ThemeComponent";
+import {ThemeComponent} from "./themes/themeComponent";
 import {KandoeCard} from "./kandoeCard";
 import {UserProfileComponent} from "./userprofile.component";
 import {AddOrganisationComponent} from "./organisations/addOrganisation.component";
+import {AddThemeComponent} from "./themes/addThemeComponent";
 
 
 @Component({
@@ -25,10 +26,10 @@ import {AddOrganisationComponent} from "./organisations/addOrganisation.componen
     {path: '/organisations', name: 'Organisations', component: OrganisationsComponent},
     {path: '/organisations/addOrganisation', name: 'AddOrganisation', component: AddOrganisationComponent},
     {path: '/register', as: 'Register', component: RegisterComponent},
-    {path: '/theme',as :'Theme',component:ThemeComponent},
+    {path: '/themes',as :'Theme',component:ThemeComponent},
     {path: '/card', as: 'KandoeCard', component:KandoeCard},
-    {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent}
-
+    {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
+    {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent}
 ])
 export class AppComponent {
 }

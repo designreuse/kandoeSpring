@@ -2,6 +2,7 @@ package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
+import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +28,7 @@ import java.util.List;
 @RequestMapping(value = "/api/themes")
 @ExposesResourceFor(ThemeDTO.class)
 public class ThemeRestController {
+
     private final Logger logger = Logger.getLogger(OrganisationRestController.class);
     private final ThemeService themeService;
     private final ThemeAssembler themeAssembler;
@@ -53,13 +56,17 @@ public class ThemeRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ThemeDTO> createOrganisation(@Valid @RequestBody ThemeDTO themeDTO){
-        Theme incTheme= mapper.map(themeDTO, Theme.class);
+    public ResponseEntity<ThemeDTO> createOrganisation(@Valid @RequestBody ThemeDTO themeDTO,
+                                                              @AuthenticationPrincipal User user) {
+        if (user != null && user.getId() != null) {
+            Theme theme_in = mapper.map(themeDTO, Theme.class);
 
-        //todo change to currently logged in user
-        Theme outTheme = themeService.saveTheme(incTheme, 1);
-        logger.info(this.getClass().toString() + ": adding new Theme " + outTheme.getId());
+            Theme theme_out = themeService.saveTheme(theme_in, user.getId());
+            logger.info(this.getClass().toString() + ": adding new theme " + theme_out.getId());
 
-        return new ResponseEntity<>(themeAssembler.toResource(outTheme), HttpStatus.CREATED);
+            return new ResponseEntity<>(themeAssembler.toResource(theme_out), HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

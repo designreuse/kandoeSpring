@@ -3,7 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {Organisation} from "../DOM/organisation";
 import {Http, Response, HTTP_PROVIDERS} from 'angular2/http'
 import {Injectable, Inject} from 'angular2/core'
-import {Theme} from "../DOM/Theme";
+import {Theme} from "../DOM/theme";
 import {User} from "../DOM/users/user";
 import {SecurityService} from "../security/securityService";
 import {UploadService} from "./uploadService";

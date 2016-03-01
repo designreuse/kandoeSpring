@@ -78,10 +78,13 @@ export class OrganisationsComponent implements OnInit {
     }
 
     private getImageSrc(url: string, id: number): string {
-        if(url.indexOf("http://") > -1){
-            return url;
-        } else {
-            return url.replace(/"/g, "");
+        if(url){
+            if(url.indexOf("http://") > -1){
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
         }
+        return url;
     }
 }

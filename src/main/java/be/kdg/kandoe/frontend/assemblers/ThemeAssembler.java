@@ -5,6 +5,7 @@ import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.DTO.ThemeDTO;
 import be.kdg.kandoe.frontend.controllers.rest.OrganisationRestController;
+import be.kdg.kandoe.frontend.controllers.rest.ThemeRestController;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -24,7 +25,7 @@ public class ThemeAssembler extends ResourceAssemblerSupport<Theme, ThemeDTO> {
 
     @Autowired
     public ThemeAssembler(MapperFacade mapper) {
-        super(OrganisationRestController.class, ThemeDTO.class);
+        super(ThemeRestController.class, ThemeDTO.class);
         this.mapper = mapper;
     }
 
@@ -40,6 +41,7 @@ public class ThemeAssembler extends ResourceAssemblerSupport<Theme, ThemeDTO> {
     public ThemeDTO toResource(Theme entity) {
         ThemeDTO themeDTO = mapper.map(entity, ThemeDTO.class);
 
+        themeDTO.setThemeId(entity.getId());
         return themeDTO;
     }
 }
