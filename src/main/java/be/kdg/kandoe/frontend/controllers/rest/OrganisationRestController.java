@@ -5,7 +5,9 @@ import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
+import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
+import be.kdg.kandoe.frontend.assemblers.UserAssembler;
 import be.kdg.kandoe.frontend.config.security.jwt.UserAuthentication;
 import be.kdg.kandoe.frontend.util.FileUtils;
 import ma.glasnost.orika.MapperFacade;
@@ -35,13 +37,15 @@ public class OrganisationRestController {
     private final OrganisationAssembler organisationAssembler;
     private final MapperFacade mapper;
     private final UserService userService;
+    private final UserAssembler userAssembler;
 
     @Autowired
-    public OrganisationRestController(OrganisationService organisationService, OrganisationAssembler organisationAssembler, MapperFacade mapper, UserService userService) {
+    public OrganisationRestController(OrganisationService organisationService, OrganisationAssembler organisationAssembler, MapperFacade mapper, UserService userService, UserAssembler userAssembler) {
         this.organisationService = organisationService;
         this.organisationAssembler = organisationAssembler;
         this.mapper = mapper;
         this.userService = userService;
+        this.userAssembler = userAssembler;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -116,5 +120,27 @@ public class OrganisationRestController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
+    }
+
+    @RequestMapping(value = "/{orgId}/organisers")
+    public ResponseEntity<List<UserDTO>> getOrganisationOrganisers(@AuthenticationPrincipal User user, @PathVariable(value = "orgId") Integer orgId){
+        if(user != null){
+            List<User> organisers = organisationService.findOrganisationOrganisers(orgId);
+
+            return new ResponseEntity<List<UserDTO>>(userAssembler.toResources(organisers), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List<UserDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{orgId}/members")
+    public ResponseEntity<List<UserDTO>> getOrganisationMembers(@AuthenticationPrincipal User user, @PathVariable(value = "orgId") Integer orgId){
+        if(user != null){
+            List<User> organisers = organisationService.findOrganisationMembers(orgId);
+
+            return new ResponseEntity<List<UserDTO>>(userAssembler.toResources(organisers), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List<UserDTO>>(HttpStatus.UNAUTHORIZED);
     }
 }

@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MvcResult;
 
+import javax.servlet.Filter;
+
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RootContextConfig.class, WebContextConfig.class})
+@ContextConfiguration(classes = {RootContextConfig.class, WebContextConfig.class, WebSecurityConfig.class})
 @WebAppConfiguration
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
@@ -38,26 +40,56 @@ public class OrganisationRestControllerTest {
     @Autowired
     WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private Filter springSecurityFilterChain;
+
     private MockMvc mockMvc;
 
     @Before
     public void setup()
     {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .addFilter(springSecurityFilterChain).build();
     }
 
     @Test
     public void testGetOrganisations() throws Exception {
-        mockMvc.perform(get("/api/organisations"))
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations")
+                .header("Authorization", token))
                 .andExpect(jsonPath("$").isArray())
                 .andDo(print());
     }
 
     @Test
     public void testGetOrganisationById() throws Exception {
-        mockMvc.perform(get("/api/organisations/1"))
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations/1")
+                .header("Authorization", token))
                 .andExpect(jsonPath("$.organisationId", is(1)))
                 .andDo(print());
+    }
+
+    @Test
+    public void testGetOrganisationOrganisers() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations/1/organisers")
+                    .header("Authorization", token))
+                    .andDo(print())
+                    .andExpect(jsonPath("$.[0].username", is("ArneLauryssens")));
+    }
+
+    @Test
+    public void testGetOrganisationMembers() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].username", is("SenneWens")));
     }
 }

@@ -24,11 +24,11 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     @Column(name="Logo")
     private String logoURL;
 
-    @ManyToMany(targetEntity =  User.class)
+    @ManyToMany(targetEntity =  User.class, fetch = FetchType.EAGER)
     @JoinTable(name = "org_users", joinColumns = @JoinColumn(name = "OrganisationId"), inverseJoinColumns = @JoinColumn(name = "UserId"))
     private List<User> users;
 
-    @ManyToMany(targetEntity = User.class)
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinTable(name = "org_owners", joinColumns = @JoinColumn(name = "OrganisationId"), inverseJoinColumns = @JoinColumn(name = "UserId"))
     private List<User> organisers;
 

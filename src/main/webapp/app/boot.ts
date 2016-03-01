@@ -13,7 +13,6 @@ import {
     RouteConfig
 } from 'angular2/router'
 import {HTTP_PROVIDERS} from 'angular2/http'
-import {Service} from "./service/service";
 import {UserService} from "./service/userService";
 import {AppComponent} from "./components/app";
 import {SecurityService} from "./security/securityService";
@@ -25,7 +24,6 @@ import {ThemeService} from "./service/themeService";
 bootstrap(AppComponent,
 [
     // dependency injection
-    Service,
     UserService,
     SecurityService,
     OrganisationService,

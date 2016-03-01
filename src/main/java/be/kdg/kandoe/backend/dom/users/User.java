@@ -104,9 +104,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-if(roles != null) {
-    roles.forEach(role -> authorities.addAll(role.getAuthorities()));
-}
+        if(roles != null) {
+            roles.forEach(role -> authorities.addAll(role.getAuthorities()));
+        }
         return authorities;
     }
 

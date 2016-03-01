@@ -65,7 +65,6 @@ export class OrganisationsComponent implements OnInit {
 
     ngOnInit() {
         this._organisationService.getUserOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
-        console.log(this.organisations.length);
 
         $('#input-search').on('keyup', function () {
             var rex = new RegExp($(this).val(), 'i');
@@ -85,6 +84,5 @@ export class OrganisationsComponent implements OnInit {
                 return url.replace(/"/g, "");
             }
         }
-        return url;
     }
 }

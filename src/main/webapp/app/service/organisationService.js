@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core', "../security/securityService", "./uploadService"], function(exports_1) {
+System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core', "../DOM/users/user", "../security/securityService", "./uploadService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,7 +11,7 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var organisation_1, core_1, securityService_1, uploadService_1;
+    var organisation_1, core_1, user_1, securityService_1, uploadService_1;
     var OrganisationService;
     return {
         setters:[
@@ -21,6 +21,9 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
             },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
             },
             function (securityService_1_1) {
                 securityService_1 = securityService_1_1;
@@ -45,6 +48,11 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                         .map(function (res) { return res.json(); })
                         .map(function (organisations) { return organisations.map(function (organisation) { return organisation_1.Organisation.fromJson(organisation); }); });
                 };
+                OrganisationService.prototype.getOrganisationById = function (id) {
+                    return this.securityService.get(this.path + 'organisations/' + id, true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (org) { return organisation_1.Organisation.fromJson(org); });
+                };
                 OrganisationService.prototype.createOrganisation = function (org, file) {
                     if (file) {
                         return this.uploadService.createOrganisation(JSON.stringify(org), file);
@@ -52,6 +60,16 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                     else {
                         return this.securityService.post(this.path + 'organisations', JSON.stringify(org), true);
                     }
+                };
+                OrganisationService.prototype.getOrganisationOrganisers = function (orgId) {
+                    return this.securityService.get(this.path + 'organisations/' + orgId + '/organisers', true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (users) { return users.map(function (u) { return user_1.User.fromJson(u); }); });
+                };
+                OrganisationService.prototype.getOrganisationMembers = function (orgId) {
+                    return this.securityService.get(this.path + 'organisations/' + orgId + '/members', true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (users) { return users.map(function (u) { return user_1.User.fromJson(u); }); });
                 };
                 OrganisationService = __decorate([
                     core_1.Injectable(),

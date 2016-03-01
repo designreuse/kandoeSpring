@@ -32,11 +32,31 @@ export class OrganisationService{
             .map((organisations:Array<Organisation>) => organisations.map((organisation:Organisation) => Organisation.fromJson(organisation)));
     }
 
+    public getOrganisationById(id: number): Observable<Organisation> {
+        return this.securityService.get(this.path + 'organisations/' + id, true)
+            .map(res => res.json())
+            .map((org: Organisation) => Organisation.fromJson(org));
+    }
+
     public createOrganisation(org: Organisation, file?: File): Observable<Response> {
         if(file){
             return this.uploadService.createOrganisation(JSON.stringify(org), file);
         } else {
             return this.securityService.post(this.path + 'organisations', JSON.stringify(org), true);
         }
+    }
+
+    public getOrganisationOrganisers(orgId: number): Observable<User[]>
+    {
+        return this.securityService.get(this.path + 'organisations/' + orgId + '/organisers', true)
+            .map(res => res.json())
+            .map((users: Array<User>) => users.map((u: User) => User.fromJson(u)));
+    }
+
+    public getOrganisationMembers(orgId: number): Observable<User[]>
+    {
+        return this.securityService.get(this.path + 'organisations/' + orgId + '/members', true)
+            .map(res => res.json())
+            .map((users: Array<User>) => users.map((u: User) => User.fromJson(u)));
     }
 }

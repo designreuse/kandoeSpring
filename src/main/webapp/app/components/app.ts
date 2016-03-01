@@ -9,6 +9,7 @@ import {KandoeCard} from "./kandoeCard";
 import {UserProfileComponent} from "./userprofile.component";
 import {AddOrganisationComponent} from "./organisations/addOrganisation.component";
 import {AddThemeComponent} from "./themes/addThemeComponent";
+import {OrganisationDetailComponent} from "./organisations/organisationDetail.component";
 
 
 @Component({
@@ -25,6 +26,7 @@ import {AddThemeComponent} from "./themes/addThemeComponent";
     {path: '/loggedIn', as: 'LoggedInHome', component: LoggedInHome},
     {path: '/organisations', name: 'Organisations', component: OrganisationsComponent},
     {path: '/organisations/addOrganisation', name: 'AddOrganisation', component: AddOrganisationComponent},
+    {path: '/organisations/:id/detail', name: 'OrganisationDetail', component: OrganisationDetailComponent},
     {path: '/register', as: 'Register', component: RegisterComponent},
     {path: '/themes',as :'Theme',component:ThemeComponent},
     {path: '/card', as: 'KandoeCard', component:KandoeCard},

@@ -34,7 +34,6 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                 OrganisationsComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._organisationService.getUserOrganisations().subscribe(function (organisations) { return _this.organisations = organisations; });
-                    console.log(this.organisations.length);
                     $('#input-search').on('keyup', function () {
                         var rex = new RegExp($(this).val(), 'i');
                         $('.searchable-container .items').hide();
@@ -52,7 +51,6 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                             return url.replace(/"/g, "");
                         }
                     }
-                    return url;
                 };
                 OrganisationsComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
