@@ -57,7 +57,7 @@ div.item{
     margin: 0 0 20px;
 }
 
-.organisation-list > li > .id,
+.organisation-list > li > a > .id,
 .organisation-list > div > li > a > .id,
 div.item > div.id{
     display: inline-block;
@@ -73,7 +73,7 @@ div.item > div.id{
 }
 
 .organisation-list > div > li > a > .id > p,
-.organisation-list > li > .id > p,
+.organisation-list > li > a > .id > p,
 div.item > div.id > p {
     color: rgb(255, 255, 255);
     text-decoration: none;
@@ -92,28 +92,28 @@ div.item > div.id > p {
 div.item > img{
     width: 100%;
 }
-.organisation-list > li > .info,
+.organisation-list > li > a > .info,
 .organisation-list > div > li > a > .info,
 div.item > div.info {
     padding-top: 10px;
     text-align: center;
 }
-.organisation-list > li > .info > .title,
+.organisation-list > li > a > .info > .title,
 .organisation-list > div > li > a > .info > .title,
 div.item > div.info > .title{
     font-size: 17pt;
     font-weight: 700;
     margin: 0;
 }
-.organisation-list > li > .info > .desc,
+.organisation-list > li > a > .info > .desc,
 .organisation-list > div > li > a > .info > .desc,
 div.item > div.info > .desc{
     font-size: 13pt;
     font-weight: 300;
     margin: 0;
 }
-.organisation-list > li > .info > ul,
-.organisation-list > li > .social > ul,
+.organisation-list > li > a > .info > ul,
+.organisation-list > li > a > .social > ul,
 .organisation-list > div > li > a > .info > ul,
 .organisation-list > div > li > a > .social > ul,
 div.item > div.info > ul,
@@ -125,13 +125,13 @@ div.item > div.social > ul{
     width: 100%;
     text-align: center;
 }
-.organisation-list > li > .social > ul,
+.organisation-list > li > a > .social > ul,
 .organisation-list > div > li > a > .social > ul,
 div.item > div.social > ul{
     margin: 0;
 }
-.organisation-list > li > .info > ul > li,
-.organisation-list > li > .social > ul > li,
+.organisation-list > li > a > .info > ul > li,
+.organisation-list > li > a > .social > ul > li,
 .organisation-list > div > li > a > .info > ul > li,
 .organisation-list > div > li > a > .social > ul > li,
 div.item > div.info > ul > li,
@@ -143,7 +143,7 @@ div.item > div.social > ul > li{
     font-weight: 300;
     padding: 3px 0;
 }
-.organisation-list > li > .info > ul > li > a,
+.organisation-list > li > a > .info > ul > li > a,
 .organisation-list > div > li > a > .info > ul > li > a,
 div.item > div.info > ul > li > a{
     display: block;
@@ -151,18 +151,18 @@ div.item > div.info > ul > li > a{
     color: rgb(30, 30, 30);
     text-decoration: none;
 }
-.organisation-list > li > .social > ul > li,
+.organisation-list > li > a > .social > ul > li,
 .organisation-list > div > li > a > .social > ul > li,
 div.item > div.social > ul > li{
     padding: 0;
 }
-.organisation-list > li > .social > ul > li > a,
+.organisation-list > li > a > .social > ul > li > a,
 .organisation-list > div > li > a > .social > ul > li > a,
 div.item > div.social > ul > li > a{
     padding: 3px 0;
 }
-.organisation-list > li > .info > ul > li:hover,
-.organisation-list > li > .social > ul > li:hover,
+.organisation-list > li > a > .info > ul > li:hover,
+.organisation-list > li > a > .social > ul > li:hover,
 .organisation-list > div > li > a > .info > ul > li:hover,
 .organisation-list > div > li > a > .social > ul > li:hover,
 div.item > div.info > ul > li:hover,
@@ -231,7 +231,7 @@ header:after {
         padding: 0;
     }
 
-    .organisation-list > li > .id,
+    .organisation-list > li > a > .id,
     .organisation-list > div > li > a > .id,
     .organisation-list > div > li > a > img,
     .organisation-list > li > a > .add,
@@ -239,7 +239,7 @@ header:after {
         display: inline-block;
     }
 
-    .organisation-list > li > .id,
+    .organisation-list > li > a > .id,
     .organisation-list > div > li > a > .id,
     div.item > div.id{
         width: 60px;
@@ -258,7 +258,7 @@ header:after {
         padding: 20px;
         margin: 0;
     }
-    .organisation-list > li > .info,
+    .organisation-list > li > a > .info,
     .organisation-list > div > li > a > .info,
     div.item > div.info{
         /*background-color: rgb(245, 245, 245);*/
@@ -273,7 +273,7 @@ header:after {
         padding: 30px;
     }
 
-    .organisation-list > li > .id > p,
+    .organisation-list > li > a > .id > p,
     .organisation-list > div > li > a > .id > p,
     div.item > div.id > p{
         position: relative;
@@ -281,15 +281,15 @@ header:after {
         transform: translateY(-50%);
     }
 
-    .organisation-list > li > .info > .title,
-    .organisation-list > li > .info > .desc,
+    .organisation-list > li > a > .info > .title,
+    .organisation-list > li > a > .info > .desc,
     .organisation-list > div > li > a > .info > .title,
     .organisation-list > div > li > a > .info > .desc,
     div.item > div.info > .title,
     div.item > div.info > .desc {
         padding: 0 10px;
     }
-/*    .organisation-list > li > .info > ul,
+/*    .organisation-list > li > a > .info > ul,
     .organisation-list > div > li > a > .info > ul,
     div.item > div.info > ul{
         position: absolute;
@@ -297,7 +297,7 @@ header:after {
         bottom: 0;
     }*/
 
-    .organisation-list > li > .social,
+    .organisation-list > li > a > .social,
     .organisation-list > div > li > a > .social,
     div.item > div.social {
         position: absolute;
@@ -306,18 +306,18 @@ header:after {
         display: block;
         width: 40px;
     }
-    .organisation-list > li > .social > ul,
+    .organisation-list > li > a > .social > ul,
     .organisation-list > div > li > a > .social > ul,
     div.item > div.social > ul {
         border-left: 1px solid rgb(230, 230, 230);
     }
-    .organisation-list > li > .social > ul > li,
+    .organisation-list > li > a > .social > ul > li,
     .organisation-list > div > li > a > .social > ul > li,
     div.item > div.social > ul > li{
         display: block;
         padding: 0;
     }
-    .organisation-list > li > .social > ul > li > a,
+    .organisation-list > li > a > .social > ul > li > a,
     .organisation-list > div > li > a > .social > ul > li > a,
     div.item > div.social > ul > li > a{
         display: block;
