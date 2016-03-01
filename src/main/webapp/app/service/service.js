@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../DOM/Theme", "../security/securityService"], function(exports_1) {
+System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../DOM/theme", "../security/securityService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,7 +11,7 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var http_1, core_1, Theme_1, securityService_1;
+    var http_1, core_1, theme_1, securityService_1;
     var Service;
     return {
         setters:[
@@ -22,8 +22,8 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (Theme_1_1) {
-                Theme_1 = Theme_1_1;
+            function (theme_1_1) {
+                theme_1 = theme_1_1;
             },
             function (securityService_1_1) {
                 securityService_1 = securityService_1_1;
@@ -39,7 +39,7 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
                 Service.prototype.getThemes = function () {
                     return this.securityService.get(this.path + 'themes', true)
                         .map(function (res) { return res.json(); })
-                        .map(function (themes) { return themes.map(function (theme) { return Theme_1.Theme.fromJson(theme); }); });
+                        .map(function (themes) { return themes.map(function (theme) { return theme_1.Theme.fromJson(theme); }); });
                 };
                 Service = __decorate([
                     core_1.Injectable(),
