@@ -83,6 +83,7 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     __metadata('design:paramtypes', [router_1.Router, userService_1.UserService, securityService_1.SecurityService, String])
                 ], Home);
                 return Home;
+                var _a;
             })();
             exports_1("Home", Home);
         }

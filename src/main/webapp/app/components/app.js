@@ -63,9 +63,9 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
                     router_1.RouteConfig([
                         { path: '/home', as: 'Home', component: home_1.Home, useAsDefault: true },
                         { path: '/loggedIn', as: 'LoggedInHome', component: loggedInHome_component_1.LoggedInHome },
-                        { path: '/organisations', name: 'Organisations', component: organisations_component_1.OrganisationsComponent },
-                        { path: '/organisations/addOrganisation', name: 'AddOrganisation', component: addOrganisation_component_1.AddOrganisationComponent },
-                        { path: '/organisations/:id/detail', name: 'OrganisationDetail', component: organisationDetail_component_1.OrganisationDetailComponent },
+                        { path: '/organisations', as: 'Organisations', component: organisations_component_1.OrganisationsComponent },
+                        { path: '/organisations/addOrganisation', as: 'AddOrganisation', component: addOrganisation_component_1.AddOrganisationComponent },
+                        { path: '/organisations/:id/detail', as: 'OrganisationDetail', component: organisationDetail_component_1.OrganisationDetailComponent },
                         { path: '/register', as: 'Register', component: register_component_1.RegisterComponent },
                         { path: '/themes', as: 'Theme', component: themeComponent_1.ThemeComponent },
                         { path: '/card', as: 'KandoeCard', component: kandoeCard_1.KandoeCard },

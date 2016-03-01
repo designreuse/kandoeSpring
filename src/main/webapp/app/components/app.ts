@@ -24,9 +24,9 @@ import {OrganisationDetailComponent} from "./organisations/organisationDetail.co
 @RouteConfig([
     {path: '/home', as: 'Home', component: Home, useAsDefault: true},
     {path: '/loggedIn', as: 'LoggedInHome', component: LoggedInHome},
-    {path: '/organisations', name: 'Organisations', component: OrganisationsComponent},
-    {path: '/organisations/addOrganisation', name: 'AddOrganisation', component: AddOrganisationComponent},
-    {path: '/organisations/:id/detail', name: 'OrganisationDetail', component: OrganisationDetailComponent},
+    {path: '/organisations', as: 'Organisations', component: OrganisationsComponent},
+    {path: '/organisations/addOrganisation', as: 'AddOrganisation', component: AddOrganisationComponent},
+    {path: '/organisations/:id/detail', as: 'OrganisationDetail', component: OrganisationDetailComponent},
     {path: '/register', as: 'Register', component: RegisterComponent},
     {path: '/themes',as :'Theme',component:ThemeComponent},
     {path: '/card', as: 'KandoeCard', component:KandoeCard},

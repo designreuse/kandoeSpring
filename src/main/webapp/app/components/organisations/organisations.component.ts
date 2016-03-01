@@ -2,7 +2,7 @@
  * Created by michaelkees on 12/02/16.
  */
 import {Component, OnInit} from 'angular2/core'
-import {Router, CanActivate} from 'angular2/router'
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Organisation} from "../../DOM/organisation";
 import {Service} from "../../service/service";
 import {tokenNotExpired} from "../../security/TokenHelper";
@@ -12,27 +12,51 @@ import {OrganisationService} from "../../service/organisationService";
 
 @Component({
     selector: 'organisations',
+    directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
-
-    <div class="container">
-        <div class="input-append">
-            <input class="span2 search-query" id="input-search" type="search" placeholder="Search organisations..." >
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" id ="filter" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-filter"></span>
-                <span class="caret"></span>Filter</button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Name</a></li>
-                    <li><a href="#">Id</a></li>
-                    <li><a href="#">Address</a></li>
-                </ul>
+    <header>
+        <div class="container clearfix">
+            <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                <form class="form-search">
+                    <div class="input-group dropdown">
+                        <input id="input-search" class="form-control"  placeholder="Search organisations..." >
+                        <div class="btn-group input-group-btn" role="group">
+                            <button type="button" class="btn btn-default dropdown-toggle" id ="filter" data-toggle="dropdown" >
+                            <span class="glyphicon glyphicon-filter"></span>
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><span class="sort-option" (click)="sortNameAsc()">Name A-Z</span></li>
+                                <li><span class="sort-option" (click)="sortNameDesc()">Name Z-A</span></li>
+                                <li><a href="#">Address City</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </header>
+    <div class="container" id="main">
     	<div class="row">
-			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+			<div class="col-xs-12 col-sm-offset-1 col-sm-10">
 				<ul class="searchable-container">
-				    <div *ngFor="#organisation of organisations; #i = index" class="event-list col-1-4">
-                        <!--<p>OrganisationID : {{organisation.organisationId}}</p>-->
+				<div class="organisation-list col-1-4">
+						<li>
+                            <div class="id"><p>0</p></div>
+                            <a class="add" [routerLink]="['/AddOrganisation']" ><span class="add glyphicon glyphicon-plus-sign"></span></a>
+                            <div class="info">
+                                <h2 class="title">Add an organisation</h2>
+                                <p class="desc">Create your own group, add people and themes, and link a session. Make sure you're in control!</p>
+                            </div>
+                            <div class="social">
+                                <ul>
+                                    <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+                                    <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+                                    <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+				    <div *ngFor="#organisation of organisations; #i = index" id="sort-list">
                         <li class="items">
                             <div class="id"><p>{{i+1}}</p></div>
                             <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisations.organisationId)" />
@@ -49,7 +73,9 @@ import {OrganisationService} from "../../service/organisationService";
                             </div>
                         </li>
 					</div>
+					</div>
 				</ul>
+
 			</div>
 		</div>
 
@@ -73,7 +99,6 @@ export class OrganisationsComponent implements OnInit {
                 return rex.test($(this).text());
             }).show();
         });
-
     }
 
     private getImageSrc(url: string, id: number): string {
@@ -85,4 +110,38 @@ export class OrganisationsComponent implements OnInit {
             }
         }
     }
+
+    sortNameAsc(){
+        var items = $('#sort-list li.items').get();
+        items.sort(function(a,b){
+            var keyA = $(a).find("h2.title").text();
+            var keyB = $(b).find("h2.title").text();
+
+            if (keyA < keyB) return -1;
+            if (keyA > keyB) return 1;
+            return 0;
+        });
+        var ul = $('#sort-list');
+        $.each(items, function(i, li){
+            ul.append(li);
+        });
+    }
+
+    sortNameDesc(){
+
+        var items = $('#sort-list li.items').get();
+        items.sort(function(a,b){
+            var keyA = $(a).find("h2.title").text();
+            var keyB = $(b).find("h2.title").text();
+
+            if (keyA > keyB) return -1;
+            if (keyA < keyB) return 1;
+            return 0;
+        });
+        var ul = $('#sort-list');
+        $.each(items, function(i, li){
+            ul.append(li);
+        });
+    }
+
 }

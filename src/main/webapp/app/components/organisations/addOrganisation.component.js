@@ -49,6 +49,16 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         alert(error.text());
                     });
                 };
+                AddOrganisationComponent.prototype.getImageSrc = function (url, id) {
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
+                    }
+                };
                 AddOrganisationComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({

@@ -71,4 +71,14 @@ export class AddOrganisationComponent {
             alert(error.text());
         });
     }
+
+    private getImageSrc(url: string, id: number): string {
+        if(url){
+            if(url.indexOf("http://") > -1){
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        }
+    }
 }
