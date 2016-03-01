@@ -1,37 +1,77 @@
 @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic");
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+
+#filter{
+    padding-bottom:13px;
+}
+
+#input-search{
+    height: 50px;
+}
+
+.glyphicon{
+    top: 0;
+}
+
+.add{
+    color: white;
+}
+
 body {
-    padding: 60px 0;
+    padding: 60px 0 0 0;
     background-color: rgb(220, 220, 220);
 }
 
-/*#filter {
-    display: inline-block;
-    padding: 4px 4px;
-    margin-bottom: 0;
-    border-radius: 3px
-}*/
+.searchable-container{
+    padding-left: 0;
+}
 
-.event-list {
+.sort-option{
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0
+}
+
+.sort-option:hover{
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.organisation-list {
     list-style: none;
     font-family: 'Lato', sans-serif;
     margin: 0;
     padding: 0;
 }
-.event-list > li {
+.organisation-list > div > li,
+.organisation-list > li{
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
     padding: 0;
     margin: 0 0 20px;
 }
 
-.event-list > li > .id{
+.organisation-list > li > .id,
+.organisation-list > div > li > .id{
     display: inline-block;
     background-color: #1E8BC3;
     width: 100%;
 }
 
-.event-list > li > .id > p{
+.organisation-list > li > a > .add {
+    font-size: 4em;
+    text-align: center;
+    padding-top: 30px;
+    background-color: slategrey;
+}
+
+.organisation-list > div > li > .id > p,
+.organisation-list > li > .id > p{
     color: rgb(255, 255, 255);
     text-decoration: none;
     padding: 5px;
@@ -40,29 +80,36 @@ body {
     text-align: center;
     text-transform: uppercase;
 }
-.event-list > li:nth-child(even) > .id {
+.organisation-list > div > li:nth-child(even) > .id {
     background-color: #ff9c44;
 }
 
-.event-list > li > img {
+.organisation-list > div > li > img,
+.organisation-list > li > a > .add {
     width: 100%;
 }
-.event-list > li > .info {
+.organisation-list > li > .info,
+.organisation-list > div > li > .info{
     padding-top: 10px;
     text-align: center;
 }
-.event-list > li > .info > .title {
+.organisation-list > li > .info > .title,
+.organisation-list > div > li > .info > .title{
     font-size: 17pt;
     font-weight: 700;
     margin: 0;
 }
-.event-list > li > .info > .desc {
+.organisation-list > li > .info > .desc,
+.organisation-list > div > li > .info > .desc {
     font-size: 13pt;
     font-weight: 300;
     margin: 0;
 }
-.event-list > li > .info > ul,
-.event-list > li > .social > ul {
+.organisation-list > li > .info > ul,
+.organisation-list > li > .social > ul,
+.organisation-list > div > li > .info > ul,
+.organisation-list > div > li > .social > ul
+{
     display: table;
     list-style: none;
     margin: 10px 0 0;
@@ -70,11 +117,14 @@ body {
     width: 100%;
     text-align: center;
 }
-.event-list > li > .social > ul {
+.organisation-list > li > .social > ul,
+.organisation-list > div > li > .social > ul{
     margin: 0;
 }
-.event-list > li > .info > ul > li,
-.event-list > li > .social > ul > li {
+.organisation-list > li > .info > ul > li,
+.organisation-list > li > .social > ul > li,
+.organisation-list > div > li > .info > ul > li,
+.organisation-list > div > li > .social > ul > li{
     display: table-cell;
     cursor: pointer;
     color: rgb(30, 30, 30);
@@ -82,22 +132,26 @@ body {
     font-weight: 300;
     padding: 3px 0;
 }
-.event-list > li > .info > ul > li > a {
+.organisation-list > li > .info > ul > li > a,
+.organisation-list > div > li > .info > ul > li > a{
     display: block;
     width: 100%;
     color: rgb(30, 30, 30);
     text-decoration: none;
 }
-.event-list > li > .social > ul > li {
+.organisation-list > li > .social > ul > li,
+.organisation-list > div > li > .social > ul > li {
     padding: 0;
 }
-.event-list > li > .social > ul > li > a {
+.organisation-list > li > .social > ul > li > a,
+.organisation-list > div > li > .social > ul > li > a {
     padding: 3px 0;
 }
-.event-list > li > .info > ul > li:hover,
-.event-list > li > .social > ul > li:hover {
+.organisation-list > li > .info > ul > li:hover,
+.organisation-list > li > .social > ul > li:hover,
+.organisation-list > div > li > .info > ul > li:hover,
+.organisation-list > div > li > .social > ul > li:hover{
     color: rgb(30, 30, 30);
-    background-color: rgb(200, 200, 200);
 }
 .facebook a,
 .twitter a,
@@ -125,8 +179,34 @@ body {
     background-color: rgb(221, 75, 57) !important;
 }
 
+header.smaller {
+    height: 75px; }
+
+header:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0; }
+
+.dropdown-menu:hover > li{
+    position: absolute;
+    display: block;
+}
+
 @media (min-width: 768px) {
-    .event-list > li {
+    .add{
+        color: white;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+    .add:hover {
+        color: #ff9c44;
+        text-decoration: none;
+    }
+    .organisation-list > li,
+    .organisation-list > div > li{
         position: relative;
         display: block;
         width: 100%;
@@ -134,74 +214,93 @@ body {
         padding: 0;
     }
 
-    .event-list > li > .id,
-    .event-list > li > img  {
+    .organisation-list > li > .id,
+    .organisation-list > div > li > .id,
+    .organisation-list > div > li > img,
+    .organisation-list > li > a > .add{
         display: inline-block;
     }
 
-    .event-list > li > .id {
+    .organisation-list > li > .id,
+    .organisation-list > div > li > .id {
         width: 60px;
         float: left;
     }
 
-    .event-list > li > img {
+    .organisation-list > div > li > img,
+    .organisation-list > li > a > .add{
         width: 120px;
         float: left;
     }
-    .event-list > li > .info {
-        background-color: rgb(245, 245, 245);
+    .organisation-list > li > .info,
+    .organisation-list > div > li > .info {
+        /*background-color: rgb(245, 245, 245);*/
         overflow: hidden;
     }
 
-    .event-list > li > .id {
+    .organisation-list > li > .id,
+    .organisation-list > div > li > .id {
         width: 60px;
         height: 120px;
         padding: 0;
         margin: 0;
     }
 
-    .event-list > li > .id > p{
+    .organisation-list > li > .id > p,
+    .organisation-list > div > li > .id > p{
         position: relative;
         top: 50%;
         transform: translateY(-50%);
     }
 
-    .event-list > li > img {
+    .organisation-list > div > li > img,
+    .organisation-list > li > a > .add {
         width: 120px;
         height: 120px;
-        padding: 0;
+        padding: 20px;
         margin: 0;
     }
-    .event-list > li > .info {
+    .organisation-list > li > a > .add{
+        padding: 30px;
+    }
+    .organisation-list > li > .info,
+    .organisation-list > div > li > .info{
         position: relative;
         height: 120px;
         text-align: left;
         padding-right: 40px;
     }
-    .event-list > li > .info > .title,
-    .event-list > li > .info > .desc {
+    .organisation-list > li > .info > .title,
+    .organisation-list > li > .info > .desc,
+    .organisation-list > div > li > .info > .title,
+    .organisation-list > div > li > .info > .desc{
         padding: 0 10px;
     }
-    .event-list > li > .info > ul {
+    .organisation-list > li > .info > ul,
+    .organisation-list > div > li > .info > ul {
         position: absolute;
         left: 0;
         bottom: 0;
     }
-    .event-list > li > .social {
+    .organisation-list > li > .social,
+    .organisation-list > div > li > .social {
         position: absolute;
         top: 0;
         right: 0;
         display: block;
         width: 40px;
     }
-    .event-list > li > .social > ul {
+    .organisation-list > li > .social > ul,
+    .organisation-list > div > li > .social > ul {
         border-left: 1px solid rgb(230, 230, 230);
     }
-    .event-list > li > .social > ul > li {
+    .organisation-list > li > .social > ul > li,
+    .organisation-list > div > li > .social > ul > li{
         display: block;
         padding: 0;
     }
-    .event-list > li > .social > ul > li > a {
+    .organisation-list > li > .social > ul > li > a,
+    .organisation-list > div > li > .social > ul > li > a{
         display: block;
         width: 40px;
         padding: 10px 0 9px;

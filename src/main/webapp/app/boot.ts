@@ -13,7 +13,6 @@ import {
     RouteConfig
 } from 'angular2/router'
 import {HTTP_PROVIDERS} from 'angular2/http'
-import {Service} from "./service/service";
 import {UserService} from "./service/userService";
 import {AppComponent} from "./components/app";
 import {SecurityService} from "./security/securityService";
@@ -25,7 +24,6 @@ import {ThemeService} from "./service/themeService";
 bootstrap(AppComponent,
 [
     // dependency injection
-    Service,
     UserService,
     SecurityService,
     OrganisationService,
@@ -38,6 +36,8 @@ bootstrap(AppComponent,
     provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
     provide(APP_BASE_HREF, {useValue: "/"}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    provide('App.BackEndPath', {useValue: "http://localhost:9966/Kandoe/api/"}),
+    provide('App.BackEndPath', {useValue: "http://wildfly-teamiip2kdgbe.rhcloud.com/api/"}),
     provide('App.DevPath', {useValue: "http://localhost:9966/Kandoe/api/"})
 ]);
+//  http://wildfly-teamiip2kdgbe.rhcloud.com/api/
+//  http://localhost:9966/Kandoe/api/

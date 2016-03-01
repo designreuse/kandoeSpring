@@ -29,7 +29,14 @@ export class User {
         user.username = json.username;
         user.email = json.email;
         var person = new Person();
+        var address = new Address();
+        address.city = json.person.address.city;
+        address.number = json.person.address.number;
+        address.street = json.person.address.street;
+        address.zip = json.person.address.zip;
+        person.address = address;
         person.firstname = json.person.firstname;
+        person.lastname = json.person.lastname;
         user.person = person;
 
         return user;

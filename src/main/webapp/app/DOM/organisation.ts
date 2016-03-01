@@ -17,11 +17,14 @@ export class Organisation {
         organisation.organisationId = json.organisationId;
         organisation.organisationName = json.organisationName;
         organisation.address = json.address;
-        organisation.logoUrl = json.logoUrl;
+        organisation.logoUrl = json.logoURL;
 
-        for (var i = 0; i < json.links.length; i++){
-            organisation.links[i] = Link.fromJson(json.links[i])
+        if(json.links){
+            for (var i = 0; i < json.links.length; i++){
+                organisation.links[i] = Link.fromJson(json.links[i])
+            }
         }
+
 
         return organisation;
     }

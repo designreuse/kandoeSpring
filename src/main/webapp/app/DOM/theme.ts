@@ -10,16 +10,17 @@ export class Theme{
     iconUrl:string;
     links:Link[];
 
-    constructor(themeId:number, themeName:string, description:string, organisation:string) {
-        this.themeId = themeId;
-        this.themeName = themeName;
-        this.description=description;
-        this.organisation=organisation;
+    constructor() {
+
     }
 
     static fromJson(json:any):Theme{
-        var theme = new Theme(json.themeId,json.themeName,json.description,json.organisation);
+        var theme = new Theme();
         theme.iconUrl=json.iconUrl;
+        theme.themeId = json.themeId;
+        theme.themeName = json.themeName;
+        theme.description = json.description;
+        theme.organisation = json.organisation;
 
         for (var i = 0; i < json.links.length; i++){
             theme.links[i] = Link.fromJson(json.links[i])

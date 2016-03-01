@@ -10,9 +10,17 @@ import {tokenNotExpired} from '../security/TokenHelper';
 @Component({
     selector: 'userprofile',
     template: `
-     <form  class="col-lg-offset-3 col-lg-6" method="post" role="form">
+    <header>
+        <div class="container clearfix">
+            <h2><span class="glyphicon glyphicon-user"></span> Profile</h2>
+        </div>
+    </header>
+    <div class="container main">
+     <div class="center-container col-lg-offset-2 col-lg-8">
+        <img class="img-responsive img-thumbnail" id="profile-picture" src="http://zblogged.com/wp-content/uploads/2015/11/c1.png">
+     </div>
+     <form  class="well well-lg col-lg-offset-2 col-lg-8" method="post" role="form">
         <div class="form-pad">
-        <h3>Profile</h3>
         <div *ngIf="!showChangePassword">
             <div class="form-group">
                 <label>Username</label>
@@ -70,12 +78,23 @@ import {tokenNotExpired} from '../security/TokenHelper';
         </div>
 
 
-        <button type="button" class="btn btn-lg btn-info" (click)="onSubmit()">Save changes</button>
-        <button *ngIf="!showChangePassword" type="button" class="btn btn-lg btn-info" (click)="changePassword()">Change password</button>
-        <button type="button" class="btn btn-lg btn-info" (click)="cancel()">Cancel</button>
         </div>
     </form>
 
+    <div class="center-container col-lg-offset-2 col-lg-8">
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-login btn-primary" (click)="onSubmit()">Save changes</button>
+            </div>
+            <div class="col-sm-4">
+                <button *ngIf="!showChangePassword" type="button" class="btn btn-login btn-primary" (click)="changePassword()">Change password</button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-login btn-primary" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
     `
 })
 

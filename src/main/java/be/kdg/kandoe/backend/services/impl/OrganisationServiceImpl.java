@@ -55,4 +55,24 @@ public class OrganisationServiceImpl implements OrganisationService{
 
         return organisationRepository.save(org);
     }
+
+    @Override
+    public List<User> findOrganisationOrganisers(Integer id){
+        Organisation org = organisationRepository.findOne(id);
+
+        if(org != null){
+            return org.getOrganisers();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<User> findOrganisationMembers(Integer id){
+        Organisation org = organisationRepository.findOne(id);
+
+        if(org != null){
+            return org.getUsers();
+        }
+        return new ArrayList<>();
+    }
 }

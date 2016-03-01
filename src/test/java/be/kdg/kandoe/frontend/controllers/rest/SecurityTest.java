@@ -107,10 +107,18 @@ public class SecurityTest {
     }
 
     @Test
+    public void testNonExistingUser() throws Exception {
+
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0In0._0Pfx-9D58HiZpTpo0gn5NOniKree5yJTzD_a2I2LdI\"";
+
+        mockMvc.perform(get("/api/organisations/currentUser")
+                .header("Authorization", token))
+                .andExpect(status().is4xxClientError())
+                .andDo(print());
+    }
+
+    @Test
     public void testgetOrganisationWithSecurity() throws Exception {
-        JSONObject orgResource = new JSONObject();
-        orgResource.put("organisationName", "KdG");
-        orgResource.put("address", "Nationalestraat 5");
 
         String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
 
@@ -119,7 +127,6 @@ public class SecurityTest {
         list.add(token);
         headers.put("Authorization", list);
 
-        System.out.println(orgResource.toString());
         mockMvc.perform(get("/api/organisations")
                 .headers(headers))
                 .andExpect(status().is2xxSuccessful())

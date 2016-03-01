@@ -50,6 +50,42 @@ section {
     padding: 100px;
 }
 
+.clearfix {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: fixed;
+    padding-top: 50px;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: #0683c9;
+    -webkit-transition: height 0.3s;
+    -moz-transition: height 0.3s;
+    -ms-transition: height 0.3s;
+    -o-transition: height 0.3s;
+    transition: height 0.3s; }
+
+header div{
+    display: inline-block;
+    font-family: "Oswald", sans-serif;
+    font-size: 60px;
+    text-align: center;
+    color: white;
+    font-weight: 400;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+
+.main{
+    padding-top: 150px;
+    background-color: #f7f7f7;
+    min-height: 100%;
+    height: inherit;
+}
+
 .login-section {
     text-align: left;
 }
@@ -170,8 +206,12 @@ article {
     font-weight: 900;
 }
 
-.btn {
+.btn-login{
+    display: block;
+    width: 100%
+}
 
+.btn {
     padding: 15px;
     border-radius: 10px;
     -webkit-transition: all 0.3s ease;
@@ -228,4 +268,13 @@ footer {
     text-transform: uppercase;
     font-weight: 600;
     font-size: 11px;
+}
+
+#profile-picture{
+    max-width: 150px;
+}
+
+.center-container{
+    text-align: center;
+    margin-bottom: 30px;
 }

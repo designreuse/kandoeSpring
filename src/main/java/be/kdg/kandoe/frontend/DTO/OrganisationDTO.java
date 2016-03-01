@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Jordan on 10/02/2016.
@@ -49,11 +50,11 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
         this.address = address;
     }
 
-    public String getLogoUrl() {
+    public String getLogoURL() {
         return logoURL;
     }
 
-    public void setLogoUrl(String logoURL) {
+    public void setLogoURL(String logoURL) {
         this.logoURL = logoURL;
     }
 }

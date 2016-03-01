@@ -1,6 +1,7 @@
 package be.kdg.kandoe.frontend.config.security.jwt;
 
 import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import be.kdg.kandoe.backend.services.impl.UserServiceImpl;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,11 @@ public class JwtFilter extends GenericFilterBean{
             token=token.replace("\"","");
             String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
                     .parseClaimsJws(token).getBody().getSubject();
-            SecurityContextHolder.getContext().setAuthentication(new UserAuthentication(userService.findUserByUsername(username)));
-
+            try {
+                SecurityContextHolder.getContext().setAuthentication(new UserAuthentication(userService.findUserByUsername(username)));
+            } catch (UserServiceException e){
+                SecurityContextHolder.getContext().setAuthentication(null);
+            }
         }
         chain.doFilter(request, response);
 

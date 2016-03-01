@@ -1,10 +1,11 @@
-import {Component} from "angular2/core";
+import {Component, Injectable, Inject} from "angular2/core";
 import {RegisterComponent} from "./register.component";
 import {RouteConfig, Router} from "angular2/router";
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
 import {Response} from "angular2/http";
 import {tokenNotExpired} from "../security/TokenHelper";
+import {SecurityService} from "../security/securityService";
 
 @Component({
     selector: 'home',
@@ -12,19 +13,26 @@ import {tokenNotExpired} from "../security/TokenHelper";
     templateUrl: 'app/components/home.html'
 })
 
+@Injectable()
 export class Home {
     private router:Router;
     private userService: UserService;
+    private securityService: SecurityService;
 
     private username: string;
     private password: string;
 
-    constructor(router:Router, userService: UserService) {
+    constructor(router:Router, userService: UserService, secService: SecurityService, @Inject('App.BackEndPath') private path: string) {
         this.router = router;
         this.userService = userService;
+        this.securityService = secService;
 
         if(tokenNotExpired()){
-            this.router.navigate(['/LoggedInHome']);
+            this.securityService.get(this.path + "login/check", true).subscribe(r => {
+                this.router.navigate(['/LoggedInHome']);
+            },e => {
+                localStorage.removeItem("id_token");
+            });
         }
     }
 

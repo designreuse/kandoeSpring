@@ -259,6 +259,14 @@
       <version>0.6.0</version>
     </dependency>
 
+    <!-- mail dependencies -->
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+
     <!-- Commons-fileupload for uploading files -->
     <dependency>
       <groupId>commons-fileupload</groupId>

@@ -41,7 +41,7 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                 AddThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
                     this.themeService.createTheme(this.theme).subscribe(function (res) {
-                        _this.router.navigate(['/Themes']);
+                        _this.router.navigate(['/themes']);
                     }, function (error) {
                         //todo change error display
                         _this.file = null;

@@ -15,9 +15,11 @@ System.register(["./link"], function(exports_1) {
                     organisation.organisationId = json.organisationId;
                     organisation.organisationName = json.organisationName;
                     organisation.address = json.address;
-                    organisation.logoUrl = json.logoUrl;
-                    for (var i = 0; i < json.links.length; i++) {
-                        organisation.links[i] = link_1.Link.fromJson(json.links[i]);
+                    organisation.logoUrl = json.logoURL;
+                    if (json.links) {
+                        for (var i = 0; i < json.links.length; i++) {
+                            organisation.links[i] = link_1.Link.fromJson(json.links[i]);
+                        }
                     }
                     return organisation;
                 };
