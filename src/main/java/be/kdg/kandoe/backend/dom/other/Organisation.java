@@ -95,4 +95,5 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     public Integer getId() {
         return organisationId;
     }
+
 }

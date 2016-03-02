@@ -72,9 +72,10 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         selector: "organisation-detail",
                         template: "\n    <header>\n        <div class=\"container clearfix\">\n            <h2><span class=\"glyphicon glyphicon-book\"></span> {{organisation.organisationName}}</h2>\n        </div>\n    </header>\n    <div class=\"container main\">\n            <div class=\"center-container col-lg-offset-2 col-lg-8\">\n                <img class=\"img-responsive img-thumbnail\" id=\"org-logo\" [src]=\"getImageSrc(organisation.logoUrl)\">\n            </div>\n            <div class=\"row\">\n                <div class=\"well well-lg col-lg-offset-2 col-lg-4\">\n                    <p>{{organisation.address}}</p>\n                </div>\n                <div class=\"well well-lg col-lg-4\">\n                    <p>members</p>\n                    <ul>\n                      <li *ngFor=\"#member of members\">\n                        {{ member.username }}\n                      </li>\n                    </ul>\n                </div>\n            </div>\n            <div class=\"row\">\n                <div class=\"well well-lg col-lg-offset-2 col-lg-8\">\n                    <p>organisers</p>\n                    <ul>\n                      <li *ngFor=\"#organiser of organisers\">\n                        {{ organiser.username }}\n                      </li>\n                    </ul>\n                </div>\n           </div>\n    </div>\n        <div *ngIf=\"organisation.organiser\">\n            <input type=\"text\" [(ngModel)]=\"newMember\">\n            <button type=\"button\" (click)=\"addMember()\">Add member</button>\n        </div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
+                var _a;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }

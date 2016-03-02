@@ -1,10 +1,6 @@
 body {
     font-family: "Open Sans", sans-serif;
-    background: #E8E8E8 repeating-linear-gradient(
-            45deg,
-            #E8E8E8,
-            rgba(190, 190, 193, 0.2) 10px
-    );
+    background-color: #E8E8E8;
 }
 
 h2 {
@@ -75,7 +71,7 @@ header div{
     font-family: "Oswald", sans-serif;
     font-size: 60px;
     text-align: center;
-    color: white !important;
+    color: white;
     font-weight: 400;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -88,9 +84,6 @@ header div{
     background-color: #f7f7f7;
     min-height: 100%;
     height: inherit;
-    -webkit-box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.6);
-    -moz-box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.6);
-    box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.6);
 }
 
 .login-section {
@@ -226,10 +219,6 @@ article {
     transition: all 0.3s ease;
 }
 
-.btn-wide{
-    width: 100%
-}
-
 .btn-primary {
     background: #ff9c44;
     border: #ff9c44;
@@ -291,6 +280,28 @@ footer {
     padding-top: 0px;
 }
 
+#profile-picturenav{
+    max-width: 50px;
+}
+.img-responsivenav {
+    display: block;
+    max-width: 100%;
+    height: auto
+}
+
+.img-thumbnailnav {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out
+}
 .center-container{
     text-align: center;
     margin-bottom: 30px;
@@ -339,4 +350,27 @@ footer {
     border-left-width: 1px;
     border-bottom-width: 1px;
     height: 44px;
+}
+
+
+
+
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+    background-color: #555;
 }

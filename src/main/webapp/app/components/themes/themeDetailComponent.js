@@ -54,9 +54,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         template: "\n        <div class=\"container\">\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t\t    <div class=\"event-list col-1-4\">\n\t\t\t\t\t    <div class=\"id\"><p>{{theme.themeId}}</p></div>\n\t\t\t\t\t\t<div class=\"info\">\n\t\t\t\t\t\t\t<h2 class=\"title\">{{theme.themeName}}</h2>\n\t\t\t\t\t\t\t<p class=\"desc\">{{theme.description}}</p>\n\t\t\t\t\t\t\t<p> IconURL: {{theme.iconURL}}</p>\n\t\t\t\t\t\t\t<p>Organisation name: {{org.organisationName}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t    </div>\n\t\t\t</div>\n\t\t</div>\n    </div>\n    ",
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
+                var _a;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }
