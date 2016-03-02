@@ -19,11 +19,6 @@
     color: white;
 }
 
-body {
-    padding: 60px 0 0 0;
-    background-color: rgb(220, 220, 220);
-}
-
 .searchable-container{
     padding-left: 0;
 }

@@ -1,4 +1,5 @@
 body {
+    padding-top: 0;
     font-family: "Open Sans", sans-serif;
     background: repeating-linear-gradient(
             45deg,
@@ -86,13 +87,16 @@ header div{
     transition: all 0.3s; }
 
 .main{
-    padding-top: 150px;
+    padding-top: 175px;
     background-color: #f7f7f7;
     min-height: 100%;
     height: inherit;
 }
 
 .login-section {
+    background-size: 100%;
+    width: 100%;
+    background: #E8E8E8;
     text-align: left;
 }
 
@@ -292,6 +296,10 @@ footer {
 
 #org-header{
     padding-top: 0px;
+}
+
+#org-list{
+    padding-top: 200px;
 }
 
 #profile-picturenav{

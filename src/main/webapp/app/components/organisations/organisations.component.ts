@@ -33,7 +33,7 @@ import {OrganisationService} from "../../service/organisationService";
             </div>
         </div>
     </header>
-    <div class="container main">
+    <div class="container main" id="org-list">
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-10">
 				<ul class="searchable-container">
