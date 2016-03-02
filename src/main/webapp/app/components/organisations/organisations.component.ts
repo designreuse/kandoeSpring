@@ -14,7 +14,8 @@ import {OrganisationService} from "../../service/organisationService";
     directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
     <header>
-        <div class="container clearfix">
+        <div class="container clearfix" id="org-header">
+            <h3>Organisations</h3>
             <div class="col-xs-12 col-sm-offset-3 col-sm-6">
                 <form class="form-search">
                     <div class="input-group dropdown">
@@ -26,7 +27,6 @@ import {OrganisationService} from "../../service/organisationService";
                             <ul class="dropdown-menu">
                                 <li><span class="sort-option" (click)="sortNameAsc()">Name A-Z</span></li>
                                 <li><span class="sort-option" (click)="sortNameDesc()">Name Z-A</span></li>
-                                <li><a href="#">Address City</a></li>
                             </ul>
                         </div>
                     </div>
