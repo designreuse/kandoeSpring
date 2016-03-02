@@ -12,7 +12,7 @@ import {User} from "../../DOM/users/user";
     template: `
     <header>
         <div class="container clearfix">
-            <h2><span class="glyphicon glyphicon-book"></span> {{organisation.organisationName}}</h2>
+            <h3><span class="glyphicon glyphicon-book"></span> {{organisation.organisationName}}</h3>
         </div>
     </header>
     <div class="container main">
@@ -27,18 +27,18 @@ import {User} from "../../DOM/users/user";
         <div class="row">
             <div class="col-lg-offset-2 col-lg-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Organisers</h4>
+                    <div class="panel-heading c-list">
+                        <h4 class="title">Organisers</h4>
                     </div>
-                    <ul class="panel-body list-group ppl-list">
+                    <ul class="panel-body list-group org-list">
                         <div *ngFor="#organiser of organisers">
                           <li class="list-group-item">
                             <div class="col-xs-12 col-sm-3">
                                 <img src="http://zblogged.com/wp-content/uploads/2015/11/c1.png" alt="profile picture" class="img-responsive img-circle" />
                             </div>
                             <div class="col-xs-12 col-sm-9">
-                                <span class="username">{{ organiser.username }}</span><br/>
-                                <span class="pull-right email">{{organiser.email}}</span>
+                                <span class="username">{{ organiser.username }}</span>
+                                <span class="pull-right email">{{organiser.email}}</span> <br/>
                                 <span class="name">{{organiser.person.firstname}} {{organiser.person.lastname}}</span>
                             </div>
                             <div class="clearfix"></div>
@@ -54,31 +54,30 @@ import {User} from "../../DOM/users/user";
                     <div class="panel-heading c-list">
                         <h4 class="title">Members</h4>
                         <div class="pull-right c-controls" *ngIf="organisation.organiser">
-                            <a class="hide-add" (click)="showAddUser($event)"><span class="glyphicon glyphicon-plus"></span></a>
+                            <a class="hide-add" id="add-button" (click)="showAddUser()"><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
                     </div>
-                    <div class="row" style="display: none;">
+                    <div class="row" style="display: none">
                         <div class="col-xs-12">
                             <div class="input-group add-user">
                                 <input type="text" class="form-control">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" (click)="addMember()"><i class="glyphicon glyphicon-plus-sign"></i>add user</button>
+                                    <button class="btn btn-default" type="button" (click)="addMember()"><i class="glyphicon glyphicon-plus-sign"></i> Add user</button>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <ul class="panel-body list-group ppl-list">
+                    <ul class="panel-body list-group member-list">
                         <div *ngFor="#member of members">
                           <li class="list-group-item">
                             <div class="col-xs-12 col-sm-3">
                                 <img src="http://zblogged.com/wp-content/uploads/2015/11/c1.png" alt="profile picture" class="img-responsive img-circle" />
                             </div>
                             <div class="col-xs-12 col-sm-9">
-                                <span class="username">{{ member.username }}</span><br/>
+                                <span class="username">{{ member.username }}</span>
+                                <span class="pull-right email">{{member.email}}</span><br/>
                                 <span class="name">{{member.person.firstname}} {{member.person.lastname}}</span>
-                                <span class="pull-right email">{{member.email}}</span>
                             </div>
-                            <div class="clearfix"></div>
                           </li>
                         </div>
                     </ul>
@@ -116,13 +115,11 @@ export class OrganisationDetailComponent implements OnInit{
 
     }
 
-    private showAddUser(event){
-        event.preventDefault();
-        $(this).toggleClass('hide-add');
-
+    private showAddUser(){
+        $("#add-button").toggleClass('hide-add');
         if ($(this).hasClass('hide-add')) {
-            $('.add-user').closest('.row').slideUp(100);
-        }else{
+            $('.add-user').closest('.row').css("display", "none");
+        }else {
             $('.add-user').closest('.row').slideDown(100);
         }
     }
