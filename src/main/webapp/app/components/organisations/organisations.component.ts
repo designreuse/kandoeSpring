@@ -18,16 +18,15 @@ import {OrganisationService} from "../../service/organisationService";
             <h3>Organisations</h3>
             <div class="col-xs-12 col-sm-offset-3 col-sm-6">
                 <form class="form-search">
-                    <div class="input-group dropdown">
-                        <input id="input-search" class="form-control"  placeholder="Search cards..." >
-                        <div class="btn-group input-group-btn" role="group">
-                            <button type="button" class="btn btn-default dropdown-toggle" id ="filter" data-toggle="dropdown" >
-                            <span class="glyphicon glyphicon-filter"></span>
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><span class="sort-option" (click)="sortNameAsc()">Name A-Z</span></li>
-                                <li><span class="sort-option" (click)="sortNameDesc()">Name Z-A</span></li>
-                            </ul>
+                    <div class="input-group">
+                        <input id="input-search" class="form-control border-radius"  placeholder="Search organisations..." >
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default filter filter-ID filter-A" (click)="sortId()">
+                            <span class="glyphicon glyphicon-sort-by-order"> ID</span></button>
+                            <button type="button" class="btn btn-default filter filter-Name filter-A" (click)="sortName()">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"> Name</span></button>
+                            <button type="button" class="btn btn-default filter filter-Desc filter-A" (click)="sortDesc()">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"> Description</span></button>
                         </div>
                     </div>
                 </form>
@@ -96,10 +95,10 @@ export class OrganisationsComponent implements OnInit {
     ngOnInit() {
         this._organisationService.getUserOrganisations().subscribe((organisations:Organisation[])=> this.organisations = organisations);
 
-        $('#input-search').on('keyup', function () {
-            var rex = new RegExp($(this).val(), 'i');
-            $('.searchable-container .items').hide();
-            $('.searchable-container .items').filter(function () {
+        $("#input-search").on("keyup", function () {
+            var rex = new RegExp($(this).val(), "i");
+            $(".searchable-container .items").hide();
+            $(".searchable-container .items").filter(function () {
                 return rex.test($(this).text());
             }).show();
         });
@@ -115,37 +114,117 @@ export class OrganisationsComponent implements OnInit {
         }
     }
 
-    sortNameAsc(){
-        var items = $('#sort-list li.items').get();
-        items.sort(function(a,b){
-            var keyA = $(a).find("h2.title").text();
-            var keyB = $(b).find("h2.title").text();
+    sortName(){
+        var items = $("#sort-list li.items").get();
 
-            if (keyA < keyB) return -1;
-            if (keyA > keyB) return 1;
-            return 0;
-        });
-        var ul = $('#sort-list');
-        $.each(items, function(i, li){
-            ul.append(li);
-        });
+        if($(".filter-Name").hasClass("filter-A")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find("h2.title").text();
+                var keyB = $(b).find("h2.title").text();
+
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Name").removeClass("filter-A").addClass("filter-Z");
+            $(".filter-Name").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet").addClass("glyphicon-sort-by-alphabet-alt");
+        } else if($(".filter-Name").hasClass("filter-Z")){
+            items.sort(function (a, b) {
+                var keyA = $(a).find("h2.title").text();
+                var keyB = $(b).find("h2.title").text();
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Name").removeClass("filter-Z").addClass("filter-A");
+            $(".filter-Name").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
+        }
     }
 
-    sortNameDesc(){
+    sortId(){
+        var items = $("#sort-list li.items").get();
 
-        var items = $('#sort-list li.items').get();
-        items.sort(function(a,b){
-            var keyA = $(a).find("h2.title").text();
-            var keyB = $(b).find("h2.title").text();
+        if($(".filter-ID").hasClass("filter-A")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find(".id").text();
+                var keyB = $(b).find(".id").text();
 
-            if (keyA > keyB) return -1;
-            if (keyA < keyB) return 1;
-            return 0;
-        });
-        var ul = $('#sort-list');
-        $.each(items, function(i, li){
-            ul.append(li);
-        });
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-ID").removeClass("filter-A").addClass("filter-Z");
+            $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order").addClass("glyphicon-sort-by-order-alt");
+        } else if($(".filter-ID").hasClass("filter-Z")){
+            items.sort(function (a, b) {
+                var keyA = $(a).find(".id").text();
+                var keyB = $(b).find(".id").text();
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-ID").removeClass("filter-Z").addClass("filter-A");
+            $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order-alt").addClass("glyphicon-sort-by-order");
+        }
     }
 
+    sortDesc(){
+        var items = $("#sort-list li.items").get();
+
+        if($(".filter-Desc").hasClass("filter-A")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find("p.desc").text();
+                var keyB = $(b).find("p.desc").text();
+
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Desc").removeClass("filter-A").addClass("filter-Z");
+            $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet").addClass("glyphicon-sort-by-alphabet-alt");
+        } else if($(".filter-Desc").hasClass("filter-Z")){
+            items.sort(function (a, b) {
+                var keyA = $(a).find("p.desc").text();
+                var keyB = $(b).find("p.desc").text();
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Desc").removeClass("filter-Z").addClass("filter-A");
+            $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
+        }
+    }
 }

@@ -2,8 +2,9 @@
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
 
 
-#filter{
+.filter{
     padding-bottom:13px;
+    height: 50px;
 }
 
 #input-search{
@@ -25,21 +26,6 @@ body {
 
 .searchable-container{
     padding-left: 0;
-}
-
-.sort-option{
-    position: relative;
-    display: block;
-    padding: 10px 15px;
-    margin-right: 2px;
-    line-height: 1.42857143;
-    border: 1px solid transparent;
-    border-radius: 4px 4px 0 0
-}
-
-.sort-option:hover{
-    text-decoration: none;
-    background-color: #eee;
 }
 
 .organisation-list {
@@ -261,7 +247,6 @@ header:after {
     .organisation-list > li > a > .info,
     .organisation-list > div > li > a > .info,
     div.item > div.info{
-        /*background-color: rgb(245, 245, 245);*/
         overflow: hidden;
         position: relative;
         height: 120px;
@@ -289,13 +274,6 @@ header:after {
     div.item > div.info > .desc {
         padding: 0 10px;
     }
-/*    .organisation-list > li > a > .info > ul,
-    .organisation-list > div > li > a > .info > ul,
-    div.item > div.info > ul{
-        position: absolute;
-        left: 0;
-        bottom: 0;
-    }*/
 
     .organisation-list > li > a > .social,
     .organisation-list > div > li > a > .social,

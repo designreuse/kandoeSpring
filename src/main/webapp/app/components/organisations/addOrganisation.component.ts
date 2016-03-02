@@ -47,7 +47,7 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-lg btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
+                <button type="button" class="btn btn-wide btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
             </div>
         </form>
 
