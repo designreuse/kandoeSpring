@@ -115,6 +115,10 @@ export class OrganisationsComponent implements OnInit {
     }
 
     sortName(){
+        $(".filter-Name").addClass("active");
+        $(".filter-ID").removeClass("active");
+        $(".filter-Desc").removeClass("active");
+
         var items = $("#sort-list li.items").get();
 
         if($(".filter-Name").hasClass("filter-A")) {
@@ -153,6 +157,10 @@ export class OrganisationsComponent implements OnInit {
     }
 
     sortId(){
+        $(".filter-Name").removeClass("active");
+        $(".filter-ID").addClass("active");
+        $(".filter-Desc").removeClass("active");
+
         var items = $("#sort-list li.items").get();
 
         if($(".filter-ID").hasClass("filter-A")) {
@@ -191,6 +199,10 @@ export class OrganisationsComponent implements OnInit {
     }
 
     sortDesc(){
+        $(".filter-Name").removeClass("active");
+        $(".filter-ID").removeClass("active");
+        $(".filter-Desc").addClass("active");
+
         var items = $("#sort-list li.items").get();
 
         if($(".filter-Desc").hasClass("filter-A")) {

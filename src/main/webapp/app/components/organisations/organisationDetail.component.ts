@@ -12,7 +12,7 @@ import {User} from "../../DOM/users/user";
     template: `
     <header>
         <div class="container clearfix">
-            <p><span class="glyphicon glyphicon-book"></span> {{organisation.organisationName}}</p>
+            <h3><span class="glyphicon glyphicon-book"> {{organisation.organisationName}}</span></h3>
         </div>
     </header>
     <div class="container main">

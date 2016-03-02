@@ -16,7 +16,6 @@ import {tokenNotExpired} from "../../security/TokenHelper";
     </header>
     <div class="container main">
         <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
-            <div class="form-padadd-org">
 
                 <div class="form-group">
                     <label>Name</label>
@@ -28,7 +27,9 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                 </div>
                 <div class="form-group">
                     <label>Logo</label>
-                    <input type="file" multiple="false" (change)="onFileChange($event)">
+                    <form id="form1" runat="server">
+                        <input type='file' id="imgInp" />
+                    </form>
                 </div>
                 <div class="items">
                     <div class="item">
@@ -47,15 +48,11 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-wide btn-info glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
-            </div>
-        </form>
+               <div class="row">
+                    <button type="button" class="btn btn-wide btn-primary glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
+                </div>
 
-    <form id="form1" runat="server">
-        <input type='file' id="imgInp" />
-        <br>
-        <img id="blah" src="http://i.imgur.com/zAyt4lX.jpg" alt="your image" height="100" />
-    </form>
+        </form>
     </div>
     `
 })

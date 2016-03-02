@@ -401,3 +401,7 @@ footer {
     font-variant: small-caps;
     font-size: x-large;
 }
+
+.org-small{
+    max-width: 250px;
+}

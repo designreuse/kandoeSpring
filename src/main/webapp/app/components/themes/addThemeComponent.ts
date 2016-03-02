@@ -14,9 +14,14 @@ import {Organisation} from "../../DOM/organisation";
 @Component({
     selector: 'add-theme',
     template: `
-        <form  class="col-lg-offset-3 col-lg-6" method="post" role="form">
-            <div class="form-pad">
-                <h3>Add new theme</h3>
+    <header>
+        <div class="container clearfix">
+            <h3><span class="glyphicon glyphicon-plus-sign"></span> Add Theme</h3>
+        </div>
+    </header>
+    <div class="container main">
+        <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
+
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" placeholder="Enter theme name" class="form-control" [(ngModel)]="theme.themeName">
@@ -26,13 +31,16 @@ import {Organisation} from "../../DOM/organisation";
                     <input type="text" placeholder="Enter Description" class="form-control" [(ngModel)]="theme.description">
                 </div>
                 <div class="form-group">
-                    <select (change)="selectOrganisation($event)">
-                        <option *ngFor="#organisation of currentOrganisations" value="{{organisation.organisationName}}">{{organisation.organisationName}}</option>
+                <label>Organisation</label>
+                    <select class="form-control" (change)="selectOrganisation($event)">
+                        <option class="form-control" *ngFor="#organisation of currentOrganisations" value="{{organisation.organisationName}}">{{organisation.organisationName}}</option>
                     </select>
                 </div>
-                <button type="button" class="btn btn-lg btn-info" (click)="onSubmit()">Add</button>
-            </div>
+                <div class="row">
+                    <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit()">Add</button>
+                </div>
         </form>
+    </div>
     `
 })
 

@@ -1,6 +1,6 @@
 import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
-import {Router} from "angular2/router";
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {ThemeService} from "../../service/themeService";
 import {CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../../security/TokenHelper";
@@ -11,19 +11,39 @@ import {Organisation} from "../../DOM/organisation";
 
 @Component({
     selector: 'Theme',
+    directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
-        <div class="container">
+    <header>
+        <div class="container clearfix">
+            <h3><span class="glyphicon glyphicon-bookmark">  {{theme.themeName}}</span></h3>
+        </div>
+    </header>
+    <div class="container main">
+        <div class="center-container col-lg-offset-2 col-lg-8">
+            <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(theme.iconURL)">
+        </div>
+        <div class="row">
+            <div class="center-container col-lg-offset-2 col-lg-8">
+                <h3>{{theme.description}}</h3>
+            </div>
+        </div>
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-				    <div class="event-list col-1-4">
-					    <div class="id"><p>{{theme.themeId}}</p></div>
-						<div class="info">
-							<h2 class="title">{{theme.themeName}}</h2>
-							<p class="desc">{{theme.description}}</p>
-							<p> IconURL: {{theme.iconURL}}</p>
-							<p>Organisation name: {{org.organisationName}}</p>
-						</div>
-				    </div>
+			<h4>Organisation</h4>
+			    <ul class="organisation-list">
+                    <li>
+                        <a [routerLink]="['/OrganisationDetail', {id:org.organisationId}]">
+                        <div class="item">
+                            <div class="id"><p>{{org.organisationId}}</p></div>
+                            <img alt="logo" [src]="getImageSrc(org.logoUrl, org.organisationId)" />
+                            <div class="info">
+                                <h2 class="title">{{org.organisationName}}</h2>
+                                <p class="desc">{{org.address}}</p>
+                            </div>
+                            </div>
+                        </a>
+                    </li>
+               </ul>
 			</div>
 		</div>
     </div>
@@ -44,5 +64,15 @@ export class ThemeDetailComponent implements OnInit {
             this.org=this.theme.organisation;
             console.log(this.theme);
         });
+    }
+
+    private getImageSrc(url: string): string {
+        if(url){
+            if(url.indexOf("http://") > -1){
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        }
     }
 }

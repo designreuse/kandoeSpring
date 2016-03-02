@@ -1,6 +1,6 @@
 import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
-import {Router} from "angular2/router";
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {ThemeService} from "../../service/themeService";
 import {CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../../security/TokenHelper";
@@ -10,25 +10,35 @@ import {Theme} from "../../DOM/theme";
 
 @Component({
     selector: 'Theme',
+    directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
-        <div class="container">
-        <div class="input-append">
-            <input class="span2 search-query" id="input-search" type="search" placeholder="Search organisations..." >
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" id ="filter" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-filter"></span>
-                <span class="caret"></span>Filter</button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Name</a></li>
-                    <li><a href="#">Description</a></li>
-                </ul>
+    <header>
+        <div class="container clearfix" id="org-header">
+            <h3>Themes</h3>
+            <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                <form class="form-search">
+                    <div class="input-group">
+                        <input id="input-search" class="form-control border-radius"  placeholder="Search organisations..." >
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default filter filter-ID filter-A" (click)="sortId()">
+                            <span class="glyphicon glyphicon-sort-by-order"> ID</span></button>
+                            <button type="button" class="btn btn-default filter filter-Name filter-A" (click)="sortName()">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"> Name</span></button>
+                            <button type="button" class="btn btn-default filter filter-Desc filter-A" (click)="sortDesc()">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"> Description</span></button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </header>
+    <div class="container main" id="org-list">
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
 				<ul class="searchable-container">
-				    <div *ngFor="#theme of themes" class="event-list col-1-4">
+				    <div *ngFor="#theme of themes" class="organisation-list col-1-4" id="sort-list">
 					<li class="items">
+					<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
 					    <div class="id"><p>{{theme.themeId}}</p></div>
 						<div class="info">
 							<h2 class="title">{{theme.themeName}}</h2>
@@ -41,12 +51,12 @@ import {Theme} from "../../DOM/theme";
 								<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
 							</ul>
 						</div>
+						</a>
 					</li>
 					</div>
 				</ul>
 			</div>
 		</div>
-
     </div>
     `,
 
