@@ -30,7 +30,7 @@ import {tokenNotExpired} from "../security/TokenHelper";
         </div>
     <section class="settings">
          <a [routerLink]="['/Organisations']" class="glyphicon glyphicon-inbox large-screen"> My Organisations</a>
-          <a [routerLink]="['/Cards']" class="glyphicon glyphicon-credit-card"> Cards</a>
+          <a [routerLink]="['/KandoeCard']" class="glyphicon glyphicon-credit-card"> Cards</a>
 
          <a [routerLink]="['/Userprofile']" class="glyphicon">Edit profile</a>
          <a class="glyphicon glyphicon-log-out" (click)="logout()">Logout</a>

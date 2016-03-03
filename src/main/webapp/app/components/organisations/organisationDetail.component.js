@@ -33,6 +33,7 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     this.organisation = organisation_1.Organisation.createEmpty();
                     this.organisers = [];
                     this.members = [];
+                    this.newMember = "";
                     this.organisationService = orgService;
                     this.orgId = +routeParams.params["id"];
                 }
@@ -49,6 +50,15 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         _this.members = users;
                     });
                 };
+                OrganisationDetailComponent.prototype.showAddUser = function () {
+                    $("#add-button").toggleClass('hide-add');
+                    if ($(this).hasClass('hide-add')) {
+                        $('.add-user').closest('.row').css("display", "none");
+                    }
+                    else {
+                        $('.add-user').closest('.row').slideDown(100);
+                    }
+                };
                 OrganisationDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -61,21 +71,22 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                 };
                 OrganisationDetailComponent.prototype.addMember = function () {
                     var _this = this;
-                    this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
-                        _this.members.push(u);
-                        _this.newMember = "";
-                    });
+                    if (this.newMember) {
+                        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
+                            _this.members.push(u);
+                            _this.newMember = "";
+                        });
+                    }
                 };
                 OrganisationDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: "organisation-detail",
-                        template: "\n    <header>\n        <div class=\"container clearfix\">\n            <h2><span class=\"glyphicon glyphicon-book\"></span> {{organisation.organisationName}}</h2>\n        </div>\n    </header>\n    <div class=\"container main\">\n            <div class=\"center-container col-lg-offset-2 col-lg-8\">\n                <img class=\"img-responsive img-thumbnail\" id=\"org-logo\" [src]=\"getImageSrc(organisation.logoUrl)\">\n            </div>\n            <div class=\"row\">\n                <div class=\"well well-lg col-lg-offset-2 col-lg-4\">\n                    <p>{{organisation.address}}</p>\n                </div>\n                <div class=\"well well-lg col-lg-4\">\n                    <p>members</p>\n                    <ul>\n                      <li *ngFor=\"#member of members\">\n                        {{ member.username }}\n                      </li>\n                    </ul>\n                </div>\n            </div>\n            <div class=\"row\">\n                <div class=\"well well-lg col-lg-offset-2 col-lg-8\">\n                    <p>organisers</p>\n                    <ul>\n                      <li *ngFor=\"#organiser of organisers\">\n                        {{ organiser.username }}\n                      </li>\n                    </ul>\n                </div>\n           </div>\n    </div>\n        <div *ngIf=\"organisation.organiser\">\n            <input type=\"text\" [(ngModel)]=\"newMember\">\n            <button type=\"button\" (click)=\"addMember()\">Add member</button>\n        </div>\n    "
+                        template: "\n    <header>\n        <div class=\"container clearfix\">\n            <h3><span class=\"glyphicon glyphicon-book\"> {{organisation.organisationName}}</span></h3>\n        </div>\n    </header>\n    <div class=\"container main\">\n        <div class=\"center-container col-lg-offset-2 col-lg-8\">\n            <img class=\"img-responsive img-thumbnail\" id=\"org-logo\" [src]=\"getImageSrc(organisation.logoUrl)\">\n        </div>\n        <div class=\"row\">\n            <div class=\"center-container col-lg-offset-2 col-lg-8\">\n                <h3>{{organisation.address}}</h3>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-lg-offset-2 col-lg-8\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading c-list\">\n                        <h4 class=\"title\">Organisers</h4>\n                    </div>\n                    <ul class=\"panel-body list-group org-list\">\n                        <div *ngFor=\"#organiser of organisers\">\n                          <li class=\"list-group-item\">\n                            <div class=\"col-xs-12 col-sm-3\">\n                                <img src=\"http://zblogged.com/wp-content/uploads/2015/11/c1.png\" alt=\"profile picture\" class=\"img-responsive img-circle\" />\n                            </div>\n                            <div class=\"col-xs-12 col-sm-9\">\n                                <span class=\"username\">{{ organiser.username }}</span>\n                                <span class=\"pull-right email\">{{organiser.email}}</span> <br/>\n                                <span class=\"name\">{{organiser.person.firstname}} {{organiser.person.lastname}}</span>\n                            </div>\n                            <div class=\"clearfix\"></div>\n                          </li>\n                        </div>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-lg-offset-2 col-lg-8\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading c-list\">\n                        <h4 class=\"title\">Members</h4>\n                        <div class=\"pull-right c-controls\" *ngIf=\"organisation.organiser\">\n                            <a class=\"hide-add\" id=\"add-button\" (click)=\"showAddUser()\"><span class=\"glyphicon glyphicon-plus\"></span></a>\n                        </div>\n                    </div>\n                    <div class=\"row\" style=\"display: none\">\n                        <div class=\"col-xs-12\">\n                            <div class=\"input-group add-user\">\n                                <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newMember\">\n                                <span class=\"input-group-btn\">\n                                    <button class=\"btn btn-default\" type=\"button\" (click)=\"addMember()\"><i class=\"glyphicon glyphicon-plus-sign\"></i> Add user</button>\n                                </span>\n                            </div>\n                        </div>\n                    </div>\n                    <ul class=\"panel-body list-group member-list\">\n                        <div *ngFor=\"#member of members\">\n                          <li class=\"list-group-item\">\n                            <div class=\"col-xs-12 col-sm-3\">\n                                <img src=\"http://zblogged.com/wp-content/uploads/2015/11/c1.png\" alt=\"profile picture\" class=\"img-responsive img-circle\" />\n                            </div>\n                            <div class=\"col-xs-12 col-sm-9\">\n                                <span class=\"username\">{{ member.username }}</span>\n                                <span class=\"pull-right email\">{{member.email}}</span><br/>\n                                <span class=\"name\">{{member.person.firstname}} {{member.person.lastname}}</span>\n                            </div>\n                          </li>\n                        </div>\n                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
-                var _a;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }

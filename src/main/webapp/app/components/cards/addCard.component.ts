@@ -1,5 +1,4 @@
 import {tokenNotExpired} from "../../security/TokenHelper";
-import {OnInit} from "angular2/core";
 import {Component, OnInit} from 'angular2/core'
 import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Card} from "../../DOM/card";

@@ -129,4 +129,24 @@ public class OrganisationRestControllerTest {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    public void testAddNonExistingMemberToOrganisation() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(post("/api/organisations/1/addMember?mail=blablabla")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)));
+    }
 }

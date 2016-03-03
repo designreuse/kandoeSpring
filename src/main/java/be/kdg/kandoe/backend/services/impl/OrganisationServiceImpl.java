@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
+@Transactional(rollbackOn = {OrganisationServiceException.class, UserServiceException.class})
 public class OrganisationServiceImpl implements OrganisationService{
 
     private final OrganisationRepository organisationRepository;
@@ -52,7 +52,6 @@ public class OrganisationServiceImpl implements OrganisationService{
 
     @Override
     public Organisation updateOrganisations(Organisation org){
-        System.out.println("update org");
         return organisationRepository.save(org);
     }
 

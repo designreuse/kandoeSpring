@@ -60,7 +60,7 @@ import {User} from "../../DOM/users/user";
                     <div class="row" style="display: none">
                         <div class="col-xs-12">
                             <div class="input-group add-user">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" [(ngModel)]="newMember">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" (click)="addMember()"><i class="glyphicon glyphicon-plus-sign"></i> Add user</button>
                                 </span>
@@ -94,7 +94,7 @@ export class OrganisationDetailComponent implements OnInit{
     private organisers: User[] = [];
     private members: User[] = [];
     private orgId: number;
-    private newMember: string;
+    private newMember: string = "";
 
     constructor(orgService: OrganisationService, routeParams: RouteParams){
         this.organisationService = orgService;
@@ -136,9 +136,12 @@ export class OrganisationDetailComponent implements OnInit{
     }
 
     private addMember() {
-        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
-            this.members.push(u);
-            this.newMember = "";
-        })
+        if(this.newMember){
+            this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
+                this.members.push(u);
+                this.newMember = "";
+            })
+        }
+
     }
 }
