@@ -27,14 +27,12 @@ import {tokenNotExpired} from "../../security/TokenHelper";
                 </div>
                 <div class="form-group">
                     <label>Logo</label>
-                    <form id="form1" runat="server">
-                        <input type='file' id="imgInp" />
-                    </form>
+                    <input type="file" multiple="false" (change)="onFileChange($event)">
                 </div>
                 <div class="items">
                     <div class="item">
                         <div class="id"><p>1</p></div>
-                        <img alt="logo" [src]="getImageSrc(organisation.logoUrl, organisation.organisationId)" />
+                        <img alt="logo" src="" id="imgOut"/>
                         <div class="info">
                             <h2 class="title">{{organisation.organisationName}}</h2>
                             <p class="desc">{{organisation.address}}</p>
@@ -70,6 +68,9 @@ export class AddOrganisationComponent {
 
     onFileChange($event) {
         this.file = $event.target.files[0];
+
+        var output = document.getElementById("imgOut");
+        output.src = URL.createObjectURL($event.target.files[0]);
     }
 
     onSubmit() {
@@ -83,19 +84,3 @@ export class AddOrganisationComponent {
         });
     }
 }
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$("#imgInp").change(function(){
-    readURL(this);
-});
