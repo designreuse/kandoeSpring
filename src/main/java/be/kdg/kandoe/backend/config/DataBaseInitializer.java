@@ -85,7 +85,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (organisationRepository.findOrganisationByOrganisationName("Karel De Grote") == null && user.getId() != null) {
             org.setOrganisationName("Karel De Grote");
             org.setAddress("Groenplaats 5 2000 Antwerpen");
-            org.setLogoURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            org.setLogoURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             org = organisationService.saveOrganisation(org, user.getId());
         }
 
@@ -93,7 +93,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (organisationRepository.findOrganisationByOrganisationName("TestOrganisation") == null && mailUser.getId() != null) {
             org2.setOrganisationName("TestOrganisation");
             org2.setAddress("Groenplaats 5 2000 Antwerpen");
-            org2.setLogoURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            org2.setLogoURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             org2 = organisationService.saveOrganisation(org2, mailUser.getId());
         }
 
@@ -101,7 +101,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (themeRepository.findThemeByThemeName("KdGTheme") == null && user.getId() != null) {
             theme.setThemeName("KdGTheme");
             theme.setDescription("KdG Theme description");
-            theme.setIconURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            theme.setIconURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             theme.setOrganisation(org);
             theme = themeService.saveTheme(theme, user.getUserId());
         }
@@ -109,7 +109,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         Card card = new Card();
         if (cardRepository.findCardByDescription("KdGCard") == null && user.getId() != null) {
             card.setDescription("KdGCard");
-            card.setImageURL("http://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            card.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             cardService.saveCard(card, theme.getId());
         }
 
