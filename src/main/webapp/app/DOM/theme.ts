@@ -23,8 +23,6 @@ export class Theme{
         theme.description = json.description;
 
         theme.organisation = Organisation.fromJson(json.organisation);
-
-        console.log(theme);
         return theme;
     }
 

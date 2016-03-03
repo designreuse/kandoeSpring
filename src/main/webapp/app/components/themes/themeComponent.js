@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, router_2, TokenHelper_1;
+    var core_1, router_1, themeService_1, TokenHelper_1;
     var ThemeComponent;
     return {
         setters:[
@@ -17,7 +17,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-                router_2 = router_1_1;
             },
             function (themeService_1_1) {
                 themeService_1 = themeService_1_1;
@@ -37,16 +36,16 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this._themeService.getAllThemes().subscribe(function (themes) { return _this.themes = themes; });
                 };
                 ThemeComponent = __decorate([
-                    router_2.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
+                    router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'Theme',
-                        template: "\n        <div class=\"container\">\n        <div class=\"input-append\">\n            <input class=\"span2 search-query\" id=\"input-search\" type=\"search\" placeholder=\"Search organisations...\" >\n            <div class=\"btn-group\">\n                <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" id =\"filter\" data-toggle=\"dropdown\">\n                <span class=\"glyphicon glyphicon-filter\"></span>\n                <span class=\"caret\"></span>Filter</button>\n                <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Name</a></li>\n                    <li><a href=\"#\">Description</a></li>\n                </ul>\n            </div>\n        </div>\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t\t<ul class=\"searchable-container\">\n\t\t\t\t    <div *ngFor=\"#theme of themes\" class=\"event-list col-1-4\">\n\t\t\t\t\t<li class=\"items\">\n\t\t\t\t\t    <div class=\"id\"><p>{{theme.themeId}}</p></div>\n\t\t\t\t\t\t<div class=\"info\">\n\t\t\t\t\t\t\t<h2 class=\"title\">{{theme.themeName}}</h2>\n\t\t\t\t\t\t\t<p class=\"desc\">{{theme.description}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"social\">\n\t\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t\t<li class=\"facebook\" style=\"width:33%;\"><a href=\"#facebook\"><span class=\"fa fa-facebook\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"twitter\" style=\"width:34%;\"><a href=\"#twitter\"><span class=\"fa fa-twitter\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"google-plus\" style=\"width:33%;\"><a href=\"#google-plus\"><span class=\"fa fa-google-plus\"></span></a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</li>\n\t\t\t\t\t</div>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\n    </div>\n    ",
+                        directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
+                        template: "\n    <header>\n        <div class=\"container clearfix\" id=\"org-header\">\n            <h3>Themes</h3>\n            <div class=\"col-xs-12 col-sm-offset-3 col-sm-6\">\n                <form class=\"form-search\">\n                    <div class=\"input-group\">\n                        <input id=\"input-search\" class=\"form-control border-radius\"  placeholder=\"Search organisations...\" >\n                        <div class=\"input-group-btn\">\n                            <button type=\"button\" class=\"btn btn-default filter filter-ID filter-A\" (click)=\"sortId()\">\n                            <span class=\"glyphicon glyphicon-sort-by-order\"> ID</span></button>\n                            <button type=\"button\" class=\"btn btn-default filter filter-Name filter-A\" (click)=\"sortName()\">\n                            <span class=\"glyphicon glyphicon-sort-by-alphabet\"> Name</span></button>\n                            <button type=\"button\" class=\"btn btn-default filter filter-Desc filter-A\" (click)=\"sortDesc()\">\n                            <span class=\"glyphicon glyphicon-sort-by-alphabet\"> Description</span></button>\n                        </div>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </header>\n    <div class=\"container main\" id=\"org-list\">\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t\t<ul class=\"searchable-container\">\n\t\t\t\t    <div *ngFor=\"#theme of themes\" class=\"organisation-list col-1-4\" id=\"sort-list\">\n\t\t\t\t\t<li class=\"items\">\n\t\t\t\t\t<a [routerLink]=\"['/ThemeDetail', {id:theme.themeId}]\">\n\t\t\t\t\t    <div class=\"id\"><p>{{theme.themeId}}</p></div>\n\t\t\t\t\t\t<div class=\"info\">\n\t\t\t\t\t\t\t<h2 class=\"title\">{{theme.themeName}}</h2>\n\t\t\t\t\t\t\t<p class=\"desc\">{{theme.description}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"social\">\n\t\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t\t<li class=\"facebook\" style=\"width:33%;\"><a href=\"#facebook\"><span class=\"fa fa-facebook\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"twitter\" style=\"width:34%;\"><a href=\"#twitter\"><span class=\"fa fa-twitter\"></span></a></li>\n\t\t\t\t\t\t\t\t<li class=\"google-plus\" style=\"width:33%;\"><a href=\"#google-plus\"><span class=\"fa fa-google-plus\"></span></a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t</div>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n    </div>\n    ",
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
                 ], ThemeComponent);
                 return ThemeComponent;
-                var _a;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }

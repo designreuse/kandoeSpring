@@ -21,7 +21,6 @@ System.register(["./organisation"], function(exports_1) {
                     theme.themeName = json.themeName;
                     theme.description = json.description;
                     theme.organisation = organisation_1.Organisation.fromJson(json.organisation);
-                    console.log(theme);
                     return theme;
                 };
                 Theme.createEmpty = function () {

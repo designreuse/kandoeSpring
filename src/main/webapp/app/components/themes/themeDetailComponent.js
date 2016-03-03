@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, router_2, TokenHelper_1, theme_1, organisation_1;
+    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1;
     var ThemeDetailComponent;
     return {
         setters:[
@@ -17,7 +17,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-                router_2 = router_1_1;
             },
             function (themeService_1_1) {
                 themeService_1 = themeService_1_1;
@@ -47,17 +46,27 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         console.log(_this.theme);
                     });
                 };
+                ThemeDetailComponent.prototype.getImageSrc = function (url) {
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
+                    }
+                };
                 ThemeDetailComponent = __decorate([
-                    router_2.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
+                    router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'Theme',
-                        template: "\n        <div class=\"container\">\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t\t    <div class=\"event-list col-1-4\">\n\t\t\t\t\t    <div class=\"id\"><p>{{theme.themeId}}</p></div>\n\t\t\t\t\t\t<div class=\"info\">\n\t\t\t\t\t\t\t<h2 class=\"title\">{{theme.themeName}}</h2>\n\t\t\t\t\t\t\t<p class=\"desc\">{{theme.description}}</p>\n\t\t\t\t\t\t\t<p> IconURL: {{theme.iconURL}}</p>\n\t\t\t\t\t\t\t<p>Organisation name: {{org.organisationName}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t    </div>\n\t\t\t</div>\n\t\t</div>\n    </div>\n    ",
+                        directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
+                        template: "\n    <header>\n        <div class=\"container clearfix\">\n            <h3><span class=\"glyphicon glyphicon-bookmark\">  {{theme.themeName}}</span></h3>\n        </div>\n    </header>\n    <div class=\"container main\">\n        <div class=\"center-container col-lg-offset-2 col-lg-8\">\n            <img class=\"img-responsive img-thumbnail\" id=\"org-logo\" [src]=\"getImageSrc(theme.iconURL)\">\n        </div>\n        <div class=\"row\">\n            <div class=\"center-container col-lg-offset-2 col-lg-8\">\n                <h3>{{theme.description}}</h3>\n            </div>\n        </div>\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t<h4>Organisation</h4>\n\t\t\t    <ul class=\"organisation-list\">\n                    <li>\n                        <a [routerLink]=\"['/OrganisationDetail', {id:org.organisationId}]\">\n                        <div class=\"item\">\n                            <div class=\"id\"><p>{{org.organisationId}}</p></div>\n                            <img alt=\"logo\" [src]=\"getImageSrc(org.logoUrl, org.organisationId)\" />\n                            <div class=\"info\">\n                                <h2 class=\"title\">{{org.organisationName}}</h2>\n                                <p class=\"desc\">{{org.address}}</p>\n                            </div>\n                            </div>\n                        </a>\n                    </li>\n               </ul>\n\t\t\t</div>\n\t\t</div>\n    </div>\n    ",
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
-                var _a;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }
