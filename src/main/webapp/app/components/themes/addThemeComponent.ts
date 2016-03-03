@@ -59,7 +59,7 @@ export class AddThemeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.organisationService.getAllOrganisations().subscribe((orgs:Organisation[])=> this.currentOrganisations= orgs);
+        this.organisationService.getUserOrganisations().subscribe((orgs:Organisation[])=> this.currentOrganisations= orgs);
     }
 
     onFileChange($event){

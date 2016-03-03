@@ -40,7 +40,7 @@ public class Theme implements Serializable, Identifiable<Integer> {
     @ManyToMany(targetEntity = Tag.class)
     private List<Tag> tags;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User creator;
 
     public Theme() {

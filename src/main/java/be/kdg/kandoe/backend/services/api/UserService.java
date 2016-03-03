@@ -10,6 +10,12 @@ import java.util.List;
 
 public interface UserService  extends UserDetailsService {
 
+    /**
+     * Finds a user by a given userId
+     * @param userId
+     * @return
+     * @throws UserServiceException thrown when the user cannot be found
+     */
     User findUserById(Integer userId) throws UserServiceException;
 
     User findUserByUsername(String username) throws UserServiceException;

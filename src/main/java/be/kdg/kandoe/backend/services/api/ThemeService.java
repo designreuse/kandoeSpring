@@ -21,4 +21,6 @@ public interface ThemeService {
     Theme updateTheme(Theme theme);
 
     void removeTheme(int id);
+
+    List<Theme> findThemeByCreator(Integer userId);
 }

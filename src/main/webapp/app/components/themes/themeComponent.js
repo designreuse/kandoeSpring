@@ -33,7 +33,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 }
                 ThemeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._themeService.getAllThemes().subscribe(function (themes) { return _this.themes = themes; });
+                    this._themeService.getUserThemes().subscribe(function (themes) { return _this.themes = themes; });
                 };
                 ThemeComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

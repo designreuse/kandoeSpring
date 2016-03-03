@@ -41,7 +41,7 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                 }
                 AddThemeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.organisationService.getAllOrganisations().subscribe(function (orgs) { return _this.currentOrganisations = orgs; });
+                    this.organisationService.getUserOrganisations().subscribe(function (orgs) { return _this.currentOrganisations = orgs; });
                 };
                 AddThemeComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];

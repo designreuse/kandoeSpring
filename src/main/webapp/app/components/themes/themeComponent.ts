@@ -2,7 +2,6 @@ import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
 import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {ThemeService} from "../../service/themeService";
-import {CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {Theme} from "../../DOM/theme";
 
@@ -70,6 +69,6 @@ export class ThemeComponent  implements OnInit {
     }
 
     ngOnInit() {
-        this._themeService.getAllThemes().subscribe((themes:Theme[])=> this.themes = themes);
+        this._themeService.getUserThemes().subscribe((themes:Theme[])=> this.themes = themes);
     }
 }

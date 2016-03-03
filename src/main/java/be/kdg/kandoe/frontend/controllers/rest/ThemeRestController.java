@@ -70,4 +70,15 @@ public class ThemeRestController {
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public ResponseEntity<List<ThemeDTO>> getThemesCurrentUser(@AuthenticationPrincipal User user){
+        if(user != null){
+            List<Theme> themes = themeService.findThemeByCreator(user.getId());
+
+            return new ResponseEntity<>(themeAssembler.toResources(themes), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
 }
