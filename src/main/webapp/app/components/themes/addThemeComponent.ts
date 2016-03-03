@@ -2,17 +2,19 @@
  * Created by Jordan on 29/02/2016.
  */
 import {Component, OnInit} from 'angular2/core';
-import {Router, CanActivate} from 'angular2/router';
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {ThemeService} from "../../service/themeService";
 import {Theme} from "../../DOM/theme";
 import {OrganisationService} from "../../service/organisationService";
 import {Organisation} from "../../DOM/organisation";
 
+import {Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
+
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-theme',
+    directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
     <header>
         <div class="container clearfix">
@@ -20,6 +22,11 @@ import {Organisation} from "../../DOM/organisation";
         </div>
     </header>
     <div class="container main">
+    <ol class="breadcrumb">
+        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+        <li><a [routerLink]="['/Themes']">Themes</a></li>
+        <li class="active"> Add theme</li>
+    </ol>
         <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
 
                 <div class="form-group">

@@ -1,10 +1,11 @@
 import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
-import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate, RouteParams} from "angular2/router";
+import {Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {ThemeService} from "../../service/themeService";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {Theme} from "../../DOM/theme";
 import {Organisation} from "../../DOM/organisation";
+
 @CanActivate(() => tokenNotExpired())
 
 @Component({
@@ -27,6 +28,12 @@ import {Organisation} from "../../DOM/organisation";
         </div>
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+			<ol class="breadcrumb">
+        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+        <li><a [routerLink]="['/Themes']">Themes</a></li>
+        <li class="active"> Theme detail</li>
+    </ol>
+
 			<h4>Organisation</h4>
 			    <ul class="organisation-list">
                     <li>
@@ -51,18 +58,16 @@ import {Organisation} from "../../DOM/organisation";
 })
 
 export class ThemeDetailComponent implements OnInit {
-    private theme: Theme = Theme.createEmpty();
-    private org: Organisation = Organisation.createEmpty;
-    private themeId: number;
-
-    constructor(private _themeService:ThemeService, private _router:Router, routeParams: RouteParams) {
-        this.themeId = +routeParams.params["id"];
+    public theme:Theme = Theme.createEmpty();
+    public org:Organisation=Organisation.createEmpty;
+    constructor(private _themeService:ThemeService, private _router:Router) {
     }
 
     ngOnInit() {
-        this._themeService.getTheme(this.themeId).subscribe(theme => {
+        this._themeService.getTheme(1).subscribe(theme => {
             this.theme = theme;
             this.org=this.theme.organisation;
+            console.log(this.theme);
         });
     }
 
