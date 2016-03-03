@@ -11,49 +11,7 @@ import {Organisation} from "../../DOM/organisation";
 @Component({
     selector: 'Theme',
     directives: [ROUTER_DIRECTIVES, RouterLink],
-    template: `
-    <header>
-        <div class="container clearfix">
-            <h3><span class="glyphicon glyphicon-bookmark">  {{theme.themeName}}</span></h3>
-        </div>
-    </header>
-    <div class="container main">
-        <div class="center-container col-lg-offset-2 col-lg-8">
-            <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(theme.iconURL)">
-        </div>
-        <div class="row">
-            <div class="center-container col-lg-offset-2 col-lg-8">
-                <h3>{{theme.description}}</h3>
-            </div>
-        </div>
-    	<div class="row">
-			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-			<ol class="breadcrumb">
-        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
-        <li><a [routerLink]="['/Themes']">Themes</a></li>
-        <li class="active"> Theme detail</li>
-    </ol>
-
-			<h4>Organisation</h4>
-			    <ul class="organisation-list">
-                    <li>
-                        <a [routerLink]="['/OrganisationDetail', {id:org.organisationId}]">
-                        <div class="item">
-                            <div class="id"><p>{{org.organisationId}}</p></div>
-                            <img alt="logo" [src]="getImageSrc(org.logoUrl, org.organisationId)" />
-                            <div class="info">
-                                <h2 class="title">{{org.organisationName}}</h2>
-                                <p class="desc">{{org.address}}</p>
-                            </div>
-                            </div>
-                        </a>
-                    </li>
-               </ul>
-			</div>
-		</div>
-    </div>
-    `,
-
+    templateUrl: 'app/components/themes/themeDetailComponent.html',
     inputs: ['theme']
 })
 

@@ -80,9 +80,10 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     }),
                     core_1.Injectable(),
                     __param(3, core_1.Inject('App.BackEndPath')), 
-                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService, securityService_1.SecurityService, String])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, securityService_1.SecurityService, String])
                 ], Home);
                 return Home;
+                var _a;
             })();
             exports_1("Home", Home);
         }

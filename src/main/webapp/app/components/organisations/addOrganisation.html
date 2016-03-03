@@ -1,0 +1,84 @@
+<nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+    <div class="container">
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="dropdown-toggle"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./">
+                KAN<span>DOE</span></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/LoggedInHome']"> Your Kandoe </a></li>
+            <li class="active"> <a href="#">My Organisations</a> </li>
+            <li> <a [routerLink]="['/Themes']"> My Themes</a> </li>
+
+            <li>  <a [routerLink]="['/KandoeCard']" > My Cards</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"  src="http://zblogged.com/wp-content/uploads/2015/11/c1.png">
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li> <a class="glyphicon" >Edit profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li> <a class="glyphicon glyphicon-log-out" > Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<header>
+    <div class="container clearfix">
+        <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new organisation</h3>
+    </div>
+</header>
+
+<div class="container main">
+    <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
+        <ol class="breadcrumb">
+            <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+            <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
+            <li  class="active">Add organisation</li>
+        </ol>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Enter organisation name" class="form-control" [(ngModel)]="organisation.organisationName">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" placeholder="Enter address" class="form-control" [(ngModel)]="organisation.address">
+        </div>
+        <div class="form-group">
+            <label>Logo</label>
+            <input type="file" multiple="false" (change)="onFileChange($event)">
+        </div>
+        <div class="items">
+            <div class="item">
+                <div class="id"><p>1</p></div>
+                <img alt="logo" src="" id="imgOut"/>
+                <div class="info">
+                    <h2 class="title">{{organisation.organisationName}}</h2>
+                    <p class="desc">{{organisation.address}}</p>
+                </div>
+                <div class="social">
+                    <ul>
+                        <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+                        <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+                        <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-wide btn-primary glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
+        </div>
+
+    </form>
+</div>
