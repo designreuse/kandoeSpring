@@ -34,6 +34,10 @@ import {Theme} from "../../DOM/theme";
     <div class="container main" id="org-list">
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+				<ol class="breadcrumb">
+        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+        <li class="active">Themes</li>
+          </ol>
 				<ul class="searchable-container">
 				    <div *ngFor="#theme of themes" class="organisation-list col-1-4" id="sort-list">
 					<li class="items">

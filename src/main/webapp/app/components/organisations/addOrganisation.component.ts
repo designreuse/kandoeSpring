@@ -1,22 +1,29 @@
 import {Component, OnInit} from 'angular2/core'
 import {Organisation} from "../../DOM/organisation";
 import {OrganisationService} from "../../service/organisationService";
-import {Router, CanActivate} from 'angular2/router';
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../../security/TokenHelper";
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-organisation',
+    directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
+
     <header>
         <div class="container clearfix">
             <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new organisation</h3>
         </div>
     </header>
+
     <div class="container main">
         <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
-
+  <ol class="breadcrumb">
+        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+        <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
+      <li  class="active">Add organisation</li>
+    </ol>
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" placeholder="Enter organisation name" class="form-control" [(ngModel)]="organisation.organisationName">

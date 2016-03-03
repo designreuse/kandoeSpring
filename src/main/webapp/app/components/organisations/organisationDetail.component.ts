@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core'
 import {Organisation} from "../../DOM/organisation";
 import {OrganisationService} from "../../service/organisationService";
-import {Router, CanActivate, RouteParams} from 'angular2/router';
+import {RouteParams, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {User} from "../../DOM/users/user";
 
@@ -9,15 +9,58 @@ import {User} from "../../DOM/users/user";
 
 @Component({
     selector: "organisation-detail",
+    directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
+         <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+        <div class="container">
+            <div class="navbar-header ">
+                <button type="button" class="navbar-toggle" data-toggle="dropdown-toggle"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./">
+                    KAN<span>DOE</span></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a [routerLink]="['/LoggedInHome']"> Your Kandoe </a></li>
+                <li class="active"> My Organisations </li>
+                <li> <a [routerLink]="['/Themes']"> My Themes</a> </li>
+                <li>  <a [routerLink]="['/KandoeCard']" > My Cards</a></li>
+
+            </ul>
+           <ul class="nav navbar-nav navbar-right">
+                <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"  src="http://zblogged.com/wp-content/uploads/2015/11/c1.png">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li> <a class="glyphicon" >Edit profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li> <a class="glyphicon glyphicon-log-out" > Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+</nav>
+
+
     <header>
         <div class="container clearfix">
             <h3><span class="glyphicon glyphicon-book"> {{organisation.organisationName}}</span></h3>
         </div>
     </header>
     <div class="container main">
+
         <div class="center-container col-lg-offset-2 col-lg-8">
-            <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
+             <ol class="breadcrumb" float="left">
+        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+        <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
+        <li class="active">Organisation detail</li>
+    </ol>
+      <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
         </div>
         <div class="row">
             <div class="center-container col-lg-offset-2 col-lg-8">
@@ -71,7 +114,7 @@ import {User} from "../../DOM/users/user";
                         <div *ngFor="#member of members">
                           <li class="list-group-item">
                             <div class="col-xs-12 col-sm-3">
-                                <img src="http://zblogged.com/wp-content/uploads/2015/11/c1.png" alt="profile picture" class="img-responsive img-circle" />
+                                <img src="https://zblogged.com/wp-content/uploads/2015/11/c1.png" alt="profile picture" class="img-responsive img-circle" />
                             </div>
                             <div class="col-xs-12 col-sm-9">
                                 <span class="username">{{ member.username }}</span>
@@ -88,15 +131,15 @@ import {User} from "../../DOM/users/user";
     `
 })
 
-export class OrganisationDetailComponent implements OnInit{
-    private organisationService: OrganisationService;
-    private organisation: Organisation = Organisation.createEmpty();
-    private organisers: User[] = [];
-    private members: User[] = [];
-    private orgId: number;
-    private newMember: string = "";
+export class OrganisationDetailComponent implements OnInit {
+    private organisationService:OrganisationService;
+    private organisation:Organisation = Organisation.createEmpty();
+    private organisers:User[] = [];
+    private members:User[] = [];
+    private orgId:number;
+    private newMember:string = "";
 
-    constructor(orgService: OrganisationService, routeParams: RouteParams){
+    constructor(orgService:OrganisationService, routeParams:RouteParams) {
         this.organisationService = orgService;
         this.orgId = +routeParams.params["id"];
     }
@@ -115,19 +158,19 @@ export class OrganisationDetailComponent implements OnInit{
 
     }
 
-    private showAddUser(){
+    private showAddUser() {
         $("#add-button").toggleClass('hide-add');
         if ($(this).hasClass('hide-add')) {
             $('.add-user').closest('.row').css("display", "none");
-        }else {
+        } else {
             $('.add-user').closest('.row').slideDown(100);
         }
     }
 
 
-    private getImageSrc(url: string): string {
-        if(url){
-            if(url.indexOf("http://") > -1){
+    private getImageSrc(url:string):string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
                 return url;
             } else {
                 return url.replace(/"/g, "");
@@ -136,7 +179,7 @@ export class OrganisationDetailComponent implements OnInit{
     }
 
     private addMember() {
-        if(this.newMember){
+        if (this.newMember) {
             this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
                 this.members.push(u);
                 this.newMember = "";
