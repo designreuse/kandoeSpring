@@ -3,11 +3,13 @@ package be.kdg.kandoe.frontend.controllers.rest;
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
 import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -49,6 +51,40 @@ public class ThemeRestControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(springSecurityFilterChain).build();
+    }
+
+    @Test
+    public void testCreateTheme() throws Exception{
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        JSONObject theme = new JSONObject();
+        theme.put("themeName", "TestTheme");
+        theme.put("description", "TestDescription");
+        JSONObject org = new JSONObject();
+        org.put("organisationId", 1);
+        org.put("organisationName", "Karel De Grote");
+        theme.put("organisation", org);
+
+        mockMvc.perform(post("/api/themes")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(theme.toString()))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testCreateThemeWithoutOrganisation() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        JSONObject theme = new JSONObject();
+        theme.put("themeName", "TestTheme");
+        theme.put("description", "TestDescription");
+
+        mockMvc.perform(post("/api/themes")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(theme.toString()))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 
     @Test

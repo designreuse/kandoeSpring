@@ -78,9 +78,7 @@ export class AddThemeComponent implements OnInit {
     }
 
     selectOrganisation($event) {
-        //alert($event.srcElement.value);
-        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.srcElement.value);
+        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
         this.theme.organisation=organisation;
-        console.log(organisation);
     }
 }

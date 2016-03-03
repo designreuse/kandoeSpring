@@ -58,10 +58,8 @@ System.register(['angular2/core', 'angular2/router', "../../security/TokenHelper
                     });
                 };
                 AddThemeComponent.prototype.selectOrganisation = function ($event) {
-                    //alert($event.srcElement.value);
-                    var organisation = this.currentOrganisations.find(function (org) { return org.organisationName === $event.srcElement.value; });
+                    var organisation = this.currentOrganisations.find(function (org) { return org.organisationName === $event.target.value; });
                     this.theme.organisation = organisation;
-                    console.log(organisation);
                 };
                 AddThemeComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

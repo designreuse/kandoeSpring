@@ -50,22 +50,25 @@ public class ThemeRestController {
     }
 
     @RequestMapping(value = "/{themeId}", method = RequestMethod.GET)
-    public ResponseEntity<ThemeDTO> getOrganisationById(@PathVariable(value = "themeId") int themeId){
+    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable(value = "themeId") int themeId){
         Theme theme = themeService.findThemeById(themeId);
         System.out.println(theme.getOrganisation().getOrganisationName());
         return new ResponseEntity<>(themeAssembler.toResource(theme), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ThemeDTO> createOrganisation(@Valid @RequestBody ThemeDTO themeDTO,
-                                                       @AuthenticationPrincipal User user) {
+    public ResponseEntity<ThemeDTO> createTheme(@Valid @RequestBody ThemeDTO themeDTO,
+                                                @AuthenticationPrincipal User user) {
         if (user != null && user.getId() != null) {
-            Theme theme_in = mapper.map(themeDTO, Theme.class);
+            if(themeDTO.getOrganisation() != null){
+                Theme theme_in = mapper.map(themeDTO, Theme.class);
 
-            Theme theme_out = themeService.saveTheme(theme_in, user.getId());
-            logger.info(this.getClass().toString() + ": adding new theme " + theme_out.getId());
+                Theme theme_out = themeService.saveTheme(theme_in, user.getId());
+                logger.info(this.getClass().toString() + ": adding new theme " + theme_out.getId());
 
-            return new ResponseEntity<>(themeAssembler.toResource(theme_out), HttpStatus.CREATED);
+                return new ResponseEntity<>(themeAssembler.toResource(theme_out), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<ThemeDTO>(HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

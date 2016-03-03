@@ -32,18 +32,18 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             }],
         execute: function() {
             ThemeDetailComponent = (function () {
-                function ThemeDetailComponent(_themeService, _router) {
+                function ThemeDetailComponent(_themeService, _router, routeParams) {
                     this._themeService = _themeService;
                     this._router = _router;
                     this.theme = theme_1.Theme.createEmpty();
                     this.org = organisation_1.Organisation.createEmpty;
+                    this.themeId = +routeParams.params["id"];
                 }
                 ThemeDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._themeService.getTheme(1).subscribe(function (theme) {
+                    this._themeService.getTheme(this.themeId).subscribe(function (theme) {
                         _this.theme = theme;
                         _this.org = _this.theme.organisation;
-                        console.log(_this.theme);
                     });
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
@@ -64,7 +64,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         template: "\n    <header>\n        <div class=\"container clearfix\">\n            <h3><span class=\"glyphicon glyphicon-bookmark\">  {{theme.themeName}}</span></h3>\n        </div>\n    </header>\n    <div class=\"container main\">\n        <div class=\"center-container col-lg-offset-2 col-lg-8\">\n            <img class=\"img-responsive img-thumbnail\" id=\"org-logo\" [src]=\"getImageSrc(theme.iconURL)\">\n        </div>\n        <div class=\"row\">\n            <div class=\"center-container col-lg-offset-2 col-lg-8\">\n                <h3>{{theme.description}}</h3>\n            </div>\n        </div>\n    \t<div class=\"row\">\n\t\t\t<div class=\"col-xs-12 col-sm-offset-2 col-sm-8\">\n\t\t\t<h4>Organisation</h4>\n\t\t\t    <ul class=\"organisation-list\">\n                    <li>\n                        <a [routerLink]=\"['/OrganisationDetail', {id:org.organisationId}]\">\n                        <div class=\"item\">\n                            <div class=\"id\"><p>{{org.organisationId}}</p></div>\n                            <img alt=\"logo\" [src]=\"getImageSrc(org.logoUrl, org.organisationId)\" />\n                            <div class=\"info\">\n                                <h2 class=\"title\">{{org.organisationName}}</h2>\n                                <p class=\"desc\">{{org.address}}</p>\n                            </div>\n                            </div>\n                        </a>\n                    </li>\n               </ul>\n\t\t\t</div>\n\t\t</div>\n    </div>\n    ",
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, router_1.RouteParams])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
             })();
