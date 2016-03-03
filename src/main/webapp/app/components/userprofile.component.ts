@@ -60,6 +60,12 @@ import {tokenNotExpired} from '../security/TokenHelper';
                     <input type="text" placeholder="Enter zip code" class="form-control" [(ngModel)]="user.person.address.zip">
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-8 form-group">
+                    <label>Logo</label>
+                    <input type="file" multiple="false" (change)="onFileChange($event)">
+                </div>
+            </div>
         </div>
         <div *ngIf="showChangePassword">
             <div class="form-group">
@@ -98,34 +104,36 @@ import {tokenNotExpired} from '../security/TokenHelper';
     `
 })
 
-export class UserProfileComponent implements OnInit{
-    private user: User = User.createEmpty();
+export class UserProfileComponent implements OnInit {
+    private user:User = User.createEmpty();
     private userService:UserService = null;
-    private router: Router;
-    private showChangePassword: boolean = false;
+    private router:Router;
+    private showChangePassword:boolean = false;
+    private file:File = null;
 
-    constructor(userService:UserService, router: Router) {
+    constructor(userService:UserService, router:Router) {
         this.userService = userService;
         this.router = router;
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
+            console.log("init user password: " + u.password)
         });
     }
 
     onSubmit() {
-        if(this.showChangePassword){
-            if(this.user.password != null && this.user.password != this.user.passwordConfirm){
+        if (this.showChangePassword) {
+            if (this.user.password != null && this.user.password != this.user.passwordConfirm) {
                 //todo proper error display
                 alert("new passwords don't match");
-            } else if(this.user.oldPassword == null) {
+            } else if (this.user.oldPassword == null) {
                 //todo proper error display
                 alert("fill in old password");
             } else {
                 this.userService.changePassword(this.user).subscribe(
-                    (res: Response) => {
+                    (res:Response) => {
                         this.user.oldPassword = null;
                         this.user.password = null;
                         this.user.passwordConfirm = null;
@@ -140,8 +148,9 @@ export class UserProfileComponent implements OnInit{
                 )
             }
         } else {
-            this.userService.updateUser(this.user).subscribe(
-                (u: User) => {
+            console.log("user before servicecall: "+this.user.password);
+            this.userService.updateUser(this.user,this.file).subscribe(
+                (u:User) => {
                     this.router.navigate(['/LoggedInHome'])
                 },
                 error => {
@@ -152,15 +161,22 @@ export class UserProfileComponent implements OnInit{
         }
     }
 
-    changePassword(){
+    changePassword() {
         this.showChangePassword = true;
     }
 
-    cancel(){
-        if(this.showChangePassword){
+    cancel() {
+        if (this.showChangePassword) {
             this.showChangePassword = false;
         } else {
             this.router.navigate(['/LoggedInHome']);
         }
+    }
+
+    onFileChange($event) {
+        this.file = $event.target.files[0];
+
+        var output = document.getElementById("profile-picture");
+        output.src = URL.createObjectURL($event.target.files[0]);
     }
 }

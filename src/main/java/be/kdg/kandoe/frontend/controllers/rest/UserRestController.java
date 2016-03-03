@@ -1,12 +1,15 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.users.Person;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import be.kdg.kandoe.frontend.DTO.LoginDTO;
+import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.UserAssembler;
+import be.kdg.kandoe.frontend.util.FileUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import ma.glasnost.orika.MapperFacade;
@@ -20,8 +23,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -116,4 +122,35 @@ public class UserRestController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(value = "/updateUser/image", method = RequestMethod.POST)
+    public ResponseEntity<String> createOrganisation(@RequestPart("body") UserDTO userDTO,
+                                                     @RequestPart("file") MultipartFile file,
+                                                     @AuthenticationPrincipal User user,
+                                                     HttpServletRequest request) {
+
+        if(user != null && user.getId() != null) {
+            if(file.getContentType().split("/")[0].equals("image")){
+                User user_in = mapperFacade.map(userDTO, User.class);
+                user_in.setPassword(userService.findUserById(user_in.getId()).getPassword());
+
+                String newFilename = String.format("%d.%s", user_in.getId(), file.getOriginalFilename().split("\\.")[1]);
+                String filePath = request.getServletContext().getRealPath("/resources/images/users/profilePictures");
+
+                try {
+                    FileUtils.saveFile(filePath, newFilename, file);
+                } catch (IOException e) {
+                    return new ResponseEntity<>("Failed to save image", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                user_in.setProfilePicture("resources/images/users/profilePictures/" + newFilename);
+                userService.updateUser(user_in);
+
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("You have to select an image", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
 }

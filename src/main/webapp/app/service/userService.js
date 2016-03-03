@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../security/securityService"], function(exports_1) {
+System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../security/securityService", "./uploadService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,7 +11,7 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var http_1, core_1, securityService_1;
+    var http_1, core_1, securityService_1, uploadService_1;
     var UserService;
     return {
         setters:[
@@ -24,14 +24,18 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
             },
             function (securityService_1_1) {
                 securityService_1 = securityService_1_1;
+            },
+            function (uploadService_1_1) {
+                uploadService_1 = uploadService_1_1;
             }],
         execute: function() {
             UserService = (function () {
-                function UserService(http, path, securityService) {
+                function UserService(http, path, securityService, uploadService) {
                     this.http = null;
                     this.http = http;
                     this.path = path;
                     this.securityService = securityService;
+                    this.uploadService = uploadService;
                 }
                 UserService.prototype.createUser = function (user) {
                     return this.securityService.post(this.path + 'users', JSON.stringify(user), false);
@@ -43,9 +47,14 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
                     return this.securityService.get(this.path + 'users/currentUser', true)
                         .map(function (res) { return res.json(); });
                 };
-                UserService.prototype.updateUser = function (user) {
-                    return this.securityService.post(this.path + 'users/updateUser', JSON.stringify(user), true)
-                        .map(function (res) { return res.json(); });
+                UserService.prototype.updateUser = function (user, file) {
+                    if (file) {
+                        return this.uploadService.updateUser(JSON.stringify(user), file);
+                    }
+                    else {
+                        return this.securityService.post(this.path + 'users/updateUser', JSON.stringify(user), true)
+                            .map(function (res) { return res.json(); });
+                    }
                 };
                 UserService.prototype.changePassword = function (user) {
                     return this.securityService.post(this.path + 'users/changePassword', JSON.stringify(user), true);
@@ -53,10 +62,9 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
                 UserService = __decorate([
                     core_1.Injectable(),
                     __param(1, core_1.Inject('App.BackEndPath')), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, String, securityService_1.SecurityService])
+                    __metadata('design:paramtypes', [http_1.Http, String, securityService_1.SecurityService, uploadService_1.UploadService])
                 ], UserService);
                 return UserService;
-                var _a;
             })();
             exports_1("UserService", UserService);
         }

@@ -26,51 +26,44 @@ public class UserDTO extends ResourceSupport implements Serializable {
 
     private List<Role.RoleType> roleTypes;
 
+    private String profilePicture;
+
     // Person and Address properties
     private PersonDTO person;
 
-    public UserDTO()
-    {
+    public UserDTO() {
         this.person = new PersonDTO();
     }
 
-    public Integer getUserId()
-    {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId)
-    {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getOldPassword()
-    {
+    public String getOldPassword() {
         return oldPassword;
     }
 
-    public void setOldPassword(String oldPassword)
-    {
+    public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
     }
 
@@ -82,23 +75,27 @@ public class UserDTO extends ResourceSupport implements Serializable {
         this.email = email;
     }
 
-    public List<Role.RoleType> getRoleTypes()
-    {
+    public List<Role.RoleType> getRoleTypes() {
         return roleTypes;
     }
 
-    public void setRoleTypes(List<Role.RoleType> roleTypes)
-    {
+    public void setRoleTypes(List<Role.RoleType> roleTypes) {
         this.roleTypes = roleTypes;
     }
 
-    public PersonDTO getPerson()
-    {
+    public PersonDTO getPerson() {
         return person;
     }
 
-    public void setPerson(PersonDTO person)
-    {
+    public void setPerson(PersonDTO person) {
         this.person = person;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

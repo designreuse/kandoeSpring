@@ -64,10 +64,9 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "./T
                 SecurityService = __decorate([
                     core_1.Injectable(),
                     __param(1, core_1.Inject('App.BackEndPath')), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, String, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [http_1.Http, String, router_1.Router])
                 ], SecurityService);
                 return SecurityService;
-                var _a, _b;
             })();
             exports_1("SecurityService", SecurityService);
         }
