@@ -74,7 +74,9 @@ public class UserServiceImpl implements UserService{
         if(existingUsername != null && user.getId() == null)
             throw new UserServiceException("Username already in use");
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(!user.isFacebookAccount()){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         User u = userRepository.save(user);
 
         if (u == null)

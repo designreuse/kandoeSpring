@@ -21,6 +21,8 @@ public class UserDTO extends ResourceSupport implements Serializable {
 
     private String oldPassword;
 
+    private boolean facebookAccount;
+
     @Email
     private String email;
 
@@ -100,5 +102,13 @@ public class UserDTO extends ResourceSupport implements Serializable {
     public void setPerson(PersonDTO person)
     {
         this.person = person;
+    }
+
+    public boolean isFacebookAccount() {
+        return facebookAccount;
+    }
+
+    public void setFacebookAccount(boolean facebookAccount) {
+        this.facebookAccount = facebookAccount;
     }
 }

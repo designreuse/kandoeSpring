@@ -49,6 +49,7 @@ export class UploadService {
 
                     var responseOptions = new ResponseOptions({body, status, headers, url});
                     let response = new Response(responseOptions);
+
                     if (isSuccess(status)) {
                         responseObserver.next(response);
                         // TODO(gdi2290): defer complete if array buffer until done

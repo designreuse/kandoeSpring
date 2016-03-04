@@ -38,6 +38,9 @@ System.register(["./person", "./address"], function(exports_1) {
                     person.firstname = json.person.firstname;
                     person.lastname = json.person.lastname;
                     user.person = person;
+                    if (json.facebookAccount) {
+                        user.facebookAccount = json.facebookAccount;
+                    }
                     return user;
                 };
                 return User;

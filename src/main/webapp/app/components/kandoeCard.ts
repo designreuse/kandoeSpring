@@ -13,7 +13,7 @@ import {UserService} from "../service/userService";
          <div class="col-md-4">
             <div class="card">
                 <div class="card-image">
-                    <img src="https://www.keenthemes.com/preview/conquer/assets/plugins/jcrop/demos/demo_files/image2.jpg" class="img-responsive">
+                    <img src="http://www.keenthemes.com/preview/conquer/assets/plugins/jcrop/demos/demo_files/image2.jpg" class="img-responsive">
                     <div class="caption post-content">
                         <h3 style="color:#f9f9f9">Birds</h3>
                     </div>

@@ -3,9 +3,7 @@ package be.kdg.kandoe.frontend.config.security;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.frontend.config.security.jwt.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -35,21 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /*http
-                .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .anyRequest().permitAll()
-                    .and()
-                .formLogin()
-                    .successHandler(new MyAuthenticationSuccessHandler())
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .permitAll()
-                    .and()
-                .logout()
-                    .permitAll()
-                    .and()
-                .csrf().disable();*/
         http
                 .headers().cacheControl().and().and()
                 .authorizeRequests()
@@ -60,12 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .antMatchers("/api/**").authenticated().and()
-                /*.formLogin()
-                .loginProcessingUrl("/api/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .successHandler(new MyAuthenticationSuccessHandler())
-                .failureHandler(new MyAuthenticationFailureHandler()).and()*/
                 .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

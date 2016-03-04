@@ -3,7 +3,6 @@ package be.kdg.kandoe.backend.dom.users;
 import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import org.hibernate.annotations.Fetch;
 import org.springframework.hateoas.Identifiable;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 
 @Entity
-public class User implements Serializable, UserDetails, Identifiable<Integer> {
+public class User implements Serializable, UserDetails, Identifiable<Integer>{
 
     @Id
     @Column(name = "UserId", nullable = false)
@@ -31,7 +30,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Column(name = "Username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "Password", nullable = false)
+    @Column(name = "Password")
     private String password;
 
     @Column(name = "Email", nullable = false, unique = true)
@@ -39,6 +38,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
 
     @Column(name= "NewUser", nullable = false)
     private boolean newUser;
+
+    @Column(name= "FacebookAccount", nullable = false)
+    private boolean facebookAccount;
 
     @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PersonId", nullable = false)
@@ -210,6 +212,22 @@ public class User implements Serializable, UserDetails, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return userId;
+    }
+
+    public boolean isFacebookAccount() {
+        return facebookAccount;
+    }
+
+    public void setFacebookAccount(boolean facebookAccount) {
+        this.facebookAccount = facebookAccount;
+    }
+
+    public List<UserSession> getUserSessions() {
+        return userSessions;
+    }
+
+    public void setUserSessions(List<UserSession> userSessions) {
+        this.userSessions = userSessions;
     }
 }
 

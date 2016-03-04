@@ -17,7 +17,7 @@ import {tokenNotExpired} from '../security/TokenHelper';
     </header>
     <div class="container main">
      <div class="center-container col-lg-offset-2 col-lg-8">
-        <img class="img-responsive img-thumbnail" id="profile-picture" src="https://zblogged.com/wp-content/uploads/2015/11/c1.png">
+        <img class="img-responsive img-thumbnail" id="profile-picture" src="http://zblogged.com/wp-content/uploads/2015/11/c1.png">
      </div>
      <form  class="well well-lg col-lg-offset-2 col-lg-8" method="post" role="form">
         <div class="form-pad">

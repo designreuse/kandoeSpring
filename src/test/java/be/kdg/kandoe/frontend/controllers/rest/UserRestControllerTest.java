@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -41,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
+@TestPropertySource("/application.properties")
 public class UserRestControllerTest {
 
     @Autowired
@@ -62,7 +64,7 @@ public class UserRestControllerTest {
     @Test
     public void testGetAllUsers() throws Exception
     {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/users").header("Authorization", token)).
                 andExpect(status().is2xxSuccessful()).
@@ -72,7 +74,7 @@ public class UserRestControllerTest {
     @Test
     public void testFindUserById() throws Exception
     {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/users/1").header("Authorization", token)).
                 andExpect(jsonPath("$.username", is("ArneLauryssens")))
@@ -81,7 +83,7 @@ public class UserRestControllerTest {
 
     @Test
     public void testFindLoggedInUser() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/users/currentUser").header("Authorization", token)).
                 andExpect(jsonPath("$.username", is("ArneLauryssens")))
@@ -108,7 +110,7 @@ public class UserRestControllerTest {
         mockMvc.perform(post("/api/users")
                 .content(userResource.toString())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXlfcGVlcmxpbmNrQGhvdG1haWwuY29tIn0.UlYd5co9iMo7U2yisZikmfRb5OL9ncwu68j1OZPtxFA")))
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXlfcGVlcmxpbmNrQGhvdG1haWwuY29tIiwiZmFjZWJvb2tBY2NvdW50IjpmYWxzZX0.jGQYrhxMQPIiCtRt0vnkctk0Chk04b0RJ8vffigL1AE")))
                 .andExpect(status().isCreated())
                 .andDo(print());
     }
@@ -145,7 +147,7 @@ public class UserRestControllerTest {
         personResource.put("lastname", "Lauryssens");
         userResource.put("person",personResource);
 
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(post("/api/users/updateUser")
                 .header("Authorization", token)
@@ -183,13 +185,13 @@ public class UserRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(login.toString()))
                 .andDo(print())
-                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE")));
 
         JSONObject userResource = new JSONObject();
         userResource.put("oldPassword","test123");
         userResource.put("password", "test");
 
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(post("/api/users/changePassword")
                 .header("Authorization", token)
@@ -204,7 +206,7 @@ public class UserRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(login.toString()))
                 .andDo(print())
-                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE")));
     }
 
     @Test
@@ -217,13 +219,13 @@ public class UserRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(login.toString()))
                 .andDo(print())
-                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU")));
+                .andExpect(jsonPath("$", Matchers.is("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE")));
 
         JSONObject userResource = new JSONObject();
         userResource.put("oldPassword","test");
         userResource.put("password", "test");
 
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(post("/api/users/changePassword")
                 .header("Authorization", token)

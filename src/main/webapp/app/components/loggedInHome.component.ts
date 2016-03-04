@@ -39,7 +39,7 @@ import {tokenNotExpired} from "../security/TokenHelper";
     </div>
 
       <div>
-     <img class="img-responsivenav img-thumbnailnav" id="profile-picturenav" align="right" src="https://zblogged.com/wp-content/uploads/2015/11/c1.png">
+     <img class="img-responsivenav img-thumbnailnav" id="profile-picturenav" align="right" src="http://zblogged.com/wp-content/uploads/2015/11/c1.png">
     </div>
     </nav>
     </div>

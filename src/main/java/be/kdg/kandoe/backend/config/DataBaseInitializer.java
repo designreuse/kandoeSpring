@@ -69,6 +69,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user.setEmail("arne.lauryssens@student.kdg.be");
             user.setNewUser(true);
             user.setUsername("ArneLauryssens");
+            user.setFacebookAccount(false);
             user = userService.saveUser(user);
         }
 
@@ -78,6 +79,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             mailUser.setUsername("MailUser");
             mailUser.setNewUser(true);
             mailUser.setPassword("test123");
+            mailUser.setFacebookAccount(false);
             userService.saveUser(mailUser);
         }
 
@@ -127,6 +129,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             List<Organisation> orgs = new ArrayList<>();
             orgs.add(org);
             user2.setOrganisations(orgs);
+            user2.setFacebookAccount(false);
             user2 = userService.saveUser(user2);
         }
 
@@ -141,6 +144,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user3.setEmail("jordan.parezys@student.kdg.be");
             user3.setNewUser(true);
             user3.setUsername("JordanParezys");
+            user3.setFacebookAccount(false);
             user3 = userService.saveUser(user3);
         }
     }

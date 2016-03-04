@@ -29,6 +29,10 @@ export class UserService {
         return this.securityService.post(this.path + 'login', "{ \"username\": \"" + username + "\",\"password\": \"" + password + "\" }", false);
     }
 
+    public loginFacebook(user: User): Observable<Response> {
+        return this.securityService.post(this.path + 'login/facebook', JSON.stringify(user), false);
+    }
+
     public getCurrentUser(): Observable<User> {
         return this.securityService.get(this.path + 'users/currentUser', true)
                 .map((res: Response) => res.json());

@@ -71,7 +71,7 @@ import {User} from "../../DOM/users/user";
                         <div *ngFor="#member of members">
                           <li class="list-group-item">
                             <div class="col-xs-12 col-sm-3">
-                                <img src="https://zblogged.com/wp-content/uploads/2015/11/c1.png" alt="profile picture" class="img-responsive img-circle" />
+                                <img src="http://zblogged.com/wp-content/uploads/2015/11/c1.png" alt="profile picture" class="img-responsive img-circle" />
                             </div>
                             <div class="col-xs-12 col-sm-9">
                                 <span class="username">{{ member.username }}</span>

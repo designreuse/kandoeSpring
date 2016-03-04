@@ -10,6 +10,7 @@ export class User {
     public oldPassword: string;
     public email: string;
     public person: Person;
+    public facebookAccount: boolean;
 
     constructor(){
 
@@ -38,6 +39,10 @@ export class User {
         person.firstname = json.person.firstname;
         person.lastname = json.person.lastname;
         user.person = person;
+
+        if(json.facebookAccount){
+            user.facebookAccount = json.facebookAccount;
+        }
 
         return user;
     }

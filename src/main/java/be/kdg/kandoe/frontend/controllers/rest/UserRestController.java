@@ -79,6 +79,7 @@ public class UserRestController {
             logger.info(this.getClass().toString() + ": adding new user " + user_out.getId());
 
             String token = Jwts.builder().setSubject(user_out.getUsername())
+                    .claim("facebookAccount", userDTO.isFacebookAccount())
                     .signWith(SignatureAlgorithm.HS256, "teamiip2kdgbe").compact();
 
             return new ResponseEntity<>(token, HttpStatus.CREATED);

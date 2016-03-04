@@ -17,7 +17,7 @@
     <script src="resources/angular2.dev.js"></script>
     <script src="resources/es6-shim.js"></script>
     <script src="resources/jquery-2.2.0.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 
     <script src="resources/router.dev.js"></script>
@@ -48,6 +48,23 @@
 
 <!-- 3. Display the application -->
 <body>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '481253435400203',
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <my-kandoe>Loading home...</my-kandoe>
 
 </body>
