@@ -35,6 +35,26 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var _this = this;
                     this._themeService.getUserThemes().subscribe(function (themes) { return _this.themes = themes; });
                 };
+                ThemeComponent.prototype.getImageSrc = function (url) {
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
+                    }
+                };
+                ThemeComponent.prototype.rotateCard = function () {
+                    var card = $('.btn-simple').closest('.themeCard-container');
+                    console.log(card);
+                    if (card.hasClass('hover')) {
+                        card.removeClass('hover');
+                    }
+                    else {
+                        card.addClass('hover');
+                    }
+                };
                 ThemeComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
@@ -43,9 +63,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], ThemeComponent);
                 return ThemeComponent;
+                var _a;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }

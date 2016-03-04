@@ -22,5 +22,26 @@ export class ThemeComponent  implements OnInit {
 
     ngOnInit() {
         this._themeService.getUserThemes().subscribe((themes:Theme[])=> this.themes = themes);
+
+    }
+
+    private getImageSrc(url:string):string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        }
+    }
+
+    private rotateCard(){
+        var card = $('.btn-simple').closest('.themeCard-container');
+        console.log(card);
+        if(card.hasClass('hover')){
+            card.removeClass('hover');
+        } else {
+            card.addClass('hover');
+        }
     }
 }

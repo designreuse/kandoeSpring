@@ -89,7 +89,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (organisationRepository.findOrganisationByOrganisationName("Karel De Grote") == null && user.getId() != null) {
             org.setOrganisationName("Karel De Grote");
             org.setAddress("Groenplaats 5 2000 Antwerpen");
-            org.setLogoURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            org.setLogoURL("https://pbs.twimg.com/profile_images/664027982718177280/YUs5qbQb.png");
             org = organisationService.saveOrganisation(org, user.getId());
         }
 
@@ -97,7 +97,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (organisationRepository.findOrganisationByOrganisationName("TestOrganisation") == null && mailUser.getId() != null) {
             org2.setOrganisationName("TestOrganisation");
             org2.setAddress("Groenplaats 5 2000 Antwerpen");
-            org2.setLogoURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            org2.setLogoURL("https://pbs.twimg.com/profile_images/664027982718177280/YUs5qbQb.png");
             org2 = organisationService.saveOrganisation(org2, mailUser.getId());
         }
 
@@ -105,7 +105,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (themeRepository.findThemeByThemeName("KdGTheme") == null && user.getId() != null) {
             theme.setThemeName("KdGTheme");
             theme.setDescription("KdG Theme description");
-            theme.setIconURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            theme.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
             theme.setOrganisation(org);
             theme = themeService.saveTheme(theme, user.getUserId());
         }
