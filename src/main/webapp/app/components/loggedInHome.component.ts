@@ -38,12 +38,12 @@ export class LoggedInHome implements OnInit{
     }
 
     private getImageSrc(url:string): string {
-        if (url) {
-            if (url.indexOf("http://") > -1) {
-                return url;
-            } else {
-                return url.replace(/"/g, "");
+            if (url) {
+                if (url.indexOf("http://") > -1) {
+                    return url;
+                } else {
+                    return url.replace(/"/g, "");
+                }
             }
-        }
     }
 }

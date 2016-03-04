@@ -9,6 +9,8 @@ import {OrganisationService} from "../../service/organisationService";
 import {Organisation} from "../../DOM/organisation";
 
 import {Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
+import {UserService} from "../../service/userService";
+import {User} from "../../DOM/users/user";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -25,15 +27,22 @@ export class AddThemeComponent implements OnInit {
     private currentOrganisations: Organisation[];
     private router: Router;
     private file: File = null;
+    private user: User = User.createEmpty();
+    private userService: UserService;
 
-    constructor(themeService: ThemeService, router: Router,orgService: OrganisationService) {
+    constructor(themeService: ThemeService, router: Router,orgService: OrganisationService,userService:UserService) {
         this.themeService = themeService;
         this.router = router;
         this.organisationService = orgService;
+        this.userService=userService;
     }
 
     ngOnInit() {
         this.organisationService.getUserOrganisations().subscribe((orgs:Organisation[])=> this.currentOrganisations= orgs);
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
+
     }
 
     onFileChange($event){
@@ -50,9 +59,24 @@ export class AddThemeComponent implements OnInit {
             alert("something went wrong");
         });
     }
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
+    }
 
     selectOrganisation($event) {
         var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
         this.theme.organisation=organisation;
+    }
+
+
+    private getImageSrc(url:string):string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        }
     }
 }

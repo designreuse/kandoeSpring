@@ -19,14 +19,14 @@
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"  src="http://zblogged.com/wp-content/uploads/2015/11/c1.png">
+            <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"  [src]="getImageSrc(user.profilePicture)">
             </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.person.firstname}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li> <a class="glyphicon" >Edit profile</a></li>
+                    <li> <a class="glyphicon" [routerLink]="['/Userprofile']">Edit profile</a></li>
                     <li role="separator" class="divider"></li>
-                    <li> <a class="glyphicon glyphicon-log-out" > Logout</a></li>
+                    <li> <a class="glyphicon glyphicon-log-out"  (click)="logout()"> Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -60,27 +60,76 @@
                 <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
                 <li class="active">Themes</li>
             </ol>
-            <ul class="searchable-container">
-                <div *ngFor="#theme of themes" class="organisation-list col-1-4" id="sort-list">
-                    <li class="items">
-                        <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
-                            <div class="id"><p>{{theme.themeId}}</p></div>
-                            <div class="info">
-                                <h2 class="title">{{theme.themeName}}</h2>
-                                <p class="desc">{{theme.description}}</p>
+            <ul class="searchable-container" id="sort-list">
+                <div *ngFor="#theme of themes; #i = index" *ngIf="i % 3 == 0" class="row">
+                    <li class="col-sm-4">
+                    <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
+                        <div class="themeCard-container manual-flip">
+                            <div class="themeCard">
+                                <div class="front">
+                                    <div class="cover">
+                                        <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
+                                            <img [src]="getImageSrc(theme.iconURL)"/>
+                                        </a>
+                                    </div>
+                                    <!--<div class="user">
+                                        <img class="img-circle" src="../../resources/kandoe-logo-circle-white.png"/>
+                                    </div>-->
+                                    <div class="themeContent">
+                                        <div class="mainContent">
+                                            <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
+                                                <h3 class="name">{{theme.themeName}}</h3>
+                                                <p class="profession">{{theme.description}}</p>
+                                            </a>
+                                            <h5><i class="glyphicon glyphicon-bookmark"></i> tag1</h5>
+                                            <h5><i class="glyphicon glyphicon-bookmark"></i> tag2</h5>
+                                            <h5><i class="glyphicon glyphicon-bookmark"></i> tag3</h5>
+                                        </div>
+                                        <div class="footer">
+                                            <button class="btn btn-simple" (click)="rotateCard()">
+                                                <i class="fa fa-mail-forward"></i> Manual Flip
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> <!-- end front panel -->
+                                <div class="back">
+                                    <div class="header">
+                                        <h5 class="motto">{{theme.themeName}}</h5>
+                                    </div>
+                                    <div class="themeContent">
+                                        <div class="mainContent">
+                                            <h4 class="text-center">Organisation</h4>
+                                            <p>org</p>
+                                            <h4 class="text-center">Cards</h4>
+                                            <ul>
+                                                <li>Card 1</li>
+                                                <li>Card 2</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-simple col-sm-3" (click)="rotateCard()" data-original-title="Flip Card">
+                                                    <i class="fa fa-reply"></i> Back
+                                                </button>
+                                                <div class="social-links text-center col-sm-9">
+                                                    <ul class="list-inline">
+                                                        <li class="facebook col-sm-4" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+                                                        <li class="twitter col-sm-4" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+                                                        <li class="google-plus col-sm-4" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end back panel -->
+                                </div>
                             </div>
-                            <div class="social">
-                                <ul>
-                                    <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                                    <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                                    <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-                                </ul>
-                            </div>
-                        </a>
+                        <!--</a>-->
                     </li>
                 </div>
             </ul>
         </div>
     </div>
 </div>
-  

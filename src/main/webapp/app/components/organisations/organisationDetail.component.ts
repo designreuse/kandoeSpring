@@ -4,6 +4,7 @@ import {OrganisationService} from "../../service/organisationService";
 import {RouteParams, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {User} from "../../DOM/users/user";
+import {UserService} from "../../service/userService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -20,10 +21,13 @@ export class OrganisationDetailComponent implements OnInit {
     private members:User[] = [];
     private orgId:number;
     private newMember:string = "";
+    private user: User = User.createEmpty();
+    private userService: UserService;
 
-    constructor(orgService:OrganisationService, routeParams:RouteParams) {
+    constructor(orgService:OrganisationService, routeParams:RouteParams, userService:UserService) {
         this.organisationService = orgService;
         this.orgId = +routeParams.params["id"];
+        this.userService=userService;
     }
 
     ngOnInit() {
@@ -37,7 +41,14 @@ export class OrganisationDetailComponent implements OnInit {
         this.organisationService.getOrganisationMembers(this.orgId).subscribe(users => {
             this.members = users;
         });
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
 
+    }
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
     }
 
     private showAddUser() {

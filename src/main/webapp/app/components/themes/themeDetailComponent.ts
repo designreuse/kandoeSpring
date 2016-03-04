@@ -6,6 +6,8 @@ import {tokenNotExpired} from "../../security/TokenHelper";
 import {Theme} from "../../DOM/theme";
 import {Organisation} from "../../DOM/organisation";
 import {RouteParams} from "angular2/router";
+import {User} from "../../DOM/users/user";
+import {UserService} from "../../service/userService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -19,10 +21,13 @@ import {RouteParams} from "angular2/router";
 export class ThemeDetailComponent implements OnInit {
     public theme:Theme = Theme.createEmpty();
     public org:Organisation=Organisation.createEmpty;
-    private themeId: number;
+	private themeId: number;
+    private user: User = User.createEmpty();
+    private userService: UserService;
 
-    constructor(private _themeService:ThemeService, private _router:Router, routeParams: RouteParams) {
-        this.themeId = +routeParams.params["id"];
+    constructor(private _themeService:ThemeService, private _router:Router, private _userService:UserService, routeParams: RouteParams) {
+        this.userService=_userService;
+		this.themeId = +routeParams.params["id"];
     }
 
     ngOnInit() {
@@ -30,6 +35,13 @@ export class ThemeDetailComponent implements OnInit {
             this.theme = theme;
             this.org=this.theme.organisation;
         });
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
+    }
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
     }
 
     private getImageSrc(url: string): string {
