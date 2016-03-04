@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../DOM/organisation", "../../service/organisationService", "angular2/router", "../../security/TokenHelper"], function(exports_1) {
+System.register(['angular2/core', "../../DOM/organisation", "../../service/organisationService", "angular2/router", "../../security/TokenHelper", "../../DOM/users/user", "../../service/userService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, organisation_1, organisationService_1, router_1, TokenHelper_1;
+    var core_1, organisation_1, organisationService_1, router_1, TokenHelper_1, user_1, userService_1;
     var OrganisationDetailComponent;
     return {
         setters:[
@@ -26,16 +26,24 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
             },
             function (TokenHelper_1_1) {
                 TokenHelper_1 = TokenHelper_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
+            },
+            function (userService_1_1) {
+                userService_1 = userService_1_1;
             }],
         execute: function() {
             OrganisationDetailComponent = (function () {
-                function OrganisationDetailComponent(orgService, routeParams) {
+                function OrganisationDetailComponent(orgService, routeParams, userService) {
                     this.organisation = organisation_1.Organisation.createEmpty();
                     this.organisers = [];
                     this.members = [];
                     this.newMember = "";
+                    this.user = user_1.User.createEmpty();
                     this.organisationService = orgService;
                     this.orgId = +routeParams.params["id"];
+                    this.userService = userService;
                 }
                 OrganisationDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -49,6 +57,13 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     this.organisationService.getOrganisationMembers(this.orgId).subscribe(function (users) {
                         _this.members = users;
                     });
+                    this.userService.getCurrentUser().subscribe(function (u) {
+                        _this.user = u;
+                    });
+                };
+                OrganisationDetailComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
                 };
                 OrganisationDetailComponent.prototype.showAddUser = function () {
                     $("#add-button").toggleClass('hide-add');
@@ -85,9 +100,10 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/organisations/organisationDetail.html'
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, userService_1.UserService])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
+                var _a;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }

@@ -1,8 +1,4 @@
-/*!
- * Bootstrap v3.3.0 (http://getbootstrap.com)
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- *//*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
 html {
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
@@ -6690,7 +6686,6 @@ button.close {
         display: inline !important
     }
 }
-
 @media (min-width: 1200px) {
     .visible-lg-inline-block {
         display: inline-block !important

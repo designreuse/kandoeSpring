@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../DOM/theme", "../../DOM/organisation"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../DOM/theme", "../../DOM/organisation", "../../DOM/users/user", "../../service/userService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1;
+    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1, user_1, userService_1;
     var ThemeDetailComponent;
     return {
         setters:[
@@ -29,14 +29,23 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             },
             function (organisation_1_1) {
                 organisation_1 = organisation_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
+            },
+            function (userService_1_1) {
+                userService_1 = userService_1_1;
             }],
         execute: function() {
             ThemeDetailComponent = (function () {
-                function ThemeDetailComponent(_themeService, _router) {
+                function ThemeDetailComponent(_themeService, _router, _userService) {
                     this._themeService = _themeService;
                     this._router = _router;
+                    this._userService = _userService;
                     this.theme = theme_1.Theme.createEmpty();
                     this.org = organisation_1.Organisation.createEmpty;
+                    this.user = user_1.User.createEmpty();
+                    this.userService = _userService;
                 }
                 ThemeDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -45,6 +54,13 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         _this.org = _this.theme.organisation;
                         console.log(_this.theme);
                     });
+                    this.userService.getCurrentUser().subscribe(function (u) {
+                        _this.user = u;
+                    });
+                };
+                ThemeDetailComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
@@ -64,9 +80,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
+                var _a;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }

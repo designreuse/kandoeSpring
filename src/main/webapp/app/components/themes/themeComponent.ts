@@ -4,6 +4,8 @@ import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "a
 import {ThemeService} from "../../service/themeService";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {Theme} from "../../DOM/theme";
+import {UserService} from "../../service/userService";
+import {User} from "../../DOM/users/user";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -16,15 +18,24 @@ import {Theme} from "../../DOM/theme";
 
 export class ThemeComponent  implements OnInit {
     public themes:Theme[] = [];
+    private user: User = User.createEmpty();
+    private userService: UserService;
 
-    constructor(private _themeService:ThemeService, private _router:Router) {
+    constructor(private _themeService:ThemeService, private _router:Router, private _userService:UserService) {
+        this.userService=_userService;
     }
 
     ngOnInit() {
         this._themeService.getUserThemes().subscribe((themes:Theme[])=> this.themes = themes);
-
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
     }
 
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
+    }
     private getImageSrc(url:string):string {
         if (url) {
             if (url.indexOf("http://") > -1) {
@@ -32,16 +43,6 @@ export class ThemeComponent  implements OnInit {
             } else {
                 return url.replace(/"/g, "");
             }
-        }
-    }
-
-    private rotateCard(){
-        var card = $('.btn-simple').closest('.themeCard-container');
-        console.log(card);
-        if(card.hasClass('hover')){
-            card.removeClass('hover');
-        } else {
-            card.addClass('hover');
         }
     }
 }

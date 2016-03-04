@@ -1,4 +1,4 @@
-System.register(['angular2/core', "angular2/router", "../../security/TokenHelper", "../../service/organisationService"], function(exports_1) {
+System.register(['angular2/core', "angular2/router", "../../security/TokenHelper", "../../service/organisationService", "../../service/userService", "../../DOM/users/user"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, TokenHelper_1, organisationService_1;
+    var core_1, router_1, TokenHelper_1, organisationService_1, userService_1, user_1;
     var OrganisationsComponent;
     return {
         setters:[
@@ -23,17 +23,29 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
             },
             function (organisationService_1_1) {
                 organisationService_1 = organisationService_1_1;
+            },
+            function (userService_1_1) {
+                userService_1 = userService_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
             }],
         execute: function() {
             OrganisationsComponent = (function () {
-                function OrganisationsComponent(_organisationService, _router) {
+                function OrganisationsComponent(_organisationService, _userService, _router) {
                     this._organisationService = _organisationService;
+                    this._userService = _userService;
                     this._router = _router;
                     this.organisations = [];
+                    this.user = user_1.User.createEmpty();
+                    this.userService = _userService;
                 }
                 OrganisationsComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._organisationService.getUserOrganisations().subscribe(function (organisations) { return _this.organisations = organisations; });
+                    this.userService.getCurrentUser().subscribe(function (u) {
+                        _this.user = u;
+                    });
                     $("#input-search").on("keyup", function () {
                         var rex = new RegExp($(this).val(), "i");
                         $(".searchable-container .items").hide();
@@ -42,7 +54,7 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                         }).show();
                     });
                 };
-                OrganisationsComponent.prototype.getImageSrc = function (url, id) {
+                OrganisationsComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
                             return url;
@@ -51,6 +63,10 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                             return url.replace(/"/g, "");
                         }
                     }
+                };
+                OrganisationsComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
                 };
                 OrganisationsComponent.prototype.sortName = function () {
                     $(".filter-Name").addClass("active");
@@ -180,9 +196,10 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                         templateUrl: 'app/components/organisations/organisations.html',
                         inputs: ['organisations']
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.Router])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], OrganisationsComponent);
                 return OrganisationsComponent;
+                var _a;
             })();
             exports_1("OrganisationsComponent", OrganisationsComponent);
         }

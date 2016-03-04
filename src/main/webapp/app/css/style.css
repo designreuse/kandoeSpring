@@ -236,6 +236,11 @@ article {
 .btn-primary {
     background: #ff9c44;
     border: #ff9c44;
+    width: 100px;
+    height: 50px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-left: 15px;
 }
 
 .btn-info {
@@ -309,10 +314,8 @@ footer {
 }
 
 .img-thumbnailnav {
-    display: inline-block;
     max-width: 100%;
-    height: auto;
-    padding: 4px;
+    height: 50px;
     line-height: 1.42857143;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -401,4 +404,8 @@ footer {
 
 .org-small{
     max-width: 250px;
+}
+
+.orclass{
+    padding-top: 5px;
 }
