@@ -76,6 +76,7 @@ public class LoginRestController {
             return new ResponseEntity<String>(token, HttpStatus.OK);
         } catch (UserServiceException e) {
             //User does not exist
+            userDTO.setFacebookAccount(true);
             User user_in = mapperFacade.map(userDTO, User.class);
 
             try{

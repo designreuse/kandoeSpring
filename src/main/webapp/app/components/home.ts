@@ -81,6 +81,11 @@ export class Home {
             if(response.authResponse){
                 let u = new User();
 
+                FB.api('/me/picture?redirect=0', "get", re => {
+                    console.log(re.data.url);
+                    u.profilePicture = re.data.url;
+                });
+
                 FB.api('/me', "get", {fields: 'name,email,first_name,last_name'}, response => {
                     u.email = response.email;
                     u.facebookAccount = true;
@@ -91,7 +96,7 @@ export class Home {
                     p.lastname = response.last_name;
                     u.person = p;
 
-                    this.userService.createUser(u).subscribe(
+                    this.userService.loginFacebook(u).subscribe(
                         (res: Response) => {
                             localStorage.setItem("id_token", res.text());
                             this.router.navigate(['/LoggedInHome']);
@@ -105,7 +110,7 @@ export class Home {
             } else {
                 console.log('User cancelled login or did not fully authorize.');
             }
-        }, {scope: 'email,public_profile'})
+        }, {scope: 'email,public_profile'});
     }
 
 }

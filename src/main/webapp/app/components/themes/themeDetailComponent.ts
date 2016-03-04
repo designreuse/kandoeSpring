@@ -5,6 +5,7 @@ import {ThemeService} from "../../service/themeService";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {Theme} from "../../DOM/theme";
 import {Organisation} from "../../DOM/organisation";
+import {RouteParams} from "angular2/router";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -18,15 +19,16 @@ import {Organisation} from "../../DOM/organisation";
 export class ThemeDetailComponent implements OnInit {
     public theme:Theme = Theme.createEmpty();
     public org:Organisation=Organisation.createEmpty;
+    private themeId: number;
 
-    constructor(private _themeService:ThemeService, private _router:Router) {
+    constructor(private _themeService:ThemeService, private _router:Router, routeParams: RouteParams) {
+        this.themeId = +routeParams.params["id"];
     }
 
     ngOnInit() {
-        this._themeService.getTheme(1).subscribe(theme => {
+        this._themeService.getTheme(this.themeId).subscribe(theme => {
             this.theme = theme;
             this.org=this.theme.organisation;
-            console.log(this.theme);
         });
     }
 

@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/index.html").permitAll()
                 .antMatchers("/resources/**", "/app/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/login/facebook").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .antMatchers("/api/**").authenticated().and()
                 .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class)

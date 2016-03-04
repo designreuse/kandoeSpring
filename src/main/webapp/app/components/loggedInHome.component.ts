@@ -23,15 +23,13 @@ export class LoggedInHome implements OnInit{
     private user: User = User.createEmpty();
     private userService: UserService;
 
-    ngOnInit() {
-        this.userService.getCurrentUser().subscribe(u => {
-            this.user = u;
-        });
-    }
-
     constructor(router:Router, userService: UserService) {
         this.router = router;
         this.userService = userService;
+
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
     }
 
     logout() {

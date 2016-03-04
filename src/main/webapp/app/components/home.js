@@ -95,6 +95,10 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     FB.login(function (response) {
                         if (response.authResponse) {
                             var u = new user_1.User();
+                            FB.api('/me/picture?redirect=0', "get", function (re) {
+                                console.log(re.data.url);
+                                u.profilePicture = re.data.url;
+                            });
                             FB.api('/me', "get", { fields: 'name,email,first_name,last_name' }, function (response) {
                                 u.email = response.email;
                                 u.facebookAccount = true;
@@ -104,7 +108,7 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                                 p.firstname = response.first_name;
                                 p.lastname = response.last_name;
                                 u.person = p;
-                                _this.userService.createUser(u).subscribe(function (res) {
+                                _this.userService.loginFacebook(u).subscribe(function (res) {
                                     localStorage.setItem("id_token", res.text());
                                     _this.router.navigate(['/LoggedInHome']);
                                 }, function (error) {

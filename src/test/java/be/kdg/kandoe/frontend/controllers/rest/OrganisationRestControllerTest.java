@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,6 +48,9 @@ public class OrganisationRestControllerTest {
 
     private MockMvc mockMvc;
 
+    @Value("${test.token}")
+    private String appToken;
+
     @Before
     public void setup()
     {
@@ -57,20 +61,19 @@ public class OrganisationRestControllerTest {
 
     @Test
     public void testGetOrganisations() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
+        System.out.println(appToken);
 
         mockMvc.perform(get("/api/organisations")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andExpect(jsonPath("$").isArray())
                 .andDo(print());
     }
 
     @Test
     public void testGetOrganisationById() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/organisations/1")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$.organisationId", is(1)))
                 .andExpect(jsonPath("$.organiser", is(true)));
@@ -79,40 +82,36 @@ public class OrganisationRestControllerTest {
 
     @Test
     public void testGetOrganisationOrganisers() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
-
         mockMvc.perform(get("/api/organisations/1/organisers")
-                    .header("Authorization", token))
+                    .header("Authorization", appToken))
                     .andDo(print())
                     .andExpect(jsonPath("$.[0].username", is("ArneLauryssens")));
     }
 
     @Test
     public void testGetOrganisationMembers() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/organisations/1/members")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].username", is("SenneWens")));
     }
 
     @Test
     public void testAddMemberToOrganisation() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/organisations/1/members")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(1)));
 
         mockMvc.perform(post("/api/organisations/1/addMember?mail=jordan.parezys@student.kdg.be")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/api/organisations/1/members")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
@@ -134,20 +133,19 @@ public class OrganisationRestControllerTest {
 
     @Test
     public void testAddNonExistingMemberToOrganisation() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyJ9.dblX_wcZ-FMOTqwhnVBvUVIthiR3YvRSLPt_mFds-PU\"";
 
         mockMvc.perform(get("/api/organisations/1/members")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(1)));
 
         mockMvc.perform(post("/api/organisations/1/addMember?mail=blablabla")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
 
         mockMvc.perform(get("/api/organisations/1/members")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(1)));
     }

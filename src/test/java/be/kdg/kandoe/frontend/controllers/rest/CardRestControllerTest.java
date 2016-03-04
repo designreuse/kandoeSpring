@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -50,6 +51,8 @@ public class CardRestControllerTest {
 
     private MockMvc mockMvc;
 
+    @Value("${test.token}")
+    private String appToken;
 
     @Before
     public void setup() {
@@ -60,10 +63,9 @@ public class CardRestControllerTest {
 
     @Test
     public void testGetCards() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/cards")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andExpect(jsonPath("$").isArray())
                 .andDo(print());
 
@@ -71,10 +73,9 @@ public class CardRestControllerTest {
 
     @Test
     public void testGetCardById() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/cards/1")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andExpect(jsonPath("$.cardId", is(1)))
                 .andDo(print());
     }
@@ -88,10 +89,9 @@ public class CardRestControllerTest {
         cardResource.put("imageURL", "http://www.google.be");
         System.out.println(cardResource.toString());
 
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(post("/api/cards")
-                .header("Authorization", token)
+                .header("Authorization", appToken)
                 .content(cardResource.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())

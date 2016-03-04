@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -49,6 +50,9 @@ public class SecurityTest {
     private Filter springSecurityFilterChain;
 
     private MockMvc mockMvc;
+
+    @Value("${test.token}")
+    private String appToken;
 
     @Before
     public void setup()
@@ -111,11 +115,9 @@ public class SecurityTest {
     @Test
     public void testgetOrganisationWithSecurity() throws Exception {
 
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
-
         HttpHeaders headers = new HttpHeaders();
         List<String> list = new ArrayList<>();
-        list.add(token);
+        list.add(appToken);
         headers.put("Authorization", list);
 
         mockMvc.perform(get("/api/organisations")
@@ -130,11 +132,9 @@ public class SecurityTest {
         orgResource.put("organisationName", "KdG");
         orgResource.put("address", "Nationalestraat 5");
 
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
-
         HttpHeaders headers = new HttpHeaders();
         List<String> list = new ArrayList<>();
-        list.add(token);
+        list.add(appToken);
         headers.put("Authorization", list);
 
         System.out.println(orgResource.toString());
@@ -165,10 +165,9 @@ public class SecurityTest {
 
     @Test
     public void testGetOrganisationByCurrentUser() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/organisations/currentUser")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.[0].organisationName", is("Karel De Grote")))

@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1;
+    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1, router_2;
     var ThemeDetailComponent;
     return {
         setters:[
@@ -17,6 +17,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+                router_2 = router_1_1;
             },
             function (themeService_1_1) {
                 themeService_1 = themeService_1_1;
@@ -32,18 +33,18 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             }],
         execute: function() {
             ThemeDetailComponent = (function () {
-                function ThemeDetailComponent(_themeService, _router) {
+                function ThemeDetailComponent(_themeService, _router, routeParams) {
                     this._themeService = _themeService;
                     this._router = _router;
                     this.theme = theme_1.Theme.createEmpty();
                     this.org = organisation_1.Organisation.createEmpty;
+                    this.themeId = +routeParams.params["id"];
                 }
                 ThemeDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._themeService.getTheme(1).subscribe(function (theme) {
+                    this._themeService.getTheme(this.themeId).subscribe(function (theme) {
                         _this.theme = theme;
                         _this.org = _this.theme.organisation;
-                        console.log(_this.theme);
                     });
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
@@ -64,7 +65,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, router_2.RouteParams])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
             })();

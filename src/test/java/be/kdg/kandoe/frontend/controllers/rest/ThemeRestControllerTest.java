@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -47,6 +48,9 @@ public class ThemeRestControllerTest {
 
     private MockMvc mockMvc;
 
+    @Value("${test.token}")
+    private String appToken;
+
     @Before
     public void setup()
     {
@@ -57,7 +61,6 @@ public class ThemeRestControllerTest {
 
     @Test
     public void testCreateTheme() throws Exception{
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
         JSONObject theme = new JSONObject();
         theme.put("themeName", "TestTheme");
         theme.put("description", "TestDescription");
@@ -67,7 +70,7 @@ public class ThemeRestControllerTest {
         theme.put("organisation", org);
 
         mockMvc.perform(post("/api/themes")
-                .header("Authorization", token)
+                .header("Authorization", appToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(theme.toString()))
                 .andDo(print())
@@ -76,13 +79,12 @@ public class ThemeRestControllerTest {
 
     @Test
     public void testCreateThemeWithoutOrganisation() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
         JSONObject theme = new JSONObject();
         theme.put("themeName", "TestTheme");
         theme.put("description", "TestDescription");
 
         mockMvc.perform(post("/api/themes")
-                .header("Authorization", token)
+                .header("Authorization", appToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(theme.toString()))
                 .andDo(print())
@@ -91,10 +93,9 @@ public class ThemeRestControllerTest {
 
     @Test
     public void testGetThemesCurrentUser() throws Exception {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
 
         mockMvc.perform(get("/api/themes/currentUser")
-                .header("Authorization", token))
+                .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].themeName", is("KdGTheme")));
     }
