@@ -102,7 +102,7 @@ public class UserDTO extends ResourceSupport implements Serializable {
         this.profilePicture = profilePicture;
     }
 
-public boolean isFacebookAccount() {
+    public boolean isFacebookAccount() {
         return facebookAccount;
     }
 

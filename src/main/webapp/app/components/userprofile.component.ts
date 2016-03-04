@@ -119,7 +119,6 @@ export class UserProfileComponent implements OnInit {
     ngOnInit() {
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
-            console.log("init user password: " + u.password)
         });
     }
 

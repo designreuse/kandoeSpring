@@ -41,7 +41,6 @@ System.register(['angular2/core', "../DOM/users/user", "../service/userService",
                     var _this = this;
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
-                        console.log("init user password: " + u.password);
                     });
                 };
                 UserProfileComponent.prototype.onSubmit = function () {
