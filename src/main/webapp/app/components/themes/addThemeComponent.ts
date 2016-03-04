@@ -2,46 +2,20 @@
  * Created by Jordan on 29/02/2016.
  */
 import {Component, OnInit} from 'angular2/core';
-import {Router, CanActivate} from 'angular2/router';
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {ThemeService} from "../../service/themeService";
 import {Theme} from "../../DOM/theme";
 import {OrganisationService} from "../../service/organisationService";
 import {Organisation} from "../../DOM/organisation";
 
+import {Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
+
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-theme',
-    template: `
-    <header>
-        <div class="container clearfix">
-            <h3><span class="glyphicon glyphicon-plus-sign"></span> Add Theme</h3>
-        </div>
-    </header>
-    <div class="container main">
-        <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
-
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" placeholder="Enter theme name" class="form-control" [(ngModel)]="theme.themeName">
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" placeholder="Enter Description" class="form-control" [(ngModel)]="theme.description">
-                </div>
-                <div class="form-group">
-                <label>Organisation</label>
-                    <select class="form-control" (change)="selectOrganisation($event)">
-                        <option class="form-control" *ngFor="#organisation of currentOrganisations" value="{{organisation.organisationName}}">{{organisation.organisationName}}</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit()">Add</button>
-                </div>
-        </form>
-    </div>
-    `
+    directives: [ROUTER_DIRECTIVES, RouterLink],
+    templateUrl: 'app/components/themes/addThemeComponent.html',
 })
 
 export class AddThemeComponent implements OnInit {

@@ -10,7 +10,8 @@ export class User {
     public oldPassword: string;
     public email: string;
     public person: Person;
-    public facebookAccount: boolean;
+	public facebookAccount: boolean;
+    public profilePicture: string;
 
     constructor(){
 
@@ -29,6 +30,7 @@ export class User {
         var user = new User();
         user.username = json.username;
         user.email = json.email;
+        user.profilePicture=json.profilePicture;
         var person = new Person();
         var address = new Address();
         address.city = json.person.address.city;

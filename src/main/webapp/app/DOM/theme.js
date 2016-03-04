@@ -14,7 +14,6 @@ System.register(["./organisation"], function(exports_1) {
                 function Theme() {
                 }
                 Theme.fromJson = function (json) {
-                    console.log(json);
                     var theme = new Theme();
                     theme.iconURL = json.iconURL;
                     theme.themeId = json.themeId;

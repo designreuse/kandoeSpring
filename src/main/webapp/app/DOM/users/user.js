@@ -28,6 +28,7 @@ System.register(["./person", "./address"], function(exports_1) {
                     var user = new User();
                     user.username = json.username;
                     user.email = json.email;
+                    user.profilePicture = json.profilePicture;
                     var person = new person_1.Person();
                     var address = new address_1.Address();
                     address.city = json.person.address.city;

@@ -15,7 +15,6 @@ export class Theme{
     }
 
     static fromJson(json:any):Theme{
-        console.log(json);
         var theme = new Theme();
         theme.iconURL=json.iconURL;
         theme.themeId = json.themeId;

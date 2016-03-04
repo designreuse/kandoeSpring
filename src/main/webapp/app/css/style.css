@@ -1,11 +1,7 @@
 body {
     padding-top: 0;
     font-family: "Open Sans", sans-serif;
-    background: repeating-linear-gradient(
-            45deg,
-            #E8E8E8,
-            rgba(0, 0, 0, 0.2) 10px,
-            rgba(0, 0, 0, 0.3) 10px
+    background: repeating-linear-gradient( 45deg, #F1F1F1, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 10px );
     );
 }
 
@@ -271,7 +267,7 @@ article {
 
 
 footer {
-    padding: 50px 0;
+    padding: 35px 0;
     background-color:  #333;
     color: white;
     text-align: center;
@@ -295,7 +291,8 @@ footer {
 }
 
 #org-header{
-    padding-top: 0px;
+    padding-top: 20px;
+    margin-top: 30px;
 }
 
 #org-list{

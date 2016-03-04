@@ -39,9 +39,11 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     @Column(name= "NewUser", nullable = false)
     private boolean newUser;
 
-    @Column(name= "FacebookAccount", nullable = false)
-    private boolean facebookAccount;
+    @Column(name="ProfilePicture")
+    private String profilePicture;
 
+@Column(name= "FacebookAccount", nullable = false)
+    private boolean facebookAccount;
     @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PersonId", nullable = false)
     private Person person;
@@ -208,6 +210,15 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     public void setOwnOrganisations(List<Organisation> ownOrganisations) {
         this.ownOrganisations = ownOrganisations;
     }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
 
     @Override
     public Integer getId() {
