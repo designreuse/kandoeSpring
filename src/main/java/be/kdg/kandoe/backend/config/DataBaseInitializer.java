@@ -70,6 +70,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user.setNewUser(true);
             user.setUsername("ArneLauryssens");
             user.setFacebookAccount(false);
+            user.setProfilePicture("resources/images/users/1.jpg");
             user = userService.saveUser(user);
         }
 
@@ -80,6 +81,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             mailUser.setNewUser(true);
             mailUser.setPassword("test123");
             mailUser.setFacebookAccount(false);
+            mailUser.setProfilePicture("http://zblogged.com/wp-content/uploads/2015/11/c1.png");
             userService.saveUser(mailUser);
         }
 
@@ -130,6 +132,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             orgs.add(org);
             user2.setOrganisations(orgs);
             user2.setFacebookAccount(false);
+            user2.setProfilePicture("http://zblogged.com/wp-content/uploads/2015/11/c1.png");
             user2 = userService.saveUser(user2);
         }
 
@@ -145,6 +148,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user3.setNewUser(true);
             user3.setUsername("JordanParezys");
             user3.setFacebookAccount(false);
+            user3.setProfilePicture("http://zblogged.com/wp-content/uploads/2015/11/c1.png");
             user3 = userService.saveUser(user3);
         }
     }

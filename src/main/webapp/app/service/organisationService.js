@@ -55,7 +55,7 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                 };
                 OrganisationService.prototype.createOrganisation = function (org, file) {
                     if (file) {
-                        return this.uploadService.createOrganisation(JSON.stringify(org), file);
+                        return this.uploadService.uploadFile(JSON.stringify(org), file, this.path + 'organisations/image');
                     }
                     else {
                         return this.securityService.post(this.path + 'organisations', JSON.stringify(org), true);

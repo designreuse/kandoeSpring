@@ -19,7 +19,7 @@ export class UploadService {
         this.path = path;
     }
 
-    public createOrganisation(body: string, file: File): Observable<Response> {
+    public uploadFile(body: string, file: File, url:string): Observable<Response> {
         return new Observable((responseObserver: Observer<Response>) => {
             //http://stackoverflow.com/questions/21329426/spring-mvc-multipart-request-with-json/25183266#25183266
             if(file.type.split("/")[0] != "image"){
@@ -64,14 +64,14 @@ export class UploadService {
                     responseObserver.error(new Response(responseOptions));
                 };
 
-                request.open("POST", this.path + "organisations/image", true);
+                request.open("POST", url, true);
                 request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("id_token"));
                 request.send(formdata);
             }
         });
     }
 
-    public updateUser(body: string, file: File): Observable<Response> {
+    /*public updateUser(body: string, file: File): Observable<Response> {
         return new Observable((responseObserver: Observer<Response>) => {
             //http://stackoverflow.com/questions/21329426/spring-mvc-multipart-request-with-json/25183266#25183266
             console.log(body);
@@ -121,5 +121,5 @@ export class UploadService {
                 request.send(formdata);
             }
         });
-    }
+    }*/
 }

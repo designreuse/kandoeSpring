@@ -40,7 +40,7 @@ export class OrganisationService{
 
     public createOrganisation(org: Organisation, file?: File): Observable<Response> {
         if(file){
-            return this.uploadService.createOrganisation(JSON.stringify(org), file);
+            return this.uploadService.uploadFile(JSON.stringify(org), file, this.path + 'organisations/image');
         } else {
             return this.securityService.post(this.path + 'organisations', JSON.stringify(org), true);
         }

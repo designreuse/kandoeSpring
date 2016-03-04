@@ -52,7 +52,7 @@ System.register(['rxjs/add/operator/map', 'angular2/http', 'angular2/core', "../
                 };
                 UserService.prototype.updateUser = function (user, file) {
                     if (file) {
-                        return this.uploadService.updateUser(JSON.stringify(user), file);
+                        return this.uploadService.uploadFile(JSON.stringify(user), file, this.path + 'users/updateUser/image');
                     }
                     else {
                         return this.securityService.post(this.path + 'users/updateUser', JSON.stringify(user), true)

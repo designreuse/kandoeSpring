@@ -43,7 +43,7 @@ export class UserService {
 
     public updateUser(user: User,file?: File): Observable<Response> {
         if(file){
-            return this.uploadService.updateUser(JSON.stringify(user), file);
+            return this.uploadService.uploadFile(JSON.stringify(user), file, this.path + 'users/updateUser/image');
         } else {
             return this.securityService.post(this.path + 'users/updateUser', JSON.stringify(user), true)
                 .map(res => res.json());

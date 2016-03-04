@@ -18,6 +18,7 @@ import {Organisation} from "../../DOM/organisation";
 export class ThemeDetailComponent implements OnInit {
     public theme:Theme = Theme.createEmpty();
     public org:Organisation=Organisation.createEmpty;
+
     constructor(private _themeService:ThemeService, private _router:Router) {
     }
 
