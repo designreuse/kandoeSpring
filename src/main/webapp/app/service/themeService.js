@@ -49,7 +49,12 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../s
                         .map(function (themes) { return themes.map(function (theme) { return theme_1.Theme.fromJson(theme); }); });
                 };
                 ThemeService.prototype.createTheme = function (theme, file) {
-                    return this.securityService.post(this.path + 'themes', JSON.stringify(theme), true);
+                    if (file) {
+                        return this.uploadService.uploadFile(JSON.stringify(theme), file, this.path + 'themes/image');
+                    }
+                    else {
+                        return this.securityService.post(this.path + 'themes', JSON.stringify(theme), true);
+                    }
                 };
                 ThemeService.prototype.getTheme = function (id) {
                     return this.securityService.get(this.path + 'themes/' + id, true)

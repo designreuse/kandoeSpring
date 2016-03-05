@@ -9,6 +9,7 @@ import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.DTO.ThemeDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
 import be.kdg.kandoe.frontend.assemblers.ThemeAssembler;
+import be.kdg.kandoe.frontend.util.FileUtils;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.xml.ws.Response;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -71,6 +75,39 @@ public class ThemeRestController {
             return new ResponseEntity<ThemeDTO>(HttpStatus.BAD_REQUEST);
         }
 
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
+    public ResponseEntity<String> createOrganisation(@RequestPart("body") ThemeDTO themeDTO,
+                                                     @RequestPart("file") MultipartFile file,
+                                                     @AuthenticationPrincipal User user,
+                                                     HttpServletRequest request) {
+
+        if(user != null && user.getId() != null) {
+            if(themeDTO.getOrganisation() != null){
+                if(file.getContentType().split("/")[0].equals("image")){
+                    Theme theme_in = mapper.map(themeDTO, Theme.class);
+                    Theme theme_out = themeService.saveTheme(theme_in, user.getId(), themeDTO.getOrganisation().getOrganisationId());
+
+                    String newFilename = String.format("%d.%s", theme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
+                    String filePath = request.getServletContext().getRealPath("/resources/images/themes/");
+
+                    try {
+                        FileUtils.saveFile(filePath, newFilename, file);
+                    } catch (IOException e) {
+                        return new ResponseEntity<>("Failed to save image", HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+
+                    theme_out.setIconURL("resources/images/themes/" + newFilename);
+                    themeService.updateTheme(theme_out);
+
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+                }
+                return new ResponseEntity<>("You have to select an image", HttpStatus.BAD_REQUEST);
+            }
+                return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 

@@ -53,7 +53,7 @@ export class AddThemeComponent implements OnInit {
     }
 
     onSubmit() {
-        this.themeService.createTheme(this.theme).subscribe(res => {
+        this.themeService.createTheme(this.theme, this.file).subscribe(res => {
             this.router.navigate(['/Themes']);
         }, error => {
             //todo change error display
