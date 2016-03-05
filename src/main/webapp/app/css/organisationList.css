@@ -42,7 +42,7 @@ div.item{
 .organisation-list > div > li > a > .id,
 div.item > div.id{
     display: inline-block;
-    background-color: #1E8BC3;
+    background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.1)), url(../resources/logs.jpg) repeat fixed;
     width: 100%;
 }
 
@@ -63,9 +63,6 @@ div.item > div.id > p {
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
-}
-.organisation-list > div > li:nth-child(even) > .id {
-    background-color: #ff9c44;
 }
 
 .organisation-list > div > li > a > img,
@@ -132,14 +129,10 @@ div.item > div.info > ul > li > a{
     color: rgb(30, 30, 30);
     text-decoration: none;
 }
-.organisation-list > li > a > .social > ul > li,
-.organisation-list > div > li > a > .social > ul > li,
-div.item > div.social > ul > li{
+.social > ul > li{
     padding: 0;
 }
-.organisation-list > li > a > .social > ul > li > a,
-.organisation-list > div > li > a > .social > ul > li > a,
-div.item > div.social > ul > li > a{
+.social > ul > li > a{
     padding: 3px 0;
 }
 .organisation-list > li > a > .info > ul > li:hover,

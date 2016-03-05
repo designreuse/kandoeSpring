@@ -87,10 +87,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/organisations/addOrganisation.html'
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, userService_1.UserService, router_1.Router])
                 ], AddOrganisationComponent);
                 return AddOrganisationComponent;
-                var _a;
             })();
             exports_1("AddOrganisationComponent", AddOrganisationComponent);
         }

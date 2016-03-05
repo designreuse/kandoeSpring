@@ -12,7 +12,6 @@ import {AddThemeComponent} from "./themes/addThemeComponent";
 import {OrganisationDetailComponent} from "./organisations/organisationDetail.component";
 import {ThemeDetailComponent} from "./themes/themeDetailComponent";
 
-
 @Component({
     selector: 'my-kandoe'
 })
