@@ -35,7 +35,7 @@
 
 <header>
     <div class="container clearfix">
-        <h3><span class="glyphicon glyphicon-book"> {{organisation.organisationName}}</span></h3>
+        <h3>{{organisation.organisationName}}</h3>
     </div>
 </header>
 <div class="container main">
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
+        <div class="col-lg-offset-2 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading c-list">
                     <h4 class="title">Organisers</h4>
@@ -70,9 +70,9 @@
                                 <img [src]="getImageSrc(organiser.profilePicture)" class="img-responsive img-circle" />
                             </div>
                             <div class="col-xs-12 col-sm-9">
-                                <span class="username">{{ organiser.username }}</span>
-                                <span class="pull-right email">{{organiser.email}}</span> <br/>
-                                <span class="name">{{organiser.person.firstname}} {{organiser.person.lastname}}</span>
+                                <span class="username">{{ organiser.username }}</span><br/>
+                                <span class="name">{{organiser.person.firstname}} {{organiser.person.lastname}}</span><br/>
+                                <span class="email">{{organiser.email}}</span> <br/>
                             </div>
                             <div class="clearfix"></div>
                         </li>
@@ -80,9 +80,7 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
+        <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading c-list">
                     <h4 class="title">Members</h4>
@@ -107,9 +105,9 @@
                                 <img [src]="getImageSrc(member.profilePicture)" alt="profile picture" class="img-responsive img-circle" />
                             </div>
                             <div class="col-xs-12 col-sm-9">
-                                <span class="username">{{ member.username }}</span>
-                                <span class="pull-right email">{{member.email}}</span><br/>
-                                <span class="name">{{member.person.firstname}} {{member.person.lastname}}</span>
+                                <span class="username">{{ member.username }}</span><br/>
+                                <span class="name">{{member.person.firstname}} {{member.person.lastname}}</span><br/>
+                                <span class="email">{{member.email}}</span><br/>
                             </div>
                         </li>
                     </div>

@@ -53,4 +53,8 @@ export class ThemeDetailComponent implements OnInit {
             }
         }
     }
+
+    removeTag(){
+        $(".removeTag").closest(".tag").remove();
+    }
 }

@@ -73,6 +73,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         }
                     }
                 };
+                ThemeDetailComponent.prototype.removeTag = function () {
+                    $(".removeTag").closest(".tag").remove();
+                };
                 ThemeDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
