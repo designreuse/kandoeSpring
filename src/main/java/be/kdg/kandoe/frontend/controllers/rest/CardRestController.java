@@ -5,6 +5,7 @@ import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.CardService;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.assemblers.CardAssembler;
+import be.kdg.kandoe.frontend.util.FileUtils;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,8 +37,6 @@ public class CardRestController {
         this.cardAssembler = cardAssembler;
         this.mapper = mapper;
     }
-
-
 
     @RequestMapping(method = {RequestMethod.GET})
     public ResponseEntity<List<CardDTO>> getCards(@AuthenticationPrincipal User user) {
@@ -62,9 +64,39 @@ public class CardRestController {
             Card card_out = cardService.saveCard(card_in, cardDTO.getThemeId());
             logger.info(this.getClass().toString() + ": adding new card " + card_out.getId());
             return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         }
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
+    public ResponseEntity<CardDTO> createCard(@RequestPart("body") CardDTO cardDTO,
+                                                     @RequestPart("file") MultipartFile file,
+                                                     @AuthenticationPrincipal User user,
+                                                     HttpServletRequest request) {
+
+        if(user != null && user.getId() != null) {
+            if(file.getContentType().split("/")[0].equals("image")){
+                Card card_in = mapper.map(cardDTO, Card.class);
+                Card card_out = cardService.saveCard(card_in, cardDTO.getThemeId());
+
+                String newFilename = String.format("%d.%s", card_out.getId(), file.getOriginalFilename().split("\\.")[1]);
+                String filePath = request.getServletContext().getRealPath("/resources/images/cards/");
+
+                try {
+                    FileUtils.saveFile(filePath, newFilename, file);
+                } catch (IOException e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                card_out.setImageURL("resources/images/cards/" + newFilename);
+                cardService.updateCard(card_out);
+
+                return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

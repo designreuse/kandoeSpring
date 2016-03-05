@@ -26,7 +26,7 @@ export class OrganisationDetailComponent implements OnInit {
     private user: User = User.createEmpty();
     private userService: UserService;
 
-    constructor(orgService:OrganisationService, routeParams:RouteParams, userService:UserService) {
+    constructor(orgService:OrganisationService, routeParams:RouteParams, userService:UserService, private router: Router) {
         this.organisationService = orgService;
         this.orgId = +routeParams.params["id"];
         this.userService=userService;

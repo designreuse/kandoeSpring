@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.services.impl;
 
+import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
@@ -109,5 +110,14 @@ public class ThemeServiceImpl implements ThemeService {
         //http://stackoverflow.com/questions/5027013/hibernate-lazy-load-application-design
         Hibernate.initialize(creator.getThemes());
         return creator.getThemes();
+    }
+
+    @Override
+    public List<Card> findThemeCards(Integer themeId) {
+        Theme theme = findThemeById(themeId);
+
+        Hibernate.initialize(theme.getCards());
+        theme.getCards().stream().forEach(c -> Hibernate.initialize(c.getCardSessions()));
+        return theme.getCards();
     }
 }

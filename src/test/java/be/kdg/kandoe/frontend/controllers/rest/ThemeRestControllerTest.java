@@ -99,4 +99,12 @@ public class ThemeRestControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].themeName", is("KdGTheme")));
     }
+
+    @Test
+    public void testGetThemeCards() throws Exception {
+        mockMvc.perform(get("/api/themes/1/cards")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].description", is("KdGCard")));
+    }
 }

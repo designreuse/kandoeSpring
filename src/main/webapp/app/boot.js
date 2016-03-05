@@ -1,5 +1,5 @@
-System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', 'angular2/http', "./service/userService", "./components/app", "./security/securityService", "./service/organisationService", "./service/uploadService", "./service/themeService"], function(exports_1) {
-    var browser_1, core_1, router_1, http_1, userService_1, app_1, securityService_1, organisationService_1, uploadService_1, themeService_1;
+System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', 'angular2/http', "./service/userService", "./components/app", "./security/securityService", "./service/organisationService", "./service/uploadService", "./service/themeService", "./service/cardService"], function(exports_1) {
+    var browser_1, core_1, router_1, http_1, userService_1, app_1, securityService_1, organisationService_1, uploadService_1, themeService_1, cardService_1;
     return {
         setters:[
             function (browser_1_1) {
@@ -31,6 +31,9 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
             },
             function (themeService_1_1) {
                 themeService_1 = themeService_1_1;
+            },
+            function (cardService_1_1) {
+                cardService_1 = cardService_1_1;
             }],
         execute: function() {
             browser_1.bootstrap(app_1.AppComponent, [
@@ -40,6 +43,7 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
                 organisationService_1.OrganisationService,
                 themeService_1.ThemeService,
                 uploadService_1.UploadService,
+                cardService_1.CardService,
                 // http
                 http_1.HTTP_PROVIDERS,
                 // routing
@@ -47,7 +51,7 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
                 core_1.provide(router_1.ROUTER_PRIMARY_COMPONENT, { useValue: app_1.AppComponent }),
                 core_1.provide(router_1.APP_BASE_HREF, { useValue: "/" }),
                 core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }),
-                core_1.provide('App.BackEndPath', { useValue: "https://wildfly-teamiip2kdgbe.rhcloud.com/api/" }),
+                core_1.provide('App.BackEndPath', { useValue: "http://localhost:9966/Kandoe/api/" }),
                 core_1.provide('App.DevPath', { useValue: "http://localhost:9966/Kandoe/api/" })
             ]);
         }

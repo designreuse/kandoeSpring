@@ -39,6 +39,8 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         _this.user = u;
                     });
                 }
+                LoggedInHome.prototype.ngOnInit = function () {
+                };
                 LoggedInHome.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
@@ -60,10 +62,9 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/loggedInHome.html'
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService])
+                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService])
                 ], LoggedInHome);
                 return LoggedInHome;
-                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }

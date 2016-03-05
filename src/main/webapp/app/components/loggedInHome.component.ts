@@ -32,6 +32,10 @@ export class LoggedInHome implements OnInit{
         });
     }
 
+    ngOnInit(){
+
+    }
+
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);

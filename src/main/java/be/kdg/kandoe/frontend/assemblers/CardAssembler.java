@@ -4,6 +4,7 @@ import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.controllers.rest.CardRestController;
 import ma.glasnost.orika.MapperFacade;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;

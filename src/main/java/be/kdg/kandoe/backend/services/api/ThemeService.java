@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.services.api;
 
+import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 
@@ -23,4 +24,7 @@ public interface ThemeService {
     void removeTheme(int id);
 
     List<Theme> findThemeByCreator(Integer userId);
+
+    List<Card> findThemeCards(Integer themeId);
+
 }

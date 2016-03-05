@@ -8,6 +8,8 @@ import {Organisation} from "../../DOM/organisation";
 import {RouteParams} from "angular2/router";
 import {User} from "../../DOM/users/user";
 import {UserService} from "../../service/userService";
+import {Card} from "../../DOM/card";
+import {CardService} from "../../service/cardService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -20,14 +22,21 @@ import {UserService} from "../../service/userService";
 
 export class ThemeDetailComponent implements OnInit {
     public theme:Theme = Theme.createEmpty();
-    public org:Organisation=Organisation.createEmpty;
-	private themeId: number;
+    private themeId: number;
+    public org:Organisation=Organisation.createEmpty();
+	private cards: Card[] = [];
+    private newCard: Card = Card.createEmpty();
+    private file: File = null;
+    private cardService: CardService;
+
     private user: User = User.createEmpty();
     private userService: UserService;
 
-    constructor(private _themeService:ThemeService, private _router:Router, private _userService:UserService, routeParams: RouteParams) {
-        this.userService=_userService;
+    constructor(private _themeService:ThemeService, private _router:Router, userService:UserService,
+                routeParams: RouteParams, cardService: CardService) {
+        this.userService = userService;
 		this.themeId = +routeParams.params["id"];
+        this.cardService = cardService;
     }
 
     ngOnInit() {
@@ -35,16 +44,34 @@ export class ThemeDetailComponent implements OnInit {
             this.theme = theme;
             this.org=this.theme.organisation;
         });
+        this._themeService.getThemeCards(this.themeId).subscribe(cards => {
+            this.cards = cards;
+        });
+
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
     }
-    logout() {
-        localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
+
+    createCard() {
+        this.newCard.themeId = this.themeId;
+        this.cardService.createCard(this.newCard, this.file).subscribe(c => {
+            console.log(c);
+            this.file = null;
+            this.cards.push(c);
+        })
     }
 
-    private getImageSrc(url: string): string {
+    onFileChange($event){
+        this.file = $event.target.files[0];
+    }
+
+    logout() {
+        localStorage.removeItem("id_token");
+        this._router.navigate(['/Home']);
+    }
+
+    getImageSrc(url: string): string {
         if(url){
             if(url.indexOf("http://") > -1){
                 return url;

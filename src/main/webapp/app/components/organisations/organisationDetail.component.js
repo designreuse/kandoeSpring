@@ -35,7 +35,8 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
             }],
         execute: function() {
             OrganisationDetailComponent = (function () {
-                function OrganisationDetailComponent(orgService, routeParams, userService) {
+                function OrganisationDetailComponent(orgService, routeParams, userService, router) {
+                    this.router = router;
                     this.organisation = organisation_1.Organisation.createEmpty();
                     this.organisers = [];
                     this.members = [];
@@ -104,10 +105,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/organisations/organisationDetail.html'
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, userService_1.UserService])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams, userService_1.UserService, router_1.Router])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
-                var _a;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }

@@ -1,12 +1,15 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
+import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
+import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
 import be.kdg.kandoe.frontend.DTO.ThemeDTO;
+import be.kdg.kandoe.frontend.assemblers.CardAssembler;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
 import be.kdg.kandoe.frontend.assemblers.ThemeAssembler;
 import be.kdg.kandoe.frontend.util.FileUtils;
@@ -37,12 +40,15 @@ public class ThemeRestController {
     private final Logger logger = Logger.getLogger(OrganisationRestController.class);
     private final ThemeService themeService;
     private final ThemeAssembler themeAssembler;
+    private final CardAssembler cardAssembler;
     private final MapperFacade mapper;
 
     @Autowired
-    public ThemeRestController(ThemeService themeService, ThemeAssembler themeAssembler, MapperFacade mapper) {
+    public ThemeRestController(ThemeService themeService, ThemeAssembler themeAssembler, CardAssembler cardAssembler,
+                               MapperFacade mapper) {
         this.themeService = themeService;
         this.themeAssembler = themeAssembler;
+        this.cardAssembler = cardAssembler;
         this.mapper = mapper;
     }
 
@@ -79,7 +85,7 @@ public class ThemeRestController {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
-    public ResponseEntity<String> createOrganisation(@RequestPart("body") ThemeDTO themeDTO,
+    public ResponseEntity<String> createTheme(@RequestPart("body") ThemeDTO themeDTO,
                                                      @RequestPart("file") MultipartFile file,
                                                      @AuthenticationPrincipal User user,
                                                      HttpServletRequest request) {
@@ -120,5 +126,18 @@ public class ThemeRestController {
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{themeId}/cards", method = RequestMethod.GET)
+    public ResponseEntity<List<CardDTO>> getThemeCards(@AuthenticationPrincipal User user,
+                                                       @PathVariable(value = "themeId") Integer themeId) {
+        if(user != null){
+            if(themeId != null){
+                List<Card> cards = themeService.findThemeCards(themeId);
+                return new ResponseEntity<List<CardDTO>>(cardAssembler.toResources(cards), HttpStatus.OK);
+            }
+            return new ResponseEntity<List<CardDTO>>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<List<CardDTO>>(HttpStatus.UNAUTHORIZED);
     }
 }

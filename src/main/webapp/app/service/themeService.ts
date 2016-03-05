@@ -7,6 +7,7 @@ import {Theme} from "../DOM/theme";
 import {User} from "../DOM/users/user";
 import {SecurityService} from "../security/securityService";
 import {UploadService} from "./uploadService";
+import {Card} from "../DOM/card";
 /**
  * Created by Jordan on 29/02/2016.
  */
@@ -48,5 +49,11 @@ export class ThemeService {
         return this.securityService.get(this.path + 'themes/' + id,true)
             .map(res => res.json())
             .map((theme:Theme) => Theme.fromJson(theme))
+    }
+
+    public getThemeCards(themeId: number): Observable<Card[]> {
+        return this.securityService.get(this.path + 'themes/' + themeId + '/cards', true)
+            .map(res => res.json())
+            .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
     }
 }

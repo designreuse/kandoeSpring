@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +45,13 @@ public class CardServiceImpl implements CardService {
     public Card saveCard(Card card, Integer themeId) {
         Theme theme = themeService.findThemeById(themeId);
         card.setTheme(theme);
+
+        List<Card> themeCards = theme.getCards();
+        if(themeCards == null){
+            themeCards = new ArrayList<>();
+        }
+        themeCards.add(card);
+        theme.setCards(themeCards);
 
         return cardRepository.save(card);
     }

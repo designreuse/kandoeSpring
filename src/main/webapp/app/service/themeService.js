@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../security/securityService", "./uploadService"], function(exports_1) {
+System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../security/securityService", "./uploadService", "../DOM/card"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,7 +11,7 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../s
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var core_1, theme_1, securityService_1, uploadService_1;
+    var core_1, theme_1, securityService_1, uploadService_1, card_1;
     var ThemeService;
     return {
         setters:[
@@ -27,6 +27,9 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../s
             },
             function (uploadService_1_1) {
                 uploadService_1 = uploadService_1_1;
+            },
+            function (card_1_1) {
+                card_1 = card_1_1;
             }],
         execute: function() {
             /**
@@ -60,6 +63,11 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../s
                     return this.securityService.get(this.path + 'themes/' + id, true)
                         .map(function (res) { return res.json(); })
                         .map(function (theme) { return theme_1.Theme.fromJson(theme); });
+                };
+                ThemeService.prototype.getThemeCards = function (themeId) {
+                    return this.securityService.get(this.path + 'themes/' + themeId + '/cards', true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
                 };
                 ThemeService = __decorate([
                     core_1.Injectable(),

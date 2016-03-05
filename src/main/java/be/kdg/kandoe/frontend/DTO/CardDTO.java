@@ -14,10 +14,10 @@ public class CardDTO extends ResourceSupport implements Serializable {
     private Integer cardId;
     @NotNull
     private String description;
-    @NotNull
+
     private String imageURL;
     private ThemeDTO theme;
-    private List<CardSession> cardSessions;
+    private List<CardSessionDTO> cardSessions;
     private Integer themeId;
 
     public CardDTO() {
@@ -55,11 +55,11 @@ public class CardDTO extends ResourceSupport implements Serializable {
         this.theme = theme;
     }
 
-    public List<CardSession> getCardSessions() {
+    public List<CardSessionDTO> getCardSessions() {
         return this.cardSessions;
     }
 
-    public void setCardSessions(List<CardSession> cardSessions) {
+    public void setCardSessions(List<CardSessionDTO> cardSessions) {
         this.cardSessions = cardSessions;
     }
 

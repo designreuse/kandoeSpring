@@ -53,7 +53,7 @@ export class OrganisationsComponent implements OnInit {
     }
     logout() {
         localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
+        this._router.navigate(['/Home']);
     }
     sortName() {
         $(".filter-Name").addClass("active");

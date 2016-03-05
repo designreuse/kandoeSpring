@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core', "../DOM/users/user", "../security/securityService", "./uploadService"], function(exports_1) {
+System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core', "../DOM/theme", "../DOM/users/user", "../security/securityService", "./uploadService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,7 +11,7 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var organisation_1, core_1, user_1, securityService_1, uploadService_1;
+    var organisation_1, core_1, theme_1, user_1, securityService_1, uploadService_1;
     var OrganisationService;
     return {
         setters:[
@@ -21,6 +21,9 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
             },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (theme_1_1) {
+                theme_1 = theme_1_1;
             },
             function (user_1_1) {
                 user_1 = user_1_1;
@@ -80,7 +83,7 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                 OrganisationService.prototype.getOrganisationThemes = function (orgId) {
                     return this.securityService.get(this.path + 'organisations/' + orgId + '/themes', true)
                         .map(function (res) { return res.json(); })
-                        .map(function (themes) { return themes.map(function (t) { return theme.fromJson(t); }); });
+                        .map(function (themes) { return themes.map(function (t) { return theme_1.Theme.fromJson(t); }); });
                 };
                 OrganisationService = __decorate([
                     core_1.Injectable(),

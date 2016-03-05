@@ -19,7 +19,7 @@ export class CardService {
     }
 
     public getAllCards() : Observable<Card[]>{
-        return this.securityService.get(this.path + 'organisations',true)
+        return this.securityService.get(this.path + 'cards',true)
             .map(res => res.json())
             .map((cards:Array<Card>) => cards.map((card:Card) => Card.fromJson(card)));
     }
@@ -31,8 +31,16 @@ export class CardService {
             .map((card: Card) => Card.fromJson(card));
     }
 
-    public createCard(card: Card, file?: File): Observable<Response> {
-        console.log(card)
-        return this.securityService.post(this.path + 'cards', JSON.stringify(card), true);
+    public createCard(card: Card, file?: File): Observable<Card> {
+        console.log(card);
+        var value: Observable<Response>;
+        if(file){
+            value = this.uploadService.uploadFile(JSON.stringify(card), file, this.path + 'cards/image')
+        } else {
+            value = this.securityService.post(this.path + 'cards', JSON.stringify(card), true);
+
+        }
+        return value.map(res => res.json())
+            .map((card: Card) => Card.fromJson(card));
     }
 }

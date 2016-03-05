@@ -32,10 +32,17 @@
 </nav>
 <header>
     <div class="container clearfix">
-        <h3><span class="glyphicon glyphicon-bookmark">  {{theme.themeName}}</span></h3>
+        <h3>{{theme.themeName}}</h3>
     </div>
 </header>
 <div class="container main">
+    <div class="col-lg-offset-2 col-lg-8">
+        <ol class="breadcrumb">
+            <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
+            <li><a [routerLink]="['/Themes']">Themes</a></li>
+            <li class="active"> Theme detail</li>
+        </ol>
+    </div>
     <div class="center-container col-lg-offset-2 col-lg-8">
         <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(theme.iconURL)">
     </div>
@@ -44,14 +51,41 @@
             <h3>{{theme.description}}</h3>
         </div>
     </div>
+    <div class="col-lg-offset-2 col-lg-8">
+        <h4>Tags</h4>
+        <div class="well">
+            <div class="row">
+                <div class="tags">
+                    <button class="tag">Tag 1 <a class="removeTag" (click)="removeTag()"> x</a></button>
+                </div>
+                <input type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <h4>Cards</h4>
+            <form class="well">
+                <ul>
+                    <li *ngFor="#card of cards">{{card.description}}</li>
+                </ul>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" placeholder="Enter Description" class="form-control" [(ngModel)]="newCard.description">
+                </div>
+                <div class="form-group">
+                    <label>Logo</label>
+                    <input type="file" multiple="false" (change)="onFileChange($event)">
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="createCard()">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12 col-sm-offset-2 col-sm-8">
-            <ol class="breadcrumb">
-                <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
-                <li><a [routerLink]="['/Themes']">Themes</a></li>
-                <li class="active"> Theme detail</li>
-            </ol>
-
             <h4>Organisation</h4>
             <ul class="organisation-list">
                 <li>
@@ -68,5 +102,5 @@
                 </li>
             </ul>
         </div>
-        </div>
     </div>
+</div>
