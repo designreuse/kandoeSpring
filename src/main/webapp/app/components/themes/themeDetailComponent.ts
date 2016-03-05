@@ -28,7 +28,7 @@ export class ThemeDetailComponent implements OnInit {
     private newCard: Card = Card.createEmpty();
     private file: File = null;
     private cardService: CardService;
-
+    private newTag:string = "";
     private user: User = User.createEmpty();
     private userService: UserService;
 
@@ -81,7 +81,14 @@ export class ThemeDetailComponent implements OnInit {
         }
     }
 
-    removeTag(){
-        $(".removeTag").closest(".tag").remove();
+    addTag(){
+        if (this.newTag) {
+
+        }
+    }
+
+    removeTag(event){
+        var self = event.target;
+        $(self).closest(".tag").remove();
     }
 }

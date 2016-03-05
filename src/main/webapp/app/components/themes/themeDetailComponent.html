@@ -51,14 +51,25 @@
             <h3>{{theme.description}}</h3>
         </div>
     </div>
-    <div class="col-lg-offset-2 col-lg-8">
-        <h4>Tags</h4>
-        <div class="well">
-            <div class="row">
-                <div class="tags">
-                    <button class="tag">Tag 1 <a class="removeTag" (click)="removeTag()"> x</a></button>
+    <div class="row">
+
+        <div class="col-lg-offset-2 col-lg-8">
+            <h4>Tags</h4>
+            <div class="well row">
+                <div class="col-sm-8">
+                    <div class="tags">
+                        <button class="tag">Tag 1 <a (click)="removeTag($event)"> x</a></button>
+                        <button class="tag">Tag 2 <a (click)="removeTag($event)"> x</a></button>
+                    </div>
                 </div>
-                <input type="text" class="form-control" />
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Add tag...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" (click)="addTag()">Go!</button>
+                      </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
