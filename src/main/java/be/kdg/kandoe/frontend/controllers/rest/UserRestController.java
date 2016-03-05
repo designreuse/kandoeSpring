@@ -125,7 +125,7 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "/updateUser/image", method = RequestMethod.POST)
-    public ResponseEntity<String> createOrganisation(@RequestPart("body") UserDTO userDTO,
+    public ResponseEntity<String> updateUser(@RequestPart("body") UserDTO userDTO,
                                                      @RequestPart("file") MultipartFile file,
                                                      @AuthenticationPrincipal User user,
                                                      HttpServletRequest request) {
@@ -136,7 +136,7 @@ public class UserRestController {
                 user_in.setPassword(userService.findUserById(user_in.getId()).getPassword());
 
                 String newFilename = String.format("%d.%s", user_in.getId(), file.getOriginalFilename().split("\\.")[1]);
-                String filePath = request.getServletContext().getRealPath("/resources/images/users/profilePictures");
+                String filePath = request.getServletContext().getRealPath("/resources/images/users/");
 
                 try {
                     FileUtils.saveFile(filePath, newFilename, file);
@@ -144,7 +144,7 @@ public class UserRestController {
                     return new ResponseEntity<>("Failed to save image", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
-                user_in.setProfilePicture("resources/images/users/profilePictures/" + newFilename);
+                user_in.setProfilePicture("resources/images/users/" + newFilename);
                 userService.updateUser(user_in);
 
                 return new ResponseEntity<>(HttpStatus.CREATED);

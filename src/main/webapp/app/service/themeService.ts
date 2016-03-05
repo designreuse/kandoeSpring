@@ -36,7 +36,12 @@ export class ThemeService {
     }
 
     public createTheme(theme:Theme,file?:File):Observable<Response> {
-        return this.securityService.post(this.path + 'themes', JSON.stringify(theme), true);
+        if(file){
+            return this.uploadService.uploadFile(JSON.stringify(theme), file, this.path + 'themes/image');
+        } else {
+            return this.securityService.post(this.path + 'themes', JSON.stringify(theme), true);
+        }
+
     }
 
     public getTheme(id:number):Observable<Theme>{

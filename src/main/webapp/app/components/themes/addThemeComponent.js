@@ -62,7 +62,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                 };
                 AddThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
-                    this.themeService.createTheme(this.theme).subscribe(function (res) {
+                    this.themeService.createTheme(this.theme, this.file).subscribe(function (res) {
                         _this.router.navigate(['/Themes']);
                     }, function (error) {
                         //todo change error display
@@ -95,10 +95,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/themes/addTheme.html',
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, organisationService_1.OrganisationService, userService_1.UserService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, organisationService_1.OrganisationService, userService_1.UserService])
                 ], AddThemeComponent);
                 return AddThemeComponent;
-                var _a;
             })();
             exports_1("AddThemeComponent", AddThemeComponent);
         }
