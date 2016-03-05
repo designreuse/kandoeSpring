@@ -80,6 +80,12 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                         .map(function (res) { return res.json(); })
                         .map(function (u) { return user_1.User.fromJson(u); });
                 };
+                OrganisationService.prototype.addOrganiserToOrganisation = function (orgId, mail) {
+                    var requestparam = "?mail=" + mail;
+                    return this.securityService.post(this.path + 'organisations/' + orgId + "/addOrganiser" + requestparam, "", true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (u) { return user_1.User.fromJson(u); });
+                };
                 OrganisationService.prototype.getOrganisationThemes = function (orgId) {
                     return this.securityService.get(this.path + 'organisations/' + orgId + '/themes', true)
                         .map(function (res) { return res.json(); })

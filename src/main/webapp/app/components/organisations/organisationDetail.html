@@ -41,9 +41,7 @@
 <div class="container main">
 
     <div class="center-container col-lg-offset-2 col-lg-8"style="float: left;">
-
-
-                    <ol class="breadcrumb" >
+        <ol class="breadcrumb" >
             <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
             <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
             <li class="active">Organisation detail</li>
@@ -62,6 +60,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading c-list">
                     <h4 class="title">Organisers</h4>
+                    <div class="pull-right c-controls" *ngIf="organisation.organiser">
+                        <a class="hide-add" id="add-button-org" (click)="showAddOrganiser()"><span class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+                </div>
+                <div class="row" style="display: none">
+                    <div class="col-xs-12">
+                        <div class="input-group add-organiser">
+                            <input type="text" class="form-control" [(ngModel)]="newOrganiser">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" (click)="addOrganiser()"><i class="glyphicon glyphicon-plus-sign"></i> Add user</button>
+                                </span>
+                        </div>
+                    </div>
                 </div>
                 <ul class="panel-body list-group org-list">
                     <div *ngFor="#organiser of organisers">

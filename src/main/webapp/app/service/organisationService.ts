@@ -67,6 +67,13 @@ export class OrganisationService{
             .map(u => User.fromJson(u));
     }
 
+    public addOrganiserToOrganisation(orgId: number, mail: string): Observable<User> {
+        var requestparam = "?mail=" + mail;
+        return this.securityService.post(this.path + 'organisations/' + orgId + "/addOrganiser" + requestparam, "", true)
+            .map(res => res.json())
+            .map(u => User.fromJson(u));
+    }
+
     public getOrganisationThemes(orgId: number): Observable<Theme[]>
     {
         return this.securityService.get(this.path + 'organisations/' + orgId + '/themes', true)

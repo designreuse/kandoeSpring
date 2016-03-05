@@ -29,4 +29,6 @@ public interface OrganisationService {
     List<User> findOrganisationMembers(Integer id);
 
     User addMemberToOrganisation(Integer orgId, String mail, Integer organiserId) throws OrganisationServiceException;
+
+    User addOrganiserToOrganisation(Integer orgId, String mail, Integer organiserId) throws OrganisationServiceException;
 }

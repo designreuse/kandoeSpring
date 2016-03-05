@@ -62,7 +62,7 @@ import {tokenNotExpired} from '../security/TokenHelper';
             </div>
             <div class="row">
                 <div class="col-sm-8 form-group">
-                    <label>Logo</label>
+                    <label>Picture</label>
                     <input type="file" multiple="false" (change)="onFileChange($event)">
                 </div>
             </div>

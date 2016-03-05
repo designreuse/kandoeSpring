@@ -149,4 +149,40 @@ public class OrganisationRestControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(1)));
     }
+
+    @Test
+    public void testAddOrganiserToOrganisation() throws Exception {
+        mockMvc.perform(get("/api/organisations/1/organisers")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(post("/api/organisations/1/addOrganiser?mail=jordan.parezys@student.kdg.be")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/organisations/1/organisers")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void testAddOrganiserExistingMemberToOrganisation() throws Exception {
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(post("/api/organisations/1/addOrganiser?mail=senne.wens@student.kdg.be")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/organisations/1/members")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
 }

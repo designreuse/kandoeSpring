@@ -22,7 +22,10 @@ export class OrganisationDetailComponent implements OnInit {
     private members:User[] = [];
     private themes: Theme[] = [];
     private orgId:number;
+
     private newMember:string = "";
+    private newOrganiser:string = "";
+
     private user: User = User.createEmpty();
     private userService: UserService;
 
@@ -51,10 +54,6 @@ export class OrganisationDetailComponent implements OnInit {
             this.user = u;
         });
     }
-    logout() {
-        localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
-    }
 
     private showAddUser() {
         $("#add-button").toggleClass('hide-add');
@@ -65,6 +64,41 @@ export class OrganisationDetailComponent implements OnInit {
         }
     }
 
+    private addMember() {
+        if (this.newMember) {
+            this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
+                this.members.push(u);
+                this.newMember = "";
+            })
+        }
+    }
+
+    private showAddOrganiser() {
+        $("#add-button-org").toggleClass('hide-add');
+        if ($(this).hasClass('hide-add')) {
+            $('.add-organiser').closest('.row').css("display", "none");
+        } else {
+            $('.add-organiser').closest('.row').slideDown(100);
+        }
+    }
+
+    private addOrganiser() {
+        if (this.newOrganiser) {
+            this.organisationService.addOrganiserToOrganisation(this.orgId, this.newOrganiser).subscribe(u => {
+                this.organisers.push(u);
+                if(this.members.find(user => user.username === u.username)){
+                    var index = this.members.indexOf(u);
+                    this.members.splice(index, 1);
+                }
+                this.newOrganiser = "";
+            });
+        }
+    }
+
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
+    }
 
     private getImageSrc(url:string):string {
         if (url) {
@@ -74,15 +108,5 @@ export class OrganisationDetailComponent implements OnInit {
                 return url.replace(/"/g, "");
             }
         }
-    }
-
-    private addMember() {
-        if (this.newMember) {
-            this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
-                this.members.push(u);
-                this.newMember = "";
-            })
-        }
-
     }
 }

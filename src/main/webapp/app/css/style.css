@@ -388,7 +388,29 @@ footer {
     border-width: 0px;
     border-left-width: 1px;
     border-bottom-width: 1px;
-    height: 50px;
+    height: 44px;
+}
+
+.add-organiser > .form-control {
+    border-radius: 0px;
+    border-width: 0px;
+    border-bottom-width: 1px;
+    font-size: 1.3em;
+    padding: 12px 12px;
+    height: 44px;
+    outline: none !important;
+}
+.add-organiser > .form-control:focus {
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none;
+}
+.add-organiser > .input-group-btn .btn {
+    border-radius: 0px;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    height: 44px;
 }
 
 ::-webkit-scrollbar-track
@@ -411,6 +433,10 @@ footer {
 }
 
 .panel > .member-list > div > .list-group-item:first-of-type{
+    border-width: 0;
+}
+
+.panel > .org-list > div > .list-group-item:first-of-type{
     border-width: 0;
 }
 

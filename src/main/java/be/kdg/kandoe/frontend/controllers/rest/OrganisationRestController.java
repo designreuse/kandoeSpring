@@ -170,9 +170,23 @@ public class OrganisationRestController {
         if(user != null){
             try {
                 User u = organisationService.addMemberToOrganisation(orgId, mail, user.getId());
-                Organisation org = organisationService.findOrganisationById(orgId);
 
-                System.out.println(org.getOrganisers().size());
+                return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
+            } catch (OrganisationServiceException | UserServiceException e) {
+                return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{orgId}/addOrganiser", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> addOrganiserToOrganisation(@PathVariable(value = "orgId") Integer orgId,
+                                                           @RequestParam(value = "mail", required = true) String mail,
+                                                           @AuthenticationPrincipal User user)
+    {
+        if(user != null){
+            try {
+                User u = organisationService.addOrganiserToOrganisation(orgId, mail, user.getId());
 
                 return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
             } catch (OrganisationServiceException | UserServiceException e) {

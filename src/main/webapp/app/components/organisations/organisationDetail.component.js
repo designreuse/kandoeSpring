@@ -42,6 +42,7 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     this.members = [];
                     this.themes = [];
                     this.newMember = "";
+                    this.newOrganiser = "";
                     this.user = user_1.User.createEmpty();
                     this.organisationService = orgService;
                     this.orgId = +routeParams.params["id"];
@@ -66,10 +67,6 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         _this.user = u;
                     });
                 };
-                OrganisationDetailComponent.prototype.logout = function () {
-                    localStorage.removeItem("id_token");
-                    this.router.navigate(['/Home']);
-                };
                 OrganisationDetailComponent.prototype.showAddUser = function () {
                     $("#add-button").toggleClass('hide-add');
                     if ($(this).hasClass('hide-add')) {
@@ -79,6 +76,41 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         $('.add-user').closest('.row').slideDown(100);
                     }
                 };
+                OrganisationDetailComponent.prototype.addMember = function () {
+                    var _this = this;
+                    if (this.newMember) {
+                        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
+                            _this.members.push(u);
+                            _this.newMember = "";
+                        });
+                    }
+                };
+                OrganisationDetailComponent.prototype.showAddOrganiser = function () {
+                    $("#add-button-org").toggleClass('hide-add');
+                    if ($(this).hasClass('hide-add')) {
+                        $('.add-organiser').closest('.row').css("display", "none");
+                    }
+                    else {
+                        $('.add-organiser').closest('.row').slideDown(100);
+                    }
+                };
+                OrganisationDetailComponent.prototype.addOrganiser = function () {
+                    var _this = this;
+                    if (this.newOrganiser) {
+                        this.organisationService.addOrganiserToOrganisation(this.orgId, this.newOrganiser).subscribe(function (u) {
+                            _this.organisers.push(u);
+                            if (_this.members.find(function (user) { return user.username === u.username; })) {
+                                var index = _this.members.indexOf(u);
+                                _this.members.splice(index, 1);
+                            }
+                            _this.newOrganiser = "";
+                        });
+                    }
+                };
+                OrganisationDetailComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
+                };
                 OrganisationDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -87,15 +119,6 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         else {
                             return url.replace(/"/g, "");
                         }
-                    }
-                };
-                OrganisationDetailComponent.prototype.addMember = function () {
-                    var _this = this;
-                    if (this.newMember) {
-                        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
-                            _this.members.push(u);
-                            _this.newMember = "";
-                        });
                     }
                 };
                 OrganisationDetailComponent = __decorate([

@@ -82,7 +82,7 @@ public class OrganisationServiceImpl implements OrganisationService{
     public User addMemberToOrganisation(Integer orgId, String mail, Integer organiserId) throws OrganisationServiceException {
         try {
             User u = userService.findUserByEmail(mail);
-            Organisation org =  findOrganisationById(orgId);
+            Organisation org = findOrganisationById(orgId);
 
             if(org == null){
                 throw new OrganisationServiceException("Organisation not found");
@@ -90,6 +90,10 @@ public class OrganisationServiceImpl implements OrganisationService{
 
             if(!org.getOrganisers().stream().anyMatch(user -> user.getId().equals(organiserId))){
                 throw new OrganisationServiceException("You are not an organiser");
+            }
+
+            if(org.getOrganisers().contains(u)){
+                throw new OrganisationServiceException("This user is already an organiser");
             }
 
             Set<User> members = org.getUsers();
@@ -100,6 +104,52 @@ public class OrganisationServiceImpl implements OrganisationService{
             if(!members.contains(u)){
                 members.add(u);
             }
+
+            organisationRepository.save(org);
+
+            return u;
+
+        } catch (UserServiceException e){
+            throw new OrganisationServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public User addOrganiserToOrganisation(Integer orgId, String mail, Integer organiserId) throws OrganisationServiceException {
+        try {
+            User u = userService.findUserByEmail(mail);
+            Organisation org = findOrganisationById(orgId);
+
+            if(org == null){
+                throw new OrganisationServiceException("Organisation not found");
+            }
+
+            if(!org.getOrganisers().stream().anyMatch(user -> user.getId().equals(organiserId))){
+                throw new OrganisationServiceException("You are not an organiser");
+            }
+
+            //remove user from members list organisation
+            Set<User> members = org.getUsers();
+            if(members != null && members.contains(u)){
+                members.remove(u);
+                org.setUsers(members);
+                List<Organisation> userOrgs = u.getOrganisations();
+                userOrgs.remove(org);
+                u.setOrganisations(userOrgs);
+            }
+
+            Set<User> organisers = org.getOrganisers();
+            if(organisers == null){
+                organisers = new TreeSet<>();
+            }
+            organisers.add(u);
+            org.setOrganisers(organisers);
+            /*List<Organisation> userOrgs = u.getOwnOrganisations();
+            if(userOrgs == null){
+                userOrgs = new ArrayList<>();
+            }
+            userOrgs.add(org);
+            u.setOwnOrganisations(userOrgs);*/
 
             organisationRepository.save(org);
 
