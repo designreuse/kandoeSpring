@@ -49,7 +49,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 };
                 ThemeComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
-                    this.router.navigate(['/Home']);
+                    this._router.navigate(['/Home']);
                 };
                 ThemeComponent.prototype.getImageSrc = function (url) {
                     if (url) {

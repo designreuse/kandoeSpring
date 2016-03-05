@@ -35,7 +35,7 @@ public class SubThemeServiceTest {
     public void testSaveSubTheme() throws Exception {
         Theme theme = new Theme("KdG");
         theme.setDescription("KdGParent description");
-        themeService.saveTheme(theme, 1);
+        themeService.saveTheme(theme, 1,1);
 
         SubTheme subtheme = new SubTheme("KdGsub", themeService.findThemeById(1));
         subtheme.setDescription("kdgSubTheme description");

@@ -34,7 +34,7 @@ export class ThemeComponent  implements OnInit {
 
     logout() {
         localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
+        this._router.navigate(['/Home']);
     }
     private getImageSrc(url:string):string {
         if (url) {

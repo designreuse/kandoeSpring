@@ -5,6 +5,7 @@ import {RouteParams, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "a
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {User} from "../../DOM/users/user";
 import {UserService} from "../../service/userService";
+import {Theme} from "../../DOM/theme";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -19,6 +20,7 @@ export class OrganisationDetailComponent implements OnInit {
     private organisation:Organisation = Organisation.createEmpty();
     private organisers:User[] = [];
     private members:User[] = [];
+    private themes: Theme[] = [];
     private orgId:number;
     private newMember:string = "";
     private user: User = User.createEmpty();
@@ -41,10 +43,13 @@ export class OrganisationDetailComponent implements OnInit {
         this.organisationService.getOrganisationMembers(this.orgId).subscribe(users => {
             this.members = users;
         });
+        this.organisationService.getOrganisationThemes(this.orgId).subscribe(themes => {
+            this.themes = themes;
+        });
+
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
-
     }
     logout() {
         localStorage.removeItem("id_token");

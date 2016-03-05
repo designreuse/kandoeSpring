@@ -36,7 +36,6 @@ export class ThemeService {
     }
 
     public createTheme(theme:Theme,file?:File):Observable<Response> {
-        console.log(theme);
         return this.securityService.post(this.path + 'themes', JSON.stringify(theme), true);
     }
 

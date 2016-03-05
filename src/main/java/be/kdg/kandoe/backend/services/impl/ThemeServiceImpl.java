@@ -1,9 +1,11 @@
 package be.kdg.kandoe.backend.services.impl;
 
+import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.ThemeRepository;
 import be.kdg.kandoe.backend.persistence.api.UserRepository;
+import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import org.hibernate.Hibernate;
@@ -24,12 +26,14 @@ public class ThemeServiceImpl implements ThemeService {
     private final ThemeRepository themeRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final OrganisationService organisationService;
 
     @Autowired
-    public ThemeServiceImpl(ThemeRepository themeRepository, UserRepository userRepository, UserService userService) {
+    public ThemeServiceImpl(ThemeRepository themeRepository, UserRepository userRepository, UserService userService, OrganisationService organisationService) {
         this.themeRepository = themeRepository;
         this.userRepository=userRepository;
         this.userService = userService;
+        this.organisationService = organisationService;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public Theme saveTheme(Theme theme, Integer userId) {
+    public Theme saveTheme(Theme theme, Integer userId, Integer orgId) {
         User creator = userRepository.getOne(userId);
         theme.setCreator(creator);
 
@@ -53,6 +57,15 @@ public class ThemeServiceImpl implements ThemeService {
         }
         themes.add(theme);
         creator.setThemes(themes);
+
+        Organisation org = organisationService.findOrganisationById(orgId);
+        List<Theme> orgThemes = org.getThemes();
+        if(orgThemes == null){
+            orgThemes = new ArrayList<>();
+        }
+        orgThemes.add(theme);
+        org.setThemes(orgThemes);
+        theme.setOrganisation(org);
 
         return themeRepository.save(theme);
     }
@@ -76,6 +89,13 @@ public class ThemeServiceImpl implements ThemeService {
         themes.remove(theme);
         u.setThemes(themes);
         theme.setCreator(u);
+
+        Hibernate.initialize(theme.getOrganisation());
+        Organisation org = organisationService.findOrganisationById(theme.getOrganisation().getId());
+        List<Theme> orgThemes = org.getThemes();
+        orgThemes.remove(theme);
+        org.setThemes(orgThemes);
+        theme.setOrganisation(org);
 
         themeRepository.delete(id);
     }

@@ -34,6 +34,9 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     @JoinTable(name = "org_owners", joinColumns = @JoinColumn(name = "OrganisationId"), inverseJoinColumns = @JoinColumn(name = "UserId"))
     private Set<User> organisers;
 
+    @OneToMany(targetEntity = Theme.class)
+    private List<Theme> themes;
+
     //TODO
     public Organisation() {
     }
@@ -96,4 +99,11 @@ public class Organisation implements Serializable, Identifiable<Integer>{
         return organisationId;
     }
 
+    public List<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
+    }
 }

@@ -77,6 +77,11 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                         .map(function (res) { return res.json(); })
                         .map(function (u) { return user_1.User.fromJson(u); });
                 };
+                OrganisationService.prototype.getOrganisationThemes = function (orgId) {
+                    return this.securityService.get(this.path + 'organisations/' + orgId + '/themes', true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (themes) { return themes.map(function (t) { return theme.fromJson(t); }); });
+                };
                 OrganisationService = __decorate([
                     core_1.Injectable(),
                     __param(0, core_1.Inject('App.BackEndPath')), 

@@ -32,7 +32,7 @@ public class ThemeServiceTest {
     public void testSaveTheme() throws Exception {
         Theme toBeSaved = new Theme("KdG");
         toBeSaved.setDescription("Dit is een KDG thema");
-        themeService.saveTheme(toBeSaved,1);
+        Theme t = themeService.saveTheme(toBeSaved,1,1);
         assertEquals(themeService.findThemes().size(),2);
         Theme theme = themeService.findThemeByName("KdG");
 

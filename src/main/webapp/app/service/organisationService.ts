@@ -66,4 +66,11 @@ export class OrganisationService{
             .map(res => res.json())
             .map(u => User.fromJson(u));
     }
+
+    public getOrganisationThemes(orgId: number): Observable<User[]>
+    {
+        return this.securityService.get(this.path + 'organisations/' + orgId + '/themes', true)
+            .map(res => res.json())
+            .map((themes: Array<Theme>) => themes.map((t: Theme) => theme.fromJson(t)));
+    }
 }

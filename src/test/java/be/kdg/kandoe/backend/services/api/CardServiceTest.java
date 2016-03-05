@@ -38,7 +38,7 @@ public class CardServiceTest {
         cardService.saveCard(card, 1);
         Theme theme = new Theme("KdGCard");
         theme.setDescription("KdGCard Theme Description");
-        themeService.saveTheme(theme, 1);
+        themeService.saveTheme(theme, 1,1);
 
          card.setTheme(new Theme("KdGCard"));
 

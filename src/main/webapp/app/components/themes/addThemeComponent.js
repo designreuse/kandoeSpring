@@ -49,7 +49,10 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                 }
                 AddThemeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.organisationService.getUserOrganisations().subscribe(function (orgs) { return _this.currentOrganisations = orgs; });
+                    this.organisationService.getUserOrganisations().subscribe(function (orgs) {
+                        _this.currentOrganisations = orgs;
+                        _this.theme.organisation = orgs[0];
+                    });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
@@ -60,7 +63,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                 AddThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
                     this.themeService.createTheme(this.theme).subscribe(function (res) {
-                        console.log(res.text());
                         _this.router.navigate(['/Themes']);
                     }, function (error) {
                         //todo change error display
@@ -91,7 +93,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                     core_1.Component({
                         selector: 'add-theme',
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
-                        templateUrl: 'app/components/themes/addThemeComponent.html',
+                        templateUrl: 'app/components/themes/addTheme.html',
                     }), 
                     __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, organisationService_1.OrganisationService, userService_1.UserService])
                 ], AddThemeComponent);

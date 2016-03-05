@@ -107,7 +107,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             theme.setDescription("KdG Theme description");
             theme.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
             theme.setOrganisation(org);
-            theme = themeService.saveTheme(theme, user.getUserId());
+            theme = themeService.saveTheme(theme, user.getUserId(), 1);
         }
 
         Card card = new Card();

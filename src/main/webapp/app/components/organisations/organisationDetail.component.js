@@ -39,6 +39,7 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     this.organisation = organisation_1.Organisation.createEmpty();
                     this.organisers = [];
                     this.members = [];
+                    this.themes = [];
                     this.newMember = "";
                     this.user = user_1.User.createEmpty();
                     this.organisationService = orgService;
@@ -56,6 +57,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     });
                     this.organisationService.getOrganisationMembers(this.orgId).subscribe(function (users) {
                         _this.members = users;
+                    });
+                    this.organisationService.getOrganisationThemes(this.orgId).subscribe(function (themes) {
+                        _this.themes = themes;
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;

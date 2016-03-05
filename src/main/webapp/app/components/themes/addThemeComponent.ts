@@ -17,7 +17,7 @@ import {User} from "../../DOM/users/user";
 @Component({
     selector: 'add-theme',
     directives: [ROUTER_DIRECTIVES, RouterLink],
-    templateUrl: 'app/components/themes/addThemeComponent.html',
+    templateUrl: 'app/components/themes/addTheme.html',
 })
 
 export class AddThemeComponent implements OnInit {
@@ -38,11 +38,14 @@ export class AddThemeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.organisationService.getUserOrganisations().subscribe((orgs:Organisation[])=> this.currentOrganisations= orgs);
+        this.organisationService.getUserOrganisations().subscribe((orgs:Organisation[])=> {
+            this.currentOrganisations= orgs;
+            this.theme.organisation = orgs[0];
+        });
+
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
-
     }
 
     onFileChange($event){
@@ -51,7 +54,6 @@ export class AddThemeComponent implements OnInit {
 
     onSubmit() {
         this.themeService.createTheme(this.theme).subscribe(res => {
-            console.log(res.text());
             this.router.navigate(['/Themes']);
         }, error => {
             //todo change error display
@@ -59,6 +61,7 @@ export class AddThemeComponent implements OnInit {
             alert("something went wrong");
         });
     }
+
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);

@@ -19,7 +19,9 @@ System.register(["./organisation"], function(exports_1) {
                     theme.themeId = json.themeId;
                     theme.themeName = json.themeName;
                     theme.description = json.description;
-                    theme.organisation = organisation_1.Organisation.fromJson(json.organisation);
+                    if (json.organisation) {
+                        theme.organisation = organisation_1.Organisation.fromJson(json.organisation);
+                    }
                     return theme;
                 };
                 Theme.createEmpty = function () {

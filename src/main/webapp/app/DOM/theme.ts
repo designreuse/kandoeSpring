@@ -21,7 +21,9 @@ export class Theme{
         theme.themeName = json.themeName;
         theme.description = json.description;
 
-        theme.organisation = Organisation.fromJson(json.organisation);
+        if(json.organisation){
+            theme.organisation = Organisation.fromJson(json.organisation);
+        }
         return theme;
     }
 

@@ -1,14 +1,17 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.OrganisationServiceException;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
+import be.kdg.kandoe.frontend.DTO.ThemeDTO;
 import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
+import be.kdg.kandoe.frontend.assemblers.ThemeAssembler;
 import be.kdg.kandoe.frontend.assemblers.UserAssembler;
 import be.kdg.kandoe.frontend.config.security.jwt.UserAuthentication;
 import be.kdg.kandoe.frontend.util.FileUtils;
@@ -40,14 +43,17 @@ public class OrganisationRestController {
     private final MapperFacade mapper;
     private final UserService userService;
     private final UserAssembler userAssembler;
+    private final ThemeAssembler themeAssembler;
 
     @Autowired
-    public OrganisationRestController(OrganisationService organisationService, OrganisationAssembler organisationAssembler, MapperFacade mapper, UserService userService, UserAssembler userAssembler) {
+    public OrganisationRestController(OrganisationService organisationService, OrganisationAssembler organisationAssembler,
+                                      MapperFacade mapper, UserService userService, UserAssembler userAssembler, ThemeAssembler themeAssembler) {
         this.organisationService = organisationService;
         this.organisationAssembler = organisationAssembler;
         this.mapper = mapper;
         this.userService = userService;
         this.userAssembler = userAssembler;
+        this.themeAssembler = themeAssembler;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -174,5 +180,17 @@ public class OrganisationRestController {
             }
         }
         return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{orgId}/themes", method = RequestMethod.GET)
+    public ResponseEntity<List<ThemeDTO>> getOrganisationThemes(@AuthenticationPrincipal User user,
+                                                                @PathVariable(value = "orgId") Integer orgId){
+        if(user != null && orgId != null){
+            Organisation org = organisationService.findOrganisationById(orgId);
+            List<Theme> themes = org.getThemes();
+
+            return new ResponseEntity<List<ThemeDTO>>(themeAssembler.toResources(themes), HttpStatus.OK);
+        }
+        return new ResponseEntity<List<ThemeDTO>>(HttpStatus.UNAUTHORIZED);
     }
 }

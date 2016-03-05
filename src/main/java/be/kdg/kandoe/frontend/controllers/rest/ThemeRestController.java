@@ -63,7 +63,7 @@ public class ThemeRestController {
             if(themeDTO.getOrganisation() != null){
                 Theme theme_in = mapper.map(themeDTO, Theme.class);
 
-                Theme theme_out = themeService.saveTheme(theme_in, user.getId());
+                Theme theme_out = themeService.saveTheme(theme_in, user.getId(), themeDTO.getOrganisation().getOrganisationId());
                 logger.info(this.getClass().toString() + ": adding new theme " + theme_out.getId());
 
                 return new ResponseEntity<>(themeAssembler.toResource(theme_out), HttpStatus.CREATED);

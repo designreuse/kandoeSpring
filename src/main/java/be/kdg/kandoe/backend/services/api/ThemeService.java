@@ -14,7 +14,7 @@ public interface ThemeService {
 
     Theme findThemeByName(String name);
 
-    Theme saveTheme(Theme theme, Integer userId);
+    Theme saveTheme(Theme theme, Integer userId, Integer orgId);
 
     List<Theme> findThemes();
 

@@ -7,6 +7,7 @@ import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.OrganisationServiceException;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -47,7 +48,9 @@ public class OrganisationServiceImpl implements OrganisationService{
 
     @Override
     public Organisation findOrganisationById(int id) {
-        return organisationRepository.findOne(id);
+        Organisation org = organisationRepository.findOne(id);
+        Hibernate.initialize(org.getThemes());
+        return org;
     }
 
     @Override
