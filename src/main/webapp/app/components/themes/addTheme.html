@@ -11,12 +11,10 @@
             <a class="navbar-brand" href="./">
                 KAN<span>DOE</span></a>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a [routerLink]="['/LoggedInHome']"> Your Kandoe </a></li>
-            <li> <a [routerLink]="['/Organisations']">My Organisations</a> </li>
-            <li class="active"> <a href="#"> My Themes</a> </li>
-            <li>  <a [routerLink]="['/KandoeCard']" > My Cards</a></li>
-
+        <ul class="nav navbar-nav navwidth">
+            <li><a [routerLink]="['/LoggedInHome']">   KANDOES   </a></li>
+            <li > <a [routerLink]="['/Organisations']">  ORGANISATIONS   </a> </li>
+            <li class="active"> <a href="#">    THEMES   </a> </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"  [src]="getImageSrc(user.profilePicture)">
@@ -39,7 +37,7 @@
 </header>
 <div class="container main">
     <ol class="breadcrumb">
-        <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+        <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
         <li><a [routerLink]="['/Themes']">Themes</a></li>
         <li class="active"> Add theme</li>
     </ol>
