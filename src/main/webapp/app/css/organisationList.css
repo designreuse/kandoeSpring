@@ -179,11 +179,6 @@ header:after {
     clear: both;
     height: 0; }
 
-.dropdown-menu:hover > li{
-    position: absolute;
-    display: block;
-}
-
 @media (min-width: 768px) {
     .add{
         color: white;
