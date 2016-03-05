@@ -11,11 +11,10 @@
             <a class="navbar-brand" href="./">
                 KAN<span>DOE</span></a>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a [routerLink]="['/LoggedInHome']"> Your Kandoe </a></li>
-            <li class="active"> <a href="#">My Organisations</a> </li>
-            <li> <a [routerLink]="['/Themes']"> My Themes</a> </li>
-            <li>  <a [routerLink]="['/KandoeCard']" > My Cards</a></li>
+        <ul class="nav navbar-nav navwidth">
+            <li><a [routerLink]="['/LoggedInHome']" >     KANDOES     </a></li>
+            <li class="active"> <a href="#" >      ORGANISATIONS     </a> </li>
+            <li> <a [routerLink]="['/Themes']" >     THEMES     </a> </li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -41,13 +40,17 @@
 </header>
 <div class="container main">
 
-    <div class="center-container col-lg-offset-2 col-lg-8">
-        <ol class="breadcrumb" float="left">
-            <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+    <div class="center-container col-lg-offset-2 col-lg-8"style="float: left;">
+
+
+                    <ol class="breadcrumb" >
+            <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
             <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
             <li class="active">Organisation detail</li>
-        </ol>
-        <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
+        </ol>  </div>
+    <div class="center-container col-lg-offset-2 col-lg-8">
+
+    <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
     </div>
     <div class="row">
         <div class="center-container col-lg-offset-2 col-lg-8">

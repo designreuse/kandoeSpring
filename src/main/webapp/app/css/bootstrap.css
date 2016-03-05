@@ -4299,7 +4299,10 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 .navbar-nav {
     margin: 7.5px -15px
 }
+.navbar-nav  {
+    margin: 7.5px -15px;
 
+}
 .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -4700,7 +4703,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 }
 
 .breadcrumb {
-    padding: 8px 15px;
+    padding: 8px 0px;
     margin-top: 5px;
     margin-bottom: 20px;
     list-style: none;

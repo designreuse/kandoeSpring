@@ -11,12 +11,10 @@
             <a class="navbar-brand" href="./">
                 KAN<span>DOE</span></a>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a [routerLink]="['/LoggedInHome']"> Your Kandoe </a></li>
-            <li class="active"> <a href="#">My Organisations</a> </li>
-            <li> <a [routerLink]="['/Themes']"> My Themes</a> </li>
-
-            <li>  <a [routerLink]="['/KandoeCard']" > My Cards</a></li>
+        <ul class="nav navbar-nav navwidth">
+            <li><a [routerLink]="['/LoggedInHome']">   KANDOES   </a></li>
+            <li class="active"> <a href="#">   ORGANISATIONS   </a> </li>
+            <li> <a [routerLink]="['/Themes']">   THEMES   </a> </li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -43,7 +41,7 @@
 <div class="container main">
     <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
         <ol class="breadcrumb">
-            <li><a [routerLink]="['/LoggedInHome']">Your Kandoe</a></li>
+            <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
             <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
             <li  class="active">Add organisation</li>
         </ol>
@@ -77,7 +75,7 @@
             </div>
         </div>
         <div class="row">
-            <button type="button" class="btn btn-wide btn-primary glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
+            <button type="button" class="btn btn-wide btn-create glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
         </div>
 
     </form>

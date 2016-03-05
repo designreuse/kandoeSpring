@@ -15,10 +15,10 @@
         <div class="collapse navbar-right navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="menu-item glyphicon glyphicon-log-in" (click)="login()"> LOGIN</a>
+                    <a class="menu-item glyphicon" (click)="login()"> LOGIN</a>
                 </li>
                 <li>
-                    <a class="menu-item glyphicon glyphicon-user" (click)="register()"> SIGN UP</a>
+                    <a class="menu-item glyphicon" (click)="register()"> SIGN UP</a>
                 </li>
             </ul>
         </div>
@@ -34,10 +34,13 @@
     </div>
     <div class="row">
         <div class="row">
-            <button type="button" class="btn btn-primary glyphicon glyphicon-log-in" (click)="login()"> LOGIN</button>
+            <button type="button" class="btn btn-home" (click)="login()"> LOGIN</button>
             <p class="">Or</p>
-            <button type="button" class="btn btn-primary glyphicon glyphicon-user" (click)="register()"> SIGN UP</button>
-        </div>
+            <button type="button" class="btn btn-home" (click)="register()"> SIGN UP</button>
+             <a class="  btn btn-block btn-social btn-sm btn-facebook" (click)="facebook()">
+               <span class="fa fa-facebook"></span> Sign in with Facebook
+            </a>
+      </div>
         <div class="row">
             <span class="jumbotron-info">
                 By signing up you agree to our <a href="#">terms & conditions</a>
