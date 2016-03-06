@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="footer">
                                             <button class="btn btn-simple" (click)="rotateCard()">
-                                                <i class="fa fa-mail-forward"></i> Manual Flip
+                                                <i class="fa fa-mail-forward"></i> More Information
                                             </button>
                                         </div>
                                     </div>
@@ -96,29 +96,22 @@
                                     </div>
                                     <div class="themeContent">
                                         <div class="mainContent">
-                                            <h4 class="text-center">Organisation</h4>
+                                            <h4>Organisation</h4>
                                             <p>{{theme.organisation.organisationName}}</p>
-                                            <h4 class="text-center">Cards</h4>
+                                            <h4>Cards</h4>
                                             <ul>
-                                                <li>Card 1</li>
-                                                <li>Card 2</li>
+                                                <li *ngFor="#card of cards">{{card.description}}</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="footer">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <button class="btn btn-simple col-sm-3" (click)="rotateCard()" data-original-title="Flip Card">
-                                                    <i class="fa fa-reply"></i> Back
-                                                </button>
-                                                <div class="social social-links text-center col-sm-9">
-                                                    <ul class="list-inline">
-                                                        <li class="facebook col-sm-4" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                                                        <li class="twitter col-sm-4" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                                                        <li class="google-plus col-sm-4" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                        <button class="btn btn-simple" (click)="rotateCard()" data-original-title="Flip Card">
+                                            <i class="fa fa-reply"></i> Back
+                                        </button>
+                                        <div class="social-links text-center">
+                                            <a href="#facebook" class="facebook"><span class="fa fa-facebook"></span></a>
+                                            <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
+                                            <a href="#google-plus" class="google-plus"><span class="fa fa-google-plus"></span></a>
                                         </div>
                                     </div>
                                 </div> <!-- end back panel -->

@@ -52,7 +52,75 @@
     </div>
     <div class="row">
         <div class="center-container col-lg-offset-2 col-lg-8">
-            <h3>{{organisation.address}}</h3>
+            <h4 class="title">{{organisation.address}}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="title">Themes</h4>
+            </div>
+            <ul class="panel-body">
+                <div *ngFor="#theme of themes; #i = index" *ngIf="i % 3 == 0" class="row">
+                    <li class="col-xs-12 col-sm-4">
+                        <div class="themeCard-container manual-flip">
+                            <div class="themeCard">
+                                <div class="front">
+                                    <div class="cover">
+                                        <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
+                                            <img [src]="getImageSrc(theme.iconURL)"/>
+                                        </a>
+                                    </div>
+                                    <div class="themeContent">
+                                        <div class="mainContent">
+                                            <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
+                                                <h3 class="name">{{theme.themeName}}</h3>
+                                                <p class="profession">{{theme.description}}</p>
+                                            </a>
+                                            <h5><i class="glyphicon glyphicon-bookmark"></i> tag1</h5>
+                                            <h5><i class="glyphicon glyphicon-bookmark"></i> tag2</h5>
+                                            <h5><i class="glyphicon glyphicon-bookmark"></i> tag3</h5>
+                                        </div>
+                                        <div class="footer">
+                                            <button class="btn btn-simple" (click)="rotateCard()">
+                                                <i class="fa fa-mail-forward"></i> More information
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> <!-- end front panel -->
+                                <div class="back">
+                                    <div class="header">
+                                        <h5 class="motto">{{theme.themeName}}</h5>
+                                    </div>
+                                    <div class="themeContent">
+                                        <div class="mainContent">
+                                            <h4>Organisation</h4>
+                                            <p>{{theme.organisation.organisationName}}</p>
+                                            <h4>Cards</h4>
+                                            <ul>
+                                                <li>Card 1</li>
+                                                <li>Card 2</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <button class="btn btn-simple" (click)="rotateCard()" data-original-title="Flip Card">
+                                            <i class="fa fa-reply"></i> Back
+                                        </button>
+                                        <div class="social social-links text-center">
+                                                <a href="#facebook" class="facebook"><span class="fa fa-facebook"></span></a>
+                                                <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
+                                                <a href="#google-plus" class="google-plus"><span class="fa fa-google-plus"></span></a>
+                                        </div>
+                                    </div>
+                                </div> <!-- end back panel -->
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -61,15 +129,15 @@
                 <div class="panel-heading c-list">
                     <h4 class="title">Organisers</h4>
                     <div class="pull-right c-controls" *ngIf="organisation.organiser">
-                        <a class="hide-add" id="add-button-org" (click)="showAddOrganiser()"><span class="glyphicon glyphicon-plus"></span></a>
+                        <a class="" id="add-button-org" (click)="showAddOrg($event)"><span class="glyphicon glyphicon-plus"></span></a>
                     </div>
                 </div>
                 <div class="row" style="display: none">
                     <div class="col-xs-12">
-                        <div class="input-group add-organiser">
+                        <div class="input-group add-org">
                             <input type="text" class="form-control" [(ngModel)]="newOrganiser">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" (click)="addOrganiser()"><i class="glyphicon glyphicon-plus-sign"></i> Add user</button>
+                                    <button class="btn btn-default" type="button" (click)="addOrganiser()"> + Add user</button>
                                 </span>
                         </div>
                     </div>
@@ -96,7 +164,7 @@
                 <div class="panel-heading c-list">
                     <h4 class="title">Members</h4>
                     <div class="pull-right c-controls" *ngIf="organisation.organiser">
-                        <a class="hide-add" id="add-button" (click)="showAddUser()"><span class="glyphicon glyphicon-plus"></span></a>
+                        <a class="members" id="add-button" (click)="showAddUser($event)"><span class="glyphicon glyphicon-plus"></span></a>
                     </div>
                 </div>
                 <div class="row" style="display: none">
@@ -104,7 +172,7 @@
                         <div class="input-group add-user">
                             <input type="text" class="form-control" [(ngModel)]="newMember">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" (click)="addMember()"><i class="glyphicon glyphicon-plus-sign"></i> Add user</button>
+                                    <button class="btn btn-default" type="button" (click)="addMember()"> + Add user</button>
                                 </span>
                         </div>
                     </div>

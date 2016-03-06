@@ -12,7 +12,7 @@ import {tokenNotExpired} from '../security/TokenHelper';
     template: `
     <header>
         <div class="container clearfix">
-            <h2><span class="glyphicon glyphicon-user"></span> {{user.person.firstname}}<span *ngIf="!user.person.firstname"> Profile</span> {{user.person.lastname}}<span *ngIf="!user.person.lastname"></span> </h2>
+            <h2>{{user.person.firstname}}<span *ngIf="!user.person.firstname"> Profile</span> {{user.person.lastname}}<span *ngIf="!user.person.lastname"></span> </h2>
         </div>
     </header>
     <div class="container main">

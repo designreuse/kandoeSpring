@@ -1,6 +1,6 @@
 import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
-import {Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {ThemeService} from "../../service/themeService";
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {Theme} from "../../DOM/theme";

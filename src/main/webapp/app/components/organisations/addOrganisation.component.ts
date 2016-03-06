@@ -38,7 +38,7 @@ export class AddOrganisationComponent implements OnInit{
         this.router.navigate(['/Home']);
     }
 
-        onFileChange($event) {
+    onFileChange($event) {
         this.file = $event.target.files[0];
 
         var output = document.getElementById("imgOut");

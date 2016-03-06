@@ -56,11 +56,26 @@ export class OrganisationDetailComponent implements OnInit {
     }
 
     private showAddUser() {
-        $("#add-button").toggleClass('hide-add');
-        if ($(this).hasClass('hide-add')) {
-            $('.add-user').closest('.row').css("display", "none");
+        event.preventDefault();
+        var self = event.target;
+        $(self).toggleClass('hide-add');
+
+        if ($(self).hasClass('hide-add')) {
+            $('.add-user').closest('.row').slideUp(100);
         } else {
             $('.add-user').closest('.row').slideDown(100);
+        }
+    }
+
+    private showAddOrg() {
+        event.preventDefault();
+        var self = event.target;
+        $(self).toggleClass('hide-add');
+
+        if ($(self).hasClass('hide-add')) {
+            $('.add-org').closest('.row').slideUp(100);
+        } else {
+            $('.add-org').closest('.row').slideDown(100);
         }
     }
 
@@ -70,15 +85,6 @@ export class OrganisationDetailComponent implements OnInit {
                 this.members.push(u);
                 this.newMember = "";
             })
-        }
-    }
-
-    private showAddOrganiser() {
-        $("#add-button-org").toggleClass('hide-add');
-        if ($(this).hasClass('hide-add')) {
-            $('.add-organiser').closest('.row').css("display", "none");
-        } else {
-            $('.add-organiser').closest('.row').slideDown(100);
         }
     }
 
@@ -107,6 +113,16 @@ export class OrganisationDetailComponent implements OnInit {
             } else {
                 return url.replace(/"/g, "");
             }
+        }
+    }
+
+    private rotateCard(){
+        var card = $('.btn-simple').closest('.themeCard-container');
+        console.log(card);
+        if(card.hasClass('hover')){
+            card.removeClass('hover');
+        } else {
+            card.addClass('hover');
         }
     }
 }
