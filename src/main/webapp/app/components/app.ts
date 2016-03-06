@@ -11,6 +11,7 @@ import {AddOrganisationComponent} from "./organisations/addOrganisation.componen
 import {AddThemeComponent} from "./themes/addThemeComponent";
 import {OrganisationDetailComponent} from "./organisations/organisationDetail.component";
 import {ThemeDetailComponent} from "./themes/themeDetailComponent";
+import {ChatComponent} from "./chat/chatComponent";
 
 @Component({
     selector: 'my-kandoe'
@@ -32,7 +33,8 @@ import {ThemeDetailComponent} from "./themes/themeDetailComponent";
     {path: 'themes/:id', as: 'ThemeDetail', component: ThemeDetailComponent},
     {path: '/card', as: 'KandoeCard', component: KandoeCard},
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
-    {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent}
+    {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
+    {path: '/chat', name: 'Chat', component: ChatComponent}
 ])
 export class AppComponent {
 }
