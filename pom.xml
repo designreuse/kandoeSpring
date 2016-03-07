@@ -117,7 +117,6 @@
               <artifactId>mysql-connector-java</artifactId>
               <version>5.1.38</version>
             </dependency>-->
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -266,7 +265,6 @@
             <version>1.4</version>
         </dependency>
 
-
         <!-- Commons-fileupload for uploading files -->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -279,7 +277,22 @@
             <version>2.4</version>
         </dependency>
 
-        <!-- Selenium tests -->
+        <!-- Websockets -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>7.0.52</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
+
+        <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
