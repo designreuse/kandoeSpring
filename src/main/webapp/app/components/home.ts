@@ -1,6 +1,6 @@
 import {Component, Injectable, Inject} from "angular2/core";
 import {RegisterComponent} from "./register.component";
-import {RouteConfig, Router} from "angular2/router";
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
 import {Response} from "angular2/http";
@@ -32,9 +32,9 @@ export class Home {
 
         if (tokenNotExpired()) {
             this.securityService.get(this.path + "login/check", true).subscribe(r => {
-                if(r.text().replace(/"/g,"") === "Facebook"){
+                if (r.text().replace(/"/g, "") === "Facebook") {
                     FB.getLoginStatus(response => {
-                        if(response.status === "connected"){
+                        if (response.status === "connected") {
                             this.router.navigate(['/LoggedInHome']);
                         } else {
                             localStorage.removeItem("id_token");
@@ -50,8 +50,10 @@ export class Home {
     }
 
     login() {
-        var login = document.getElementById("login-form");
+      var login = document.getElementById("login-form");
         var register = document.getElementById("register-form");
+        login.scrollIntoView();
+        login.style.animationTimingFunction="ease-in-out";
         login.style.display = "block";
         register.style.display = "none";
 
@@ -60,6 +62,9 @@ export class Home {
     register() {
         var login = document.getElementById("login-form");
         var register = document.getElementById("register-form");
+        register.scrollIntoView();
+        register.style.animationTimingFunction="ease-in-out";
+        register.style.animationDuration="3s";
         login.style.display = "none";
         register.style.display = "block";
     }
@@ -78,7 +83,7 @@ export class Home {
 
     facebook() {
         FB.login(response => {
-            if(response.authResponse){
+            if (response.authResponse) {
                 let u = new User();
 
                 FB.api('/me/picture?redirect=0', "get", re => {
@@ -97,7 +102,7 @@ export class Home {
                     u.person = p;
 
                     this.userService.loginFacebook(u).subscribe(
-                        (res: Response) => {
+                        (res:Response) => {
                             localStorage.setItem("id_token", res.text());
                             this.router.navigate(['/LoggedInHome']);
                         },
@@ -114,3 +119,19 @@ export class Home {
     }
 
 }
+$(function(){
+    $('a[href^="#login-form"]').click(function(e){
+        var target=$(this).attr('href')
+        var strip= target.slice(1);
+        var anchor=$("a[name='" +strip +"']")
+
+        e.preventDefault();
+
+        $('html,body').animate({
+            scrollTop: anchor.offset().top
+        },'slow');
+
+
+    });
+
+});

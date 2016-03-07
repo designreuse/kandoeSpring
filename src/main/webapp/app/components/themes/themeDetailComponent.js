@@ -114,9 +114,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
+                var _a, _b;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }

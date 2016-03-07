@@ -1,9 +1,12 @@
+
+
 <div class="home">
     <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
-        <div class="container">
+
+        <div class="container container-fluid">
             <div class="navbar-header ">
-                <button type="button" class="navbar-toggle" data-toggle="dropdown-toggle"
-                        data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#myNavbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -12,51 +15,52 @@
                 <a class="navbar-brand" href="./">
                     KAN<span>DOE</span></a>
             </div>
-            <ul class="nav navbar-nav navwidth">
-                 <li class="active">  <a href="#"> KANDOES  </a></li>
-                <li ><a [routerLink]="['/Organisations']" >  ORGANISATIONS   </a> </li>
-                <li> <a [routerLink]="['/Themes']">   THEMES   </a> </li>
 
-            </ul>
-           <ul class="nav navbar-nav navbar-right">
-                <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"  [src]="getImageSrc(user.profilePicture)">
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.person.firstname}}<span class="caret"></span></a>
-                    <ul class=" dropdown-menu pull-right">
-                        <li> <a class="glyphicon" [routerLink]="['/Userprofile']">Edit profile</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li> <a class="glyphicon glyphicon-log-out" (click)="logout()"> Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <div class="collapse  navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navwidth">
+                    <li class="active"><a href="#"> KANDOES </a></li>
+                    <li><a [routerLink]="['/Organisations']"> ORGANISATIONS </a></li>
+                    <li><a [routerLink]="['/Themes']"> THEMES </a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right ">
+                    <li><img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"
+                             [src]="getImageSrc(user.profilePicture)">
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{user.person.firstname}}<span class="caret"></span></a>
+                        <ul class=" dropdown-menu pull-right">
+                            <li><a [routerLink]="['/Userprofile']">Edit profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a class="glyphicon glyphicon-log-out" (click)="logout()"> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-</nav>
+
+    </nav>
 
 
-    <ol class="breadcrumb">
-        <li><a href="#">Your Kandoe</a></li>
-        <li><a href="#">Library</a></li>
-        <li class="active">Data</li>
-    </ol>
 
-<div class="row col-md-offset-2">
-    <div class="col-md-4">
-        <div class="card">
+    <div class="row col-md-offset-2">
+        <div class="col-md-4">
+            <div class="card">
+            </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="card">
+        <div class="col-md-4">
+            <div class="card">
+            </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="card">
+        <div class="col-md-4">
+            <div class="card">
+            </div>
         </div>
+
     </div>
 
 </div>
-
-    </div>
 

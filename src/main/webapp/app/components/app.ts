@@ -12,6 +12,7 @@ import {AddThemeComponent} from "./themes/addThemeComponent";
 import {OrganisationDetailComponent} from "./organisations/organisationDetail.component";
 import {ThemeDetailComponent} from "./themes/themeDetailComponent";
 import {ChatComponent} from "./chat/chatComponent";
+import {CardsComponent} from "./cards/cards.component";
 import {SessionDetailComponent} from "./sessions/sessionDetail.component";
 
 @Component({
@@ -35,6 +36,9 @@ import {SessionDetailComponent} from "./sessions/sessionDetail.component";
     {path: '/card', as: 'KandoeCard', component: KandoeCard},
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
+    {path: '/chat', name: 'Chat', component: ChatComponent},
+
+    {path: '/addCard', as: 'AddCard', component: CardsComponent}
     {path: '/chat', name: 'Chat', component: ChatComponent},
     {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent}
 ])

@@ -8,11 +8,11 @@ import {CardService} from "../../service/cardService";
 @CanActivate(() => tokenNotExpired())
 
 @Component({
-    selector: 'add-organisation',
+    selector: 'add-card',
     template: `
      <header>
         <div class="container clearfix">
-            <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new organisation</h3>
+            <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new card</h3>
         </div>
     </header>
     <div class="container main">
@@ -60,7 +60,7 @@ import {CardService} from "../../service/cardService";
 })
 
 
-export class AddCardComponent {
+export class AddCardComponent implements OnInit{
     private card:Card = Card.createEmpty();
     private cardService:CardService;
     private router:Router;
