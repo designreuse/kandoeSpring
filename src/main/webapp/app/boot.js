@@ -52,7 +52,7 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
                 core_1.provide(router_1.APP_BASE_HREF, { useValue: "/" }),
                 core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }),
                 core_1.provide('App.BackEndPath', { useValue: "https://wildfly-teamiip2kdgbe.rhcloud.com/api/" }),
-                core_1.provide('App.DevPath', { useValue: "http://localhost:9966/Kandoe/api/" })
+                core_1.provide('App.DevPath', { useValue: "https://wildfly-teamiip2kdgbe.rhcloud.com/api/" })
             ]);
         }
     }
