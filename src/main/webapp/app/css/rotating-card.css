@@ -72,6 +72,16 @@
 }
 
 /*        Style       */
+.new-themeCard{
+    border: 1px dashed #c2c7cd;
+}
+
+.card-btn-container {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
 
 .themeCard{
     background: none repeat scroll 0 0 #FFFFFF;

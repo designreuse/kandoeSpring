@@ -59,8 +59,19 @@
                 <li class="active">Themes</li>
             </ol>
             <ul class="searchable-container" id="sort-list">
-                <div *ngFor="#theme of themes; #i = index" *ngIf="i % 3 == 0" class="row">
-                    <li class="col-sm-4">
+                <div *ngFor="#theme of themes; #i = index" *ngIf="(i+1) % 3 == 0" class="row">
+                    <li class="col-xs-12 col-sm-4">
+                            <div class="themeCard">
+                                <div class="front new-themeCard">
+                                    <div class="col-xs-offset-1 col-xs-10 card-btn-container center-container">
+                                        <button [routerLink]="['/AddTheme']" class="btn btn-primary">
+                                            Create a new Theme
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                    </li>
+                    <li class="col-xs-12 col-sm-4">
                     <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
                         <div class="themeCard-container manual-flip">
                             <div class="themeCard">
