@@ -3,12 +3,14 @@ package be.kdg.kandoe.frontend.controllers.rest;
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
 import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,10 +23,16 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.Filter;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by amy on 7/03/2016.
@@ -70,5 +78,47 @@ public class SessionRestControllerTest {
                 .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$").isArray());
+    }
+
+    @Test
+    public void testCreateSession() throws Exception {
+        JSONObject session = new JSONObject();
+        session.put("mode", "SYNC");
+        session.put("type", "IDEA");
+        session.put("minCards", 1);
+        session.put("maxCards", 5);
+        session.put("userAddCards", false);
+        session.put("startTime", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        session.put("endTime", LocalDateTime.of(2016, Month.APRIL, 1, 12, 0).format(DateTimeFormatter.ISO_DATE_TIME));
+        session.put("size", 5);
+        session.put("themeId", 1);
+
+        mockMvc.perform(post("/api/sessions")
+                .header("Authorization", appToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(session.toString()))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testCreateSessionWrongTheme() throws Exception {
+        JSONObject session = new JSONObject();
+        session.put("mode", "SYNC");
+        session.put("type", "IDEA");
+        session.put("minCards", 1);
+        session.put("maxCards", 5);
+        session.put("userAddCards", false);
+        session.put("startTime", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        session.put("endTime", LocalDateTime.of(2016, Month.APRIL, 1, 12, 0).format(DateTimeFormatter.ISO_DATE_TIME));
+        session.put("size", 5);
+        session.put("themeId", 2);
+
+        mockMvc.perform(post("/api/sessions")
+                .header("Authorization", appToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(session.toString()))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 }

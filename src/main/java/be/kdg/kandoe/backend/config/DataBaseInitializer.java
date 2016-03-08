@@ -116,6 +116,15 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             theme = themeService.saveTheme(theme, user.getUserId(), 1);
         }
 
+        Theme theme2 = new Theme();
+        if (themeRepository.findThemeByThemeName("MailTheme") == null && mailUser.getId() != null) {
+            theme2.setThemeName("MailTheme");
+            theme2.setDescription("Mail Theme description");
+            theme2.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
+            theme2.setOrganisation(org2);
+            theme2 = themeService.saveTheme(theme2, mailUser.getUserId(), org2.getId());
+        }
+
         Card card = new Card();
         if (cardRepository.findCardByDescription("KdGCard") == null && user.getId() != null) {
             card.setDescription("KdGCard");
@@ -174,7 +183,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             cardSession.setCard(card);
 
             cardSessions.add(cardSession);
-            cardSession = cardSessionRepository.save(cardSession);
+            //cardSession = cardSessionRepository.save(cardSession);
             card.setCardSessions(cardSessions);
             session.setCardSessions(cardSessions);
 
@@ -183,7 +192,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
 
             userSession.setUser(user);
             userSessions.add(userSession);
-            userSession = userSessionRepository.save(userSession);
+           // userSession = userSessionRepository.save(userSession);
 
             session.setUserSessions(userSessions);
             session.setSize(6);

@@ -32,8 +32,9 @@ public class ThemeServiceTest {
     public void testSaveTheme() throws Exception {
         Theme toBeSaved = new Theme("KdG");
         toBeSaved.setDescription("Dit is een KDG thema");
+        int sizeBefore = themeService.findThemes().size();
         Theme t = themeService.saveTheme(toBeSaved,1,1);
-        assertEquals(themeService.findThemes().size(),2);
+        assertEquals(themeService.findThemes().size(),sizeBefore + 1);
         Theme theme = themeService.findThemeByName("KdG");
 
         assertNotNull("The new theme should have an id", theme.getId());
@@ -46,9 +47,10 @@ public class ThemeServiceTest {
 
         int themeId=updatedTheme.getId();
 
+        sizeBefore = themeService.findThemes().size();
         themeService.removeTheme(themeId);
         assertNull(themeService.findThemeById(themeId));
 
-        assertEquals(1,themeService.findThemes().size());
+        assertEquals(sizeBefore-1,themeService.findThemes().size());
     }
 }

@@ -12,4 +12,6 @@ public interface SessionService {
     Session findSessionById(Integer sessionId, Integer userId) throws SessionServiceException;
 
     List<Session> findSessionsCurrentUser(Integer userId) throws SessionServiceException;
+
+    Session createSession(Session session, Integer themeId, Integer userId) throws SessionServiceException;
 }

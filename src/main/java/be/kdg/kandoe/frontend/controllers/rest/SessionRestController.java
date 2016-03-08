@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -63,6 +60,21 @@ public class SessionRestController {
         }
 
         return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> createSession(@RequestBody SessionDTO sessionDTO, @AuthenticationPrincipal User user){
+        if(user != null){
+            try {
+                Session session_in = mapper.map(sessionDTO, Session.class);
+                Session session_out = sessionService.createSession(session_in, sessionDTO.getThemeId(), user.getId());
+
+                return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(session_out), HttpStatus.CREATED);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
     }
 
 }
