@@ -39,7 +39,11 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public Theme findThemeById(int Id) {
-        return themeRepository.findOne(Id);
+        Theme theme = themeRepository.findOne(Id);
+        if(theme != null && theme.getCards() != null)
+            Hibernate.initialize(theme.getCards());
+
+        return theme;
     }
 
     @Override

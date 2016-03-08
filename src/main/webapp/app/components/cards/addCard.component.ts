@@ -1,8 +1,10 @@
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {Component, OnInit} from 'angular2/core'
-import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate, RouteParams} from "angular2/router";
 import {Card} from "../../DOM/card";
 import {CardService} from "../../service/cardService";
+import {UserService} from "../../service/userService";
+import {ThemeService} from "../../service/themeService";
 
 
 @CanActivate(() => tokenNotExpired())
@@ -10,11 +12,7 @@ import {CardService} from "../../service/cardService";
 @Component({
     selector: 'add-card',
     templateUrl: 'app/components/cards/addCard.html'
-
-
-
 })
-
 
 export class AddCardComponent implements OnInit{
     private card:Card = Card.createEmpty();
@@ -41,7 +39,7 @@ export class AddCardComponent implements OnInit{
             this.user = u;
         });
 
-        this.themeService.getTheme(1).subscribe(theme=> {
+        this.themeService.getTheme(this.themeId).subscribe(theme=> {
             this.theme = theme;
         });
     }
