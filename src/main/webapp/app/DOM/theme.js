@@ -1,10 +1,13 @@
-System.register(["./organisation"], function(exports_1) {
-    var organisation_1;
+System.register(["./organisation", './card'], function(exports_1) {
+    var organisation_1, card_1;
     var Theme;
     return {
         setters:[
             function (organisation_1_1) {
                 organisation_1 = organisation_1_1;
+            },
+            function (card_1_1) {
+                card_1 = card_1_1;
             }],
         execute: function() {
             /**
@@ -21,6 +24,12 @@ System.register(["./organisation"], function(exports_1) {
                     theme.description = json.description;
                     if (json.organisation) {
                         theme.organisation = organisation_1.Organisation.fromJson(json.organisation);
+                    }
+                    if (json.cards) {
+                        theme.cards = [];
+                        for (var i = 0; i < json.cards.length; i++) {
+                            theme.cards[i] = card_1.Card.fromJson(json.cards[i]);
+                        }
                     }
                     return theme;
                 };

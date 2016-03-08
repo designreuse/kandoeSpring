@@ -73,7 +73,8 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public List<Theme> findThemes() {
-        return themeRepository.findAll();
+        List<Theme> themes = themeRepository.findAll();
+        return themes;
     }
 
     @Override
@@ -109,6 +110,8 @@ public class ThemeServiceImpl implements ThemeService {
         //to prevent org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role
         //http://stackoverflow.com/questions/5027013/hibernate-lazy-load-application-design
         Hibernate.initialize(creator.getThemes());
+        List<Theme> themes = creator.getThemes();
+        themes.stream().forEach(t -> Hibernate.initialize(t.getCards()));
         return creator.getThemes();
     }
 

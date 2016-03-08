@@ -77,6 +77,7 @@ public class CardRestController {
                                                      HttpServletRequest request) {
 
         if(user != null && user.getId() != null) {
+            System.out.println("qefmioejfmqeoifjqzemiofj");
             if(file.getContentType().split("/")[0].equals("image")){
                 Card card_in = mapper.map(cardDTO, Card.class);
                 Card card_out = cardService.saveCard(card_in, cardDTO.getThemeId());
@@ -92,7 +93,6 @@ public class CardRestController {
 
                 card_out.setImageURL("resources/images/cards/" + newFilename);
                 cardService.updateCard(card_out);
-
                 return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

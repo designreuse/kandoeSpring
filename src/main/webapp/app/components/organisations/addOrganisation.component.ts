@@ -5,6 +5,8 @@ import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "a
 import {tokenNotExpired} from "../../security/TokenHelper";
 import {UserService} from "../../service/userService";
 import {User} from "../../DOM/users/user";
+import {Theme} from "../../DOM/theme";
+import {ThemeService} from "../../service/themeService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -26,13 +28,16 @@ export class AddOrganisationComponent implements OnInit{
         this.router = router;
         this._userService=_userService;
 
+
     }
 
     ngOnInit() {
         this._userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+
     }
+
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);

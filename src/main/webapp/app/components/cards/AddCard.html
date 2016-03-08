@@ -1,0 +1,45 @@
+
+<header>
+    <div class="container clearfix">
+        <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new card</h3>
+    </div>
+</header>
+
+
+<div class="container main">
+    <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+
+        <div class="row">
+            <form method="post" role="form">
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" placeholder="Enter card description" class="form-control"
+                           [(ngModel)]="card.description">
+                </div>
+
+                <div class="form-group">
+                    <label>Logo</label>
+                    <input type="file" multiple="false" (change)="onFileChange($event)">
+                </div>
+                <div class="row">
+                    <div class="center-container">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <div class="session-card" >
+                                <img src="" id="cardimg"/>
+                                <p class="session-card-description">{{card.description}} <br/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="center-container">
+                        <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit()">Add</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

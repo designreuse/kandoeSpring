@@ -49,6 +49,10 @@ hr {
     margin-bottom: 30px;
 }
 
+.floatleftclass {
+    float: left;
+}
+
 /*
 --------------------- Buttons ------------------------------
 */
@@ -97,11 +101,11 @@ hr {
     margin-bottom: 20px;
     margin-top: 30px;
 
-     -webkit-transition: all 600ms ease-in-out ;
-    -moz-transition: all 600ms ease-in-out ;
-    -ms-transition:all 600ms ease-in-out ;
-    -o-transition: all 600ms ease-in-out ;
-    transition: all 600ms ease-in-out ;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -ms-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+    transition: all 600ms ease-in-out;
 }
 
 .btn-info {
@@ -130,10 +134,10 @@ section {
     text-align: center;
     display: block;
     transition: all 3s ease-in-out;
-    -webkit-transition:all 3s ease-in-out;;
-    -moz-transition :all 3s ease-in-out;;
+    -webkit-transition: all 3s ease-in-out;;
+    -moz-transition: all 3s ease-in-out;;
     -ms-transition: all 3s ease-in-out;;
-    -o-transition:  all 3s ease-in-out;;
+    -o-transition: all 3s ease-in-out;;
 
 }
 
@@ -516,8 +520,27 @@ footer {
     border-color: #ffb951;
 }
 
-.floatleftclass{
-    float:left;
+/*
+-------------------------- Session card ---------------------------
+*/
+
+.session-card {
+    width: 175px;
+    height: 250px;
+    background: url(../resources/logs.jpg) no-repeat;
+    position: relative;
 }
+#cardimg{
+    width: 175px;
+    height: 250px;
 
-
+}
+.session-card-description {
+    color: white !important;
+    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.6));
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 0;
+    padding-bottom: 15px;
+}
