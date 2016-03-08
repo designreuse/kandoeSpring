@@ -85,7 +85,6 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
                         { path: '/userprofile', as: 'Userprofile', component: userprofile_component_1.UserProfileComponent },
                         { path: '/themes/addTheme', name: 'AddTheme', component: addThemeComponent_1.AddThemeComponent },
                         { path: '/addCard', as: 'AddCard', component: cards_component_1.CardsComponent },
-                        { path: '/chat', name: 'Chat', component: chatComponent_1.ChatComponent },
                         { path: '/sessions/:id', as: 'SessionDetail', component: sessionDetail_component_1.SessionDetailComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
