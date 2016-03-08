@@ -24,7 +24,7 @@ export class SessionDetailComponent implements OnInit{
     private session: Session;
     private sessionId: number;
     private size: Array<number> = [];
-    private cards: Card[] = []
+    private cards: Card[] = [];
     private user: User = User.createEmpty();
     private userService: UserService;
 
