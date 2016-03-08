@@ -13,6 +13,7 @@ import {OrganisationDetailComponent} from "./organisations/organisationDetail.co
 import {ThemeDetailComponent} from "./themes/themeDetailComponent";
 import {ChatComponent} from "./chat/chatComponent";
 import {SessionDetailComponent} from "./sessions/sessionDetail.component";
+import {CardsComponent} from "./cards/cards.component";
 
 @Component({
     selector: 'my-kandoe'
