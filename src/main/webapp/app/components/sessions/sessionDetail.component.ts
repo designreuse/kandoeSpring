@@ -24,7 +24,7 @@ export class SessionDetailComponent implements OnInit{
     private session: Session;
     private sessionId: number;
     private size: Array<number> = [];
-
+    private cards: Card[] = []
     private user: User = User.createEmpty();
     private userService: UserService;
 
@@ -45,11 +45,13 @@ export class SessionDetailComponent implements OnInit{
                 this.size[i] = j-1;
                 j = j-1;
             }
+            this.cards = s.cards;
         });
 
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+
     }
 
     calculateWidthCentre(){
@@ -60,6 +62,19 @@ export class SessionDetailComponent implements OnInit{
     calculateHeightCentre(){
         var height= document.getElementById("circlesvg").clientHeight;
         return height/2;
+    }
+
+    private setImgBg(url:string):string{
+        var style;
+        if (url) {
+            if (url.indexOf("http://") > -1) {
+                style= "background: url(" + url + ") no-repeat; max-width: 100%";
+            } else {
+                style= "background: url(" + url.replace(/"/g, "") + ") no-repeat; max-width: 100%";
+            }
+        }
+
+        return style;
     }
 
     private getImageSrc(url:string): string {

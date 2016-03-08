@@ -40,18 +40,19 @@
 
 <header>
     <div class="container page-header" id="org-header">
-        <h3>Session Name {}</h3>
-
+        <h3>Session Name</h3>
     </div>
 </header>
 <div class="container main">
-    <ol class="breadcrumb">
-        <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
-        <li><a [routerLink]="['/Themes']">Themes</a></li>
-        <li class="active"> Add theme</li>
-    </ol>
     <div class="row">
-
+        <ul class="list-inline list-unstyled">
+            <div *ngFor="#card of cards; #i = index" class="col-xs-2">
+                <li>
+                    <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
+                    <p class="hover-text">{{card.description}}</p>
+                </li>
+            </div>
+        </ul>
     </div>
     <div class="row">
         <div class="center-container">

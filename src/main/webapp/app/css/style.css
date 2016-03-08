@@ -2,6 +2,7 @@
     min-height: 850px;
 }
 
+
 /*
 --------------------- General ------------------------------
 */
@@ -225,7 +226,7 @@ section {
     position: relative;
     padding: 30px;
     text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/meeting_header_img.jpg) no-repeat fixed 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/meeting_header_img.jpg) no-repeat fixed;
     background-size: 100%;
     overflow: hidden;
     color: white !important;
