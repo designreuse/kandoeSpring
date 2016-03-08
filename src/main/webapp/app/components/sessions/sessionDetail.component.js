@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService"], function(exports_1) {
+System.register(['angular2/core', "angular2/router", "../../security/TokenHelper"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,47 +8,33 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, TokenHelper_1, router_1, sessionService_1;
+    var core_1, router_1, TokenHelper_1;
     var SessionDetailComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (TokenHelper_1_1) {
-                TokenHelper_1 = TokenHelper_1_1;
-            },
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (sessionService_1_1) {
-                sessionService_1 = sessionService_1_1;
+            function (TokenHelper_1_1) {
+                TokenHelper_1 = TokenHelper_1_1;
             }],
         execute: function() {
             SessionDetailComponent = (function () {
-                function SessionDetailComponent(sesService, router, routeParams) {
-                    this.sessionService = sesService;
-                    this.router = router;
-                    this.sessionId = +routeParams.params["id"];
+                function SessionDetailComponent() {
                 }
-                SessionDetailComponent.prototype.ngOnInit = function () {
-                    var _this = this;
-                    this.sessionService.getSessionById(this.sessionId).subscribe(function (s) {
-                        console.log(JSON.stringify(s));
-                        _this.session = s;
-                    });
-                };
                 SessionDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
-                        selector: 'session-detail',
+                        selector: "session-detail",
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
-                        template: "\n\n    "
+                        template: "\n        <h1>test</h1>\n    "
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
-                var _a, _b;
             })();
             exports_1("SessionDetailComponent", SessionDetailComponent);
         }

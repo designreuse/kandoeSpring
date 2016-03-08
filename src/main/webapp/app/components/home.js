@@ -70,12 +70,17 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                 Home.prototype.login = function () {
                     var login = document.getElementById("login-form");
                     var register = document.getElementById("register-form");
+                    login.scrollIntoView();
+                    login.style.animationTimingFunction = "ease-in-out";
                     login.style.display = "block";
                     register.style.display = "none";
                 };
                 Home.prototype.register = function () {
                     var login = document.getElementById("login-form");
                     var register = document.getElementById("register-form");
+                    register.scrollIntoView();
+                    register.style.animationTimingFunction = "ease-in-out";
+                    register.style.animationDuration = "3s";
                     login.style.display = "none";
                     register.style.display = "block";
                 };
@@ -136,6 +141,17 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                 var _a;
             })();
             exports_1("Home", Home);
+            $(function () {
+                $('a[href^="#login-form"]').click(function (e) {
+                    var target = $(this).attr('href');
+                    var strip = target.slice(1);
+                    var anchor = $("a[name='" + strip + "']");
+                    e.preventDefault();
+                    $('html,body').animate({
+                        scrollTop: anchor.offset().top
+                    }, 'slow');
+                });
+            });
         }
     }
 });

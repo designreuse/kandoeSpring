@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-inverse " role="navigation">
     <div class="container">
         <div class="navbar-header ">
@@ -15,10 +16,10 @@
         <div class="collapse navbar-right navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="menu-item glyphicon" (click)="login()"> LOGIN</a>
+                    <a (click)="login()">LOGIN</a>
                 </li>
                 <li>
-                    <a class="menu-item glyphicon" (click)="register()"> SIGN UP</a>
+                    <a (click)="register()"> SIGN UP</a>
                 </li>
             </ul>
         </div>
@@ -29,18 +30,19 @@
     <div class="row">
         <h1>
             Kandoe</h1>
-        <p>Free <span class="roboto-bold">platform</span> for making <span class="roboto-bold">decisions</span>. <span class="roboto-bold">Easy</span>  to use
-            <br> You can <span class="roboto-bold">participate</span>  with a lot of people</p>
+        <p>Free <span class="roboto-bold">platform</span> for making <span class="roboto-bold">decisions</span>. <span
+                class="roboto-bold">Easy</span> to use
+            <br> You can <span class="roboto-bold">participate</span> with a lot of people</p>
     </div>
     <div class="row">
         <div class="row">
-            <button type="button" class="btn btn-home" (click)="login()"> LOGIN</button>
+            <button type="button" class="btn btn-home "  (click)="login()">LOGIN</button>
             <p class="">Or</p>
-            <button type="button" class="btn btn-home" (click)="register()"> SIGN UP</button>
-             <a class="  btn btn-block btn-social btn-sm btn-facebook" (click)="facebook()">
-               <span class="fa fa-facebook"></span> Sign in with Facebook
+            <button type="button" class="btn btn-home "  (click)="register()">SIGN UP</button>
+            <a class="  btn btn-block btn-social btn-sm btn-facebook" (click)="facebook()">
+                <span class="fa fa-facebook"></span> Sign in with Facebook
             </a>
-      </div>
+        </div>
         <div class="row">
             <span class="jumbotron-info">
                 By signing up you agree to our <a href="#">terms & conditions</a>
@@ -50,10 +52,11 @@
     </div>
 </section>
 
-<section class="container login-section">
+<section class="container login-section " >
     <div class="row">
 
-        <form id="login-form" class="col-lg-offset-4 col-lg-4" method="post" role="form" style="display: none;">
+        <form  id="login-form" class="col-lg-offset-4 col-lg-4 " method="post" role="form"
+            style="display: none;">
             <div class="form-pad">
                 <h3>Login</h3>
                 <div class="form-group">
@@ -78,24 +81,19 @@
         <p>Simply pick a card and push it onto the circle. May the best idea win!</p>
         <div class="block">
             <svg width="200" height="200">
-                <circle cx="100" cy="100" r="80" stroke="black" stroke-width="4" fill="#FFFFFF" />
-                <circle cx="100" cy="100" r="55" stroke="black" stroke-width="4" fill="#FFFFFF" />
-                <circle cx="100" cy="100" r="25" stroke="black" stroke-width="4" fill="#FFFFFF" />
-                <circle cx="100" cy="145" r="2" stroke="#ff9c44" stroke-width="2" fill="#ff9c44" />
-                <circle cx="100" cy="130" r="2" stroke="#ff9c44" stroke-width="2" fill="#ff9c44" />
-                <circle cx="100" cy="115" r="2" stroke="#ff9c44" stroke-width="2" fill="#ff9c44" />
-                <rect x="85" y="92" width="30" height="15" style="fill:#ff9c44;" />
-                <rect x="85" y="160" width="30" height="15" style="fill:#ff9c44;" />
+                <circle cx="100" cy="100" r="80" stroke="black" stroke-width="4" fill="#FFFFFF"/>
+                <circle cx="100" cy="100" r="55" stroke="black" stroke-width="4" fill="#FFFFFF"/>
+                <circle cx="100" cy="100" r="25" stroke="black" stroke-width="4" fill="#FFFFFF"/>
+                <circle cx="100" cy="145" r="2" stroke="#ff9c44" stroke-width="2" fill="#ff9c44"/>
+                <circle cx="100" cy="130" r="2" stroke="#ff9c44" stroke-width="2" fill="#ff9c44"/>
+                <circle cx="100" cy="115" r="2" stroke="#ff9c44" stroke-width="2" fill="#ff9c44"/>
+                <rect x="85" y="92" width="30" height="15" style="fill:#ff9c44;"/>
+                <rect x="85" y="160" width="30" height="15" style="fill:#ff9c44;"/>
             </svg>
         </div>
-        <button type="button" class="btn btn-info" (click)="login()">CREATE A NEW <span class="roboto-bold">KANDOE</span></button>
+        <button type="button" class="btn btn-info" (click)="login()">CREATE A NEW <span
+                class="roboto-bold">KANDOE</span></button>
 
     </article>
 </section>
-<!--<div class="footer">
-    <footer class="footer-container">
 
-        <p class="copy">© 2016 Kandoe Inc.</p>
-
-    </footer>
-</div>-->

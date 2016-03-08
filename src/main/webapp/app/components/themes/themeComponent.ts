@@ -57,6 +57,7 @@ export class ThemeComponent  implements OnInit {
         }
     }
 
+
     private rotateCard(){
         var card = $('.btn-simple').closest('.themeCard-container');
         console.log(card);

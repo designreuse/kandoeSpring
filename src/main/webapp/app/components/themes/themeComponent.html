@@ -93,6 +93,9 @@
                                             <h5><i class="glyphicon glyphicon-bookmark"></i> tag1</h5>
                                             <h5><i class="glyphicon glyphicon-bookmark"></i> tag2</h5>
                                             <h5><i class="glyphicon glyphicon-bookmark"></i> tag3</h5>
+                                            <br>
+                                            <h4>Organisation</h4>
+                                            <p>{{theme.organisation.organisationName}}</p>
                                         </div>
                                         <div class="footer">
                                             <button class="btn btn-simple" (click)="rotateCard()">
@@ -107,14 +110,18 @@
                                     </div>
                                     <div class="themeContent">
                                         <div class="mainContent">
-                                            <h4>Organisation</h4>
-                                            <p>{{theme.organisation.organisationName}}</p>
+                                            <!--kaarten worden hier afgedrukt voor description komt u logo(heel klein)
+                                             daar een knop zetten om kaart toe te voegen
+                                             en in thema detail aanpassen-->
                                             <h4>Cards</h4>
                                             <ul>
+                                                <li *ngFor="#card of cards">{{card.imageURL}}</li>
                                                 <li *ngFor="#card of cards">{{card.description}}</li>
                                             </ul>
+                                            <button [routerLink]="['/AddCard']" class="btn btn-primary">Add card</button>
+
                                         </div>
-                                    </div>
+                                     </div>
                                     <div class="footer">
                                         <button class="btn btn-simple" (click)="rotateCard()" data-original-title="Flip Card">
                                             <i class="fa fa-reply"></i> Back

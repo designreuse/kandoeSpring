@@ -3922,7 +3922,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 
 .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
-    background-color: #eee
+    background-color: #ffb951;
 }
 
 .nav > li.disabled > a {
@@ -5464,7 +5464,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+
 }
 
 .panel-body {

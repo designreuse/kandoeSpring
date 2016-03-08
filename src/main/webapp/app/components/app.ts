@@ -32,9 +32,11 @@ import {SessionDetailComponent} from "./sessions/sessionDetail.component";
     {path: '/register', as: 'Register', component: RegisterComponent},
     {path: '/themes', as: 'Themes', component: ThemeComponent},
     {path: 'themes/:id', as: 'ThemeDetail', component: ThemeDetailComponent},
-    {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/card', as: 'KandoeCard', component: KandoeCard},
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
+    {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
+
+    {path: '/addCard', as: 'AddCard', component: CardsComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},
     {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent}
 ])
