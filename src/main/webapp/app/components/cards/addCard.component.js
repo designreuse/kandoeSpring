@@ -1,4 +1,4 @@
-System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router", "../../DOM/card", "../../service/cardService", "../../service/userService", "../../service/themeService"], function(exports_1) {
+System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router", "../../DOM/card", "../../service/cardService", "../../service/userService", "../../service/themeService", "../../DOM/users/user", "../../DOM/theme"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var TokenHelper_1, core_1, router_1, card_1, cardService_1, userService_1, themeService_1;
+    var TokenHelper_1, core_1, router_1, card_1, cardService_1, userService_1, themeService_1, user_1, theme_1;
     var AddCardComponent;
     return {
         setters:[
@@ -32,14 +32,20 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
             },
             function (themeService_1_1) {
                 themeService_1 = themeService_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
+            },
+            function (theme_1_1) {
+                theme_1 = theme_1_1;
             }],
         execute: function() {
             AddCardComponent = (function () {
                 function AddCardComponent(cardService, router, userService, themeService, routeParams) {
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
-                    this.user = User.createEmpty();
-                    this.theme = Theme.createEmpty();
+                    this.user = user_1.User.createEmpty();
+                    this.theme = theme_1.Theme.createEmpty();
                     this.cardService = cardService;
                     this.router = router;
                     this.userService = userService;
@@ -90,12 +96,11 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'add-card',
-                        templateUrl: 'app/components/cards/addCard.html'
+                        templateUrl: 'app/components/cards/AddCard.html'
                     }), 
-                    __metadata('design:paramtypes', [cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, themeService_1.ThemeService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [cardService_1.CardService, router_1.Router, userService_1.UserService, themeService_1.ThemeService, router_1.RouteParams])
                 ], AddCardComponent);
                 return AddCardComponent;
-                var _a, _b;
             })();
             exports_1("AddCardComponent", AddCardComponent);
         }

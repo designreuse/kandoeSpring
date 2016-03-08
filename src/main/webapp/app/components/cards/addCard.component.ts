@@ -5,13 +5,15 @@ import {Card} from "../../DOM/card";
 import {CardService} from "../../service/cardService";
 import {UserService} from "../../service/userService";
 import {ThemeService} from "../../service/themeService";
+import {User} from "../../DOM/users/user";
+import {Theme} from "../../DOM/theme";
 
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-card',
-    templateUrl: 'app/components/cards/addCard.html'
+    templateUrl: 'app/components/cards/AddCard.html'
 })
 
 export class AddCardComponent implements OnInit{
