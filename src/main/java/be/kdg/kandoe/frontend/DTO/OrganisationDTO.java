@@ -77,6 +77,4 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
     public void setCountUsers(int countUsers) {
         this.countUsers = countUsers;
     }
-
-    public void addCountUsers(int countUsers) {this.countUsers += countUsers;}
 }
