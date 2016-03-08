@@ -15,6 +15,8 @@ import {ChatComponent} from "./chat/chatComponent";
 import {CardsComponent} from "./cards/cards.component";
 import {SessionDetailComponent} from "./sessions/sessionDetail.component";
 
+declare var jsColor: any;
+
 @Component({
     selector: 'my-kandoe'
 })
