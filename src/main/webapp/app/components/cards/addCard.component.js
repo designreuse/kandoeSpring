@@ -1,4 +1,4 @@
-System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router", "../../DOM/card", "../../service/cardService"], function(exports_1) {
+System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router", "../../DOM/card", "../../service/cardService", "../../service/userService", "../../service/themeService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var TokenHelper_1, core_1, router_1, card_1, cardService_1;
+    var TokenHelper_1, core_1, router_1, card_1, cardService_1, userService_1, themeService_1;
     var AddCardComponent;
     return {
         setters:[
@@ -26,22 +26,49 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
             },
             function (cardService_1_1) {
                 cardService_1 = cardService_1_1;
+            },
+            function (userService_1_1) {
+                userService_1 = userService_1_1;
+            },
+            function (themeService_1_1) {
+                themeService_1 = themeService_1_1;
             }],
         execute: function() {
             AddCardComponent = (function () {
-                function AddCardComponent(cardService, router) {
+                function AddCardComponent(cardService, router, userService, themeService, routeParams) {
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
+                    this.user = User.createEmpty();
+                    this.theme = Theme.createEmpty();
                     this.cardService = cardService;
                     this.router = router;
+                    this.userService = userService;
+                    this.themeService = themeService;
+                    this.themeId = +routeParams.params["id"];
                 }
+                AddCardComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.userService.getCurrentUser().subscribe(function (u) {
+                        _this.user = u;
+                    });
+                    this.themeService.getTheme(this.themeId).subscribe(function (theme) {
+                        _this.theme = theme;
+                    });
+                };
+                AddCardComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
+                };
                 AddCardComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 AddCardComponent.prototype.onSubmit = function () {
                     var _this = this;
+                    this.card.themeId = this.themeId;
                     this.cardService.createCard(this.card, this.file).subscribe(function (res) {
-                        _this.router.navigate(['/Cards']);
+                        _this.router.navigate(['/Themes']);
                         _this.file = null;
                     }, function (error) {
                         //todo change error display
@@ -49,15 +76,26 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
                         alert(error.text());
                     });
                 };
+                AddCardComponent.prototype.getImageSrc = function (url) {
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
+                    }
+                };
                 AddCardComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'add-card',
-                        template: "\n     <header>\n        <div class=\"container clearfix\">\n            <h3><span class=\"glyphicon glyphicon-plus-sign\"></span> Add new card</h3>\n        </div>\n    </header>\n    <div class=\"container main\">\n        <form  class=\"col-lg-offset-2 col-lg-8\" method=\"post\" role=\"form\">\n            <div class=\"form-padadd-org\">\n\n                <div class=\"form-group\">\n                    <label>Description</label>\n                    <input type=\"text\" placeholder=\"Enter card description\" class=\"form-control\" [(ngModel)]=\"card.description\">\n                </div>\n\n                <div class=\"form-group\">\n                    <label>Image</label>\n                    <input type=\"file\" multiple=\"false\" (change)=\"onFileChange($event)\">\n                </div>\n                <div class=\"items\">\n                    <div class=\"item\">\n                        <div class=\"id\"><p>1</p></div>\n                        <img alt=\"logo\" [src]=\"getImageSrc(card.imageURL, card.cardId)\" />\n                        <div class=\"info\">\n                            <h2 class=\"title\">{{card.description}}</h2>\n\n                        </div>\n                        <div class=\"social\">\n                            <ul>\n                                <li class=\"facebook\" style=\"width:33%;\"><a href=\"#facebook\"><span class=\"fa fa-facebook\"></span></a></li>\n                                <li class=\"twitter\" style=\"width:34%;\"><a href=\"#twitter\"><span class=\"fa fa-twitter\"></span></a></li>\n                                <li class=\"google-plus\" style=\"width:33%;\"><a href=\"#google-plus\"><span class=\"fa fa-google-plus\"></span></a></li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n                <button type=\"button\" class=\"btn btn-lg btn-info glyphicon glyphicon-plus\" (click)=\"onSubmit()\"> Create new card</button>\n            </div>\n        </form>\n\n    <form id=\"form1\" runat=\"server\">\n        <input type='file' id=\"imgInp\" />\n        <br>\n        <img id=\"blah\" src=\"http://i.imgur.com/zAyt4lX.jpg\" alt=\"your image\" height=\"100\" />\n    </form>\n    </div>\n            "
+                        templateUrl: 'app/components/cards/addCard.html'
                     }), 
-                    __metadata('design:paramtypes', [cardService_1.CardService, router_1.Router])
+                    __metadata('design:paramtypes', [cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, themeService_1.ThemeService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], AddCardComponent);
                 return AddCardComponent;
+                var _a, _b;
             })();
             exports_1("AddCardComponent", AddCardComponent);
         }

@@ -37,7 +37,10 @@ public class OrganisationAssembler extends ResourceAssemblerSupport<Organisation
     @Override
     public OrganisationDTO toResource(Organisation entity) {
         OrganisationDTO organisationDTO = mapper.map(entity, OrganisationDTO.class);
-
+        if(entity.getUsers() != null){
+            int aantalUsers = entity.getUsers().size() + entity.getOrganisers().size();
+            organisationDTO.setCountUsers(aantalUsers);
+        }
 
         return organisationDTO;
     }

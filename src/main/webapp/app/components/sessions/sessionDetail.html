@@ -12,12 +12,13 @@
 
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">KAN<span>DOES</span></a></li>
-                <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
-                <li><a [routerLink]="['/Themes']">THEMES</a></li>
+                <li><a href="#">KAN<span>DOES</span></a></li>
+                <li><a>ORGANISATIONS</a></li>
+                <li><a>THEMES</a></li>
+                <li class="active" ><a>SESSIONS </a></li>
 
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <!--<ul class="nav navbar-nav navbar-right">
                 <li>
                     <img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"
                          [src]="getImageSrc(user.profilePicture)">
@@ -32,18 +33,33 @@
                         <li><a class="glyphicon glyphicon-log-out" (click)="logout()"> Logout</a></li>
                     </ul>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 </nav>
 
 <header>
-    <div class="container page-header">
-        <h3>My Kandoes</h3>
+    <div class="container page-header" id="org-header">
+        <h3>Session Name</h3>
     </div>
 </header>
-
 <div class="container main">
-
+    <div class="row">
+        <ul class="list-inline list-unstyled">
+            <div *ngFor="#card of cards; #i = index" class="col-xs-2">
+                <li>
+                    <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
+                    <p class="hover-text">{{card.description}}</p>
+                </li>
+            </div>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="center-container">
+            <svg id="circlesvg" width="100%" height="100%">
+                <circle *ngFor="#siz of size" [attr.cx]="calculateWidthCentre()" [attr.cy]="calculateHeightCentre()"
+                        [attr.r]="60 + (60*siz)" stroke="#f7f7f7" stroke-width="8" fill="#1E8BC3"/>
+            </svg>
+        </div>
+    </div>
 </div>
-

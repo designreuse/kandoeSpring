@@ -27,13 +27,13 @@ export class LoggedInHome implements OnInit{
         this.router = router;
         this.userService = userService;
 
-        this.userService.getCurrentUser().subscribe(u => {
-            this.user = u;
-        });
+
     }
 
     ngOnInit(){
-
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
     }
 
     logout() {

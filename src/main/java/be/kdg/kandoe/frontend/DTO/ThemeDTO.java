@@ -1,13 +1,7 @@
 package be.kdg.kandoe.frontend.DTO;
 
-import be.kdg.kandoe.backend.dom.game.Card;
-import be.kdg.kandoe.backend.dom.other.Organisation;
-import be.kdg.kandoe.backend.dom.other.SubTheme;
-import be.kdg.kandoe.backend.dom.other.Tag;
-import be.kdg.kandoe.backend.dom.users.User;
 import org.springframework.hateoas.ResourceSupport;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,6 +19,8 @@ public class ThemeDTO extends ResourceSupport implements Serializable {
     private String iconURL;
 
     private OrganisationDTO organisation;
+
+    private List<CardDTO> cards;
 
     public Integer getThemeId() {
         return themeId;
@@ -64,5 +60,13 @@ public class ThemeDTO extends ResourceSupport implements Serializable {
 
     public void setOrganisation(OrganisationDTO organisation) {
         this.organisation = organisation;
+    }
+
+    public List<CardDTO> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<CardDTO> cards) {
+        this.cards = cards;
     }
 }

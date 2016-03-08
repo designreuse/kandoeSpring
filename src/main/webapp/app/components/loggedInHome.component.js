@@ -30,16 +30,16 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
         execute: function() {
             LoggedInHome = (function () {
                 function LoggedInHome(router, userService) {
-                    var _this = this;
                     this.router = null;
                     this.user = user_1.User.createEmpty();
                     this.router = router;
                     this.userService = userService;
+                }
+                LoggedInHome.prototype.ngOnInit = function () {
+                    var _this = this;
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
-                }
-                LoggedInHome.prototype.ngOnInit = function () {
                 };
                 LoggedInHome.prototype.logout = function () {
                     localStorage.removeItem("id_token");

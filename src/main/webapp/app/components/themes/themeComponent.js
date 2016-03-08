@@ -47,12 +47,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 }
                 ThemeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._themeService.getUserThemes().subscribe(function (themes) { return _this.themes = themes; });
+                    this._themeService.getUserThemes().subscribe(function (themes) {
+                        _this.themes = themes;
+                    });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
-                    });
-                    this._themeService.getThemeCards(this.themeId).subscribe(function (cards) {
-                        _this.cards = cards;
                     });
                 };
                 ThemeComponent.prototype.logout = function () {
@@ -68,6 +67,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             return url.replace(/"/g, "");
                         }
                     }
+                };
+                ThemeComponent.prototype.onFileChange = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeComponent.prototype.rotateCard = function () {
                     var card = $('.btn-simple').closest('.themeCard-container');

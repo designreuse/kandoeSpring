@@ -40,7 +40,11 @@ bootstrap(AppComponent,
     provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
     provide(APP_BASE_HREF, {useValue: "/"}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-   provide('App.BackEndPath', {useValue: "https://wildfly-teamiip2kdgbe.rhcloud.com/api/"}),
+<<<<<<< HEAD
+    provide('App.BackEndPath', {useValue: " http://localhost:9966/Kandoe/api/"}),
+=======
+   provide('App.BackEndPath', {useValue: "http://localhost:9966/Kandoe/api/"}),
+>>>>>>> origin/master
     provide('App.DevPath', {useValue: "http://localhost:9966/Kandoe/api/"})
 ]);
 //  https://wildfly-teamiip2kdgbe.rhcloud.com/api/

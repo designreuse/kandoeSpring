@@ -31,7 +31,7 @@ export class CardService {
             .map((card: Card) => Card.fromJson(card));
     }
 
-    public createCard(card: Card, file?: File): Observable<Card> {
+    public createCard(card: Card, file?: File): Observable<Response> {
         console.log(card);
         var value: Observable<Response>;
         if(file){

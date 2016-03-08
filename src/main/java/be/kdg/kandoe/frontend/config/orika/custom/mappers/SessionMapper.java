@@ -20,7 +20,6 @@ public class SessionMapper extends CustomMapper<Session, SessionDTO>{
             CardDTO carddto = new CardDTO();
             mapperFacade.map(cardSession.getCard(), carddto);
             carddto.setPosition(cardSession.getPosition());
-            carddto.setTheme(null);
             cards.add(carddto);
         }
         sessionDTO.setCards(cards);

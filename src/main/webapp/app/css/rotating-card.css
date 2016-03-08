@@ -157,7 +157,15 @@
     text-align: center;
 }
 
+.theme-cards-content{
+    height: 60%;
+}
+
 /*      Just for presentation        */
+
+.theme-cards-btn{
+    margin-left: 0 !important;
+}
 
 .btn-simple{
     opacity: .8;
