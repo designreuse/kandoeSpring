@@ -10,7 +10,7 @@ import {CardService} from "../../service/cardService";
     selector: 'cards',
     directives: [ROUTER_DIRECTIVES, RouterLink],
     template: `
- <div class="container clearfix">
+ <div class="container page-header">
             <div class="col-xs-12 col-sm-offset-3 col-sm-6">
                 <form class="form-search">
                     <div class="input-group dropdown">

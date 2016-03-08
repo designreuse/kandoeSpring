@@ -11,7 +11,7 @@ import {CardService} from "../../service/cardService";
     selector: 'add-card',
     template: `
      <header>
-        <div class="container clearfix">
+        <div class="container page-header">
             <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new card</h3>
         </div>
     </header>
