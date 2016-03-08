@@ -62,5 +62,5 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
     }
 });
 //  https://wildfly-teamiip2kdgbe.rhcloud.com/api/
-//  http://localhost:9966/Kandoe/api/
+//  http://localhost:9966/Kandoe/api/ 
 //# sourceMappingURL=boot.js.map

@@ -27,9 +27,44 @@ public class UserSession implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Session.class)
     private Session session;
 
+    public UserSession() {
+    }
+
     public UserSession(int userPosition, User user, Session session) {
         this.userPosition = userPosition;
         this.user = user;
+        this.session = session;
+    }
+
+    public Integer getUserSessionId() {
+        return userSessionId;
+    }
+
+    public void setUserSessionId(Integer userSessionId) {
+        this.userSessionId = userSessionId;
+    }
+
+    public int getUserPosition() {
+        return userPosition;
+    }
+
+    public void setUserPosition(int userPosition) {
+        this.userPosition = userPosition;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
         this.session = session;
     }
 

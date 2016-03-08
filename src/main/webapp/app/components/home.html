@@ -1,27 +1,29 @@
-
-<nav class="navbar navbar-inverse " role="navigation">
-    <div class="container">
+<nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+    <div class="container container-fluid">
         <div class="navbar-header ">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
+                    data-target="#myNavbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="./">
-                KAN<span>DOE</span></a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-right navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li>
-                    <a (click)="login()">LOGIN</a>
-                </li>
-                <li>
-                    <a (click)="register()"> SIGN UP</a>
-                </li>
+                <li><a href="#">KAN<span>DOE</span></a></li>
             </ul>
+            <div class="collapse navbar-right navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a (click)="login()">LOGIN</a>
+                    </li>
+                    <li>
+                        <a (click)="register()"> SIGN UP</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -36,9 +38,9 @@
     </div>
     <div class="row">
         <div class="row">
-            <button type="button" class="btn btn-home "  (click)="login()">LOGIN</button>
+            <button type="button" class="btn btn-home " (click)="login()">LOGIN</button>
             <p class="">Or</p>
-            <button type="button" class="btn btn-home "  (click)="register()">SIGN UP</button>
+            <button type="button" class="btn btn-home " (click)="register()">SIGN UP</button>
             <a class="  btn btn-block btn-social btn-sm btn-facebook" (click)="facebook()">
                 <span class="fa fa-facebook"></span> Sign in with Facebook
             </a>
@@ -52,11 +54,11 @@
     </div>
 </section>
 
-<section class="container login-section " >
+<section class="container login-section ">
     <div class="row">
 
-        <form  id="login-form" class="col-lg-offset-4 col-lg-4 " method="post" role="form"
-            style="display: none;">
+        <form id="login-form" class="col-lg-offset-4 col-lg-4 " method="post" role="form"
+              style="display: none;">
             <div class="form-pad">
                 <h3>Login</h3>
                 <div class="form-group">

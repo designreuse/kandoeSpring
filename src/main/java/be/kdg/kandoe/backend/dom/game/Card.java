@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.dom.game;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.CardSession;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.hateoas.Identifiable;
 
@@ -77,5 +78,13 @@ public class Card implements Serializable, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return cardId;
+    }
+
+    public Integer getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Integer cardId) {
+        this.cardId = cardId;
     }
 }

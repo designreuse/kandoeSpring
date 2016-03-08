@@ -1,6 +1,8 @@
-import {Injectable, Inject} from "angular2/core";
-import {SecurityService} from "../security/securityService";
+import 'rxjs/add/operator/map'
 import {Observable} from "rxjs/Observable";
+import {UploadService} from "./uploadService";
+import {SecurityService} from "../security/securityService";
+import {Injectable, Inject} from 'angular2/core'
 import {Session} from "../DOM/circleSession/session";
 
 @Injectable()
@@ -14,7 +16,7 @@ export class SessionService {
     }
 
     public getSessionById(sessionId: number): Observable<Session> {
-        return this.securityService.get(this.path + '/sessions/' + sessionId, true)
+        return this.securityService.get(this.path + 'sessions/' + sessionId, true)
             .map(res => res.json())
             .map((session: Session) => Session.fromJson(session));
     }

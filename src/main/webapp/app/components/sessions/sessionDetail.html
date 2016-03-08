@@ -1,0 +1,65 @@
+<nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+    <div class="container container-fluid">
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#myNavbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse  navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="#">KAN<span>DOES</span></a></li>
+                <li><a>ORGANISATIONS</a></li>
+                <li><a>THEMES</a></li>
+                <li class="active" ><a>SESSIONS </a></li>
+
+            </ul>
+            <!--<ul class="nav navbar-nav navbar-right">
+                <li>
+                    <img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"
+                         [src]="getImageSrc(user.profilePicture)">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{user.person.firstname}}<span class="caret"></span>
+                    </a>
+                    <ul class=" dropdown-menu pull-right">
+                        <li><a [routerLink]="['/Userprofile']">Edit profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a class="glyphicon glyphicon-log-out" (click)="logout()"> Logout</a></li>
+                    </ul>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container page-header" id="org-header">
+        <h3>Session Name</h3>
+    </div>
+</header>
+<div class="container main">
+    <div class="row">
+        <ul class="list-inline list-unstyled">
+            <div *ngFor="#card of cards; #i = index" class="col-xs-2">
+                <li>
+                    <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
+                    <p class="hover-text">{{card.description}}</p>
+                </li>
+            </div>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="center-container">
+            <svg id="circlesvg" width="100%" height="100%">
+                <circle *ngFor="#siz of size" [attr.cx]="calculateWidthCentre()" [attr.cy]="calculateHeightCentre()"
+                        [attr.r]="60 + (60*siz)" stroke="#f7f7f7" stroke-width="8" fill="#1E8BC3"/>
+            </svg>
+        </div>
+    </div>
+</div>

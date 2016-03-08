@@ -1,10 +1,5 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
-import be.kdg.kandoe.backend.dom.game.Card;
-import be.kdg.kandoe.backend.dom.game.CardSession;
-import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.services.api.CardService;
-import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
 import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;

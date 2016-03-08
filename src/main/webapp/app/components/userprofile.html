@@ -1,0 +1,141 @@
+<nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+    <div class="container container-fluid">
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#myNavbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse  navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="#">KAN<span>DOES</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"
+                         [src]="getImageSrc(user.profilePicture)">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{user.person.firstname}}<span class="caret"></span>
+                    </a>
+                    <ul class=" dropdown-menu pull-right">
+                        <li class="active"><a>Edit profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a class="glyphicon glyphicon-log-out" (click)="logout()"> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container page-header">
+        <h3>{{user.person.firstname}}<span *ngIf="!user.person.firstname"> Profile</span> {{user.person.lastname}}<span
+                *ngIf="!user.person.lastname"></span></h3>
+    </div>
+</header>
+<div class="container main">
+    <div class="center-container col-lg-offset-2 col-lg-8">
+        <img class="img-responsive img-thumbnail" id="profile-picture" [src]="getImageSrc(user.profilePicture)">
+    </div>
+    <form class="well well-lg col-lg-offset-2 col-lg-8" method="post" role="form">
+        <div class="form-pad">
+            <div *ngIf="!showChangePassword">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input disabled type="text" placeholder="Enter username" class="form-control"
+                           [(ngModel)]="user.username">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input disabled type="text" placeholder="Enter email address" class="form-control"
+                           [(ngModel)]="user.email">
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label>First Name</label>
+                        <input type="text" placeholder="Enter first name" class="form-control"
+                               [(ngModel)]="user.person.firstname">
+                    </div>
+                    <div class="col-sm-8 form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Enter last name" class="form-control"
+                               [(ngModel)]="user.person.lastname">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 form-group">
+                        <label>Street</label>
+                        <input type="text" placeholder="Enter street" class="form-control"
+                               [(ngModel)]="user.person.address.street">
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Number</label>
+                        <input type="text" placeholder="Enter streetnumber" class="form-control"
+                               [(ngModel)]="user.person.address.number">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="Enter city name" class="form-control"
+                               [(ngModel)]="user.person.address.city">
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Zip</label>
+                        <input type="text" placeholder="Enter zip code" class="form-control"
+                               [(ngModel)]="user.person.address.zip">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 form-group">
+                        <label>Picture</label>
+                        <input type="file" multiple="false" (change)="onFileChange($event)">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="showChangePassword">
+                <div class="form-group">
+                    <label>Old password</label>
+                    <input type="password" placeholder="Enter password" class="form-control"
+                           [(ngModel)]="user.oldPassword">
+                </div>
+
+                <div class="form-group">
+                    <label>New password</label>
+                    <input type="password" placeholder="Enter password" class="form-control"
+                           [(ngModel)]="user.password">
+                </div>
+                <div class="form-group">
+                    <label>Password confirmation</label>
+                    <input type="password" placeholder="Enter password again" class="form-control"
+                           [(ngModel)]="user.passwordConfirm">
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+    <div class="center-container col-lg-offset-2 col-lg-8">
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-login btn-primary" (click)="onSubmit()">Save changes</button>
+            </div>
+            <div class="col-sm-4">
+                <button *ngIf="!showChangePassword" type="button" class="btn btn-login btn-primary"
+                        (click)="changePassword()">Change password
+                </button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-login btn-primary" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

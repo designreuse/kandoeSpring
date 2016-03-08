@@ -1,23 +1,22 @@
 import {tokenNotExpired} from "../../security/TokenHelper";
-import {Component, OnInit, Injectable} from 'angular2/core'
-import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate, RouteParams} from "angular2/router";
+import {Component, OnInit} from 'angular2/core'
+import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Card} from "../../DOM/card";
-import {Theme} from "../../DOM/theme";
-import {User} from "../../DOM/users/user";
 import {CardService} from "../../service/cardService";
-import {UserService} from "../../service/userService";
-import {ThemeService} from "../../service/themeService";
+
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'add-card',
-    templateUrl: 'app/components/cards/addCard.html',
+    templateUrl: 'app/components/cards/addCard.html'
+
 
 
 })
 
-export class AddCardComponent implements OnInit {
+
+export class AddCardComponent implements OnInit{
     private card:Card = Card.createEmpty();
     private cardService:CardService;
     private router:Router;
