@@ -5,23 +5,21 @@ import ma.glasnost.orika.metadata.Type;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by amy on 7/03/2016.
  */
 @Component
-public class LocalDateTimeConvertor extends BidirectionalConverter<LocalDateTime, LocalDateTime>
+public class LocalDateTimeConvertor extends BidirectionalConverter<LocalDateTime, String>
 {
-
     @Override
-    public LocalDateTime convertTo(LocalDateTime source, Type<LocalDateTime> destinationType)
-    {
-        return (LocalDateTime.from(source));
+    public String convertTo(LocalDateTime source, Type<String> destinationType) {
+        return source.format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
     @Override
-    public LocalDateTime convertFrom(LocalDateTime source, Type<LocalDateTime> destinationType)
-    {
-        return (LocalDateTime.from(source));
+    public LocalDateTime convertFrom(String source, Type<LocalDateTime> destinationType) {
+        return LocalDateTime.parse(source, DateTimeFormatter.ISO_DATE_TIME);
     }
 }

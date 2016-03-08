@@ -40,7 +40,9 @@ public class SessionServiceImpl implements SessionService{
             List<UserSession> userSessions = user.getUserSessions();
             Hibernate.initialize(userSessions);
             if(userSessions!= null && userSessions.stream().anyMatch(u -> u.getSession().getId().equals(sessionId))){
-                return sessionRepository.findOne(sessionId);
+                Session s = sessionRepository.findOne(sessionId);
+                Hibernate.initialize(s.getCardSessions());
+                return s;
             }
         } catch (UserServiceException e) {
             throw new SessionServiceException(e.getMessage(), e);

@@ -1,8 +1,8 @@
 import {Card} from "../card";
 export class Session {
     private sessionId: number;
-    private sessionMode: string;
-    private sessionType: string;
+    private mode: string;
+    private type: string;
     private minCards: number;
     private maxCards: number;
     private size: number;
@@ -18,8 +18,8 @@ export class Session {
     static fromJson(json: any): Session {
         var session = new Session();
         session.sessionId = json.sessionId;
-        session.sessionMode = json.sessionMode;
-        session.sessionType = json.sessionType;
+        session.mode = json.mode;
+        session.type = json.type;
         session.minCards = json.minCards;
         session.maxCards = json.maxCards;
         //dates might not work
@@ -29,6 +29,7 @@ export class Session {
         session.userAddCards = json.userAddCards;
 
         if(json.cards) {
+            session.cards = [];
             for(var i = 0; i < json.cards.length; i++){
                 session.cards[i] = Card.fromJson(json.cards[i]);
             }

@@ -43,7 +43,6 @@ public class SessionRestController {
         if(user != null){
             try {
                 Session session = this.sessionService.findSessionById(sessionId, user.getUserId());
-                System.out.println(session.getSessionId());
                 return new ResponseEntity<>(sessionAssembler.toResource(session), HttpStatus.OK);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);

@@ -79,4 +79,12 @@ public class Card implements Serializable, Identifiable<Integer> {
     public Integer getId() {
         return cardId;
     }
+
+    public Integer getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Integer cardId) {
+        this.cardId = cardId;
+    }
 }

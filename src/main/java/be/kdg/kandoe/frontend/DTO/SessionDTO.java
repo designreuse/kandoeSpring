@@ -2,6 +2,7 @@ package be.kdg.kandoe.frontend.DTO;
 
 import be.kdg.kandoe.backend.dom.game.CircleSession.SessionMode;
 import be.kdg.kandoe.backend.dom.game.CircleSession.SessionType;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
@@ -15,8 +16,8 @@ public class SessionDTO extends ResourceSupport implements Serializable{
     private int minCards;
     private int maxCards;
     private int size;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
+    private String endTime;
     private boolean userAddCards;
 
     //todo add mapper for this?
@@ -73,20 +74,20 @@ public class SessionDTO extends ResourceSupport implements Serializable{
         this.size = size;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public boolean isUserAddCards() {

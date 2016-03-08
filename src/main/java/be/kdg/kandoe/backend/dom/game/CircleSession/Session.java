@@ -3,6 +3,7 @@ package be.kdg.kandoe.backend.dom.game.CircleSession;
 import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.game.Snapshot;
 import be.kdg.kandoe.backend.dom.other.Theme;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -37,9 +38,11 @@ public class Session implements Serializable, Identifiable<Integer> {
     private int size;
 
     @Column(name = "StartTime")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startTime;
 
     @Column(name = "EndTime")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endTime;
 
     @Column(name = "UserAddCards")
@@ -77,14 +80,6 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setMode(SessionMode mode) {
         this.mode = mode;
-    }
-
-    public int getMaxCards() {
-        return maxCards;
-    }
-
-    public void setMaxCards(int max) {
-        this.maxCards = maxCards;
     }
 
     public List<CardSession> getCardSessions() {
@@ -178,5 +173,13 @@ public class Session implements Serializable, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return sessionId;
+    }
+
+    public int getMaxCards() {
+        return maxCards;
+    }
+
+    public void setMaxCards(int maxCards) {
+        this.maxCards = maxCards;
     }
 }

@@ -13,8 +13,8 @@ System.register(["../card"], function(exports_1) {
                 Session.fromJson = function (json) {
                     var session = new Session();
                     session.sessionId = json.sessionId;
-                    session.sessionMode = json.sessionMode;
-                    session.sessionType = json.sessionType;
+                    session.mode = json.mode;
+                    session.type = json.type;
                     session.minCards = json.minCards;
                     session.maxCards = json.maxCards;
                     //dates might not work
@@ -23,6 +23,7 @@ System.register(["../card"], function(exports_1) {
                     session.size = json.size;
                     session.userAddCards = json.userAddCards;
                     if (json.cards) {
+                        session.cards = [];
                         for (var i = 0; i < json.cards.length; i++) {
                             session.cards[i] = card_1.Card.fromJson(json.cards[i]);
                         }
