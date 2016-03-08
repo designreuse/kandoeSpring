@@ -2,9 +2,7 @@ package be.kdg.kandoe.frontend.DTO;
 
 import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
-import org.springframework.security.access.annotation.Secured;
 
 import java.io.Serializable;
 import java.util.List;

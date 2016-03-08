@@ -1,5 +1,6 @@
 package be.kdg.kandoe.backend.dom.game;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.CardSession;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.hateoas.Identifiable;
 

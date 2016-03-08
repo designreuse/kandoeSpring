@@ -1,14 +1,13 @@
 package be.kdg.kandoe.backend.dom.game.CircleSession;
 
-import be.kdg.kandoe.backend.dom.game.CardSession;
 import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.game.Snapshot;
 import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.dom.users.User;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,11 +24,26 @@ public class Session implements Serializable, Identifiable<Integer> {
     @Column(name = "Modus", nullable = false)
     private SessionMode mode;
 
+    @Column(name = "Type")
+    private SessionType type;
+
+    @Column(name = "MinCards")
+    private int minCards;
+
     @Column(name = "MaxCards")
-    private int max;
+    private int maxCards;
 
     @Column(name = "Size")
     private int size;
+
+    @Column(name = "StartTime")
+    private LocalDateTime startTime;
+
+    @Column(name = "EndTime")
+    private LocalDateTime endTime;
+
+    @Column(name = "UserAddCards")
+    private boolean userAddCards;
 
     @OneToMany(targetEntity = UserSession.class)
     private List<UserSession> userSessions;
@@ -45,6 +59,9 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     @OneToMany(targetEntity = Message.class)
     private List<Message> chat;
+
+    public Session() {
+    }
 
     public int getSize() {
         return size;
@@ -62,12 +79,12 @@ public class Session implements Serializable, Identifiable<Integer> {
         this.mode = mode;
     }
 
-    public int getMax() {
-        return max;
+    public int getMaxCards() {
+        return maxCards;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setMaxCards(int max) {
+        this.maxCards = maxCards;
     }
 
     public List<CardSession> getCardSessions() {
@@ -108,6 +125,54 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setChat(List<Message> chat) {
         this.chat = chat;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public boolean isUserAddCards() {
+        return userAddCards;
+    }
+
+    public void setUserAddCards(boolean userAddCards) {
+        this.userAddCards = userAddCards;
+    }
+
+    public int getMinCards() {
+        return minCards;
+    }
+
+    public void setMinCards(int minCards) {
+        this.minCards = minCards;
+    }
+
+    public SessionType getType() {
+        return type;
+    }
+
+    public void setType(SessionType type) {
+        this.type = type;
+    }
+
+    public Integer getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Integer sessionId) {
+        this.sessionId = sessionId;
     }
 
     @Override

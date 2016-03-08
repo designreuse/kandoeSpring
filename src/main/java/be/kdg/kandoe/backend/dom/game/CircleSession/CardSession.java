@@ -1,6 +1,6 @@
-package be.kdg.kandoe.backend.dom.game;
+package be.kdg.kandoe.backend.dom.game.CircleSession;
 
-import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.game.Card;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -26,6 +26,9 @@ public class CardSession implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Session.class)
     private Session session;
 
+    public CardSession() {
+    }
+
     public CardSession(int position, Card card, Session session) {
         this.position = position;
         this.card = card;
@@ -35,5 +38,37 @@ public class CardSession implements Serializable, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return cardSessionId;
+    }
+
+    public Integer getCardSessionId() {
+        return cardSessionId;
+    }
+
+    public void setCardSessionId(Integer cardSessionId) {
+        this.cardSessionId = cardSessionId;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

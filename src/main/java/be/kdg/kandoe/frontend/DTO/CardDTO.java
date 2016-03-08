@@ -1,8 +1,6 @@
 package be.kdg.kandoe.frontend.DTO;
 
 
-import be.kdg.kandoe.backend.dom.game.CardSession;
-import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.NotNull;
@@ -17,8 +15,9 @@ public class CardDTO extends ResourceSupport implements Serializable {
 
     private String imageURL;
     private ThemeDTO theme;
-    private List<CardSessionDTO> cardSessions;
+    //private List<CardSessionDTO> cardSessions;
     private Integer themeId;
+    private int position;
 
     public CardDTO() {
     }
@@ -55,13 +54,13 @@ public class CardDTO extends ResourceSupport implements Serializable {
         this.theme = theme;
     }
 
-    public List<CardSessionDTO> getCardSessions() {
+   /* public List<CardSessionDTO> getCardSessions() {
         return this.cardSessions;
     }
 
     public void setCardSessions(List<CardSessionDTO> cardSessions) {
         this.cardSessions = cardSessions;
-    }
+    }*/
 
     public Integer getThemeId() {
         return themeId;
@@ -69,5 +68,13 @@ public class CardDTO extends ResourceSupport implements Serializable {
 
     public void setThemeId(Integer themeId) {
         this.themeId = themeId;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

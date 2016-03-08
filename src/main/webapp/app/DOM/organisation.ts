@@ -26,7 +26,7 @@ export class Organisation {
 
         if(json.links){
             for (var i = 0; i < json.links.length; i++){
-                organisation.links[i] = Link.fromJson(json.links[i])
+                organisation.links[i] = Link.fromJson(json.links[i]);
             }
         }
 

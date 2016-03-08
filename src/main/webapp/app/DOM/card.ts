@@ -8,6 +8,7 @@ export class Card{
     links:Link[];
     theme: Theme;
     themeId: number;
+    position: number;
 
     constructor(){
 
@@ -38,6 +39,8 @@ export class Card{
         if(json.themeId){
             card.themeId = json.themeId;
         }
+
+        card.position = json.position;
 
         return card;
     }

@@ -1,25 +1,22 @@
 package be.kdg.kandoe.backend.config;
 
 import be.kdg.kandoe.backend.dom.game.Card;
+import be.kdg.kandoe.backend.dom.game.CircleSession.*;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.Address;
 import be.kdg.kandoe.backend.dom.users.Person;
 import be.kdg.kandoe.backend.dom.users.User;
-import be.kdg.kandoe.backend.persistence.api.CardRepository;
-import be.kdg.kandoe.backend.persistence.api.OrganisationRepository;
-import be.kdg.kandoe.backend.persistence.api.ThemeRepository;
-import be.kdg.kandoe.backend.persistence.api.UserRepository;
-import be.kdg.kandoe.backend.services.api.CardService;
-import be.kdg.kandoe.backend.services.api.OrganisationService;
-import be.kdg.kandoe.backend.services.api.ThemeService;
-import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.persistence.api.*;
+import be.kdg.kandoe.backend.services.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +44,15 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
     private CardRepository cardRepository;
     @Autowired
     private CardService cardService;
+    @Autowired
+    private SessionRepository sessionRepository;
+    @Autowired
+    private SessionService sessionService;
+
+    @Autowired
+    private CardSessionRepository cardSessionRepository;
+    @Autowired
+    private UserSessionRepository userSessionRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -150,6 +156,44 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             user3.setFacebookAccount(false);
             user3.setProfilePicture("http://zblogged.com/wp-content/uploads/2015/11/c1.png");
             user3 = userService.saveUser(user3);
+        }
+
+        Session session = new Session();
+        CardSession cardSession = new CardSession();
+        UserSession userSession = new UserSession();
+        if(sessionRepository.findOne(1) == null && user.getId() != null ){
+            session.setStartTime(LocalDateTime.now());
+            session.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
+            session.setMaxCards(10);
+            session.setMinCards(2);
+            session.setMode(SessionMode.SYNC);
+            session.setType(SessionType.IDEA);
+            session.setTheme(theme);
+            ArrayList<CardSession> cardSessions = new ArrayList<>();
+
+            cardSession.setCard(card);
+
+            cardSessions.add(cardSession);
+            cardSession = cardSessionRepository.save(cardSession);
+            card.setCardSessions(cardSessions);
+            session.setCardSessions(cardSessions);
+
+            session.setUserAddCards(false);
+            List<UserSession> userSessions = new ArrayList<>();
+
+            userSession.setUser(user);
+            userSessions.add(userSession);
+            userSession = userSessionRepository.save(userSession);
+
+            session.setUserSessions(userSessions);
+            session.setSize(6);
+            session = sessionRepository.save(session);
+            user.setUserSessions(userSessions);
+            userRepository.save(user);
+            userSession.setSession(session);
+            userSessionRepository.save(userSession);
+            cardSession.setSession(session);
+            cardSessionRepository.save(cardSession);
         }
     }
 }

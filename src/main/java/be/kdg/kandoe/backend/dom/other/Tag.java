@@ -27,6 +27,12 @@ public class Tag implements Serializable, Identifiable<Integer>{
     @ManyToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
     private List<Card> card;
 
+    public Tag(String description, List<Theme> themes, List<Card> card) {
+        this.description = description;
+        this.themes = themes;
+        this.card = card;
+    }
+
     public String getDescription() {
         return description;
     }
