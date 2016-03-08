@@ -37,9 +37,7 @@ import {SessionDetailComponent} from "./sessions/sessionDetail.component";
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},
-
-    {path: '/addCard', as: 'AddCard', component: CardsComponent}
-    {path: '/chat', name: 'Chat', component: ChatComponent},
+    {path: '/addCard', as: 'AddCard', component: CardsComponent},
     {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent}
 ])
 export class AppComponent {
