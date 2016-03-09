@@ -13,7 +13,7 @@
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
-                <li class="active" ><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
+                <li class="active"><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
                 <li><a [routerLink]="['/Themes']">THEMES</a></li>
 
             </ul>
@@ -43,16 +43,14 @@
     </div>
 </header>
 
-<div class="container main">
-    <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
-        <ol class="breadcrumb">
-            <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
-            <li><a [routerLink]="['/Organisations']"> Organisations</a></li>
-            <li  class="active">Add organisation</li>
-        </ol>
+<div class="container ">
+
+    <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3" method="post" role="form">
+
         <div class="form-group">
             <label>Name</label>
-            <input type="text" placeholder="Enter organisation name" class="form-control" [(ngModel)]="organisation.organisationName">
+            <input type="text" placeholder="Enter organisation name" class="form-control"
+                   [(ngModel)]="organisation.organisationName">
         </div>
         <div class="form-group">
             <label>Description</label>
@@ -65,23 +63,26 @@
         <div class="items">
             <div class="item">
                 <div class="id"><p>1</p></div>
-                <img alt="logo" src="" id="imgOut"/>
+                <img alt="logo" src="../../resources/noimgplaceholder.png" id="imgOut"/>
                 <div class="info">
                     <h2 class="title">{{organisation.organisationName}}</h2>
                     <p class="desc">{{organisation.address}}</p>
                 </div>
                 <div class="social">
                     <ul>
-                        <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                        <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                        <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                        <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a>
+                        </li>
+                        <li class="twitter" style="width:34%;"><a href="#twitter"><span
+                                class="fa fa-twitter"></span></a></li>
+                        <li class="google-plus" style="width:33%;"><a href="#google-plus"><span
+                                class="fa fa-google-plus"></span></a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <button type="button" class="btn btn-wide btn-create glyphicon glyphicon-plus" (click)="onSubmit()"> Create new organisation</button>
-        </div>
+
+        <button type="button" class="btn btn-wide btn-info" (click)="onSubmit()"> Create new organisation</button>
+
 
     </form>
 </div>

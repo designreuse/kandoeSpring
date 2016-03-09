@@ -42,7 +42,7 @@ div.item{
 .organisation-list > div > li > a > .id,
 div.item > div.id{
     display: inline-block;
-    background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.1)), url(../resources/darts.jpg) repeat fixed  ;
+    background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.1)), url(../resources/photo.jpeg) repeat fixed  ;
     background-size: 100%;
     width: 100%;
 }

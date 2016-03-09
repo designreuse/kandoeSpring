@@ -39,21 +39,17 @@
 
 <header>
     <div class="container page-header">
-        <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new session</h3>
+        <h3>New session</h3>
     </div>
 </header>
 
-<div class="container main">
-    <form class="col-lg-offset-2 col-lg-8" method="post" role="form">
-        <ol class="breadcrumb">
-            <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
-            <li class="active">Add session</li>
-        </ol>
-
+<div class="container">
+    <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 " method="post" role="form">
         <div class="form-group">
             <label>Theme</label>
             <select class="form-control" (change)="selectTheme($event)">
-                <option class="form-control" *ngFor="#theme of themes" value="{{theme.themeName}}">{{theme.themeName}}
+                <option class="form-control" *ngFor="#theme of themes" value="{{theme.themeName}}">
+                    {{theme.themeName}}
                 </option>
             </select>
         </div>
@@ -63,13 +59,23 @@
             </button>
             <div id="card-open" class="collapse well">
                 <ul class="container">
-                    <li *ngFor="#card of cards" class="col-xs-2 car-item">
+                    <li *ngFor="#card of cards" class="card-item">
                         <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
-                        <p class="hover-text">{{card.description}}</p>
+                        <p>{{card.description}}</p>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <div class="form-group">
+            <label>Min cards / member</label>
+            <input type="number" placeholder="2" class="form-control"
+                   [(ngModel)]="session.minCards">
+            <label>Max cards / member</label>
+            <input type="number" placeholder="5" class="form-control"
+                   [(ngModel)]="session.maxCards">
+        </div>
+
         <div class="form-group">
             <label>Startdate</label>
             <input type="date" placeholder="Enter session startdate" class="form-control"
@@ -80,12 +86,24 @@
             <input type="date" placeholder="Enter session enddate" class="form-control"
                    [(ngModel)]="session.endTime">
         </div>
-        <div class="row">
-            <button type="button" class="btn btn-wide btn-create glyphicon glyphicon-plus" (click)="onSubmit()"> Create
-                new session
-            </button>
+
+
+        <div class="form-group">
+            <label>Size circle</label>
+            <input type="number" placeholder="4" class="form-control"
+                   [(ngModel)]="session.size">
         </div>
 
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" [(ngModel)]="session.userAddCards"> Can user add cards?
+            </label>
+        </div>
+
+
+        <button type="button" class="btn btn-wide btn-info" (click)="onSubmit()">
+            Create new session
+        </button>
 
     </form>
 </div>
