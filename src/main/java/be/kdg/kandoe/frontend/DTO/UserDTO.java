@@ -31,6 +31,8 @@ public class UserDTO extends ResourceSupport implements Serializable {
     // Person and Address properties
     private PersonDTO person;
 
+    private int position;
+
     public UserDTO() {
         this.person = new PersonDTO();
     }
@@ -106,5 +108,13 @@ public class UserDTO extends ResourceSupport implements Serializable {
 
     public void setFacebookAccount(boolean facebookAccount) {
         this.facebookAccount = facebookAccount;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

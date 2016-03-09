@@ -606,6 +606,7 @@ footer {
 */
 
 .card-ingame-container{
+    background: rgba(255,156,68, 0.4);
     padding: 0 10px;
     height: 125px;
     min-width: 80px;

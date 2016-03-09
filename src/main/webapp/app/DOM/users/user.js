@@ -42,6 +42,7 @@ System.register(["./person", "./address"], function(exports_1) {
                     if (json.facebookAccount) {
                         user.facebookAccount = json.facebookAccount;
                     }
+                    user.position = json.position;
                     return user;
                 };
                 return User;

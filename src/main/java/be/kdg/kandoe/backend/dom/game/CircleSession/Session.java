@@ -48,7 +48,7 @@ public class Session implements Serializable, Identifiable<Integer> {
     @Column(name = "UserAddCards")
     private boolean userAddCards;
 
-    @OneToMany(targetEntity = UserSession.class, cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = UserSession.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<UserSession> userSessions;
 
     @OneToMany(targetEntity = CardSession.class, cascade = CascadeType.PERSIST)

@@ -12,6 +12,7 @@ export class User {
     public person: Person;
 	public facebookAccount: boolean;
     public profilePicture: string;
+    public position: number;
 
     constructor(){
 
@@ -45,6 +46,8 @@ export class User {
         if(json.facebookAccount){
             user.facebookAccount = json.facebookAccount;
         }
+
+        user.position = json.position;
 
         return user;
     }
