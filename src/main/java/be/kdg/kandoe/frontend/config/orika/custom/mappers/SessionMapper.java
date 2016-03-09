@@ -33,6 +33,7 @@ public class SessionMapper extends CustomMapper<Session, SessionDTO>{
             userDTO.setPosition(userSession.getUserPosition());
             users.add(userDTO);
         }
+        sessionDTO.setUsers(users);
     }
 
     @Override
