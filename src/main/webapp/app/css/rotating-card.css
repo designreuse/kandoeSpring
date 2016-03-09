@@ -33,6 +33,7 @@
 }
 /* flip speed goes here */
 .themeCard {
+    position: relative;
     -webkit-transition: -webkit-transform .5s;
     -moz-transition: -moz-transform .5s;
     -o-transition: -o-transform .5s;
@@ -41,7 +42,6 @@
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
     transform-style: preserve-3d;
-	position: relative;
 }
 
 /* hide back of pane during swap */

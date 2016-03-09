@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
                 <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
-                <li class="active"><a [routerLink]="['/Themes']">THEMES</a></li>
+                <li  class="active" ><a [routerLink]="['/Themes']">THEMES</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -64,21 +64,23 @@
                 <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
                 <li class="active">Themes</li>
             </ol>
-            <ul class="searchable-container" id="sort-list">
-                <li class="col-xs-12 col-sm-4">
-                    <div class="themeCard">
-                        <div class="front new-card">
-                            <div class="col-xs-offset-1 col-xs-10 card-btn-container center-container">
-                                <button [routerLink]="['/AddTheme']" class="btn btn-primary">
-                                    Create a new Theme
-                                </button>
+            <div class="searchable-container" id="sort-list">
+                <ul>
+                    <li class="col-xs-12 col-sm-4">
+                        <div class="themeCard">
+                            <div class="front new-card">
+                                <div class="col-xs-offset-1 col-xs-10 card-btn-container center-container">
+                                    <button [routerLink]="['/AddTheme']" class="btn btn-primary">
+                                        Create a new Theme
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <div *ngFor="#theme of themes; #i = index" *ngIf="(i+1)%3 == 0" class="row">
+                    </li>
+                </ul>
+                <ul *ngFor="#theme of themes; #i = index">
                     <li class="col-xs-12 col-sm-4">
-                        <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
+                    <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
                         <div class="themeCard-container manual-flip">
                             <div class="themeCard">
                                 <div class="front">
