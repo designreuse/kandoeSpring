@@ -68,6 +68,7 @@ export class AddSession implements OnInit{
         this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(users => {
             this.users = users;
         });
+        this.cards = this.currentTheme.cards;
     }
 
     onSubmit() {

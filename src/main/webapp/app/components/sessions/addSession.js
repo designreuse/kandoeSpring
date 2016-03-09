@@ -82,6 +82,7 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(function (users) {
                         _this.users = users;
                     });
+                    this.cards = this.currentTheme.cards;
                 };
                 AddSession.prototype.onSubmit = function () {
                     this.sessionService.createSession(this.session);
