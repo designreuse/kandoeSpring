@@ -551,9 +551,12 @@ footer {
 /*
 --------------------- Theme Overview ------------------------------
 */
+.single-card{
+    height: 40%;
+}
 .card-img-theme {
-    width: 35%;
-    height: 35%;
+    width: 45%;
+    height: 100%;
     float: left;
 }
 
