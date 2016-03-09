@@ -43,9 +43,8 @@
                 *ngIf="!user.person.lastname"></span></h3>
     </div>
 </header>
-<div class="container main">
-
-    <form class="well well-lg col-lg-offset-2 col-lg-8" method="post" role="form">
+<div class="container">
+    <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 " method="post" role="form">
         <div class="form-pad">
             <div *ngIf="!showChangePassword">
                 <div class="form-group">
@@ -119,24 +118,16 @@
                            [(ngModel)]="user.passwordConfirm">
                 </div>
             </div>
-
-
+            <hr>
+            <div class="button-panel">
+                <button type="button" class="btn  btn-info" (click)="onSubmit()">Save changes</button>
+                <button *ngIf="!showChangePassword" type="button" class="btn  btn-info"
+                        (click)="changePassword()">Change password
+                </button>
+                <button type="button" class="btn btn-info" (click)="cancel()">Cancel</button>
+            </div>
         </div>
     </form>
 
-    <div class="center-container col-lg-offset-2 col-lg-8">
-        <div class="row">
-            <div class="col-sm-4">
-                <button type="button" class="btn btn-login btn-primary" (click)="onSubmit()">Save changes</button>
-            </div>
-            <div class="col-sm-4">
-                <button *ngIf="!showChangePassword" type="button" class="btn btn-login btn-primary"
-                        (click)="changePassword()">Change password
-                </button>
-            </div>
-            <div class="col-sm-4">
-                <button type="button" class="btn btn-login btn-primary" (click)="cancel()">Cancel</button>
-            </div>
-        </div>
-    </div>
+
 </div>

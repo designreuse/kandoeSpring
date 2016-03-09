@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
                 <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
-                <li  class="active" ><a [routerLink]="['/Themes']">THEMES</a></li>
+                <li class="active"><a [routerLink]="['/Themes']">THEMES</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -80,7 +80,7 @@
                 </ul>
                 <ul *ngFor="#theme of themes; #i = index">
                     <li class="col-xs-12 col-sm-4">
-                    <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
+                        <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
                         <div class="themeCard-container manual-flip">
                             <div class="themeCard">
                                 <div class="front">
@@ -160,8 +160,8 @@
                         </div>
                         <!--</a>-->
                     </li>
-                </div>
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
