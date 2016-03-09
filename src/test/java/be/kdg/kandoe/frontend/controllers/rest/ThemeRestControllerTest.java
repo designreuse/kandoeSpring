@@ -105,6 +105,6 @@ public class ThemeRestControllerTest {
         mockMvc.perform(get("/api/themes/1/cards")
                 .header("Authorization", appToken))
                 .andDo(print())
-                .andExpect(jsonPath("$.[0].description", is("KdGCard")));
+                .andExpect(jsonPath("$.[0].description", is("KdGCard longer description to check if everything works accordingly")));
     }
 }
