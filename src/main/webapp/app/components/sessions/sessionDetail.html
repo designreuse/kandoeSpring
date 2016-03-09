@@ -45,21 +45,40 @@
 </header>
 <div class="container main">
     <div class="row">
-        <ul class="list-inline list-unstyled">
-            <div *ngFor="#card of cards; #i = index" class="col-xs-2">
-                <li>
-                    <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
-                    <p class="hover-text">{{card.description}}</p>
-                </li>
-            </div>
-        </ul>
+        <div class="col-md-offset-2">
+            <ul class="list-unstyled">
+                <div *ngFor="#card of cards; #i = index" class="col-xs-1 card-ingame-container">
+                    <li class="card-ingame-list center-container" (mouseover)="showFullDescription(i)" (mouseout)="hideFullDescription(i)">
+                        <h4 class="card-ingame-nr">{{i+1}}</h4>
+                        <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-ingame-img img-thumbnail">
+                        <div class="hover-description-container">
+                            <div class="card-ingame-hover-description" [attr.id]="i">{{card.description}}</div>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </div>
     </div>
     <div class="row">
-        <div class="center-container">
-            <svg id="circlesvg" width="100%" height="100%">
-                <circle *ngFor="#siz of size" [attr.cx]="calculateWidthCentre()" [attr.cy]="calculateHeightCentre()"
-                        [attr.r]="60 + (60*siz)" stroke="#f7f7f7" stroke-width="8" fill="#1E8BC3"/>
-            </svg>
+        <div class="users-ingame col-sm-12 col-md-2">
+            <ul class="list-unstyled">
+                <li *ngFor="#user of users">
+                    <p>{{user.username}}</p>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-12 col-md-8">
+            <div class="row">
+                <div class="center-container">
+                    <svg id="circlesvg" width="100%" height="100%">
+                        <circle *ngFor="#siz of size" [attr.cx]="calculateWidthCentre()" [attr.cy]="calculateHeightCentre()"
+                                [attr.r]="60 + (60*siz)" stroke="#f7f7f7" stroke-width="8" fill="#1E8BC3"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="chat -ingame col-sm-12 col-md-2">
+
         </div>
     </div>
 </div>

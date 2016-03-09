@@ -1,11 +1,9 @@
 System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../service/userService", "../../DOM/users/user"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-        switch (arguments.length) {
-            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-        }
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -38,6 +36,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this._userService = _userService;
                     this.size = [];
                     this.cards = [];
+                    this.users = [];
                     this.user = user_1.User.createEmpty();
                     this.sessionService = sesService;
                     this.router = router;
@@ -55,6 +54,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             j = j - 1;
                         }
                         _this.cards = s.cards;
+                        _this.users = s.users;
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
@@ -68,18 +68,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     var height = document.getElementById("circlesvg").clientHeight;
                     return height / 2;
                 };
-                SessionDetailComponent.prototype.setImgBg = function (url) {
-                    var style;
-                    if (url) {
-                        if (url.indexOf("http://") > -1) {
-                            style = "background: url(" + url + ") no-repeat; max-width: 100%";
-                        }
-                        else {
-                            style = "background: url(" + url.replace(/"/g, "") + ") no-repeat; max-width: 100%";
-                        }
-                    }
-                    return style;
-                };
                 SessionDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -89,6 +77,28 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             return url.replace(/"/g, "");
                         }
                     }
+                };
+                SessionDetailComponent.prototype.showFullDescription = function (i) {
+                    var id = "#" + i;
+                    var cardid = "#desc-" + i;
+                    var arrowid = "#arrow-" + i;
+                    var description = $(document).find($(id));
+                    var carddescription = $(document).find($(cardid));
+                    var arrow = $(document).find($(arrowid));
+                    description.css("display", "inherit");
+                    arrow.css("display", "inherit");
+                    carddescription.css("display", "none");
+                };
+                SessionDetailComponent.prototype.hideFullDescription = function (i) {
+                    var id = "#" + i;
+                    var cardid = "#desc-" + i;
+                    var arrowid = "#arrow-" + i;
+                    var description = $(document).find($(id));
+                    var carddescription = $(document).find($(cardid));
+                    var arrow = $(document).find($(arrowid));
+                    description.css("display", "none");
+                    arrow.css("display", "none");
+                    carddescription.css("display", "");
                 };
                 SessionDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

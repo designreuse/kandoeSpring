@@ -195,11 +195,11 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
         this.themes = themes;
     }
 
-    public List<UserSession> getSessions() {
+    public List<UserSession> getUserSessions() {
         return userSessions;
     }
 
-    public void setSessions(List<UserSession> sessions) {
+    public void setUserSessions(List<UserSession> sessions) {
         this.userSessions = sessions;
     }
 
@@ -231,14 +231,6 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
 
     public void setFacebookAccount(boolean facebookAccount) {
         this.facebookAccount = facebookAccount;
-    }
-
-    public List<UserSession> getUserSessions() {
-        return userSessions;
-    }
-
-    public void setUserSessions(List<UserSession> userSessions) {
-        this.userSessions = userSessions;
     }
 }
 

@@ -13,7 +13,7 @@ import {Theme} from "../../DOM/theme";
 
 @Component({
     selector: 'add-card',
-    templateUrl: 'app/components/cards/AddCard.html'
+    templateUrl: 'app/components/cards/addCard.html'
 })
 
 export class AddCardComponent implements OnInit{

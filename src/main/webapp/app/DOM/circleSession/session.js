@@ -1,10 +1,13 @@
-System.register(["../card"], function(exports_1) {
-    var card_1;
+System.register(["../card", "../users/user"], function(exports_1) {
+    var card_1, user_1;
     var Session;
     return {
         setters:[
             function (card_1_1) {
                 card_1 = card_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
             }],
         execute: function() {
             Session = (function () {
@@ -27,6 +30,12 @@ System.register(["../card"], function(exports_1) {
                         session.cards = [];
                         for (var i = 0; i < json.cards.length; i++) {
                             session.cards[i] = card_1.Card.fromJson(json.cards[i]);
+                        }
+                    }
+                    if (json.users) {
+                        session.users = [];
+                        for (var i = 0; i < json.users.lenth; i++) {
+                            session.users[i] = user_1.User.fromJson(json.users[i]);
                         }
                     }
                     return session;

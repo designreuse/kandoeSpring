@@ -1,0 +1,94 @@
+System.register(['angular2/core', "../../DOM/circleSession/session", "../../service/sessionService", "angular2/router", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../service/themeService"], function(exports_1) {
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, session_1, sessionService_1, router_1, TokenHelper_1, userService_1, user_1, themeService_1;
+    var AddSession;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (session_1_1) {
+                session_1 = session_1_1;
+            },
+            function (sessionService_1_1) {
+                sessionService_1 = sessionService_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (TokenHelper_1_1) {
+                TokenHelper_1 = TokenHelper_1_1;
+            },
+            function (userService_1_1) {
+                userService_1 = userService_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
+            },
+            function (themeService_1_1) {
+                themeService_1 = themeService_1_1;
+            }],
+        execute: function() {
+            AddSession = (function () {
+                function AddSession(sessionService, _userService, router, themeService) {
+                    this._userService = _userService;
+                    this.session = session_1.Session.createEmpty();
+                    this.user = user_1.User.createEmpty();
+                    this.sessionService = sessionService;
+                    this.router = router;
+                    this._userService = _userService;
+                    this.themeService = themeService;
+                }
+                AddSession.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.themeService.getUserThemes().subscribe(function (themes) {
+                        _this.themes = themes;
+                        _this.session.themeId = themes[0].themeId;
+                        _this.cards = themes[0].cards;
+                    });
+                    this._userService.getCurrentUser().subscribe(function (u) {
+                        _this.user = u;
+                    });
+                };
+                AddSession.prototype.onSubmit = function () {
+                    this.sessionService.createSession(this.session);
+                };
+                AddSession.prototype.getImageSrc = function (url) {
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
+                    }
+                };
+                AddSession.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
+                };
+                AddSession = __decorate([
+                    router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
+                    core_1.Component({
+                        selector: 'add-session',
+                        directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
+                        templateUrl: 'app/components/sessions/addSession.html',
+                    }), 
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, themeService_1.ThemeService])
+                ], AddSession);
+                return AddSession;
+                var _a;
+            })();
+            exports_1("AddSession", AddSession);
+        }
+    }
+});
+//# sourceMappingURL=addSession.js.map

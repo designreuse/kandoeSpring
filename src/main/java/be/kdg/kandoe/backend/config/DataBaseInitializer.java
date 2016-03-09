@@ -127,7 +127,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
 
         Card card = new Card();
         if (cardRepository.findCardByDescription("KdGCard") == null && user.getId() != null) {
-            card.setDescription("KdGCard");
+            card.setDescription("KdGCard longer description to check if everything works accordingly");
             card.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             cardService.saveCard(card, theme.getId());
         }
