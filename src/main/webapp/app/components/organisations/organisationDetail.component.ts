@@ -20,19 +20,19 @@ export class OrganisationDetailComponent implements OnInit {
     private organisation:Organisation = Organisation.createEmpty();
     private organisers:User[] = [];
     private members:User[] = [];
-    private themes: Theme[] = [];
+    private themes:Theme[] = [];
     private orgId:number;
 
     private newMember:string = "";
     private newOrganiser:string = "";
 
-    private user: User = User.createEmpty();
-    private userService: UserService;
+    private user:User = User.createEmpty();
+    private userService:UserService;
 
-    constructor(orgService:OrganisationService, routeParams:RouteParams, userService:UserService, private router: Router) {
+    constructor(orgService:OrganisationService, routeParams:RouteParams, userService:UserService, private router:Router) {
         this.organisationService = orgService;
         this.orgId = +routeParams.params["id"];
-        this.userService=userService;
+        this.userService = userService;
     }
 
     ngOnInit() {
@@ -92,7 +92,7 @@ export class OrganisationDetailComponent implements OnInit {
         if (this.newOrganiser) {
             this.organisationService.addOrganiserToOrganisation(this.orgId, this.newOrganiser).subscribe(u => {
                 this.organisers.push(u);
-                if(this.members.find(user => user.username === u.username)){
+                if (this.members.find(user => user.username === u.username)) {
                     var index = this.members.indexOf(u);
                     this.members.splice(index, 1);
                 }
@@ -116,10 +116,10 @@ export class OrganisationDetailComponent implements OnInit {
         }
     }
 
-    private rotateCard(){
+    private rotateCard() {
         var card = $('.btn-simple').closest('.themeCard-container');
         console.log(card);
-        if(card.hasClass('hover')){
+        if (card.hasClass('hover')) {
             card.removeClass('hover');
         } else {
             card.addClass('hover');

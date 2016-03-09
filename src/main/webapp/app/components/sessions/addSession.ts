@@ -8,6 +8,7 @@ import {User} from "../../DOM/users/user";
 import {ThemeService} from "../../service/themeService";
 import {Theme} from "../../DOM/theme";
 import {Card} from "../../DOM/card";
+import {OrganisationService} from "../../service/organisationService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -20,17 +21,22 @@ import {Card} from "../../DOM/card";
 export class AddSession implements OnInit{
     private session:Session = Session.createEmpty();
     private sessionService:SessionService;
+    private organisationService:OrganisationService;
     private themes:Theme[];
+    private currentTheme:Theme;
     private themeService:ThemeService;
     private router:Router;
     private user: User = User.createEmpty();
     private cards:Card[];
+    private users: User[];
 
-    constructor(sessionService:SessionService, private _userService:UserService, router:Router, themeService: ThemeService) {
+    constructor(sessionService:SessionService, private _userService:UserService, router:Router, themeService: ThemeService, organisationService : OrganisationService) {
         this.sessionService = sessionService;
         this.router = router;
         this._userService=_userService;
         this.themeService=themeService;
+        this.organisationService=organisationService;
+        this.users=[];
     }
 
 
@@ -38,10 +44,29 @@ export class AddSession implements OnInit{
         this.themeService.getUserThemes().subscribe((themes:Theme[])=> {
             this.themes= themes;
             this.session.themeId = themes[0].themeId;
-            this.cards = themes[0].cards;
+            this.currentTheme = themes[0];
+            this.cards = this.currentTheme.cards;
+            this.users = this.session.users;
+            this.showUsersOrganisation()
         });
         this._userService.getCurrentUser().subscribe(u => {
             this.user = u;
+        });
+    }
+
+    selectTheme($event){
+        this.currentTheme = this.themes.find(theme => theme.themeName === $event.target.value);
+        console.log("theme: " + this.currentTheme.themeId);
+        this.showUsersOrganisation();
+    }
+
+    showUsersOrganisation(){
+        console.log("showOrganisationUsers") ;
+        this.organisationService.getOrganisationOrganisers(this.currentTheme.organisation.organisationId).subscribe(users => {
+            this.users = users;
+        });
+        this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(users => {
+            this.users = users;
         });
     }
 
@@ -58,6 +83,31 @@ export class AddSession implements OnInit{
                 return url.replace(/"/g, "");
             }
         }
+    }
+
+    showFullDescription(i){
+        var id= "#" + i;
+        var cardid = "#desc-"+i;
+        var arrowid = "#arrow-" + i;
+        var description = $(document).find($(id));
+        var carddescription = $(document).find($(cardid));
+        var arrow = $(document). find($(arrowid));
+        description.css("display", "inherit");
+        arrow.css("display", "inherit");
+        carddescription.css("display", "none");
+
+    }
+
+    hideFullDescription(i){
+        var id= "#" + i;
+        var cardid = "#desc-"+i;
+        var arrowid = "#arrow-" + i;
+        var description = $(document).find($(id));
+        var carddescription = $(document).find($(cardid));
+        var arrow = $(document). find($(arrowid));
+        description.css("display", "none");
+        arrow.css("display", "none");
+        carddescription.css("display", "");
     }
 
     logout() {

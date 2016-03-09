@@ -43,8 +43,6 @@
     </div>
 </header>
 
-
-
 <div class="container">
     <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 " method="post" role="form">
         <div class="form-group">
@@ -60,49 +58,79 @@
                 <span class="caret"></span> Show Cards
             </button>
             <div id="card-open" class="collapse well">
-                <ul class="container">
-                    <li *ngFor="#card of cards" class="card-item">
-                        <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
-                        <p>{{card.description}}</p>
+                <div *ngFor="#card of cards; #i = index" class="card-ingame-container">
+                    <li class="card-ingame-list center-container" (mouseover)="showFullDescription(i)"
+                        (mouseout)="hideFullDescription(i)">
+                        <h4 class="card-ingame-nr">{{i+1}}</h4>
+                        <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-ingame-img img-thumbnail">
+                        <div class="hover-description-container">
+                            <div class="card-ingame-hover-description" [attr.id]="i">{{card.description}}</div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-transparent" data-toggle="collapse" data-target="#user-open">
+                <span class="caret"></span> Show Users
+            </button>
+            <div id="user-open" class="collapse well">
+                <ul class="list-unstyled">
+                    <li *ngFor="#user of users" class="list-group-item">
+                        <div class="col-xs-12 col-sm-3">
+                            <img [src]="getImageSrc(user.profilePicture)" alt="profile picture"
+                                 class="img-responsive img-circle user-picture-circle"/>
+                        </div>
+                        <div class="col-xs-12 col-sm-9">
+                            <span class="username">{{ user.username }}</span><br/>
+                            <span class="name">{{user.person.firstname}} {{user.person.lastname}}</span><br/>
+                            <span class="email">{{user.email}}</span><br/>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="row">
+            <div class="form-group col-md-6">
             <label>Min cards / member</label>
             <input type="number" placeholder="2" class="form-control"
                    [(ngModel)]="session.minCards">
+            </div>
+            <div class="form-group col-md-6">
             <label>Max cards / member</label>
             <input type="number" placeholder="5" class="form-control"
                    [(ngModel)]="session.maxCards">
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="row">
+            <div class="form-group col-md-6">
             <label>Startdate</label>
             <input type="date" placeholder="Enter session startdate" class="form-control"
                    [(ngModel)]="session.startTime">
         </div>
-        <div class="form-group">
+            <div class="form-group col-md-6">
             <label>Enddate</label>
             <input type="date" placeholder="Enter session enddate" class="form-control"
                    [(ngModel)]="session.endTime">
+            </div>
         </div>
 
-
-        <div class="form-group">
+        <div class="form-group ">
             <label>Size circle</label>
             <input type="number" placeholder="4" class="form-control"
                    [(ngModel)]="session.size">
         </div>
 
-        <div class="checkbox">
+        <div class="checkbox ">
             <label>
                 <input type="checkbox" [(ngModel)]="session.userAddCards"> Can user add cards?
             </label>
         </div>
 
-
+        <hr>
         <button type="button" class="btn btn-wide btn-info" (click)="onSubmit()">
             Create new session
         </button>
