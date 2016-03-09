@@ -1,12 +1,3 @@
-#circlesvg  {
-    min-height: 850px;
-}
-
-.img-circle {
-    border-radius: 50%;
-    min-height:50px;
-    min-width: 50px;
-}
 
 /*
 --------------------- General ------------------------------
@@ -243,8 +234,13 @@ section {
 }
 
 /*
---------------------- Wood header elements ------------------------------
+--------------------- Header elements ------------------------------
 */
+.img-circle {
+    border-radius: 50%;
+    min-height:50px;
+    min-width: 50px;
+}
 
 .page-header {
     width: 100%;
@@ -535,10 +531,6 @@ footer {
     border-width: 0;
 }
 
-.list-group-item {
-    height: 100px;
-}
-
 .username {
     font-variant: small-caps;
     font-size: x-large;
@@ -606,4 +598,74 @@ footer {
     position: absolute;
     margin-bottom: 0;
     padding-bottom: 15px;
+}
+
+
+/*
+--------------------------- Circle Sessions --------------------------
+*/
+
+.card-ingame-container{
+    padding: 0 10px;
+    height: 125px;
+    min-width: 80px;
+    max-width: 100px;
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.card-ingame-container:before,.card-ingame-container:after{
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+
+.card-ingame-container:after{
+    right:10px;
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg);
+    -moz-transform:skew(8deg) rotate(3deg);
+    -ms-transform:skew(8deg) rotate(3deg);
+    -o-transform:skew(8deg) rotate(3deg);
+    transform:skew(8deg) rotate(3deg);
+}
+
+.card-ingame-nr{
+}
+
+.card-ingame-img{
+    position: relative;
+    height: inherit;
+}
+
+.card-ingame-hover-description{
+    display: none;
+    background: rgba(255,156,68, 1);
+    width: 150%;
+    border:2px solid #FFF;
+    color:#EEE;
+    background:#333 repeat-x 0 0;
+    z-index:10;
+    padding:14px 20px;
+    margin-top:10px;
+    line-height:16px;
+}
+
+.hover-description-container{
+    position:absolute;
+}
+
+#circlesvg  {
+    position: relative;
+    min-height: 850px;
 }
