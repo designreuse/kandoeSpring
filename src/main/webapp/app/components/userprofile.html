@@ -36,14 +36,15 @@
 
 <header>
     <div class="container page-header">
+        <div class="page-header-img-preview">
+            <img class="img-responsive img-circle" id="profile-picture" [src]="getImageSrc(user.profilePicture)">
+        </div>
         <h3>{{user.person.firstname}}<span *ngIf="!user.person.firstname"> Profile</span> {{user.person.lastname}}<span
                 *ngIf="!user.person.lastname"></span></h3>
     </div>
 </header>
 <div class="container main">
-    <div class="center-container col-lg-offset-2 col-lg-8">
-        <img class="img-responsive img-thumbnail" id="profile-picture" [src]="getImageSrc(user.profilePicture)">
-    </div>
+
     <form class="well well-lg col-lg-offset-2 col-lg-8" method="post" role="form">
         <div class="form-pad">
             <div *ngIf="!showChangePassword">

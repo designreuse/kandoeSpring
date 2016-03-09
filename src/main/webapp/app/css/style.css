@@ -2,6 +2,11 @@
     min-height: 850px;
 }
 
+.img-circle {
+    border-radius: 50%;
+    min-height:50px;
+    min-width: 50px;
+}
 
 /*
 --------------------- General ------------------------------
@@ -70,6 +75,15 @@ hr {
     transition: all 0.3s ease;
 }
 
+.btn-transparent {
+    border-radius: 0;
+    width: 100%;
+    border: 1px solid #e3e3e3;
+    text-align: left;
+    background: #FFFFFF;
+    height: 50px;
+}
+
 .btn-login {
     display: block;
     width: 100%
@@ -100,8 +114,7 @@ hr {
 
 .btn-create-trans {
     background: transparent;
-    border: #ff9c44;
-    border-bottom-width: 5px;
+    border: 5px #ff9c44;
     color: #ff9c44;
     height: 50px;
     margin: 5px;
@@ -134,6 +147,14 @@ hr {
 
 .btn-info:hover {
     background: #24a7ea;
+}
+
+/*-------------- FORMS: Inputs -------------------- */
+
+.form-control {
+    height: 40px;
+    border-radius: 2px;
+    font-size: 1em;
 }
 
 /*
@@ -231,7 +252,7 @@ section {
     position: relative;
     padding: 30px;
     text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/meeting_header_img.jpg) no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/darts.jpg) no-repeat fixed  0 -150px;
     background-size: 100%;
     overflow: hidden;
     color: white !important;
@@ -259,6 +280,10 @@ section {
     margin: auto;
 }
 
+.page-header-img-preview {
+     width: 100%;
+    margin: 0 auto;
+}
 
 
 /* -------- PAGE CONTENT ------------ */
@@ -279,10 +304,23 @@ section {
 --------------------- Navigation bar ------------------------------
 */
 
-#profile-picture,
-#org-logo {
-    max-width: 150px;
+#profile-picture {
+    height: 150px;
+    width: 150px;
+    margin: 10px auto;
     padding: 10px;
+    border: 3px solid #ffffff;
+    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(8, 8, 8, 0.50))
+}
+
+#org-logo {
+    height: 150px;
+    width: 150px;
+    margin: 10px auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 3px solid #ffffff;
+    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(8, 8, 8, 0.50))
 }
 
 #profile-picturenav {
@@ -495,6 +533,10 @@ footer {
 
 .panel > .org-list > div > .list-group-item:first-of-type {
     border-width: 0;
+}
+
+.list-group-item {
+    height: 100px;
 }
 
 .username {

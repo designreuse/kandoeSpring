@@ -27,8 +27,6 @@ export class AddOrganisationComponent implements OnInit{
         this.organisationService = orgService;
         this.router = router;
         this._userService=_userService;
-
-
     }
 
     ngOnInit() {

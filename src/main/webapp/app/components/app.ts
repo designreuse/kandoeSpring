@@ -15,6 +15,7 @@ import {ChatComponent} from "./chat/chatComponent";
 import {CardsComponent} from "./cards/cards.component";
 import {SessionDetailComponent} from "./sessions/sessionDetail.component";
 import {AddCardComponent} from "./cards/addCard.component";
+import {AddSession} from "./sessions/addSession";
 
 declare var jsColor: any;
 
@@ -42,7 +43,8 @@ declare var jsColor: any;
     {path: '/chat', name: 'Chat', component: ChatComponent},
 
     {path: 'themes/:id/addCard', as: 'AddCard', component: AddCardComponent},
-    {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent}
+    {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent},
+    {path: '/sessions/addSession', as: 'AddSession', component: AddSession}
 ])
 export class AppComponent {
 }

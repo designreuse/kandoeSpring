@@ -22,12 +22,17 @@ System.register(["../card"], function(exports_1) {
                     session.endTime = new Date(json.endTime);
                     session.size = json.size;
                     session.userAddCards = json.userAddCards;
+                    session.themeId = json.themeId;
                     if (json.cards) {
                         session.cards = [];
                         for (var i = 0; i < json.cards.length; i++) {
                             session.cards[i] = card_1.Card.fromJson(json.cards[i]);
                         }
                     }
+                    return session;
+                };
+                Session.createEmpty = function () {
+                    var session = new Session();
                     return session;
                 };
                 return Session;

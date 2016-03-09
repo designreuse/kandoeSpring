@@ -1,0 +1,91 @@
+<nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+    <div class="container container-fluid">
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#myNavbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse  navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">KAN<span>DOES</span></a></li>
+                <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
+                <li><a [routerLink]="['/Themes']">THEMES</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <img class="img-responsivenav img-thumbnailnav" id="profile-picturenav"
+                         [src]="getImageSrc(user.profilePicture)">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{user.person.firstname}}<span class="caret"></span>
+                    </a>
+                    <ul class=" dropdown-menu pull-right">
+                        <li><a [routerLink]="['/Userprofile']">Edit profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a class="glyphicon glyphicon-log-out" (click)="logout()"> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container page-header">
+        <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new session</h3>
+    </div>
+</header>
+
+<div class="container main">
+    <form class="col-lg-offset-2 col-lg-8" method="post" role="form">
+        <ol class="breadcrumb">
+            <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
+            <li class="active">Add session</li>
+        </ol>
+
+        <div class="form-group">
+            <label>Theme</label>
+            <select class="form-control" (change)="selectTheme($event)">
+                <option class="form-control" *ngFor="#theme of themes" value="{{theme.themeName}}">{{theme.themeName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-transparent" data-toggle="collapse" data-target="#card-open">
+                <span class="caret"></span> Show Cards
+            </button>
+            <div id="card-open" class="collapse well">
+                <ul class="container">
+                    <li *ngFor="#card of cards" class="col-xs-2 car-item">
+                        <img [src]="getImageSrc(card.imageURL)" class="img-responsive">
+                        <p class="hover-text">{{card.description}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Startdate</label>
+            <input type="date" placeholder="Enter session startdate" class="form-control"
+                   [(ngModel)]="session.startTime">
+        </div>
+        <div class="form-group">
+            <label>Enddate</label>
+            <input type="date" placeholder="Enter session enddate" class="form-control"
+                   [(ngModel)]="session.endTime">
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-wide btn-create glyphicon glyphicon-plus" (click)="onSubmit()"> Create
+                new session
+            </button>
+        </div>
+
+
+    </form>
+</div>
