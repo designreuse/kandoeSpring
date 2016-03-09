@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -114,16 +116,18 @@
                                     <div class="header">
                                         <h5 class="motto">{{theme.themeName}}</h5>
                                     </div>
-                                    <div class="themeContent">
+                                    <div class="themeContent theme-nopaddingleft">
                                         <div class="mainContent center-container">
                                             <!--kaarten worden hier afgedrukt voor description komt u logo(heel klein)
                                              daar een knop zetten om kaart toe te voegen
                                              en in thema detail aanpassen-->
                                             <div class="theme-cards-content">
                                                 <h4>Cards</h4>
-                                                <ul>
-                                                    <li *ngFor="#cards of theme.cards">{{cards.imageURL}}</li>
-                                                    <li *ngFor="#card of theme.cards">{{card.description}}</li>
+                                                <ul class="ul-show-cards"  data-spy="scroll" *ngFor="#card of theme.cards">
+                                                    <li >
+                                                        <img class="card-img-theme"  alt="no image found" [src]="getImageSrc(card.imageURL)"> </li>
+                                                    <li >{{card.description}}</li>
+                                                    <br>
                                                 </ul>
                                             </div>
                                             <div>

@@ -96,7 +96,7 @@ System.register(["../../security/TokenHelper", 'angular2/core', "angular2/router
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'add-card',
-                        templateUrl: 'app/components/cards/AddCard.html'
+                        templateUrl: 'app/components/cards/addCard.html'
                     }), 
                     __metadata('design:paramtypes', [cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, themeService_1.ThemeService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], AddCardComponent);
