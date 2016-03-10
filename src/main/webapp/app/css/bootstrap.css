@@ -4308,7 +4308,9 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
     padding-bottom: 10px;
     line-height: 20px
 }
-
+.navbar-nav > li > a:hover {
+   cursor:pointer;
+}
 @media (max-width: 767px) {
     .navbar-nav .open .dropdown-menu {
         position: static;
