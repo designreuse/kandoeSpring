@@ -642,7 +642,7 @@ footer {
     list-style-type: none;
 }
 
-.cards{
+.cards {
 
 }
 
@@ -833,3 +833,7 @@ footer {
     min-height: 850px;
 }
 
+.dropdown-menu > li > a:hover {
+    background-color: rgba(255, 156, 68, 0.6);
+    color: #1E8BC3;
+}
