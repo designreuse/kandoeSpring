@@ -29,6 +29,8 @@ export class AddSession implements OnInit{
     private user: User = User.createEmpty();
     private cards:Card[];
     private users: User[];
+    private members:Array<User>;
+    private organisers:Array<User>;
 
     constructor(sessionService:SessionService, private _userService:UserService, router:Router, themeService: ThemeService, organisationService : OrganisationService) {
         this.sessionService = sessionService;
@@ -46,7 +48,7 @@ export class AddSession implements OnInit{
             this.session.themeId = themes[0].themeId;
             this.currentTheme = themes[0];
             this.cards = this.currentTheme.cards;
-            //this.users = this.session.users;
+            this.users = this.session.users;
             this.showUsersOrganisation()
         });
         this._userService.getCurrentUser().subscribe(u => {
@@ -71,6 +73,7 @@ export class AddSession implements OnInit{
         });
         this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u => {
+                console.log(JSON.stringify(u));
                 this.users.push(u);
             })
         });
@@ -78,9 +81,12 @@ export class AddSession implements OnInit{
     }
 
     onSubmit() {
-        this.sessionService.createSession(this.session).subscribe(r => {
-            console.log(r.text());
-        })
+
+        this.sessionService.createSession(this.session).subscribe(res => {
+            this.router.navigate(['/LoggedIn']);
+        }, error => {
+            alert(error.text());
+        });
     }
 
 
