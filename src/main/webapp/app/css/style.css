@@ -1,10 +1,10 @@
-#circlesvg  {
+#circlesvg {
     min-height: 850px;
 }
 
 .img-circle {
     border-radius: 50%;
-    min-height:50px;
+    min-height: 50px;
     min-width: 50px;
 }
 
@@ -62,6 +62,17 @@ hr {
 .floatleftclass {
     float: left;
 }
+
+
+.nopaddingleft {
+    padding-left: 0;
+}
+
+.nopadding-nomargin{
+    padding:0;
+    margin:0;
+}
+
 
 /*
 --------------------- Buttons ------------------------------
@@ -193,6 +204,7 @@ form {
 input {
     box-shadow: none;
 }
+
 /*
 --------------------- Homepage section ------------------------------
 */
@@ -293,14 +305,14 @@ section {
     position: relative;
     padding: 30px;
     text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/photo.jpeg) no-repeat fixed  0 -150px;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/photo.jpeg) no-repeat fixed 0 -150px;
     background-size: 100%;
     overflow: hidden;
     color: white !important;
     margin: 40px 0 0;
 }
 
-.page-header h3{
+.page-header h3 {
     margin: auto;
     font-family: "Roboto", sans-serif;
     font-weight: 100;
@@ -326,7 +338,6 @@ section {
     margin: 0 auto;
 }
 
-
 /* -------- PAGE CONTENT ------------ */
 
 .main {
@@ -340,7 +351,6 @@ section {
     margin: auto;
     padding: 20px;
 }
-
 
 /*
 --------------------- Navigation bar ------------------------------
@@ -487,11 +497,14 @@ article {
 */
 
 footer {
-
+    width: 100%;
+    position: absolute;
+    bottom: 0;
     padding: 35px 0;
     background-color: #333;
     color: white;
     text-align: center;
+    display: block;
 }
 
 .footer-nav ul {
@@ -612,24 +625,80 @@ footer {
 /*
 --------------------- Theme Overview ------------------------------
 */
-.single-card{
+.single-card {
     height: 40%;
 }
+
 .card-img-theme {
     width: 45%;
     height: 100%;
     float: left;
 }
 
-.theme-nopaddingleft {
-    padding-left: 0;
-}
-
 .ul-show-cards {
     padding-left: 0;
     list-style-type: none;
 }
+/*
+--------------------- Add card popup ------------------------------
+*/
 
+.overlay {
+    position: absolute;
+    height:300%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 10px;
+    background: #f7f7f7;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+.popup-header{
+    margin:0 5%;
+}
+.page-headercard {
+    border-radius: 4px;
+    width: 100%;
+    height: auto;
+    position: relative;
+    text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/photo.jpeg) no-repeat fixed 0 -150px;
+    background-size: 100%;
+    overflow: hidden;
+    color: white !important;
+    margin: 20px 0 0;
+}
+
+.page-headercard h4 {
+    margin: auto;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 45px;
+    text-align: center;
+}
+
+.bottomfixes{
+    padding-bottom: 0;
+    margin-bottom: 20px;
+}
 /*
 --------------------- Theme Tags ------------------------------
 */
@@ -655,21 +724,20 @@ footer {
     border-color: #ffb951;
 }
 
-
 /*
 -------------------------- Session card ---------------------------
 */
 
 .session-card {
-    width: 175px;
-    height: 250px;
-    background: url(../resources/logs.jpg) no-repeat;
+    width: 125px;
+    height: 180px;
+    background: url(../resources/noimgplaceholder.png) no-repeat;
     position: relative;
 }
 
 #cardimg {
-    width: 175px;
-    height: 250px;
+    width: 125px;
+    height: 180px;
 
 }
 

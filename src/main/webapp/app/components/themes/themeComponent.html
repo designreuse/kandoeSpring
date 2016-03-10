@@ -116,11 +116,9 @@
                                     <div class="header">
                                         <h5 class="motto">{{theme.themeName}}</h5>
                                     </div>
-                                    <div class="themeContent theme-nopaddingleft">
+                                    <div class="themeContent nopaddingleft">
                                         <div class="mainContent center-container">
-                                            <!--kaarten worden hier afgedrukt voor description komt u logo(heel klein)
-                                             daar een knop zetten om kaart toe te voegen
-                                             en in thema detail aanpassen-->
+
                                             <div class="theme-cards-content">
                                                 <h4>Cards</h4>
                                                 <ul class="ul-show-cards" data-spy="scroll"
@@ -136,9 +134,12 @@
                                                 </ul>
                                             </div>
                                             <div>
-                                                <button [routerLink]="['/AddCard', {id:theme.themeId}]"
-                                                        class=" btn btn-primary btn-wide theme-cards-btn">Add card
-                                                </button>
+
+                                                <a href="#popup-addCard">
+                                                    <button
+                                                            class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">Add card
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -163,5 +164,57 @@
                 </ul>
             </div>
         </div>
+    </div>
+</div>
+
+<!--Popup addCard -->
+
+<div id="popup-addCard" class="overlay">
+    <div class="popup">
+
+        <header class="popup-header">
+            <div class="container page-headercard">
+                <h4>Add new card</h4>
+            </div>
+        </header>
+
+        <div class="container main nopaddingleft bottomfixes">
+            <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                <div class="row">
+                    <form method="post" role="form">
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" placeholder="Enter card description" class="form-control"
+                                   [(ngModel)]="card.description">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <input type="file" multiple="false" (change)="onFileChange($event)">
+                        </div>
+                        <div class="row">
+                            <div class="center-container ">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <div class="session-card">
+                                        <img src="" id="cardimg"/>
+                                        <p class="session-card-description">{{card.description}} <br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-offset-1 col-sm-11 nopadding-nomargin">
+                                <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit($event)">Add
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>
