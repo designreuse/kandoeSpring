@@ -4,6 +4,8 @@ import {UploadService} from "./uploadService";
 import {SecurityService} from "../security/securityService";
 import {Injectable, Inject} from 'angular2/core'
 import {Session} from "../DOM/circleSession/session";
+import {Response} from "angular2/http";
+import {Card} from "../DOM/card";
 
 @Injectable()
 export class SessionService {
@@ -29,5 +31,17 @@ export class SessionService {
 
     public createSession(session:Session):Observable<Response> {
         return this.securityService.post(this.path + 'sessions', JSON.stringify(session), true);
+    }
+
+    public addCards(cardIds: Array<number>, sessionId: number): Observable<Session>{
+        var cards: Card[] = [];
+        for(var i = 0; i < cardIds.length; i++){
+            var c = new Card();
+            c.cardId = cardIds[i];
+            cards[i] = c;
+        }
+        return this.securityService.post(this.path + 'sessions/' + sessionId + '/addCards', JSON.stringify(cards), true)
+            .map(res => res.json())
+            .map((session:Session) => Session.fromJson(session));
     }
 }

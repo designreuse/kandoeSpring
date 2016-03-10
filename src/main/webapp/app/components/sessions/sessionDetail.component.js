@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../service/userService", "../../DOM/users/user"], function(exports_1) {
+System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../DOM/circleSession/session", "../../service/userService", "../../DOM/users/user"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, TokenHelper_1, router_1, sessionService_1, userService_1, user_1;
+    var core_1, TokenHelper_1, router_1, sessionService_1, session_1, userService_1, user_1;
     var SessionDetailComponent;
     return {
         setters:[
@@ -24,6 +24,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
             function (sessionService_1_1) {
                 sessionService_1 = sessionService_1_1;
             },
+            function (session_1_1) {
+                session_1 = session_1_1;
+            },
             function (userService_1_1) {
                 userService_1 = userService_1_1;
             },
@@ -32,8 +35,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
             }],
         execute: function() {
             SessionDetailComponent = (function () {
-                function SessionDetailComponent(sesService, _userService, router, routeParams) {
-                    this._userService = _userService;
+                function SessionDetailComponent(sesService, userService, router, routeParams) {
+                    this.session = session_1.Session.createEmpty();
                     this.size = [];
                     this.cards = [];
                     this.users = [];
@@ -41,17 +44,15 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.sessionService = sesService;
                     this.router = router;
                     this.sessionId = +routeParams.params["id"];
-                    this.userService = _userService;
+                    this.userService = userService;
                 }
                 SessionDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.sessionService.getSessionById(this.sessionId).subscribe(function (s) {
-                        console.log(JSON.stringify(s));
                         _this.session = s;
                         var j = s.size;
                         for (var i = 0; i < s.size; i++) {
-                            _this.size[i] = j - 1;
-                            j = j - 1;
+                            _this.size[i] = --j;
                         }
                         _this.cards = s.cards;
                         _this.users = s.users;
@@ -99,6 +100,38 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     description.css("display", "none");
                     arrow.css("display", "none");
                     carddescription.css("display", "");
+                };
+                SessionDetailComponent.prototype.onSelectCard = function ($event) {
+                    this.countChecked();
+                };
+                SessionDetailComponent.prototype.countChecked = function () {
+                    var count = $("input:checked").length;
+                    if (count >= this.session.maxCards) {
+                        $("input:checkbox:not(:checked)").prop('disabled', true);
+                    }
+                    else {
+                        $("input:checkbox:not(:checked)").prop('disabled', false);
+                    }
+                };
+                SessionDetailComponent.prototype.onChooseCards = function () {
+                    var _this = this;
+                    var count = $("input:checked").length;
+                    if (count >= this.session.minCards) {
+                        var cardIds = Array();
+                        var i = 0;
+                        $("input:checked").each(function () {
+                            cardIds[i++] = $(this).val();
+                            console.log($(this).val());
+                        });
+                        this.sessionService.addCards(cardIds, this.sessionId).subscribe(function (ses) {
+                            _this.session = ses;
+                            _this.cards = ses.cards;
+                            _this.users = ses.users;
+                            _this.session.chosenCards = true;
+                        }, function (e) {
+                            console.log(e.text());
+                        });
+                    }
                 };
                 SessionDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

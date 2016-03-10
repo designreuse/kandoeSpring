@@ -11,6 +11,7 @@ export class Session {
     startTime: Date;
     endTime: Date;
     userAddCards: boolean;
+    chosenCards: boolean;
     themeId: number;
     cards: Card[];
     users: User[];
@@ -33,6 +34,7 @@ export class Session {
         session.endTime = new Date(json.endTime);
         session.size = json.size;
         session.userAddCards = json.userAddCards;
+        session.chosenCards = json.chosenCards;
         session.themeId = json.themeId;
 
         if(json.cards) {
@@ -58,6 +60,7 @@ export class Session {
 
     static createEmpty(): Session {
         var session = new Session();
+        session.theme = Theme.createEmpty();
         return session;
     }
 }

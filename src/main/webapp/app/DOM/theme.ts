@@ -10,7 +10,7 @@ export class Theme{
     description:string;
     organisation:Organisation;
     iconURL:string;
-    cards: Card[];
+    cards: Card[] = [];
 
     constructor() {
 

@@ -43,7 +43,7 @@
         <h3>Session Name</h3>
     </div>
 </header>
-<div class="container main">
+<div class="container main" *ngIf="session.chosenCards">
     <div class="row">
         <div class="col-md-offset-2">
             <ul class="list-unstyled">
@@ -81,4 +81,14 @@
 
         </div>
     </div>
+</div>
+<div class="container main" *ngIf="!session.chosenCards">
+    <div *ngFor="#card of session.theme.cards">
+        <div class="checkbox">
+            <label><input type="checkbox" [value]="card.cardId" (change)="onSelectCard($event)">{{card.description}}</label>
+        </div>
+    </div>
+    <button type="button" class="btn btn-wide btn-info" (click)="onChooseCards()">
+        Choose cards
+    </button>
 </div>

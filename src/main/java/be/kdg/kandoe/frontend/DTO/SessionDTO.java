@@ -20,6 +20,7 @@ public class SessionDTO extends ResourceSupport implements Serializable{
     private String endTime;
     private boolean userAddCards;
     private Integer themeId;
+    private boolean chosenCards;
 
     private List<CardDTO> cards;
     private List<UserDTO> users;
@@ -130,5 +131,13 @@ public class SessionDTO extends ResourceSupport implements Serializable{
 
     public void setTheme(ThemeDTO theme) {
         this.theme = theme;
+    }
+
+    public boolean isChosenCards() {
+        return chosenCards;
+    }
+
+    public void setChosenCards(boolean chosenCards) {
+        this.chosenCards = chosenCards;
     }
 }

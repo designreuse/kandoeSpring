@@ -1,11 +1,9 @@
 System.register(['angular2/core', "../../DOM/circleSession/session", "../../service/sessionService", "angular2/router", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../service/themeService", "../../service/organisationService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-        switch (arguments.length) {
-            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-        }
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -61,7 +59,7 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         _this.session.themeId = themes[0].themeId;
                         _this.currentTheme = themes[0];
                         _this.cards = _this.currentTheme.cards;
-                        _this.users = _this.session.users;
+                        //this.users = this.session.users;
                         _this.showUsersOrganisation();
                     });
                     this._userService.getCurrentUser().subscribe(function (u) {
@@ -75,17 +73,25 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                 };
                 AddSession.prototype.showUsersOrganisation = function () {
                     var _this = this;
+                    this.users = [];
                     console.log("showOrganisationUsers");
                     this.organisationService.getOrganisationOrganisers(this.currentTheme.organisation.organisationId).subscribe(function (users) {
-                        _this.users = users;
+                        users.forEach(function (u) {
+                            console.log(JSON.stringify(u));
+                            _this.users.push(u);
+                        });
                     });
                     this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(function (users) {
-                        _this.users = users;
+                        users.forEach(function (u) {
+                            _this.users.push(u);
+                        });
                     });
                     this.cards = this.currentTheme.cards;
                 };
                 AddSession.prototype.onSubmit = function () {
-                    this.sessionService.createSession(this.session);
+                    this.sessionService.createSession(this.session).subscribe(function (r) {
+                        console.log(r.text());
+                    });
                 };
                 AddSession.prototype.getImageSrc = function (url) {
                     if (url) {
@@ -130,10 +136,9 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/sessions/addSession.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, themeService_1.ThemeService, organisationService_1.OrganisationService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, router_1.Router, themeService_1.ThemeService, organisationService_1.OrganisationService])
                 ], AddSession);
                 return AddSession;
-                var _a;
             })();
             exports_1("AddSession", AddSession);
         }

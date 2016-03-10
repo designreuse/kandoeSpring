@@ -7,11 +7,9 @@ import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
+import be.kdg.kandoe.backend.persistence.api.CardSessionRepository;
 import be.kdg.kandoe.backend.persistence.api.SessionRepository;
-import be.kdg.kandoe.backend.services.api.OrganisationService;
-import be.kdg.kandoe.backend.services.api.SessionService;
-import be.kdg.kandoe.backend.services.api.ThemeService;
-import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.api.*;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.hibernate.Hibernate;
@@ -34,15 +32,17 @@ public class SessionServiceImpl implements SessionService{
     private final SessionRepository sessionRepository;
     private final UserService userService;
     private final ThemeService themeService;
-    private final OrganisationService organisationService;
+    private final CardSessionRepository cardSessionRepository;
+    private final CardService cardService;
 
     @Autowired
     public SessionServiceImpl(SessionRepository sessionRepository, UserService userService, ThemeService themeService,
-                              OrganisationService organisationService) {
+                              CardSessionRepository cardSessionRepository, CardService cardService) {
         this.sessionRepository = sessionRepository;
         this.userService = userService;
         this.themeService = themeService;
-        this.organisationService = organisationService;
+        this.cardSessionRepository = cardSessionRepository;
+        this.cardService = cardService;
     }
 
     @Override
@@ -110,28 +110,52 @@ public class SessionServiceImpl implements SessionService{
         }
         session.setUserSessions(userSessions);
 
-        List<CardSession> cardSessions = new ArrayList<>();
-        for (Card card : theme.getCards()) {
-            CardSession cardSession = new CardSession();
-            cardSession.setCard(card);
-            cardSession.setPosition(0);
-            cardSessions.add(cardSession);
-            List<CardSession> cs = card.getCardSessions();
-            if(cs == null)
-                cs = new ArrayList<>();
-            cs.add(cardSession);
-            card.setCardSessions(cs);
+        session = sessionRepository.save(session);
+
+        for (UserSession userSession : userSessions) {
+            userSession.setSession(session);
+        }
+
+        return session;
+    }
+
+    @Override
+    public Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException {
+        Session session = findSessionById(sessionId, userId);
+        Theme theme = session.getTheme();
+
+        List<CardSession> cardSessions = session.getCardSessions();
+        if(cardSessions == null)
+            cardSessions = new ArrayList<>();
+
+        for (Card card : cards) {
+            if(!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))){
+                if(theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))){
+                    CardSession cardSession = new CardSession();
+                    cardSession.setCard(cardService.findCardById(card.getId()));
+                    cardSession.setPosition(0);
+                    cardSessionRepository.save(cardSession);
+                    cardSessions.add(cardSession);
+
+                    List<CardSession> cs = card.getCardSessions();
+                    if(cs == null)
+                        cs = new ArrayList<>();
+                    cs.add(cardSession);
+                    card.setCardSessions(cs);
+                }
+            }
         }
         session.setCardSessions(cardSessions);
+
+
+        UserSession userSession = session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(userId))
+                .findFirst().get();
+        userSession.setChosenCards(true);
 
         session = sessionRepository.save(session);
         for (CardSession cardSession : cardSessions) {
             cardSession.setSession(session);
         }
-        for (UserSession userSession : userSessions) {
-            userSession.setSession(session);
-        }
-
         return session;
     }
 }

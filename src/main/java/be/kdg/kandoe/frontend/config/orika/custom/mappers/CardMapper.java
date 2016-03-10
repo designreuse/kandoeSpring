@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class CardMapper extends CustomMapper<Card, CardDTO>{
     @Override
     public void mapAtoB(Card card, CardDTO cardDTO, MappingContext context) {
-        cardDTO.setThemeId(card.getTheme().getThemeId());
+        if(card.getTheme() != null)
+            cardDTO.setThemeId(card.getTheme().getThemeId());
     }
 
     @Override

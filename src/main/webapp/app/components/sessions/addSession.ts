@@ -46,7 +46,7 @@ export class AddSession implements OnInit{
             this.session.themeId = themes[0].themeId;
             this.currentTheme = themes[0];
             this.cards = this.currentTheme.cards;
-            this.users = this.session.users;
+            //this.users = this.session.users;
             this.showUsersOrganisation()
         });
         this._userService.getCurrentUser().subscribe(u => {
@@ -61,18 +61,26 @@ export class AddSession implements OnInit{
     }
 
     showUsersOrganisation(){
+        this.users = [];
         console.log("showOrganisationUsers") ;
         this.organisationService.getOrganisationOrganisers(this.currentTheme.organisation.organisationId).subscribe(users => {
-            this.users = users;
+            users.forEach(u =>{
+                console.log(JSON.stringify(u));
+                this.users.push(u);
+            })
         });
         this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(users => {
-            this.users = users;
+            users.forEach(u => {
+                this.users.push(u);
+            })
         });
         this.cards = this.currentTheme.cards;
     }
 
     onSubmit() {
-        this.sessionService.createSession(this.session)
+        this.sessionService.createSession(this.session).subscribe(r => {
+            console.log(r.text());
+        })
     }
 
 

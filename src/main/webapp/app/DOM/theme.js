@@ -15,6 +15,7 @@ System.register(["./organisation", './card'], function(exports_1) {
              */
             Theme = (function () {
                 function Theme() {
+                    this.cards = [];
                 }
                 Theme.fromJson = function (json) {
                     var theme = new Theme();

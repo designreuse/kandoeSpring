@@ -8,8 +8,6 @@ import {UserService} from "../../service/userService";
 import {User} from "../../DOM/users/user";
 import {Person} from "../../DOM/users/person";
 
-
-
 @CanActivate(() => tokenNotExpired())
 
 @Component({
@@ -21,7 +19,7 @@ import {Person} from "../../DOM/users/person";
 export class SessionDetailComponent implements OnInit{
     private sessionService: SessionService;
     private router: Router;
-    private session: Session;
+    private session: Session = Session.createEmpty();
     private sessionId: number;
     private size: Array<number> = [];
     private cards: Card[] = [];
@@ -30,21 +28,19 @@ export class SessionDetailComponent implements OnInit{
     private userService: UserService;
 
 
-    constructor(sesService: SessionService, private _userService:UserService, router: Router, routeParams: RouteParams){
+    constructor(sesService: SessionService, userService:UserService, router: Router, routeParams: RouteParams){
         this.sessionService = sesService;
         this.router = router;
         this.sessionId = +routeParams.params["id"];
-        this.userService=_userService;
+        this.userService = userService;
     }
 
     ngOnInit(){
         this.sessionService.getSessionById(this.sessionId).subscribe(s => {
-            console.log(JSON.stringify(s));
             this.session = s;
-             var j = s.size;
+            var j = s.size;
             for(var i = 0; i < s.size; i++){
-                this.size[i] = j-1;
-                j = j-1;
+                this.size[i] = --j;
             }
             this.cards = s.cards;
             this.users = s.users;
@@ -101,4 +97,37 @@ export class SessionDetailComponent implements OnInit{
         carddescription.css("display", "");
     }
 
+    onSelectCard($event){
+        this.countChecked();
+    }
+
+    countChecked() {
+        var count = $("input:checked").length;
+        if(count >= this.session.maxCards){
+            $("input:checkbox:not(:checked)").prop('disabled', true);
+        } else {
+            $("input:checkbox:not(:checked)").prop('disabled', false);
+        }
+    }
+
+    onChooseCards() {
+        var count = $("input:checked").length;
+        if(count >= this.session.minCards) {
+            var cardIds = Array<number>();
+            var i = 0;
+            $("input:checked").each(function() {
+                cardIds[i++] = $(this).val();
+                console.log($(this).val());
+            });
+            this.sessionService.addCards(cardIds, this.sessionId).subscribe(ses => {
+                this.session = ses;
+                this.cards = ses.cards;
+                this.users = ses.users;
+                this.session.chosenCards = true;
+
+            }, e => {
+                console.log(e.text());
+            });
+        }
+    }
 }

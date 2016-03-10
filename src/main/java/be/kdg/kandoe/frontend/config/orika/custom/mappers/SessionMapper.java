@@ -18,13 +18,15 @@ public class SessionMapper extends CustomMapper<Session, SessionDTO>{
     @Override
     public void mapAtoB(Session session, SessionDTO sessionDTO, MappingContext context) {
         List<CardDTO> cards = new ArrayList<>();
-        for (CardSession cardSession : session.getCardSessions()) {
-            CardDTO carddto = new CardDTO();
-            mapperFacade.map(cardSession.getCard(), carddto);
-            carddto.setPosition(cardSession.getPosition());
-            cards.add(carddto);
+        if(session.getCardSessions() != null){
+            for (CardSession cardSession : session.getCardSessions()) {
+                CardDTO carddto = new CardDTO();
+                mapperFacade.map(cardSession.getCard(), carddto);
+                carddto.setPosition(cardSession.getPosition());
+                cards.add(carddto);
+            }
+            sessionDTO.setCards(cards);
         }
-        sessionDTO.setCards(cards);
 
         List<UserDTO> users = new ArrayList<>();
         for(UserSession userSession : session.getUserSessions()){

@@ -121,4 +121,15 @@ public class SessionRestControllerTest {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    public void testAddCardsToSession() throws Exception {
+
+        mockMvc.perform(post("/api/sessions/1/addCards")
+                .header("Authorization", appToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("[{\"cardId\":\"1\"},{\"cardId\":\"3\"},{\"cardId\":\"5\"}]"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
 }

@@ -28,6 +28,7 @@ System.register(["../card", "../users/user", "../theme"], function(exports_1) {
                     session.endTime = new Date(json.endTime);
                     session.size = json.size;
                     session.userAddCards = json.userAddCards;
+                    session.chosenCards = json.chosenCards;
                     session.themeId = json.themeId;
                     if (json.cards) {
                         session.cards = [];
@@ -48,6 +49,7 @@ System.register(["../card", "../users/user", "../theme"], function(exports_1) {
                 };
                 Session.createEmpty = function () {
                     var session = new Session();
+                    session.theme = theme_1.Theme.createEmpty();
                     return session;
                 };
                 return Session;
