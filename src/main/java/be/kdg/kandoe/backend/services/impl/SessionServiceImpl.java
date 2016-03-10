@@ -54,6 +54,7 @@ public class SessionServiceImpl implements SessionService{
             if(userSessions!= null && userSessions.stream().anyMatch(u -> u.getSession().getId().equals(sessionId))){
                 Session s = sessionRepository.findOne(sessionId);
                 Hibernate.initialize(s.getCardSessions());
+                Hibernate.initialize(s.getTheme());
                 return s;
             }
         } catch (UserServiceException e) {
@@ -69,6 +70,8 @@ public class SessionServiceImpl implements SessionService{
             List<UserSession> userSessions = user.getUserSessions();
             List<Session> sessions = new ArrayList<>();
             for (UserSession userSession : userSessions) {
+                Hibernate.initialize(userSession.getSession().getTheme());
+                Hibernate.initialize(userSession.getSession().getCardSessions());
                 sessions.add(userSession.getSession());
             }
             return sessions;

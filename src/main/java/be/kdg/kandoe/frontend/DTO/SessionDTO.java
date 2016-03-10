@@ -23,6 +23,7 @@ public class SessionDTO extends ResourceSupport implements Serializable{
 
     private List<CardDTO> cards;
     private List<UserDTO> users;
+    private ThemeDTO theme;
 
     public SessionDTO() {
     }
@@ -121,5 +122,13 @@ public class SessionDTO extends ResourceSupport implements Serializable{
 
     public void setThemeId(Integer themeId) {
         this.themeId = themeId;
+    }
+
+    public ThemeDTO getTheme() {
+        return theme;
+    }
+
+    public void setTheme(ThemeDTO theme) {
+        this.theme = theme;
     }
 }

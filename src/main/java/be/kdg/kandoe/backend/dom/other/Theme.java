@@ -34,7 +34,7 @@ public class Theme implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Organisation.class)
     private Organisation organisation;
 
-    @OneToMany(targetEntity = Card.class)
+    @OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
     private List<Card> cards;
 
     @ManyToMany(targetEntity = Tag.class)

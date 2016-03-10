@@ -56,12 +56,12 @@ export class SessionDetailComponent implements OnInit{
     }
 
     calculateWidthCentre(){
-        var width = document.getElementById("circlesvg").clientWidth;
+        var width = document.getElementById("circlesvg").getBoundingClientRect().width;
         return width/2;
     }
 
     calculateHeightCentre(){
-        var height= document.getElementById("circlesvg").clientHeight;
+        var height= document.getElementById("circlesvg").getBoundingClientRect().height;
         return height/2;
     }
 

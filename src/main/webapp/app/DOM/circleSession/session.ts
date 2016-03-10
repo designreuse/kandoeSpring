@@ -1,5 +1,6 @@
 import {Card} from "../card";
 import {User} from "../users/user";
+import {Theme} from "../theme";
 export class Session {
     sessionId: number;
     mode: string;
@@ -13,6 +14,8 @@ export class Session {
     themeId: number;
     cards: Card[];
     users: User[];
+    theme: Theme;
+
 
     constructor() {
 
@@ -44,6 +47,10 @@ export class Session {
             for(var i = 0; i < json.users.lenth; i++){
                 session.users[i] = User.fromJson(json.users[i]);
             }
+        }
+
+        if(json.theme){
+            session.theme = Theme.fromJson(json.theme);
         }
 
         return session;
