@@ -79,14 +79,15 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
-                ThemeComponent.prototype.rotateCard = function () {
-                    var card = $('.btn-simple').closest('.themeCard-container');
-                    console.log(card);
-                    if (card.hasClass('hover')) {
-                        card.removeClass('hover');
+                ThemeComponent.prototype.rotateCard = function ($event) {
+                    var card = $event.target;
+                    var container = $(card).closest('.themeCard-container');
+                    console.log(container);
+                    if (container.hasClass('hover')) {
+                        container.removeClass('hover');
                     }
                     else {
-                        card.addClass('hover');
+                        container.addClass('hover');
                     }
                 };
                 ThemeComponent.prototype.giveId = function (id) {

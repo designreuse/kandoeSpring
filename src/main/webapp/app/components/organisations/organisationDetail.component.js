@@ -125,14 +125,15 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         }
                     }
                 };
-                OrganisationDetailComponent.prototype.rotateCard = function () {
-                    var card = $('.btn-simple').closest('.themeCard-container');
-                    console.log(card);
-                    if (card.hasClass('hover')) {
-                        card.removeClass('hover');
+                OrganisationDetailComponent.prototype.rotateCard = function ($event) {
+                    var card = $event.target;
+                    var container = $(card).closest('.themeCard-container');
+                    console.log(container);
+                    if (container.hasClass('hover')) {
+                        container.removeClass('hover');
                     }
                     else {
-                        card.addClass('hover');
+                        container.addClass('hover');
                     }
                 };
                 OrganisationDetailComponent = __decorate([

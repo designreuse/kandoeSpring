@@ -73,6 +73,8 @@ public class SessionServiceImpl implements SessionService{
                 Hibernate.initialize(userSession.getSession().getTheme());
                 Hibernate.initialize(userSession.getSession().getCardSessions());
                 sessions.add(userSession.getSession());
+                Hibernate.initialize(userSession.getSession().getTheme());
+                Hibernate.initialize(userSession.getSession().getCardSessions());
             }
             return sessions;
         } catch(UserServiceException ex){

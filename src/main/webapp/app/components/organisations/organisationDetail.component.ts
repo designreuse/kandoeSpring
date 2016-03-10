@@ -116,13 +116,14 @@ export class OrganisationDetailComponent implements OnInit {
         }
     }
 
-    private rotateCard() {
-        var card = $('.btn-simple').closest('.themeCard-container');
-        console.log(card);
-        if (card.hasClass('hover')) {
-            card.removeClass('hover');
+    private rotateCard($event) {
+        var card = $event.target;
+        var container = $(card).closest('.themeCard-container');
+        console.log(container);
+        if(container.hasClass('hover')){
+            container.removeClass('hover');
         } else {
-            card.addClass('hover');
+            container.addClass('hover');
         }
     }
 }

@@ -21,7 +21,7 @@ public class UserSession implements Serializable, Identifiable<Integer> {
     @Column(name = "UserPosition", nullable = false)
     private int userPosition;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
     @ManyToOne(targetEntity = Session.class)

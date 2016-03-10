@@ -9,7 +9,6 @@ import {User} from "../../DOM/users/user";
 import {Card} from "../../DOM/card";
 import {CardService} from "../../service/cardService";
 
-
 @CanActivate(() => tokenNotExpired())
 
 @Component({
@@ -36,6 +35,7 @@ export class ThemeComponent implements OnInit {
         this.router=router;
         this.cardService = cardService;
     }
+
 
 
     ngOnInit() {
@@ -69,13 +69,14 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    private rotateCard() {
-        var card = $('.btn-simple').closest('.themeCard-container');
-        console.log(card);
-        if (card.hasClass('hover')) {
-            card.removeClass('hover');
+    private rotateCard($event){
+        var card = $event.target;
+        var container = $(card).closest('.themeCard-container');
+        console.log(container);
+        if(container.hasClass('hover')){
+            container.removeClass('hover');
         } else {
-            card.addClass('hover');
+            container.addClass('hover');
         }
     }
 
@@ -96,11 +97,5 @@ export class ThemeComponent implements OnInit {
              this.file = null;
             alert(error.text());
         });
-
-
-
-
-
     }
-
 }

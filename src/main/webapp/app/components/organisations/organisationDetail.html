@@ -67,8 +67,7 @@
                     <h4 class="title">Themes</h4>
                 </div>
                 <ul class="panel-body">
-                    <div *ngFor="#theme of themes; #i = index" *ngIf="(i+1) % 3 == 0" class="row">
-                        <li class="col-xs-12 col-sm-4">
+                        <li *ngFor="#theme of themes; #i = index" class="col-xs-12 col-sm-4">
                             <div class="themeCard-container manual-flip">
                                 <div class="themeCard">
                                     <div class="front">
@@ -78,18 +77,23 @@
                                             </a>
                                         </div>
                                         <div class="themeContent">
-                                            <div class="mainContent">
+                                            <div class="mainContent center-container">
                                                 <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
                                                     <h3 class="name">{{theme.themeName}}</h3>
-                                                    <p class="profession">{{theme.description}}</p>
+                                                    <p class="description">{{theme.description}}</p>
                                                 </a>
-                                                <h5><i class="glyphicon glyphicon-bookmark"></i> tag1</h5>
-                                                <h5><i class="glyphicon glyphicon-bookmark"></i> tag2</h5>
-                                                <h5><i class="glyphicon glyphicon-bookmark"></i> tag3</h5>
+                                                <ul class="tag-list list-inline">
+                                                    <li><i class="glyphicon glyphicon-bookmark"></i> tag1</li>
+                                                    <li><i class="glyphicon glyphicon-bookmark"></i> tag2</li>
+                                                    <li><i class="glyphicon glyphicon-bookmark"></i> tag3</li>
+                                                </ul>
+                                                <br>
+                                                <h3 class="name">Organisation</h3>
+                                                <p class="description">{{theme.organisation.organisationName}}</p>
                                             </div>
-                                            <div class="footer">
-                                                <button class="btn btn-simple" (click)="rotateCard()">
-                                                    <i class="fa fa-mail-forward"></i> More information
+                                            <div class="theme-card-footer">
+                                                <button class="btn btn-simple" (click)="rotateCard($event)">
+                                                    <i class="fa fa-mail-forward"></i> More Information
                                                 </button>
                                             </div>
                                         </div>
@@ -98,19 +102,34 @@
                                         <div class="header">
                                             <h5 class="motto">{{theme.themeName}}</h5>
                                         </div>
-                                        <div class="themeContent">
-                                            <div class="mainContent">
-                                                <h4>Organisation</h4>
-                                                <p>{{theme.organisation.organisationName}}</p>
-                                                <h4>Cards</h4>
-                                                <ul>
-                                                    <li>Card 1</li>
-                                                    <li>Card 2</li>
-                                                </ul>
+                                        <div class="themeContent theme-nopaddingleft">
+                                            <div class="mainContent center-container">
+                                                <!--kaarten worden hier afgedrukt voor description komt u logo(heel klein)
+                                                 daar een knop zetten om kaart toe te voegen
+                                                 en in thema detail aanpassen-->
+                                                <div class="theme-cards-content">
+                                                    <h4>Cards</h4>
+                                                    <ul class="ul-show-cards" data-spy="scroll"
+                                                        *ngFor="#card of theme.cards">
+                                                        <div class="single-card">
+                                                            <li>
+                                                                <img class="card-img-theme" alt="no image found"
+                                                                     [src]="getImageSrc(card.imageURL)">
+                                                                {{card.description}}
+                                                            </li>
+                                                        </div>
+                                                        <br>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button [routerLink]="['/AddCard', {id:theme.themeId}]"
+                                                            class=" btn btn-primary btn-wide theme-cards-btn">Add card
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="footer">
-                                            <button class="btn btn-simple" (click)="rotateCard()"
+                                        <div class="theme-card-footer">
+                                            <button class="btn btn-simple" (click)="rotateCard($event)"
                                                     data-original-title="Flip Card">
                                                 <i class="fa fa-reply"></i> Back
                                             </button>
@@ -127,7 +146,6 @@
                                 </div>
                             </div>
                         </li>
-                    </div>
                 </ul>
             </div>
         </div>

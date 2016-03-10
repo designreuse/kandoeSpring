@@ -3,8 +3,9 @@
 .btn:active{
     outline: 0 !important;
 }
-.list-inline{
-    float: right;
+
+.list-inline {
+        float: right;
 }
 
 /* entire container, keeps perspective */
@@ -15,8 +16,7 @@
       perspective: 800px;
       margin-bottom: 30px;
 }
-/* flip the pane when hovered */
-.themeCard-container:not(.manual-flip):hover .themeCard,
+/* flip the pane*/
 .themeCard-container.hover.manual-flip .themeCard{
 	-webkit-transform: rotateY( 180deg );
     -moz-transform: rotateY( 180deg );
@@ -24,7 +24,6 @@
     transform: rotateY( 180deg );
 }
 
-.themeCard-container.static:hover .themeCard, 
 .themeCard-container.static.hover .themeCard {
 	-webkit-transform: none;
 -moz-transform: none;
@@ -77,6 +76,10 @@
     box-shadow: none !important;
 }
 
+.tag-list{
+    float: none;
+}
+
 .card-btn-container {
     position: relative;
     top: 50%;
@@ -116,7 +119,7 @@
     height: 215px;
 }
 .themeCard .name {
-    font-size: 22px;
+    font-size: 18px;
     line-height: 28px;
     margin: 10px 0 0;
     text-align: center;
@@ -127,25 +130,32 @@
     font-weight: 400;
     line-height: 20px;
 }
-.themeCard .profession{
+.themeCard .description{
     color: #999999;
-    text-align: center;
     margin-bottom: 20px;
+    font-size: 13px;
 }
-.themeCard .footer {
+.themeCard .theme-card-footer {
     border-top: 1px solid #EEEEEE;
     color: #999999;
-    /*margin: 30px 0 0;*/
+    margin: 30px 0 0;
     padding: 20px 0;
     text-align: center;
 }
-.themeCard .footer .social-links{
+
+.back .theme-card-footer{
+    margin: 0;
+}
+
+.themeCard .theme-card-footer .social-links{
+    float: right;
+    padding-right: 5px;
     font-size: 18px;
 }
-.themeCard .footer .social-links a{
+.themeCard .theme-card-footer .social-links a{
     margin: 0 7px;
 }
-.themeCard .footer .btn-simple{
+.themeCard .theme-card-footer .btn-simple{
     margin-top: -6px;
 }
 .themeCard .header {
@@ -164,6 +174,7 @@
 .theme-cards-content{
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /*      Just for presentation        */
@@ -195,7 +206,19 @@
     left: 0;
 }
 
-/*       Fix bug for IE      */
+/*
+----------------- media width small -------------------
+
+
+@media (max-width: 992px) {
+    .theme-card-list li {
+        padding-bottom: 430px;
+    }
+}*/
+
+/*
+------------------ Fix bug for IE -------------------
+*/
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .front, .back{

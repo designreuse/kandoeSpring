@@ -1,6 +1,7 @@
 import {Card} from "../card";
 import {User} from "../users/user";
 import {Theme} from "../theme";
+
 export class Session {
     sessionId: number;
     mode: string;
