@@ -44,6 +44,8 @@ export class SessionDetailComponent implements OnInit{
             }
             this.cards = s.cards;
             this.users = s.users;
+        }, e => {
+            this.router.navigate(["/LoggedInHome"])
         });
 
         this.userService.getCurrentUser().subscribe(u => {

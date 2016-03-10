@@ -56,6 +56,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         }
                         _this.cards = s.cards;
                         _this.users = s.users;
+                    }, function (e) {
+                        _this.router.navigate(["/LoggedInHome"]);
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;

@@ -68,6 +68,7 @@ export class AddCardComponent implements OnInit{
             this.file = null;
             alert(error.text());
         });
+
     }
 
     private getImageSrc(url:string):string {
