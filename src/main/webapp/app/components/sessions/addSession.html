@@ -44,15 +44,41 @@
 </header>
 
 <div class="container">
-    <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 " method="post" role="form">
+    <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 " method="post" role="form"
+          #sessionForm="ngForm">
+
+
+        <div class="form-group">
+            <label>Session Type</label>
+            <select class="form-control" [(ngModel)]="session.type" required ngControl="type" #type="ngForm">
+                <option *ngFor="#t of types" [value]="t">{{t}}</option>
+            </select>
+            <div [hidden]="type.valid" class="alert alert-danger">
+                Type is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Session Mode</label>
+            <select class="form-control" [(ngModel)]="session.mode" required ngControl="mode" #mode="ngForm">
+                <option *ngFor="#m of modes" [value]="m">{{m}}</option>
+            </select>
+            <div [hidden]="mode.valid" class="alert alert-danger">
+                Mode is required
+            </div>
+        </div>
+
         <div class="form-group">
             <label>Theme</label>
-            <select class="form-control" (change)="selectTheme($event)">
-                <option class="form-control" *ngFor="#theme of themes" value="{{theme.themeName}}">
-                    {{theme.themeName}}
-                </option>
+            <select class="form-control" (change)="selectTheme($event)" required ngControl="theme" #theme="ngForm">
+                <option  *ngFor="#t of themes" [value]="t.themeName">{{t.themeName}}</option>
             </select>
+            <div [hidden]="theme.valid" class="alert alert-danger">
+                Theme is required
+            </div>
         </div>
+
+        <!--SHOW CARDS-->
         <div class="form-group">
             <button class="btn btn-transparent" data-toggle="collapse" data-target="#card-open">
                 <span class="caret"></span> Show Cards
@@ -71,9 +97,10 @@
             </div>
         </div>
 
+        <!--SHOW PARTICIPANTS-->
         <div class="form-group">
             <button class="btn btn-transparent" data-toggle="collapse" data-target="#user-open">
-                <span class="caret"></span> Show Users
+                <span class="caret"></span> Show Participants
             </button>
             <div id="user-open" class="collapse well">
                 <ul class="list-unstyled">
@@ -92,29 +119,32 @@
             </div>
         </div>
 
+
         <div class="row">
             <div class="form-group col-md-6">
-            <label>Min cards / member</label>
-            <input type="number" placeholder="2" class="form-control"
-                   [(ngModel)]="session.minCards">
+                <label for="minCards">Min. cards / member</label>
+                <input name="minCards" id="minCards" type="number"  min="1" max="6" value="1" class="form-control"
+                   [(ngModel)]="session.minCards" required>
             </div>
             <div class="form-group col-md-6">
-            <label>Max cards / member</label>
-            <input type="number" placeholder="5" class="form-control"
-                   [(ngModel)]="session.maxCards">
+                <label for="maxCards">Max. cards / member</label>
+                <input name="maxCards" id="maxCards" type="number" min="1" max="6" value="1" class="form-control"
+                   [(ngModel)]="session.maxCards" required>
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6">
-            <label>Startdate</label>
-            <input type="date" placeholder="Enter session startdate" class="form-control"
-                   [(ngModel)]="session.startTime">
+                <label>Start Time</label>
+
+                <input type="datetime-local" placeholder="Enter session startdate" class="form-control"
+                       [(ngModel)]="startTime" required>
         </div>
             <div class="form-group col-md-6">
-            <label>Enddate</label>
-            <input type="date" placeholder="Enter session enddate" class="form-control"
-                   [(ngModel)]="session.endTime">
+                <label>End Time</label>
+
+                <input type="datetime-local" placeholder="Enter session enddate" class="form-control"
+                       [(ngModel)]="endTime" required>
             </div>
         </div>
 
@@ -124,6 +154,7 @@
                    [(ngModel)]="session.size">
         </div>
 
+
         <div class="checkbox ">
             <label>
                 <input type="checkbox" [(ngModel)]="session.userAddCards"> Can user add cards?
@@ -131,7 +162,7 @@
         </div>
 
         <hr>
-        <button type="button" class="btn btn-wide btn-info" (click)="onSubmit()">
+        <button type="button" class="btn btn-wide btn-info" [disabled]="!sessionForm.form.valid" (click)="onSubmit()">
             Create new session
         </button>
 

@@ -47,6 +47,8 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this._userService = _userService;
                     this.session = session_1.Session.createEmpty();
                     this.user = user_1.User.createEmpty();
+                    this.types = ['PROBLEM', 'IDEA'];
+                    this.modes = ['ASYNC', 'SYNC'];
                     this.sessionService = sessionService;
                     this.router = router;
                     this._userService = _userService;
@@ -62,15 +64,19 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         _this.currentTheme = themes[0];
                         _this.cards = _this.currentTheme.cards;
                         _this.users = _this.session.users;
+                        _this.session.theme = _this.currentTheme;
                         _this.showUsersOrganisation();
                     });
                     this._userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
+                    this.types = ['PROBLEM', 'IDEA'];
+                    this.modes = ['ASYNC', 'SYNC'];
                 };
                 AddSession.prototype.selectTheme = function ($event) {
                     this.currentTheme = this.themes.find(function (theme) { return theme.themeName === $event.target.value; });
                     console.log("theme: " + this.currentTheme.themeId);
+                    this.session.theme = this.currentTheme;
                     this.showUsersOrganisation();
                 };
                 AddSession.prototype.showUsersOrganisation = function () {
@@ -91,12 +97,22 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     });
                     this.cards = this.currentTheme.cards;
                 };
+                AddSession.prototype.selectMode = function ($event) {
+                    this.session.type = $event.target.value;
+                };
+                AddSession.prototype.selectType = function ($event) {
+                    this.session.mode = $event.target.value;
+                };
                 AddSession.prototype.onSubmit = function () {
                     var _this = this;
+                    this.session.startTime = this.startTime.toString(); //stringify date
+                    this.session.endTime = this.endTime.toString(); //stringify date
+                    console.log(JSON.stringify(this.session));
                     this.sessionService.createSession(this.session).subscribe(function (res) {
+                        alert(res);
                         _this.router.navigate(['/LoggedIn']);
                     }, function (error) {
-                        alert(error.text());
+                        alert("Something went wrong");
                     });
                 };
                 AddSession.prototype.getImageSrc = function (url) {

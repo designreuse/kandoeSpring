@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', "../security/securityService", 'angular2/core', "../DOM/circleSession/session", "../DOM/card"], function(exports_1) {
+System.register(['rxjs/add/operator/map', "../security/securityService", 'angular2/core', "../DOM/circleSession/session"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -13,7 +13,7 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var securityService_1, core_1, session_1, card_1;
+    var securityService_1, core_1, session_1;
     var SessionService;
     return {
         setters:[
@@ -26,9 +26,6 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
             },
             function (session_1_1) {
                 session_1 = session_1_1;
-            },
-            function (card_1_1) {
-                card_1 = card_1_1;
             }],
         execute: function() {
             SessionService = (function () {
@@ -48,17 +45,6 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
                 };
                 SessionService.prototype.createSession = function (session) {
                     return this.securityService.post(this.path + 'sessions', JSON.stringify(session), true);
-                };
-                SessionService.prototype.addCards = function (cardIds, sessionId) {
-                    var cards = [];
-                    for (var i = 0; i < cardIds.length; i++) {
-                        var c = new card_1.Card();
-                        c.cardId = cardIds[i];
-                        cards[i] = c;
-                    }
-                    return this.securityService.post(this.path + 'sessions/' + sessionId + '/addCards', JSON.stringify(cards), true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (session) { return session_1.Session.fromJson(session); });
                 };
                 SessionService = __decorate([
                     core_1.Injectable(),

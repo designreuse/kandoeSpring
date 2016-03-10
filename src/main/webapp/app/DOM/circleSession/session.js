@@ -24,8 +24,8 @@ System.register(["../card", "../users/user", "../theme"], function(exports_1) {
                     session.minCards = json.minCards;
                     session.maxCards = json.maxCards;
                     //dates might not work
-                    session.startTime = new Date(json.startTime);
-                    session.endTime = new Date(json.endTime);
+                    session.startTime = json.startTime;
+                    session.endTime = json.endTime;
                     session.size = json.size;
                     session.userAddCards = json.userAddCards;
                     session.chosenCards = json.chosenCards;

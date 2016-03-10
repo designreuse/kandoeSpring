@@ -21,6 +21,11 @@ import {OrganisationService} from "../../service/organisationService";
 export class AddSession implements OnInit{
     private session:Session = Session.createEmpty();
     private sessionService:SessionService;
+
+    //DATE FIX?
+    private startTime:Date;
+    private endTime:Date;
+
     private organisationService:OrganisationService;
     private themes:Theme[];
     private currentTheme:Theme;
@@ -29,8 +34,9 @@ export class AddSession implements OnInit{
     private user: User = User.createEmpty();
     private cards:Card[];
     private users: User[];
-    private members:Array<User>;
-    private organisers:Array<User>;
+    private types:string[] = ['PROBLEM', 'IDEA'];
+    private modes:string[] = ['ASYNC', 'SYNC'];
+
 
     constructor(sessionService:SessionService, private _userService:UserService, router:Router, themeService: ThemeService, organisationService : OrganisationService) {
         this.sessionService = sessionService;
@@ -39,6 +45,7 @@ export class AddSession implements OnInit{
         this.themeService=themeService;
         this.organisationService=organisationService;
         this.users=[];
+
     }
 
 
@@ -49,16 +56,20 @@ export class AddSession implements OnInit{
             this.currentTheme = themes[0];
             this.cards = this.currentTheme.cards;
             this.users = this.session.users;
+            this.session.theme = this.currentTheme;
             this.showUsersOrganisation()
         });
         this._userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+        this.types = ['PROBLEM', 'IDEA'];
+        this.modes = ['ASYNC', 'SYNC'];
     }
 
     selectTheme($event){
         this.currentTheme = this.themes.find(theme => theme.themeName === $event.target.value);
         console.log("theme: " + this.currentTheme.themeId);
+        this.session.theme = this.currentTheme;
         this.showUsersOrganisation();
     }
 
@@ -80,12 +91,26 @@ export class AddSession implements OnInit{
         this.cards = this.currentTheme.cards;
     }
 
+    selectMode($event){
+        this.session.type = $event.target.value;
+    }
+
+    selectType($event){
+        this.session.mode = $event.target.value;
+    }
+
     onSubmit() {
 
+
+        this.session.startTime = this.startTime.toString(); //stringify date
+        this.session.endTime = this.endTime.toString(); //stringify date
+
+        console.log(JSON.stringify(this.session)) ;
         this.sessionService.createSession(this.session).subscribe(res => {
+            alert(res);
             this.router.navigate(['/LoggedIn']);
         }, error => {
-            alert(error.text());
+            alert("Something went wrong");
         });
     }
 
