@@ -2,11 +2,19 @@
 --------------------- General ------------------------------
 */
 
+/*.well{
+    width: 100%;
+}
+
+.collapse.in {
+    display: inline-block;
+    visibility: visible;
+}  */
+
 body {
     padding-top: 0;
     font-family: "Open Sans", sans-serif;
-    background: repeating-linear-gradient(45deg, #F1F1F1, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 10px);
-);
+    background: repeating-linear-gradient(45deg, #F9F9F9, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 5px);
 }
 
 h2 {
@@ -37,16 +45,29 @@ a:hover {
 }
 
 hr {
-    max-width: 200px;
-    margin: 20px auto;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    height: 2px;
+    border: 0;
+    margin: 15px auto;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .center-container {
     text-align: center;
     margin-bottom: 30px;
+}
+
+.floatleftclass {
+    float: left;
+}
+
+.nopaddingleft {
+    padding-left: 0;
+}
+
+.nopadding-nomargin {
+    padding: 0;
+    margin: 0;
 }
 
 /*
@@ -59,6 +80,15 @@ hr {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
+}
+
+.btn-transparent {
+    border-radius: 0;
+    width: 100%;
+    border: 1px solid #e3e3e3;
+    text-align: left;
+    background: #FFFFFF;
+    height: 50px;
 }
 
 .btn-login {
@@ -89,6 +119,20 @@ hr {
     width: 96%;
 }
 
+.btn-create-trans {
+    background: transparent;
+    border: 5px #ff9c44;
+    color: #ff9c44;
+    height: 50px;
+    margin: 5px;
+    padding: 20px;
+    width: auto;
+}
+
+.btn-info:hover {
+    background: #24a7ea;
+}
+
 .btn-home {
     background: #ff9c44;
     border: #ff9c44;
@@ -96,15 +140,15 @@ hr {
     height: 50px;
     margin-bottom: 20px;
     margin-top: 30px;
-
-     -webkit-transition: all 600ms ease-in-out ;
-    -moz-transition: all 600ms ease-in-out ;
-    -ms-transition:all 600ms ease-in-out ;
-    -o-transition: all 600ms ease-in-out ;
-    transition: all 600ms ease-in-out ;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -ms-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+    transition: all 600ms ease-in-out;
 }
 
 .btn-info {
+    padding: 5px;
     background: #1E8BC3;
     border: #1E8BC3;
 }
@@ -113,8 +157,49 @@ hr {
     background: #ffb951;
 }
 
-.btn-info:hover {
-    background: #24a7ea;
+
+/*-------------- FORMS: Inputs -------------------- */
+
+form {
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}
+
+.form-card {
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #FFF;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+    box-shadow: none;
+}
+
+.form-control::-ms-expand {
+    background-color: transparent;
+    border: 0
+}
+
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0
+}
+
+input {
+    box-shadow: none;
 }
 
 /*
@@ -130,10 +215,10 @@ section {
     text-align: center;
     display: block;
     transition: all 3s ease-in-out;
-    -webkit-transition:all 3s ease-in-out;;
-    -moz-transition :all 3s ease-in-out;;
+    -webkit-transition: all 3s ease-in-out;;
+    -moz-transition: all 3s ease-in-out;;
     -ms-transition: all 3s ease-in-out;;
-    -o-transition:  all 3s ease-in-out;;
+    -o-transition: all 3s ease-in-out;;
 
 }
 
@@ -149,8 +234,9 @@ section {
 }
 
 .jumbotron {
-    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(8, 8, 8, 0.25)), url(../resources/header_img2.jpeg) no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(8, 8, 8, 0.25)), url(../resources/header_img2.jpeg) no-repeat;
     background-size: 100%;
+    overflow: hidden;
     text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
     color: white;
     width: 100%;
@@ -202,87 +288,111 @@ section {
 }
 
 /*
---------------------- Wood header elements ------------------------------
+--------------------- Header elements ------------------------------
 */
+.img-circle {
+    border-radius: 50%;
+    min-height: 50px;
+    min-width: 50px;
+}
 
-.clearfix {
+.page-header {
     width: 100%;
-    max-height: 175px;
+    height: auto;
+    position: relative;
+    padding: 30px;
+    text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
+    background: linear-gradient(rgba(29, 46, 66, 0.6), rgba(29, 46, 66, 0.4)), url(../resources/photo.jpeg) no-repeat fixed  0 -60px;
+    background-size: 100%;
     overflow: hidden;
-    position: fixed;
-    padding-top: 50px;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../resources/logs.jpg) repeat fixed;
     color: white !important;
-    -webkit-transition: height 0.3s;
-    -moz-transition: height 0.3s;
-    -ms-transition: height 0.3s;
-    -o-transition: height 0.3s;
-    transition: height 0.3s;
+    margin: 40px 0 0;
 }
 
-header div {
-    display: inline-block;
-    font-family: "Oswald", sans-serif;
-    font-size: 60px;
+.page-header h3{
+    margin: auto;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 50px;
     text-align: center;
-    color: white;
-    font-weight: 400;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
 }
+
+.page-header p {
+    display: inline-block;
+    padding: 10px;
+    margin: 20px;
+}
+
+.page-header-search {
+    width: 50%;
+    margin: auto;
+}
+
+.page-header-img-preview {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* -------- PAGE CONTENT ------------ */
 
 .main {
-    padding-top: 175px;
+    width: 90%;
+    padding: 30px;
     background-color: #f7f7f7;
-    min-height: 100%;
-    height: inherit;
+    height: 100%;
+}
+
+.page-content {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
 }
 
 /*
 --------------------- Navigation bar ------------------------------
 */
 
-#profile-picture,
-#org-logo {
-    max-width: 150px;
+#profile-picture {
+    height: 150px;
+    width: 150px;
+    margin: 10px auto;
     padding: 10px;
+    border: 3px solid #ffffff;
+    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(8, 8, 8, 0.50))
 }
 
-#org-header {
-    padding-top: 20px;
-    margin-top: 30px;
-}
-
-#org-list {
-    padding-top: 200px;
+#org-logo {
+    height: 150px;
+    width: 150px;
+    margin: 10px auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 3px solid #ffffff;
+    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(8, 8, 8, 0.50))
 }
 
 #profile-picturenav {
-    max-width: 50px;
+    max-width: 45px;
 }
 
-.img-responsivenav {
-    display: block;
-    max-width: 100%;
-    height: auto
+.user-picture-circle {
+    height: 75px;
+    width: 75px;
+    margin: 2px auto;
+    padding: 2px;
+    border: 3px solid #ffffff;
+    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(8, 8, 8, 0.50))
 }
 
 .img-thumbnailnav {
-    max-width: 100%;
-    height: 50px;
-    line-height: 1.42857143;
-    background-color: #fff;
+    margin: 5px;
+    padding: 0;
+    width: 40px;
+    height: 40px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out
 }
 
 .login-section {
@@ -341,32 +451,43 @@ article {
 }
 
 .navbar {
-    background: #1E8BC3;
-    border-color: #1E8BC3;
+    background: #1E8BC3;  /*0f6bac?*/
+    border-width: 0;
 }
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
     color: #ffffff;
-    font-size: 18px;
+    font-size: 15px;
+    font-weight: 300;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav > li > a:hover {
-    color: #ff9c44;
+    color: #ff9c44;  /*f49f11*/
 }
 
 .navbar-brand {
     text-transform: uppercase;
     font-weight: 300;
-    font-size: 28px;
+    font-size: 30px;
     letter-spacing: -1px;
-
 }
 
-.navbar-brand span {
+.navbar-nav span {
     font-weight: 900;
+}
+
+.container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+    margin: auto;
+    width: 80%;
+}
+
+.navbar-nav {
+    float: left;
+    margin: 0;
+    padding: 0;
 }
 
 /*
@@ -374,10 +495,16 @@ article {
 */
 
 footer {
+    display: block;
+}
+
+.footer {
+    position: absolute;
     padding: 35px 0;
     background-color: #333;
     color: white;
     text-align: center;
+    width: 100%;
 }
 
 .footer-nav ul {
@@ -473,6 +600,10 @@ footer {
     border-width: 0;
 }
 
+.list-group-item {
+    height: 100px;
+}
+
 .username {
     font-variant: small-caps;
     font-size: x-large;
@@ -489,6 +620,105 @@ footer {
 .navwidth > li > a {
     min-width: 150px;
     text-align: center;
+}
+
+/*
+--------------------- Theme Overview ------------------------------
+*/
+.single-card {
+    min-height: 40%;
+}
+
+.card-img-theme {
+    max-width: 40%;
+    height: 75px;
+    float: left;
+    margin-right: 10px;
+}
+
+.fontsize-card {
+    font-size: 13px;
+    padding-left: 2px;
+    text-align: left;
+}
+
+.ul-show-cards {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.cards {
+
+}
+
+/*
+--------------------- Add card popup ------------------------------
+*/
+
+.popup-main{
+    width: 90%;
+    padding: 30px;
+    background-color: #f7f7f7;
+}
+
+.overlay {
+    position: absolute;
+    height: 300%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 10px;
+    background: #f7f7f7;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
+.popup-header {
+    margin: 0 5%;
+}
+
+.page-headercard {
+    border-radius: 4px;
+    width: 100%;
+    height: auto;
+    position: relative;
+    text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(../resources/photo.jpeg) no-repeat fixed 0 -150px;
+    background-size: 100%;
+    overflow: hidden;
+    color: white !important;
+    margin: 20px 0 0;
+}
+
+.page-headercard h4 {
+    margin: auto;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 45px;
+    text-align: center;
+}
+
+.bottomfixes {
+    padding-bottom: 0;
+    margin-bottom: 20px;
 }
 
 /*
@@ -516,8 +746,107 @@ footer {
     border-color: #ffb951;
 }
 
-.floatleftclass{
-    float:left;
+/*
+-------------------------- Session card ---------------------------
+*/
+
+.session-card {
+    width: 125px;
+    height: 180px;
+    background: url(../resources/noimgplaceholder.png) no-repeat;
+    position: relative;
 }
 
+#cardimg {
+    width: 125px;
+    height: 180px;
 
+}
+
+.session-card-description {
+    color: white !important;
+    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.6));
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 0;
+    padding-bottom: 15px;
+}
+
+/*
+--------------------------- Circle Sessions --------------------------
+*/
+
+.card-ingame-container {
+    display: inline-block;
+    background: rgba(255, 156, 68, 0.4);
+    padding: 0 10px;
+    margin: 5px;
+    float: left;
+    height: 125px;
+    min-width: 80px;
+    max-width: 100px;
+    position: relative;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.card-ingame-container:before, .card-ingame-container:after {
+    position: absolute;
+    z-index: -1;
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    top: 50%;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    -moz-border-radius: 100px / 10px;
+    border-radius: 100px / 10px;
+}
+
+.card-ingame-container:after {
+    right: 10px;
+    left: auto;
+    -webkit-transform: skew(8deg) rotate(3deg);
+    -moz-transform: skew(8deg) rotate(3deg);
+    -ms-transform: skew(8deg) rotate(3deg);
+    -o-transform: skew(8deg) rotate(3deg);
+    transform: skew(8deg) rotate(3deg);
+}
+
+.card-ingame-nr {
+}
+
+.card-ingame-img {
+    position: relative;
+    height: inherit;
+}
+
+.card-ingame-hover-description {
+    display: none;
+    background: rgba(255, 156, 68, 1);
+    width: 150%;
+    border: 2px solid #FFF;
+    color: #EEE;
+    background: #333 repeat-x 0 0;
+    z-index: 10;
+    padding: 14px 20px;
+    margin-top: 10px;
+    line-height: 16px;
+}
+
+.hover-description-container {
+    position: absolute;
+}
+
+#circlesvg {
+    position: relative;
+    min-height: 850px;
+}
+
+.dropdown-menu > li > a:hover {
+    background-color: rgba(255, 156, 68, 0.6);
+    color: #1E8BC3;
+}

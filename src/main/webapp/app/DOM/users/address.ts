@@ -6,4 +6,13 @@ export class Address {
     public number: string;
     public city: string;
     public zip: number;
+
+    static fromJson(json: any): Address {
+        var address = new Address();
+        address.city = json.city;
+        address.number = json.number;
+        address.street = json.street;
+        address.zip = json.zip;
+        return address;
+    }
 }

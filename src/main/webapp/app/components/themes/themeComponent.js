@@ -1,14 +1,16 @@
-System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../service/cardService"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../DOM/card", "../../service/cardService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, TokenHelper_1, userService_1, user_1, cardService_1;
+    var core_1, router_1, themeService_1, TokenHelper_1, userService_1, user_1, card_1, cardService_1;
     var ThemeComponent;
     return {
         setters:[
@@ -30,34 +32,39 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             function (user_1_1) {
                 user_1 = user_1_1;
             },
+            function (card_1_1) {
+                card_1 = card_1_1;
+            },
             function (cardService_1_1) {
                 cardService_1 = cardService_1_1;
             }],
         execute: function() {
             ThemeComponent = (function () {
-                function ThemeComponent(_themeService, _router, _userService, cardService) {
+                function ThemeComponent(_themeService, router, _userService, cardService) {
                     this._themeService = _themeService;
-                    this._router = _router;
+                    this.router = router;
                     this._userService = _userService;
                     this.themes = [];
                     this.user = user_1.User.createEmpty();
+                    this.file = null;
                     this.cards = [];
+                    this.card = card_1.Card.createEmpty();
                     this.userService = _userService;
+                    this.router = router;
                     this.cardService = cardService;
                 }
                 ThemeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._themeService.getUserThemes().subscribe(function (themes) { return _this.themes = themes; });
+                    this._themeService.getUserThemes().subscribe(function (themes) {
+                        _this.themes = themes;
+                    });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
-                    });
-                    this._themeService.getThemeCards(this.themeId).subscribe(function (cards) {
-                        _this.cards = cards;
                     });
                 };
                 ThemeComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
-                    this._router.navigate(['/Home']);
+                    this.router.navigate(['/Home']);
                 };
                 ThemeComponent.prototype.getImageSrc = function (url) {
                     if (url) {
@@ -69,15 +76,39 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         }
                     }
                 };
-                ThemeComponent.prototype.rotateCard = function () {
-                    var card = $('.btn-simple').closest('.themeCard-container');
-                    console.log(card);
-                    if (card.hasClass('hover')) {
-                        card.removeClass('hover');
+                ThemeComponent.prototype.onFileChange = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                ThemeComponent.prototype.rotateCard = function ($event) {
+                    var card = $event.target;
+                    var container = $(card).closest('.themeCard-container');
+                    console.log(container);
+                    if (container.hasClass('hover')) {
+                        container.removeClass('hover');
                     }
                     else {
-                        card.addClass('hover');
+                        container.addClass('hover');
                     }
+                };
+                ThemeComponent.prototype.giveId = function (id) {
+                    this.themeId = id;
+                };
+                ThemeComponent.prototype.onSubmit = function () {
+                    var _this = this;
+                    this.card.themeId = +this.themeId;
+                    this.cardService.createCard(this.card, this.file).subscribe(function (res) {
+                        var popup = document.getElementById("popup-addCard");
+                        $(popup).css("visibility", "hidden");
+                        _this.router.navigate(['/Themes']);
+                        document.location.reload();
+                        _this.file = null;
+                    }, function (error) {
+                        //todo change error display
+                        _this.file = null;
+                        alert(error.text());
+                    });
                 };
                 ThemeComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

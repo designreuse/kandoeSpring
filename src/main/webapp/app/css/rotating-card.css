@@ -3,8 +3,9 @@
 .btn:active{
     outline: 0 !important;
 }
-.list-inline{
-    float: right;
+
+.list-inline {
+        float: right;
 }
 
 /* entire container, keeps perspective */
@@ -15,8 +16,7 @@
       perspective: 800px;
       margin-bottom: 30px;
 }
-/* flip the pane when hovered */
-.themeCard-container:not(.manual-flip):hover .themeCard,
+/* flip the pane*/
 .themeCard-container.hover.manual-flip .themeCard{
 	-webkit-transform: rotateY( 180deg );
     -moz-transform: rotateY( 180deg );
@@ -24,7 +24,6 @@
     transform: rotateY( 180deg );
 }
 
-.themeCard-container.static:hover .themeCard, 
 .themeCard-container.static.hover .themeCard {
 	-webkit-transform: none;
 -moz-transform: none;
@@ -33,6 +32,7 @@
 }
 /* flip speed goes here */
 .themeCard {
+    position: relative;
     -webkit-transition: -webkit-transform .5s;
     -moz-transition: -moz-transform .5s;
     -o-transition: -o-transform .5s;
@@ -41,7 +41,6 @@
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
     transform-style: preserve-3d;
-	position: relative;
 }
 
 /* hide back of pane during swap */
@@ -77,8 +76,12 @@
     box-shadow: none !important;
 }
 
+.tag-list{
+    float: none;
+}
+
 .card-btn-container {
-    position: absolute;
+    position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%)
@@ -106,13 +109,17 @@
     background-color: rgba(0, 0, 0, 0);
     box-shadow: none;
     padding: 10px 20px 20px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    height: 75%;
+;
 }
 .themeCard .themeContent .mainContent {
     min-height: 160px;
     height: 215px;
 }
 .themeCard .name {
-    font-size: 22px;
+    font-size: 18px;
     line-height: 28px;
     margin: 10px 0 0;
     text-align: center;
@@ -123,30 +130,37 @@
     font-weight: 400;
     line-height: 20px;
 }
-.themeCard .profession{
+.themeCard .description{
     color: #999999;
-    text-align: center;
     margin-bottom: 20px;
+    font-size: 13px;
 }
-.themeCard .footer {
+.themeCard .theme-card-footer {
     border-top: 1px solid #EEEEEE;
     color: #999999;
-    /*margin: 30px 0 0;*/
-    padding: 30px 0;
+    margin: 30px 0 0;
+    padding: 20px 0;
     text-align: center;
 }
-.themeCard .footer .social-links{
+
+.back .theme-card-footer{
+    margin: 0;
+}
+
+.themeCard .theme-card-footer .social-links{
+    float: right;
+    padding-right: 5px;
     font-size: 18px;
 }
-.themeCard .footer .social-links a{
+.themeCard .theme-card-footer .social-links a{
     margin: 0 7px;
 }
-.themeCard .footer .btn-simple{
+.themeCard .theme-card-footer .btn-simple{
     margin-top: -6px;
 }
 .themeCard .header {
     padding: 15px 20px;
-    height: 90px;
+    height: 50px;
 }
 .themeCard .motto{
     border-bottom: 1px solid #EEEEEE;
@@ -157,7 +171,19 @@
     text-align: center;
 }
 
+.theme-cards-content{
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 /*      Just for presentation        */
+
+.theme-cards-btn{
+    margin-left: 0 !important;
+    margin-top: 2px;
+    height: 40px;
+}
 
 .btn-simple{
     opacity: .8;
@@ -180,7 +206,19 @@
     left: 0;
 }
 
-/*       Fix bug for IE      */
+/*
+----------------- media width small -------------------
+
+
+@media (max-width: 992px) {
+    .theme-card-list li {
+        padding-bottom: 430px;
+    }
+}*/
+
+/*
+------------------ Fix bug for IE -------------------
+*/
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .front, .back{

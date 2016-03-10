@@ -19,9 +19,12 @@ public class SessionDTO extends ResourceSupport implements Serializable{
     private String startTime;
     private String endTime;
     private boolean userAddCards;
+    private Integer themeId;
+    private boolean chosenCards;
 
-    //todo add mapper for this?
     private List<CardDTO> cards;
+    private List<UserDTO> users;
+    private ThemeDTO theme;
 
     public SessionDTO() {
     }
@@ -104,5 +107,37 @@ public class SessionDTO extends ResourceSupport implements Serializable{
 
     public void setCards(List<CardDTO> cards) {
         this.cards = cards;
+    }
+
+    public List<UserDTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserDTO> users) {
+        this.users = users;
+    }
+
+    public Integer getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(Integer themeId) {
+        this.themeId = themeId;
+    }
+
+    public ThemeDTO getTheme() {
+        return theme;
+    }
+
+    public void setTheme(ThemeDTO theme) {
+        this.theme = theme;
+    }
+
+    public boolean isChosenCards() {
+        return chosenCards;
+    }
+
+    public void setChosenCards(boolean chosenCards) {
+        this.chosenCards = chosenCards;
     }
 }

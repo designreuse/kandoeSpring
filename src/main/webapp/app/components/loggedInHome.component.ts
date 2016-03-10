@@ -9,6 +9,11 @@ import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "a
 import {tokenNotExpired} from "../security/TokenHelper";
 import {User} from "../DOM/users/user";
 import {UserService} from "../service/userService";
+import {SessionService} from "../service/sessionService";
+import {Session} from "../DOM/circleSession/session";
+import {Theme} from "../DOM/theme";
+import {Card} from "../DOM/card";
+import {Organisation} from "../DOM/organisation";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -22,18 +27,28 @@ export class LoggedInHome implements OnInit{
     private router:Router = null;
     private user: User = User.createEmpty();
     private userService: UserService;
+    public sessions:Session[] =  [];
 
-    constructor(router:Router, userService: UserService) {
+    constructor(private _sessionService:SessionService, router:Router, userService: UserService) {
         this.router = router;
         this.userService = userService;
-
-        this.userService.getCurrentUser().subscribe(u => {
-            this.user = u;
-        });
     }
 
     ngOnInit(){
+        this._sessionService.getUserSessions().subscribe((sessions:Session[])=>{
+            this.sessions = sessions;
+        });
+        this.userService.getCurrentUser().subscribe(u => {
+            this.user = u;
+        });
 
+        $('.show-btn').on('click', function () {
+            $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
+        });
+
+        $('.card-reveal .close').on('click', function () {
+            $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
+        });
     }
 
     logout() {

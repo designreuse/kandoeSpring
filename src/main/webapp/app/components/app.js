@@ -1,14 +1,16 @@
-System.register(['angular2/core', 'angular2/router', "./organisations/organisations.component", "./register.component", "./home", "./loggedInHome.component", "./themes/themeComponent", "./kandoeCard", "./userprofile.component", "./organisations/addOrganisation.component", "./themes/addThemeComponent", "./organisations/organisationDetail.component", "./themes/themeDetailComponent", "./chat/chatComponent", "./sessions/sessionDetail.component", "./cards/cards.component"], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', "./organisations/organisations.component", "./register.component", "./home", "./loggedInHome.component", "./themes/themeComponent", "./kandoeCard", "./userprofile.component", "./organisations/addOrganisation.component", "./themes/addThemeComponent", "./organisations/organisationDetail.component", "./themes/themeDetailComponent", "./chat/chatComponent", "./sessions/sessionDetail.component", "./cards/addCard.component", "./sessions/addSession"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, organisations_component_1, register_component_1, home_1, loggedInHome_component_1, themeComponent_1, kandoeCard_1, userprofile_component_1, addOrganisation_component_1, addThemeComponent_1, organisationDetail_component_1, themeDetailComponent_1, chatComponent_1, sessionDetail_component_1, cards_component_1;
+    var core_1, router_1, organisations_component_1, register_component_1, home_1, loggedInHome_component_1, themeComponent_1, kandoeCard_1, userprofile_component_1, addOrganisation_component_1, addThemeComponent_1, organisationDetail_component_1, themeDetailComponent_1, chatComponent_1, sessionDetail_component_1, addCard_component_1, addSession_1;
     var AppComponent;
     return {
         setters:[
@@ -57,8 +59,11 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
             function (sessionDetail_component_1_1) {
                 sessionDetail_component_1 = sessionDetail_component_1_1;
             },
-            function (cards_component_1_1) {
-                cards_component_1 = cards_component_1_1;
+            function (addCard_component_1_1) {
+                addCard_component_1 = addCard_component_1_1;
+            },
+            function (addSession_1_1) {
+                addSession_1 = addSession_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -84,8 +89,10 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
                         { path: '/card', as: 'KandoeCard', component: kandoeCard_1.KandoeCard },
                         { path: '/userprofile', as: 'Userprofile', component: userprofile_component_1.UserProfileComponent },
                         { path: '/themes/addTheme', name: 'AddTheme', component: addThemeComponent_1.AddThemeComponent },
-                        { path: '/addCard', as: 'AddCard', component: cards_component_1.CardsComponent },
-                        { path: '/sessions/:id', as: 'SessionDetail', component: sessionDetail_component_1.SessionDetailComponent }
+                        { path: '/chat', name: 'Chat', component: chatComponent_1.ChatComponent },
+                        { path: 'themes/:id/addCard', as: 'AddCard', component: addCard_component_1.AddCardComponent },
+                        { path: '/sessions/:id', as: 'SessionDetail', component: sessionDetail_component_1.SessionDetailComponent },
+                        { path: '/sessions/addSession', as: 'AddSession', component: addSession_1.AddSession }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

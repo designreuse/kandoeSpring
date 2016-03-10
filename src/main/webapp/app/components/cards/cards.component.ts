@@ -29,7 +29,7 @@ import {CardService} from "../../service/cardService";
                 </form>
             </div>
         </div>
-    </header>
+
     <div class="container main">
     	<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-10">

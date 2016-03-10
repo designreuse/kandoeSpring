@@ -90,7 +90,7 @@ public class CardRestControllerTest {
                 .content(cardResource.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(jsonPath("$.theme.themeId", Matchers.is(1)))
+                .andExpect(jsonPath("$.themeId", Matchers.is(1)))
                 .andExpect(jsonPath("$.description", Matchers.is("KdGCard description")))
                 .andExpect(jsonPath("$.imageURL", Matchers.is("http://www.google.be")))
                 .andExpect(status().isCreated());

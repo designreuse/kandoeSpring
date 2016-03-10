@@ -116,12 +116,52 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             theme = themeService.saveTheme(theme, user.getUserId(), 1);
         }
 
+        Theme theme2 = new Theme();
+        if (themeRepository.findThemeByThemeName("MailTheme") == null && mailUser.getId() != null) {
+            theme2.setThemeName("MailTheme");
+            theme2.setDescription("Mail Theme description");
+            theme2.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
+            theme2.setOrganisation(org2);
+            theme2 = themeService.saveTheme(theme2, mailUser.getUserId(), org2.getId());
+        }
+
         Card card = new Card();
-        if (cardRepository.findCardByDescription("KdGCard") == null && user.getId() != null) {
-            card.setDescription("KdGCard");
+        if (cardRepository.findCardByDescription("KdGCard longer description to check if everything works accordingly") == null) {
+            card.setDescription("KdGCard longer description to check if everything works accordingly");
             card.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             cardService.saveCard(card, theme.getId());
         }
+        Card card1 = new Card();
+        if (cardRepository.findCardByDescription("Testcard1") == null) {
+            card1.setDescription("Testcard1");
+            card1.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            cardService.saveCard(card1, theme.getId());
+        }
+        Card card2 = new Card();
+        if (cardRepository.findCardByDescription("Testcard2") == null) {
+            card2.setDescription("Testcard2");
+            card2.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            cardService.saveCard(card2, theme.getId());
+        }
+        Card card3 = new Card();
+        if (cardRepository.findCardByDescription("Testcard3") == null) {
+            card3.setDescription("Testcard3");
+            card3.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            cardService.saveCard(card3, theme.getId());
+        }
+        Card card4 = new Card();
+        if (cardRepository.findCardByDescription("Testcard4") == null) {
+            card4.setDescription("Testcard4");
+            card4.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            cardService.saveCard(card4, theme.getId());
+        }
+        Card card5 = new Card();
+        if (cardRepository.findCardByDescription("Testcard5") == null) {
+            card5.setDescription("Testcard5");
+            card5.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
+            cardService.saveCard(card5, theme.getId());
+        }
+
 
         User user2 = new User();
         if (userRepository.findUserByUsername("SenneWens") == null) {
@@ -164,7 +204,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if(sessionRepository.findOne(1) == null && user.getId() != null ){
             session.setStartTime(LocalDateTime.now());
             session.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
-            session.setMaxCards(10);
+            session.setMaxCards(4);
             session.setMinCards(2);
             session.setMode(SessionMode.SYNC);
             session.setType(SessionType.IDEA);
@@ -174,7 +214,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             cardSession.setCard(card);
 
             cardSessions.add(cardSession);
-            cardSession = cardSessionRepository.save(cardSession);
+            //cardSession = cardSessionRepository.save(cardSession);
             card.setCardSessions(cardSessions);
             session.setCardSessions(cardSessions);
 
@@ -183,7 +223,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
 
             userSession.setUser(user);
             userSessions.add(userSession);
-            userSession = userSessionRepository.save(userSession);
+           // userSession = userSessionRepository.save(userSession);
 
             session.setUserSessions(userSessions);
             session.setSize(6);

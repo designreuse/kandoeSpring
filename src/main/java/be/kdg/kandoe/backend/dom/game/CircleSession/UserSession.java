@@ -21,11 +21,14 @@ public class UserSession implements Serializable, Identifiable<Integer> {
     @Column(name = "UserPosition", nullable = false)
     private int userPosition;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
     @ManyToOne(targetEntity = Session.class)
     private Session session;
+
+    @Column(name = "ChosenCards", nullable = false)
+    private boolean chosenCards = false;
 
     public UserSession() {
     }
@@ -66,6 +69,14 @@ public class UserSession implements Serializable, Identifiable<Integer> {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public boolean isChosenCards() {
+        return chosenCards;
+    }
+
+    public void setChosenCards(boolean chosenCards) {
+        this.chosenCards = chosenCards;
     }
 
     @Override

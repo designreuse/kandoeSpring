@@ -14,6 +14,10 @@ import {ThemeDetailComponent} from "./themes/themeDetailComponent";
 import {ChatComponent} from "./chat/chatComponent";
 import {CardsComponent} from "./cards/cards.component";
 import {SessionDetailComponent} from "./sessions/sessionDetail.component";
+import {AddCardComponent} from "./cards/addCard.component";
+import {AddSession} from "./sessions/addSession";
+
+declare var jsColor: any;
 
 @Component({
     selector: 'my-kandoe'
@@ -37,8 +41,10 @@ import {SessionDetailComponent} from "./sessions/sessionDetail.component";
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},
-    {path: '/addCard', as: 'AddCard', component: CardsComponent},
-    {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent}
+
+    {path: 'themes/:id/addCard', as: 'AddCard', component: AddCardComponent},
+    {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent},
+    {path: '/sessions/addSession', as: 'AddSession', component: AddSession}
 ])
 export class AppComponent {
 }

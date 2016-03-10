@@ -50,6 +50,12 @@ public class OrganisationServiceImpl implements OrganisationService{
     public Organisation findOrganisationById(int id) {
         Organisation org = organisationRepository.findOne(id);
         Hibernate.initialize(org.getThemes());
+        if(org.getThemes() != null)
+            org.getThemes().stream().forEach(t -> {
+                if(t.getCards() != null)
+                    Hibernate.initialize(t.getCards());
+            });
+
         return org;
     }
 

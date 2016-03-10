@@ -9,6 +9,14 @@ System.register([], function(exports_1) {
             Address = (function () {
                 function Address() {
                 }
+                Address.fromJson = function (json) {
+                    var address = new Address();
+                    address.city = json.city;
+                    address.number = json.number;
+                    address.street = json.street;
+                    address.zip = json.zip;
+                    return address;
+                };
                 return Address;
             })();
             exports_1("Address", Address);

@@ -12,6 +12,7 @@ export class User {
     public person: Person;
 	public facebookAccount: boolean;
     public profilePicture: string;
+    public position: number;
 
     constructor(){
 
@@ -31,20 +32,17 @@ export class User {
         user.username = json.username;
         user.email = json.email;
         user.profilePicture=json.profilePicture;
-        var person = new Person();
-        var address = new Address();
-        address.city = json.person.address.city;
-        address.number = json.person.address.number;
-        address.street = json.person.address.street;
-        address.zip = json.person.address.zip;
-        person.address = address;
-        person.firstname = json.person.firstname;
-        person.lastname = json.person.lastname;
-        user.person = person;
+
+        user.person = new Person();
+        if(json.person){
+            user.person = Person.fromJson(user.person);
+        }
 
         if(json.facebookAccount){
             user.facebookAccount = json.facebookAccount;
         }
+
+        user.position = json.position;
 
         return user;
     }

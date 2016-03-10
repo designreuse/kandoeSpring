@@ -21,6 +21,8 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     private boolean isOrganiser;
 
+    private int countUsers;
+
     public OrganisationDTO() {
     }
 
@@ -66,5 +68,13 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     public void setIsOrganiser(boolean isOrganiser) {
         this.isOrganiser = isOrganiser;
+    }
+
+    public int getCountUsers() {
+        return countUsers;
+    }
+
+    public void setCountUsers(int countUsers) {
+        this.countUsers = countUsers;
     }
 }

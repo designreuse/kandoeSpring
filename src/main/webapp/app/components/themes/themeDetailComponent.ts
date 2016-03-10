@@ -56,7 +56,6 @@ export class ThemeDetailComponent implements OnInit {
     createCard() {
         this.newCard.themeId = this.themeId;
         this.cardService.createCard(this.newCard, this.file).subscribe(c => {
-            console.log(c);
             this.file = null;
             this.cards.push(c);
         })

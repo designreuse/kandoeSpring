@@ -1,9 +1,11 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
+import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.SessionService;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
+import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SessionDTO;
 import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
 import ma.glasnost.orika.MapperFacade;
@@ -12,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +43,12 @@ public class SessionRestController {
         if(user != null){
             try {
                 Session session = this.sessionService.findSessionById(sessionId, user.getUserId());
-                return new ResponseEntity<>(sessionAssembler.toResource(session), HttpStatus.OK);
+                SessionDTO dto = sessionAssembler.toResource(session);
+
+                session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(user.getId()))
+                        .findFirst().ifPresent(userSession ->  dto.setChosenCards(userSession.isChosenCards()));
+
+                return new ResponseEntity<>(dto, HttpStatus.OK);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
             }
@@ -65,4 +70,51 @@ public class SessionRestController {
         return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
     }
 
+    @RequestMapping(method = {RequestMethod.GET}, value = "/theme/{themeId}")
+    public ResponseEntity<List<SessionDTO>> getSessionByThemeId(@PathVariable("themeId") int themeId, @AuthenticationPrincipal User user){
+        if (user != null){
+            try{
+                List<Session> sessions = this.sessionService.findSessionByThemeId(themeId, user.getUserId());
+                return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> createSession(@RequestBody SessionDTO sessionDTO, @AuthenticationPrincipal User user){
+        if(user != null){
+            try {
+                Session session_in = mapper.map(sessionDTO, Session.class);
+                Session session_out = sessionService.createSession(session_in, sessionDTO.getThemeId(), user.getId());
+
+                return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(session_out), HttpStatus.CREATED);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{sessionId}/addCards", method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> addCardsToSession(@RequestBody List<CardDTO> cardDTOs,
+                                                        @PathVariable("sessionId") Integer sessionId,
+                                                        @AuthenticationPrincipal User user) {
+        if(user != null){
+            try {
+                List<Card> cards = new ArrayList<>();
+                for (CardDTO cardDTO : cardDTOs) {
+                    cards.add(mapper.map(cardDTO, Card.class));
+                }
+
+                Session session = sessionService.addCardsToSession(sessionId, cards, user.getId());
+                return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(session), HttpStatus.OK);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
+    }
 }
