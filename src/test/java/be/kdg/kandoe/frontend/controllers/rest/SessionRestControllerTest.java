@@ -81,6 +81,14 @@ public class SessionRestControllerTest {
     }
 
     @Test
+    public void testGetSessionByThemeId() throws Exception {
+        mockMvc.perform(get("/api/sessions/theme/1")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].sessionId", is(1)));
+    }
+
+    @Test
     public void testCreateSession() throws Exception {
         JSONObject session = new JSONObject();
         session.put("mode", "SYNC");

@@ -62,6 +62,19 @@ public class SessionRestController {
         return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
     }
 
+    @RequestMapping(method = {RequestMethod.GET}, value = "/theme/{themeId}")
+    public ResponseEntity<List<SessionDTO>> getSessionByThemeId(@PathVariable("themeId") int themeId, @AuthenticationPrincipal User user){
+        if (user != null){
+            try{
+                List<Session> sessions = this.sessionService.findSessionByThemeId(themeId, user.getUserId());
+                return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<SessionDTO> createSession(@RequestBody SessionDTO sessionDTO, @AuthenticationPrincipal User user){
         if(user != null){

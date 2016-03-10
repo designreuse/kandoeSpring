@@ -81,6 +81,29 @@ public class SessionServiceImpl implements SessionService{
     }
 
     @Override
+    public List<Session> findSessionByThemeId(Integer themeId, Integer userId) throws SessionServiceException {
+        try {
+            User user = userService.findUserById(userId);
+            List<UserSession> userSessions = user.getUserSessions();
+            List<Session> themeSessions = new ArrayList<>();
+            Hibernate.initialize(userSessions);
+            if(userSessions!= null && userSessions.stream().anyMatch(u -> u.getSession().getTheme().getThemeId().equals(themeId))){
+                List<Session> s = sessionRepository.findAll();
+                for (Session session : s){
+                    Hibernate.initialize(session.getCardSessions());
+                    Hibernate.initialize(session.getTheme());
+                    themeSessions.add(session);
+                }
+
+                return themeSessions;
+            }
+        } catch (UserServiceException e) {
+            throw new SessionServiceException(e.getMessage(), e);
+        }
+        throw new SessionServiceException("You're not a member of this session");
+    }
+
+    @Override
     public Session createSession(Session session, Integer themeId, Integer userId) throws SessionServiceException {
         Theme theme = themeService.findThemeById(themeId);
 
@@ -134,4 +157,6 @@ public class SessionServiceImpl implements SessionService{
 
         return session;
     }
+
+
 }
