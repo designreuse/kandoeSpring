@@ -1,5 +1,4 @@
-import {Component} from "angular2/core";
-import {OnInit} from "angular2/core";
+import {Component, OnInit} from "angular2/core";
 import {RouteConfig, Router, RouterLink, ROUTER_DIRECTIVES, CanActivate, RouteParams} from "angular2/router";
 import {ThemeService} from "../../service/themeService";
 import {tokenNotExpired} from "../../security/TokenHelper";
@@ -31,9 +30,10 @@ export class ThemeComponent implements OnInit {
     private card:Card = Card.createEmpty();
     private themeId:number;
 
-    constructor(private _themeService:ThemeService, private _router:Router, private _userService:UserService,
+    constructor(private _themeService:ThemeService, private router:Router, private _userService:UserService,
                 cardService:CardService) {
         this.userService = _userService;
+        this.router=router;
         this.cardService = cardService;
     }
 
@@ -49,7 +49,7 @@ export class ThemeComponent implements OnInit {
 
     logout() {
         localStorage.removeItem("id_token");
-        this._router.navigate(['/Home']);
+        this.router.navigate(['/Home']);
     }
 
     private getImageSrc(url:string):string {
@@ -83,23 +83,23 @@ export class ThemeComponent implements OnInit {
         this.themeId = id;
     }
 
-    onSubmit($event) {
+    onSubmit() {
         this.card.themeId = +this.themeId;
         this.cardService.createCard(this.card, this.file).subscribe(res => {
+            var popup = document.getElementById("popup-addCard");
+            $(popup).css("visibility", "hidden");
             this.router.navigate(['/Themes']);
+            document.location.reload();
             this.file = null;
         }, error => {
             //todo change error display
-            this.file = null;
+             this.file = null;
             alert(error.text());
         });
 
-        var popup = document.getElementById("popup-addCard");
-        $(popup).css("visibility", "hidden");
-        /*
-         var el = $event.target;
-         var popup = $(el).closest("#popup-addCard");
-         $(popup).css("visibility","hidden");*/
+
+
+
 
     }
 

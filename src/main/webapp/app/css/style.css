@@ -63,16 +63,14 @@ hr {
     float: left;
 }
 
-
 .nopaddingleft {
     padding-left: 0;
 }
 
-.nopadding-nomargin{
-    padding:0;
-    margin:0;
+.nopadding-nomargin {
+    padding: 0;
+    margin: 0;
 }
-
 
 /*
 --------------------- Buttons ------------------------------
@@ -626,26 +624,35 @@ footer {
 --------------------- Theme Overview ------------------------------
 */
 .single-card {
-    height: 40%;
+    min-height: 40%;
 }
 
 .card-img-theme {
     width: 45%;
-    height: 100%;
+    max-height: 100%;
     float: left;
+}
+
+.fontsize-card {
+    font-size: 13px;
 }
 
 .ul-show-cards {
     padding-left: 0;
     list-style-type: none;
 }
+
+.cards{
+
+}
+
 /*
 --------------------- Add card popup ------------------------------
 */
 
 .overlay {
     position: absolute;
-    height:300%;
+    height: 300%;
     top: 0;
     bottom: 0;
     left: 0;
@@ -655,6 +662,7 @@ footer {
     visibility: hidden;
     opacity: 0;
 }
+
 .overlay:target {
     visibility: visible;
     opacity: 1;
@@ -669,9 +677,11 @@ footer {
     position: relative;
     transition: all 5s ease-in-out;
 }
-.popup-header{
-    margin:0 5%;
+
+.popup-header {
+    margin: 0 5%;
 }
+
 .page-headercard {
     border-radius: 4px;
     width: 100%;
@@ -695,10 +705,11 @@ footer {
     text-align: center;
 }
 
-.bottomfixes{
+.bottomfixes {
     padding-bottom: 0;
     margin-bottom: 20px;
 }
+
 /*
 --------------------- Theme Tags ------------------------------
 */

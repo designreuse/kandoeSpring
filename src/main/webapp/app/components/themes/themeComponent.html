@@ -118,13 +118,14 @@
                                     </div>
                                     <div class="themeContent nopaddingleft">
                                         <div class="mainContent center-container">
-
+                                            <h4>Cards</h4>
                                             <div class="theme-cards-content">
-                                                <h4>Cards</h4>
-                                                <ul class="ul-show-cards" data-spy="scroll"
+
+                                                <div class="cards" data-spy="scroll">
+                                                <ul class="ul-show-cards"
                                                     *ngFor="#card of theme.cards">
                                                     <div class="single-card">
-                                                        <li>
+                                                        <li class="fontsize-card">
                                                             <img class="card-img-theme" alt="no image found"
                                                                  [src]="getImageSrc(card.imageURL)">
                                                             {{card.description}}
@@ -132,16 +133,18 @@
                                                     </div>
                                                     <br>
                                                 </ul>
+                                                </div>
                                             </div>
-                                            <div>
 
-                                                <a href="#popup-addCard">
-                                                    <button
-                                                            class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">Add card
-                                                    </button>
-                                                </a>
-                                            </div>
                                         </div>
+                                        <div>
+
+                                        <a href="#popup-addCard">
+                                            <button
+                                                    class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">Add card
+                                            </button>
+                                        </a>
+                                    </div>
                                     </div>
                                     <div class="footer">
                                         <button class="btn btn-simple" (click)="rotateCard()"
@@ -205,7 +208,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-offset-1 col-sm-11 nopadding-nomargin">
-                                <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit($event)">Add
+                                <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit()">Add
                                 </button>
                             </div>
                         </div>
