@@ -84,7 +84,8 @@
     position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);
-    transform: translateY(-50%)
+    transform: translateY(-50%);
+    overflow-x: hidden;
 }
 .themeCard{
     background: none repeat scroll 0 0 #FFFFFF;
@@ -115,7 +116,6 @@
 ;
 }
 .themeCard .themeContent .mainContent {
-    min-height: 160px;
     height: 215px;
 }
 .themeCard .name {

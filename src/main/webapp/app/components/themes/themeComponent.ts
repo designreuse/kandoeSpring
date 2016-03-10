@@ -45,6 +45,13 @@ export class ThemeComponent implements OnInit {
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+        $("#input-search").on("keyup", function () {
+            var rex = new RegExp($(this).val(), "i");
+            $(".searchable-container .items").hide();
+            $(".searchable-container .items").filter(function () {
+                return rex.test($(this).text());
+            }).show();
+        });
     }
 
     logout() {
@@ -69,17 +76,6 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    private rotateCard($event){
-        var card = $event.target;
-        var container = $(card).closest('.themeCard-container');
-        console.log(container);
-        if(container.hasClass('hover')){
-            container.removeClass('hover');
-        } else {
-            container.addClass('hover');
-        }
-    }
-
     giveId(id:number) {
         this.themeId = id;
     }
@@ -94,8 +90,150 @@ export class ThemeComponent implements OnInit {
             this.file = null;
         }, error => {
             //todo change error display
-             this.file = null;
+            this.file = null;
             alert(error.text());
         });
+    }
+
+    private rotateCard($event){
+        var card = $event.target;
+        var container = $(card).closest('.themeCard-container');
+        console.log(container);
+        if(container.hasClass('hover')){
+            container.removeClass('hover');
+        } else {
+            container.addClass('hover');
+        }
+    }
+
+    /*
+     --------------------------------------------------------------
+     --------------------- SORT FUNCTIONS -------------------------
+     --------------------------------------------------------------
+     */
+    sortName() {
+        $(".filter-Name").addClass("active");
+        $(".filter-ID").removeClass("active");
+        $(".filter-Desc").removeClass("active");
+
+        var items = $("#sort-list li.items").get();
+
+        if ($(".filter-Name").hasClass("filter-A")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find("h2.title").text();
+                var keyB = $(b).find("h2.title").text();
+
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Name").removeClass("filter-A").addClass("filter-Z");
+            $(".filter-Name").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet").addClass("glyphicon-sort-by-alphabet-alt");
+        } else if ($(".filter-Name").hasClass("filter-Z")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find("h2.title").text();
+                var keyB = $(b).find("h2.title").text();
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Name").removeClass("filter-Z").addClass("filter-A");
+            $(".filter-Name").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
+        }
+    }
+
+    sortId() {
+        $(".filter-Name").removeClass("active");
+        $(".filter-ID").addClass("active");
+        $(".filter-Desc").removeClass("active");
+
+        var items = $("#sort-list li.items").get();
+
+        if ($(".filter-ID").hasClass("filter-A")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find(".id").text();
+                var keyB = $(b).find(".id").text();
+
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-ID").removeClass("filter-A").addClass("filter-Z");
+            $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order").addClass("glyphicon-sort-by-order-alt");
+        } else if ($(".filter-ID").hasClass("filter-Z")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find(".id").text();
+                var keyB = $(b).find(".id").text();
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-ID").removeClass("filter-Z").addClass("filter-A");
+            $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order-alt").addClass("glyphicon-sort-by-order");
+        }
+    }
+
+    sortDesc() {
+        $(".filter-Name").removeClass("active");
+        $(".filter-ID").removeClass("active");
+        $(".filter-Desc").addClass("active");
+
+        var items = $("#sort-list li.items").get();
+
+        if ($(".filter-Desc").hasClass("filter-A")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find("p.desc").text();
+                var keyB = $(b).find("p.desc").text();
+
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Desc").removeClass("filter-A").addClass("filter-Z");
+            $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet").addClass("glyphicon-sort-by-alphabet-alt");
+        } else if ($(".filter-Desc").hasClass("filter-Z")) {
+            items.sort(function (a, b) {
+                var keyA = $(a).find("p.desc").text();
+                var keyB = $(b).find("p.desc").text();
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            });
+            var ul = $("#sort-list");
+            $.each(items, function (i, li) {
+                ul.append(li);
+            });
+
+            $(".filter-Desc").removeClass("filter-Z").addClass("filter-A");
+            $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
+        }
     }
 }

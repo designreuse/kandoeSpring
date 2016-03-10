@@ -33,7 +33,7 @@ export class OrganisationsComponent implements OnInit {
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
-             $("#input-search").on("keyup", function () {
+        $("#input-search").on("keyup", function () {
             var rex = new RegExp($(this).val(), "i");
             $(".searchable-container .items").hide();
             $(".searchable-container .items").filter(function () {
@@ -55,6 +55,12 @@ export class OrganisationsComponent implements OnInit {
         localStorage.removeItem("id_token");
         this._router.navigate(['/Home']);
     }
+
+    /*
+    --------------------------------------------------------------
+    --------------------- SORT FUNCTIONS -------------------------
+     --------------------------------------------------------------
+     */
     sortName() {
         $(".filter-Name").addClass("active");
         $(".filter-ID").removeClass("active");

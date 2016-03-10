@@ -69,27 +69,26 @@
                     <li class="col-sm-12 col-md-4">
                         <div class="themeCard-container manual-flip">
                             <div class="themeCard">
-                            <div class="front new-card">
-                                <div class="cover"></div>
-                                <div class="themeContent">
-                                <div class="mainContent">
-                                    <div class="col-xs-offset-1 col-xs-10 card-btn-container center-container">
-                                        <button [routerLink]="['/AddTheme']" class="btn btn-primary">
-                                            Create a new Theme
-                                        </button>
+                                <div class="front new-card">
+                                    <div class="cover"></div>
+                                    <div class="themeContent">
+                                        <div class="mainContent">
+                                            <div class="col-xs-offset-1 col-xs-10 card-btn-container center-container">
+                                                <button [routerLink]="['/AddTheme']" class="btn btn-primary btn-add-theme">
+                                                    Create a new Theme
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                    </div>
-                            </div>
-                            <div class="back">
-                                <div class="header"></div>
-                                <div class="themeContent nopaddingleft"></div>
-                            </div>
+                                <div class="back">
+                                    <div class="header"></div>
+                                    <div class="themeContent nopaddingleft"></div>
+                                </div>
                             </div>
                         </div>
                     </li>
                     <li *ngFor="#theme of themes; #i = index" class="col-sm-12 col-md-4">
-                        <!--<a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">-->
                         <div class="themeCard-container manual-flip">
                             <div class="themeCard">
                                 <div class="front">
@@ -98,9 +97,6 @@
                                             <img [src]="getImageSrc(theme.iconURL)"/>
                                         </a>
                                     </div>
-                                    <!--<div class="user">
-                                        <img class="img-circle" src="../../resources/kandoe-logo-circle-white.png"/>
-                                    </div>-->
                                     <div class="themeContent">
                                         <div class="mainContent center-container">
                                             <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
@@ -131,31 +127,27 @@
                                         <div class="mainContent center-container">
                                             <h4>Cards</h4>
                                             <div class="theme-cards-content">
-
                                                 <div class="cards" data-spy="scroll">
-                                                <ul class="ul-show-cards"
-                                                    *ngFor="#card of theme.cards">
-                                                    <div class="single-card">
+                                                <ul class="ul-show-cards">
+                                                    <div class="single-card" *ngFor="#card of theme.cards">
                                                         <li class="fontsize-card">
                                                             <img class="card-img-theme" alt="no image found"
                                                                  [src]="getImageSrc(card.imageURL)">
                                                             {{card.description}}
                                                         </li>
                                                     </div>
-                                                    <br>
+                                                    <br/>
                                                 </ul>
                                                 </div>
                                             </div>
-
+                                            <div>
+                                                <a href="#popup-addCard">
+                                                    <button class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">
+                                                        Add card
+                                                    </button>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div>
-
-                                        <a href="#popup-addCard">
-                                            <button
-                                                    class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">Add card
-                                            </button>
-                                        </a>
-                                    </div>
                                     </div>
                                     <div class="theme-card-footer">
                                         <button class="btn btn-simple" (click)="rotateCard($event)"
@@ -170,10 +162,9 @@
                                                     class="fa fa-google-plus"></span></a>
                                         </div>
                                     </div>
-                                </div> <!-- end back panel -->
-                            </div>
+                            </div> <!-- end back panel -->
                         </div>
-                        <!--</a>-->
+                        </div>
                     </li>
                 </ul>
             </div>
