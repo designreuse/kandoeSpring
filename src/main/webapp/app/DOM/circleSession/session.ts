@@ -9,8 +9,8 @@ export class Session {
     minCards: number;
     maxCards: number;
     size: number;
-    startTime: Date;
-    endTime: Date;
+    startTime: string;
+    endTime: string;
     userAddCards: boolean;
     chosenCards: boolean;
     themeId: number;
