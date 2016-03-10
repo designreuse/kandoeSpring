@@ -24,13 +24,59 @@
     <script src="resources/router.dev.js"></script>
     <script src="resources/http.dev.js"></script>
 
+    <!--Websocket -->
+    <script src="resources/sockjs-0.3.4.js"></script>
+    <script src="resources/stomp.js"></script>
+    <script type="text/javascript">
+        var stompClient = null;
+
+        function connect() {
+            var socket = new SockJS('/Kandoe/chat');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/chat', function (greeting) {
+                    console.log("Recieved message: " + greeting);
+                    showGreeting(JSON.parse(greeting.body).content);
+                });
+            });
+        }
+
+        function setConnected(connected) {
+            document.getElementById('connect').disabled = connected;
+            document.getElementById('disconnect').disabled = !connected;
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
+
+        function sendName() {
+            var name = document.getElementById('sendchatmessage').value;
+            stompClient.send("/chat", {}, JSON.stringify({'name': name}));
+        }
+
+        function showGreeting(message) {
+            var response = document.getElementById('receivedMessage');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            response.appendChild(p);
+        }
+    </script>
+    <!-- -->
+
     <link rel="stylesheet" href="./app/css/bootstrap.css">
     <link rel="stylesheet" href="./app/css/style.css">
     <link rel="stylesheet" href="./app/css/foundation-icons.css">
     <link rel="stylesheet" href="./app/css/card.css">
     <link rel="stylesheet" href="./app/css/organisationList.css">
     <link rel="stylesheet" href="./app/css/rotating-card.css">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./app/css/bootstrap-social.css">
 
     <!-- 2. Configure SystemJS -->
@@ -51,18 +97,21 @@
 <!-- 3. Display the application -->
 <body>
 <script>
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
         FB.init({
-            appId      : '481253435400203',
-            xfbml      : true,
-            version    : 'v2.5'
+            appId: '481253435400203',
+            xfbml: true,
+            version: 'v2.5'
         });
     };
 
-    (function(d, s, id){
+    (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
         js.src = "//connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));

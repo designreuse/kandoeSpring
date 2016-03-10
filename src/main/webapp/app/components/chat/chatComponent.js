@@ -26,18 +26,23 @@ System.register(["angular2/core", "angular2/http"], function(exports_1) {
                 function ChatComponent(http) {
                     this.message = "empty";
                     this.http = http;
-                    this.ws = new WebSocket('ws://localhost:9966/Kandoe/chat');
-                    ChatComponent.messages[0] = ("This is a test message");
-                    this.ws.onopen = function () {
-                        console.log("Connection openned");
-                    };
-                    this.ws.onclose = function (event) {
-                        console.log(event.code);
-                    };
-                    this.ws.onmessage = function (data) {
-                        console.log("incoming message: " + data.data);
-                        ChatComponent.messages[ChatComponent.messages.length + 1] = data.data;
-                    };
+                    /* this.ws = new WebSocket('ws://localhost:9966/Kandoe/chat');
+                     ChatComponent.messages[0] = ("This is a test message");
+            
+                     this.stompclient =
+            
+                     //this.stompclient.connect("chicken.rmq.cloudamqp.com");
+            
+                     this.ws.onopen = function () {
+                     console.log("Connection openned");
+                     };
+                     this.ws.onclose = function (event) {
+                     console.log(event.code);
+                     };
+                     this.ws.onmessage = function (data) {
+                     console.log("incoming message: " + data.data);
+                     ChatComponent.messages[ChatComponent.messages.length + 1] = data.data;
+                     };*/
                 }
                 ChatComponent.prototype.getMessages = function () {
                     return ChatComponent.messages;
@@ -51,13 +56,12 @@ System.register(["angular2/core", "angular2/http"], function(exports_1) {
                 ChatComponent = __decorate([
                     core_1.Component({
                         selector: 'userprofile',
-                        template: "\n    <div>\n        <div>\n            <form  class=\"col-lg-offset-2 col-lg-8\" method=\"post\" role=\"form\">\n                <div class=\"form-group\">\n                    <label>TextMessage</label>\n                    <input type=\"text\" placeholder=\"Enter chat\" class=\"form-control\" [(ngModel)]=\"message\">\n                </div>\n                <div class=\"row\">\n                    <button type=\"button\" class=\"btn btn-lg btn-wide btn-primary\" (click)=\"onSubmit()\">Add</button>\n                </div>\n            </form>\n        </div>\n        <div *ngFor=\"#message of getMessages()\">\n            <p>{{message}}</p>\n        </div>\n    </div>\n    ",
+                        template: "\n    <head>\n\n    </head>\n    <div>\n        <div>\n            <form  class=\"col-lg-offset-2 col-lg-8\" method=\"post\" role=\"form\">\n                <div class=\"form-group\">\n                    <label>TextMessage</label>\n                    <input type=\"text\" placeholder=\"Enter chat\" class=\"form-control\" id=\"sendchatmessage\">\n                </div>\n                <div class=\"row\">\n                    <button type=\"button\" class=\"btn btn-lg btn-wide btn-primary\" onclick=\"sendName();\">Add</button>\n                </div>\n            </form>\n        </div>\n\n        <div>\n            <button id=\"connect\" onclick=\"connect();\">Connect</button>\n            <button id=\"disconnect\" disabled=\"disabled\" onclick=\"disconnect();\">Disconnect</button>\n        </div>\n\n\n        <div id=\"receivedMessage\">\n        </div>\n        <div *ngFor=\"#message of getMessages()\">\n            <p>{{message}}</p>\n        </div>\n    </div>\n    ",
                         inputs: ['messages']
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [http_1.Http])
                 ], ChatComponent);
                 return ChatComponent;
-                var _a;
             })();
             exports_1("ChatComponent", ChatComponent);
         }

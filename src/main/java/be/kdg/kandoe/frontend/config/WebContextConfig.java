@@ -1,5 +1,6 @@
 package be.kdg.kandoe.frontend.config;
 
+import be.kdg.kandoe.frontend.webSocket.WebSocketConfig;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
@@ -24,7 +25,7 @@ import java.util.List;
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class),
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "be.kdg.kandoe.frontend.config.security.rest.*")}
 )
-@Import({RestConfig.class})
+@Import({RestConfig.class, WebSocketConfig.class})
 public class WebContextConfig extends WebMvcConfigurerAdapter{
 
     @Override

@@ -9,51 +9,67 @@ import {Http} from "angular2/http";
 @Component({
     selector: 'userprofile',
     template: `
+    <head>
+
+    </head>
     <div>
         <div>
             <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
                 <div class="form-group">
                     <label>TextMessage</label>
-                    <input type="text" placeholder="Enter chat" class="form-control" [(ngModel)]="message">
+                    <input type="text" placeholder="Enter chat" class="form-control" id="sendchatmessage">
                 </div>
                 <div class="row">
-                    <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit()">Add</button>
+                    <button type="button" class="btn btn-lg btn-wide btn-primary" onclick="sendName();">Add</button>
                 </div>
             </form>
+        </div>
+
+        <div>
+            <button id="connect" onclick="connect();">Connect</button>
+            <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+        </div>
+
+
+        <div id="receivedMessage">
         </div>
         <div *ngFor="#message of getMessages()">
             <p>{{message}}</p>
         </div>
     </div>
     `,
-    inputs:['messages']
+    inputs: ['messages']
 })
 
 export class ChatComponent {
     http:Http;
-    ws:WebSocket;
+    ws;
     stompclient;
-    static messages:String[]=[];
-    message:String="empty";
+    static messages:String[] = [];
+    message:String = "empty";
 
     constructor(http:Http) {
         this.http = http;
-        this.ws = new WebSocket('ws://localhost:9966/Kandoe/chat');
-        ChatComponent.messages[0]=("This is a test message");
+        /* this.ws = new WebSocket('ws://localhost:9966/Kandoe/chat');
+         ChatComponent.messages[0] = ("This is a test message");
 
-        this.ws.onopen = function(){
-          console.log("Connection openned");
-        };
-        this.ws.onclose = function(event){
-            console.log(event.code);
-        };
-        this.ws.onmessage = function(data){
-            console.log("incoming message: " + data.data);
-            ChatComponent.messages[ChatComponent.messages.length+1] = data.data;
-        };
+         this.stompclient =
+
+         //this.stompclient.connect("chicken.rmq.cloudamqp.com");
+
+         this.ws.onopen = function () {
+         console.log("Connection openned");
+         };
+         this.ws.onclose = function (event) {
+         console.log(event.code);
+         };
+         this.ws.onmessage = function (data) {
+         console.log("incoming message: " + data.data);
+         ChatComponent.messages[ChatComponent.messages.length + 1] = data.data;
+         };*/
     }
 
-    getMessages():String[]{
+    getMessages():String[] {
         return ChatComponent.messages;
     }
 
