@@ -66,8 +66,30 @@
                 <div class="panel-heading">
                     <h4 class="title">Themes</h4>
                 </div>
-                <ul class="panel-body">
-                        <li *ngFor="#theme of themes; #i = index" class="col-xs-12 col-sm-4">
+                <ul class="panel-body list-unstyled theme-card-list">
+                    <li class="col-sm-12 col-md-4">
+                        <div class="themeCard-container manual-flip">
+                            <div class="themeCard">
+                                <div class="front new-card">
+                                    <div class="cover"></div>
+                                    <div class="themeContent">
+                                        <div class="mainContent">
+                                            <div class="col-xs-offset-1 col-xs-10 card-btn-container center-container">
+                                                <button [routerLink]="['/AddTheme']" class="btn btn-primary btn-add-theme">
+                                                    Create a new Theme
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="back">
+                                    <div class="header"></div>
+                                    <div class="themeContent nopaddingleft"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                        <li *ngFor="#theme of themes; #i = index" class="col-sm-12 col-md-4">
                             <div class="themeCard-container manual-flip">
                                 <div class="themeCard">
                                     <div class="front">
@@ -104,27 +126,27 @@
                                         </div>
                                         <div class="themeContent nopaddingleft">
                                             <div class="mainContent center-container">
-                                                <!--kaarten worden hier afgedrukt voor description komt u logo(heel klein)
-                                                 daar een knop zetten om kaart toe te voegen
-                                                 en in thema detail aanpassen-->
+                                                <h4>Cards</h4>
                                                 <div class="theme-cards-content">
-                                                    <h4>Cards</h4>
-                                                    <ul class="ul-show-cards" data-spy="scroll"
-                                                        *ngFor="#card of theme.cards">
-                                                        <div class="single-card">
-                                                            <li>
+                                                    <div class="cards" data-spy="scroll">
+                                                    <ul class="ul-show-cards">
+                                                        <div class="single-card" *ngFor="#card of theme.cards">
+                                                            <li class="fontsize-card">
                                                                 <img class="card-img-theme" alt="no image found"
                                                                      [src]="getImageSrc(card.imageURL)">
                                                                 {{card.description}}
                                                             </li>
                                                         </div>
-                                                        <br>
+                                                        <br/>
                                                     </ul>
+                                                    </div>
                                                 </div>
                                                 <div>
-                                                    <button [routerLink]="['/AddCard', {id:theme.themeId}]"
-                                                            class=" btn btn-primary btn-wide theme-cards-btn">Add card
-                                                    </button>
+                                                    <a href="#popup-addCard">
+                                                        <button class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">
+                                                            Add card
+                                                        </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,7 +155,7 @@
                                                     data-original-title="Flip Card">
                                                 <i class="fa fa-reply"></i> Back
                                             </button>
-                                            <div class="social social-links text-center">
+                                            <div class="social-links text-center">
                                                 <a href="#facebook" class="facebook"><span
                                                         class="fa fa-facebook"></span></a>
                                                 <a href="#twitter" class="twitter"><span
