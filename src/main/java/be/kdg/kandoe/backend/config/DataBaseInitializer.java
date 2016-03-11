@@ -203,6 +203,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         UserSession userSession = new UserSession();
         if(sessionRepository.findOne(1) == null && user.getId() != null ){
             session.setStartTime(LocalDateTime.now());
+            session.setSessionName("First session name");
             session.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
             session.setMaxCards(4);
             session.setMinCards(2);

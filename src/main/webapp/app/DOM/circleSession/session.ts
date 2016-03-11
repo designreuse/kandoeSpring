@@ -4,6 +4,7 @@ import {Theme} from "../theme";
 
 export class Session {
     sessionId: number;
+    sessionName: string
     mode: string;
     type: string;
     minCards: number;
@@ -26,6 +27,7 @@ export class Session {
     static fromJson(json: any): Session {
         var session = new Session();
         session.sessionId = json.sessionId;
+        session.sessionName = json.sessionName;
         session.mode = json.mode;
         session.type = json.type;
         session.minCards = json.minCards;

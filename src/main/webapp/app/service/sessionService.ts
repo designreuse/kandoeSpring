@@ -34,7 +34,7 @@ export class SessionService {
         return this.securityService.post(this.path + 'sessions', JSON.stringify(session), true);
     }
 
-   /* public addCards(cardIds: Array<number>, sessionId: number): Observable<Session>{
+    public addCards(cardIds: Array<number>, sessionId: number): Observable<Session>{
         var cards: Card[] = [];
         for(var i = 0; i < cardIds.length; i++){
             var c = new Card();
@@ -44,5 +44,5 @@ export class SessionService {
         return this.securityService.post(this.path + 'sessions/' + sessionId + '/addCards', JSON.stringify(cards), true)
             .map(res => res.json())
             .map((session:Session) => Session.fromJson(session));
-    }*/
+    }
 }

@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class SessionDTO extends ResourceSupport implements Serializable{
+public class SessionDTO extends ResourceSupport implements Serializable {
     private Integer sessionId;
+    private String sessionName;
     private SessionMode mode;
     private SessionType type;
     private int minCards;
@@ -21,12 +22,19 @@ public class SessionDTO extends ResourceSupport implements Serializable{
     private boolean userAddCards;
     private Integer themeId;
     private boolean chosenCards;
-
     private List<CardDTO> cards;
     private List<UserDTO> users;
     private ThemeDTO theme;
 
     public SessionDTO() {
+    }
+
+    public String getSessionName() {
+        return sessionName;
+    }
+
+    public void setSessionName(String sessionName) {
+        this.sessionName = sessionName;
     }
 
     public Integer getSessionId() {

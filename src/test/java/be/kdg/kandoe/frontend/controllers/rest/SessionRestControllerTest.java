@@ -91,6 +91,7 @@ public class SessionRestControllerTest {
     @Test
     public void testCreateSession() throws Exception {
         JSONObject session = new JSONObject();
+        session.put("sessionName","First session name");
         session.put("mode", "SYNC");
         session.put("type", "IDEA");
         session.put("minCards", 1);
@@ -112,6 +113,7 @@ public class SessionRestControllerTest {
     @Test
     public void testCreateSessionWrongTheme() throws Exception {
         JSONObject session = new JSONObject();
+        session.put("sessionName","First session name");
         session.put("mode", "SYNC");
         session.put("type", "IDEA");
         session.put("minCards", 1);

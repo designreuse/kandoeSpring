@@ -40,7 +40,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             ThemeComponent = (function () {
                 function ThemeComponent(_themeService, router, _userService, cardService) {
                     this._themeService = _themeService;
-                    this.router = router;
                     this._userService = _userService;
                     this.themes = [];
                     this.user = user_1.User.createEmpty();
@@ -86,8 +85,19 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
-                ThemeComponent.prototype.giveId = function (id) {
+                ThemeComponent.prototype.showPopup = function (id) {
                     this.themeId = id;
+                    /* var background = document.getElementById('everything');
+                     var popup=document.getElementById('popup-addCard');
+             
+                     $(popup).css('visibility', 'visible');
+                     $(background).css('background','rgba(0, 0, 0, 0.7)')*/
+                };
+                ThemeComponent.prototype.closePopup = function () {
+                    var popup = document.getElementById('popup-addCard');
+                    $(popup).css('display', 'none');
+                    this.router.navigate(['/Themes']);
+                    document.location.reload();
                 };
                 ThemeComponent.prototype.onSubmit = function () {
                     var _this = this;

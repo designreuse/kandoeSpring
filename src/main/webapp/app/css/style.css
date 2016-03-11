@@ -688,6 +688,11 @@ footer {
 
 }
 
+#close-popup{
+    float: right;
+
+}
+
 .containerpopup {
     padding-right: 0;
     padding-left: 0;

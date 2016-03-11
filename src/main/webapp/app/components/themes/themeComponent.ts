@@ -29,13 +29,12 @@ export class ThemeComponent implements OnInit {
     private card:Card = Card.createEmpty();
     private themeId:number;
 
-    constructor(private _themeService:ThemeService, private router:Router, private _userService:UserService,
+    constructor(private _themeService:ThemeService, router:Router, private _userService:UserService,
                 cardService:CardService) {
         this.userService = _userService;
-        this.router=router;
+        this.router = router;
         this.cardService = cardService;
     }
-
 
 
     ngOnInit() {
@@ -76,8 +75,20 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    giveId(id:number) {
+    showPopup(id:number) {
         this.themeId = id;
+       /* var background = document.getElementById('everything');
+        var popup=document.getElementById('popup-addCard');
+
+        $(popup).css('visibility', 'visible');
+        $(background).css('background','rgba(0, 0, 0, 0.7)')*/
+    }
+
+     closePopup(){
+        var popup = document.getElementById('popup-addCard');
+        $(popup).css('display', 'none');
+         this.router.navigate(['/Themes']);
+         document.location.reload();
     }
 
     onSubmit() {
@@ -95,11 +106,11 @@ export class ThemeComponent implements OnInit {
         });
     }
 
-    private rotateCard($event){
+    private rotateCard($event) {
         var card = $event.target;
         var container = $(card).closest('.themeCard-container');
         console.log(container);
-        if(container.hasClass('hover')){
+        if (container.hasClass('hover')) {
             container.removeClass('hover');
         } else {
             container.addClass('hover');
@@ -236,4 +247,7 @@ export class ThemeComponent implements OnInit {
             $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
         }
     }
+
+
+
 }
