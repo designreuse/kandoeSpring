@@ -1,6 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
 
+.add-kandoe-card{
+    height: 375px;
+}
+
 .kandoe-session-card{
     font-family: 'Roboto', sans-serif;
     margin-top: 10px;
@@ -17,7 +21,7 @@ overflow: hidden;
 -ms-transform-style: preserve-3d;
 -o-transform-style: preserve-3d;
 transform-style: preserve-3d;
-/*height: 200px;*/
+height: 200px;
 }
 
 .kandoe-session-card .kandoe-session-card-image img{

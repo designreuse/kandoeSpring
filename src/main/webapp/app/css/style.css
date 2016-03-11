@@ -80,6 +80,11 @@ hr {
     margin: 0 !important;
 }
 
+.padding-left-5{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 /*
 --------------------- Buttons ------------------------------
 */
@@ -120,7 +125,6 @@ hr {
     height: 50px;
     margin-bottom: 20px;
     margin-top: 30px;
-    margin-left: 15px;
 }
 
 .btn-create {
@@ -292,7 +296,11 @@ section {
 }
 
 .roboto-bold {
-    font-weight: 600;
+    font-weight: 600 !important;
+}
+
+.no-bold{
+    font-weight: normal !important;
 }
 
 .content {
@@ -779,7 +787,7 @@ footer {
 .session-card {
     width: 125px;
     height: 180px;
-    background: url(../resources/noimgplaceholder.png) no-repeat;
+    background: no-repeat;
     position: relative;
 }
 

@@ -21,7 +21,7 @@ import {UserService} from "../service/userService";
 
                 <div class="card-content">
                     <span class="card-title">Title</span>
-                   <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="show()">
+                   <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="showReveal($event)">
                         <i class="fa fa-ellipsis-v"></i>
                     </button>
                 </div><!-- card content -->
@@ -53,13 +53,18 @@ export class KandoeCard {
     }
 
     ngOnInit() {
-        $('.show-btn').on('click', function () {
+        /*$('.show-btn').on('click', function () {
             $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-        });
+        });*/
 
         $('.card-reveal .close').on('click', function () {
             $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
         });
+    }
+
+    showReveal($event) {
+        var id = $event.target.getAttribute("data-rel");
+        $('div.card-reveal[data-rel=' + id + ']').slideToggle('slow');
     }
 
 

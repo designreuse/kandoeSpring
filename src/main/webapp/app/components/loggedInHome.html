@@ -51,40 +51,47 @@
                 <li class="active">Themes</li>
             </ol>
             <div class="searchable-container" id="sort-list">
-                <div class="col-xs-12 col-sm-4">
-                    <button type="button" class="btn btn-primary" [routerLink]="['/AddSession']">
-                        Create new kandoe
-                    </button>
+                <div class="kandoe-session-card-container col-sm-12 col-md-4">
+                    <div class="new-card add-kandoe-card kandoe-session-card center-container">
+                        <div class="card-btn-container">
+                            <button type="button" class="btn btn-primary" [routerLink]="['/AddSession']">
+                                Create new kandoe
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-                <div *ngFor="#session of sessions; #i = index" class="kandoe-session-card-container col-md-4">
+                <div *ngFor="#session of sessions; #i = index" class="kandoe-session-card-container col-sm-12 col-md-4">
                     <div class="kandoe-session-card">
                         <div class="kandoe-session-card-image">
                             <img [src]="getImageSrc(session.theme.iconURL)" class="img-responsive">
                             <div class="caption post-content">
-                                <h3 style="color:#f9f9f9">{{session.theme.description}}</h3>
+                                <h3 style="color:#f9f9f9">{{session.theme.themeName}}</h3>
                             </div>
                         </div><!-- kandoe-session-card image -->
             
                         <div class="kandoe-session-card-content">
-                            <span class="kandoe-session-card-title">Title</span>
-                            <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="show()">
+                            <span class="kandoe-session-card-title">{{session.sessionId}}</span>
+                            <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="showReveal(i)">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                         </div><!-- kandoe-session-card content -->
-                        <div class="row">
+                        <div class="row nopadding-nomargin">
                             <div class="kandoe-session-card-action col-sm-12">
-                                <div class="col-sm-2"><label><span class="glyphicon glyphicon-user"></span> 4</label></div>
-                                <div class="col-sm-4"><label><span class="glyphicon glyphicon-time"></span> {{session.endTime}}</label></div>
-                                <div class="col-sm-4"><label><span class="glyphicon glyphicon-bookmark"></span> Birds</label></div>
-                                <div class="col-sm-2"><button type="button" [routerLink]="['/SessionDetail', {id:session.sessionId}]" class="btn btn-custom pull-right"><span class="glyphicon glyphicon-chevron-right"></span></button></div>
+                                <div class="padding-left-5 col-sm-2"><label>ID<p class="no-bold">{{session.sessionId}}</p></label></div>
+                                <div class="padding-left-5 col-sm-5"><label><span class="glyphicon glyphicon-time"></span> <span class="no-bold">{{session.endTime}}</span></label></div>
+                                <div class="padding-left-5 col-sm-3"><label>TYPE<p class="no-bold">{{session.type}}</p></label></div>
+                                <div class="padding-left-5 col-sm-2"><button type="button" [routerLink]="['/SessionDetail', {id:session.sessionId}]" class="btn btn-custom pull-right"><span class="glyphicon glyphicon-chevron-right"></span></button></div>
                             </div><!-- kandoe-session-card actions -->
                         </div>
-                        <div class="kandoe-session-card-reveal" data-rel="1">
-                            <span class="kandoe-session-card-title">kandoe-session-card Title</span> <button type="button" class="close" data-rel="1" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
-                            <h4>Subtitle</h4>
+                        <div class="kandoe-session-card-reveal" [attr.id]="i">
+                            <span class="kandoe-session-card-title"><h3>{{session.sessionId}}</h3></span> <button type="button" class="close" data-rel="1" data-dismiss="modal" aria-label="Close" (click)="closeReveal(i)"><span aria-hidden="true">×</span></button>
+                            <h4>Cards</h4>
                             <ul>
-                                <li> More information</li>
+                                <li *ngFor="#card of session.cards">{{card.description}}</li>
+                            </ul>
+                            <h4>Users</h4>
+                            <ul>
+                                <li *ngFor="#user of session.users">{{user.username}}</li>
                             </ul>
                         </div><!-- kandoe-session-card reveal -->
                     </div>
