@@ -1,15 +1,17 @@
 System.register(['angular2/core', "../../DOM/circleSession/session", "../../service/sessionService", "angular2/router", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../service/themeService", "../../service/organisationService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, session_1, sessionService_1, router_1, TokenHelper_1, userService_1, user_1, themeService_1, organisationService_1;
-    var AddSession;
+    var DateTimeFormat, AddSession;
     return {
         setters:[
             function (core_1_1) {
@@ -71,10 +73,13 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this.types = ['PROBLEM', 'IDEA'];
                     this.modes = ['ASYNC', 'SYNC'];
                 };
+                AddSession.prototype.onDateChanged = function (event) {
+                    console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+                };
                 AddSession.prototype.selectTheme = function ($event) {
                     this.currentTheme = this.themes.find(function (theme) { return theme.themeName === $event.target.value; });
-                    console.log("theme: " + this.currentTheme.themeId);
                     this.session.theme = this.currentTheme;
+                    this.session.themeId = this.currentTheme.themeId;
                     this.showUsersOrganisation();
                 };
                 AddSession.prototype.showUsersOrganisation = function () {
@@ -103,12 +108,13 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                 };
                 AddSession.prototype.onSubmit = function () {
                     var _this = this;
-                    this.session.startTime = this.startTime.toString(); //stringify date
-                    this.session.endTime = this.endTime.toString(); //stringify date
+                    this.startDate = new Date(this.startYear + "-" + this.startMonth + "-" + this.startDay);
+                    this.endDate = new Date(this.endYear + "-" + this.endMonth + "-" + this.endDay);
+                    this.session.startTime = this.startDate.toISOString();
+                    this.session.endTime = this.endDate.toISOString();
                     console.log(JSON.stringify(this.session));
                     this.sessionService.createSession(this.session).subscribe(function (res) {
-                        alert(res);
-                        _this.router.navigate(['/LoggedIn']);
+                        _this.router.navigate(['/LoggedInHome']);
                     }, function (error) {
                         alert("Something went wrong");
                     });

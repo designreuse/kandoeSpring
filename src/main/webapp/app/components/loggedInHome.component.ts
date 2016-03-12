@@ -36,6 +36,7 @@ export class LoggedInHome implements OnInit{
 
     ngOnInit(){
         this._sessionService.getUserSessions().subscribe((sessions:Session[])=>{
+            console.log(JSON.stringify(sessions));
             this.sessions = sessions;
         });
         this.userService.getCurrentUser().subscribe(u => {

@@ -4,7 +4,7 @@ import {Theme} from "../theme";
 
 export class Session {
     sessionId: number;
-    sessionName: string
+    sessionName: string;
     mode: string;
     type: string;
     minCards: number;

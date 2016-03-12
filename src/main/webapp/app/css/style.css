@@ -187,12 +187,34 @@ form {
 
 }
 
+.form-titel {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #55595c;
+}
+
 .form-card {
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: #FFF;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+}
+
+.form-control-date {
+    display: inline-block;
+    width: 32%;
+    padding: .375rem .75rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #55595c;
+    background: #fff none;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+    box-shadow: none;
 }
 
 .form-control {
