@@ -40,7 +40,10 @@ public class ThemeAssembler extends ResourceAssemblerSupport<Theme, ThemeDTO> {
     @Override
     public ThemeDTO toResource(Theme entity) {
         ThemeDTO themeDTO = mapper.map(entity, ThemeDTO.class);
-        themeDTO.setCountSubthemes(entity.getSubThemes().size());
+        if(entity.getSubThemes() != null){
+            themeDTO.setCountSubthemes(entity.getSubThemes().size());
+        }
+
         themeDTO.setThemeId(entity.getId());
         return themeDTO;
     }
