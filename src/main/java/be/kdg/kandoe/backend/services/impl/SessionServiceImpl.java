@@ -71,8 +71,6 @@ public class SessionServiceImpl implements SessionService {
             List<UserSession> userSessions = user.getUserSessions();
             List<Session> sessions = new ArrayList<>();
             for (UserSession userSession : userSessions) {
-                Hibernate.initialize(userSession.getSession().getTheme());
-                Hibernate.initialize(userSession.getSession().getCardSessions());
                 sessions.add(userSession.getSession());
                 Hibernate.initialize(userSession.getSession().getTheme());
                 Hibernate.initialize(userSession.getSession().getCardSessions());

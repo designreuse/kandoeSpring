@@ -62,13 +62,13 @@ public class SessionServiceTest {
 
     @Test
     public void testMoveCardWrongUser() throws Exception{
-       /* Session s = sessionService.findSessionById(1,1);
+        Session s = sessionService.findSessionById(1,1);
         System.out.println(s.getUserSessions().size());
         CardSession cardSession = s.getCardSessions().stream().filter(cs -> cs.getPosition()==0).findFirst().get();
         UserSession userSession = s.getUserSessions().stream().filter(us -> us.getUserPosition()==1).findFirst().get();
 
         int original = cardSession.getPosition();
         sessionService.updateCardPosition(cardSession.getCard().getId(),0,userSession.getUser().getId(),s.getId());
-        assertEquals("The cardPosition should be 0",original,cardSession.getPosition());*/
+        assertEquals("The cardPosition should be 0",original,cardSession.getPosition());
     }
 }

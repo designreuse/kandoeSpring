@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -233,10 +234,13 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             session.setUserSessions(userSessions);
             session.setSize(6);
             session = sessionRepository.save(session);
-            user.setUserSessions(userSessions);
+            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession)));
             userRepository.save(user);
+            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1)));
             userSession.setSession(session);
+            userSession1.setSession(session);
             userSessionRepository.save(userSession);
+            userSessionRepository.save(userSession1);
             cardSession.setSession(session);
             cardSessionRepository.save(cardSession);
         }
