@@ -45,17 +45,19 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                 LoggedInHome.prototype.ngOnInit = function () {
                     var _this = this;
                     this._sessionService.getUserSessions().subscribe(function (sessions) {
+                        console.log(JSON.stringify(sessions));
                         _this.sessions = sessions;
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
-                    $('.show-btn').on('click', function () {
-                        $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
+                    /*$('.show-btn').on('click', function () {
+                        $('div.kandoe-session-card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
                     });
+            /*
                     $('.card-reveal .close').on('click', function () {
                         $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-                    });
+                    });*/
                 };
                 LoggedInHome.prototype.logout = function () {
                     localStorage.removeItem("id_token");
@@ -70,6 +72,16 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                             return url.replace(/"/g, "");
                         }
                     }
+                };
+                LoggedInHome.prototype.showReveal = function (i) {
+                    var id = "#" + i;
+                    var el = $(document).find($(id));
+                    el.slideToggle("slow");
+                };
+                LoggedInHome.prototype.closeReveal = function (i) {
+                    var id = "#" + i;
+                    var el = $(document).find($(id));
+                    el.slideToggle("slow");
                 };
                 LoggedInHome = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),

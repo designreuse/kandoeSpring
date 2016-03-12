@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -144,7 +145,7 @@
                                             </div>
                                             <div>
                                                 <a href="#popup-addCard">
-                                                    <button class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">
+                                                    <button id="addcard-btn" class=" btn btn-primary btn-wide theme-cards-btn" (click)="showPopup(theme.themeId)">
                                                         Add card
                                                     </button>
                                                 </a>
@@ -175,9 +176,9 @@
 </div>
 
 <!--Popup addCard -->
-<div id="popup-addCard" class="containerpopup overlay">
+<div id="popup-addCard" class="containerpopup overlay" (mouseup)="closePopup()" >
     <div class="popup">
-
+        <a [routerLink]="['/Themes']"  (click)="closePopup()"  id="close-popup" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right glyphicon glyphicon-remove-circle"></a>
         <header class="popup-header">
             <div class="container page-headercard">
                 <h4>Add new card</h4>
@@ -224,3 +225,4 @@
 
     </div>
 </div>
+

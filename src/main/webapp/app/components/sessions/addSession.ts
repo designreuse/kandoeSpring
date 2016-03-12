@@ -9,6 +9,7 @@ import {ThemeService} from "../../service/themeService";
 import {Theme} from "../../DOM/theme";
 import {Card} from "../../DOM/card";
 import {OrganisationService} from "../../service/organisationService";
+import DateTimeFormat = Intl.DateTimeFormat;
 
 @CanActivate(() => tokenNotExpired())
 
@@ -21,10 +22,16 @@ import {OrganisationService} from "../../service/organisationService";
 export class AddSession implements OnInit{
     private session:Session = Session.createEmpty();
     private sessionService:SessionService;
-
     //DATE FIX?
-    private startTime:Date;
-    private endTime:Date;
+    //private startTime:Date;
+    private startYear:number;
+    private startMonth:number;
+    private startDay:number;
+    private endDay:number;
+    private endYear:number;
+    private endMonth:number;
+    private startDate:Date;
+    private endDate:Date;
 
     private organisationService:OrganisationService;
     private themes:Theme[];
@@ -36,6 +43,7 @@ export class AddSession implements OnInit{
     private users: User[];
     private types:string[] = ['PROBLEM', 'IDEA'];
     private modes:string[] = ['ASYNC', 'SYNC'];
+
 
 
     constructor(sessionService:SessionService, private _userService:UserService, router:Router, themeService: ThemeService, organisationService : OrganisationService) {
@@ -57,6 +65,7 @@ export class AddSession implements OnInit{
             this.cards = this.currentTheme.cards;
             this.users = this.session.users;
             this.session.theme = this.currentTheme;
+
             this.showUsersOrganisation()
         });
         this._userService.getCurrentUser().subscribe(u => {
@@ -64,12 +73,18 @@ export class AddSession implements OnInit{
         });
         this.types = ['PROBLEM', 'IDEA'];
         this.modes = ['ASYNC', 'SYNC'];
+
+
+    }
+
+    onDateChanged(event) {
+        console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
     }
 
     selectTheme($event){
         this.currentTheme = this.themes.find(theme => theme.themeName === $event.target.value);
-        console.log("theme: " + this.currentTheme.themeId);
         this.session.theme = this.currentTheme;
+        this.session.themeId = this.currentTheme.themeId;
         this.showUsersOrganisation();
     }
 
@@ -100,15 +115,17 @@ export class AddSession implements OnInit{
     }
 
     onSubmit() {
+        this.startDate = new Date(this.startYear + "-" + this.startMonth + "-" + this.startDay);
+        this.endDate = new Date(this.endYear + "-" + this.endMonth + "-" + this.endDay);
+
+        this.session.startTime = this.startDate.toISOString();
+        this.session.endTime = this.endDate.toISOString();
 
 
-        this.session.startTime = this.startTime.toString(); //stringify date
-        this.session.endTime = this.endTime.toString(); //stringify date
 
         console.log(JSON.stringify(this.session)) ;
         this.sessionService.createSession(this.session).subscribe(res => {
-            alert(res);
-            this.router.navigate(['/LoggedIn']);
+            this.router.navigate(['/LoggedInHome']);
         }, error => {
             alert("Something went wrong");
         });

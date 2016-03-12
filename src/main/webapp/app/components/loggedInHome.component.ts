@@ -36,19 +36,20 @@ export class LoggedInHome implements OnInit{
 
     ngOnInit(){
         this._sessionService.getUserSessions().subscribe((sessions:Session[])=>{
+            console.log(JSON.stringify(sessions));
             this.sessions = sessions;
         });
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
 
-        $('.show-btn').on('click', function () {
-            $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
+        /*$('.show-btn').on('click', function () {
+            $('div.kandoe-session-card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
         });
-
+/*
         $('.card-reveal .close').on('click', function () {
             $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-        });
+        });*/
     }
 
     logout() {
@@ -64,5 +65,17 @@ export class LoggedInHome implements OnInit{
                     return url.replace(/"/g, "");
                 }
             }
+    }
+
+    showReveal(i) {
+        var id = "#" + i;
+        var el = $(document).find($(id));
+        el.slideToggle("slow");
+    }
+
+    closeReveal(i){
+        var id = "#" + i;
+        var el = $(document).find($(id));
+        el.slideToggle("slow");
     }
 }

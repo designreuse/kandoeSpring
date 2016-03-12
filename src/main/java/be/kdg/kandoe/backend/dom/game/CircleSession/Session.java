@@ -22,6 +22,9 @@ public class Session implements Serializable, Identifiable<Integer> {
     @GeneratedValue
     private Integer sessionId;
 
+    @Column(name = "SessionName", nullable = false)
+     private String sessionName;
+
     @Column(name = "Modus", nullable = false)
     private SessionMode mode;
 
@@ -64,6 +67,14 @@ public class Session implements Serializable, Identifiable<Integer> {
     private List<Message> chat;
 
     public Session() {
+    }
+
+    public String getSessionName() {
+        return sessionName;
+    }
+
+    public void setSessionName(String sessionName) {
+        this.sessionName = sessionName;
     }
 
     public int getSize() {

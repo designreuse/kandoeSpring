@@ -19,6 +19,7 @@ System.register(["../card", "../users/user", "../theme"], function(exports_1) {
                 Session.fromJson = function (json) {
                     var session = new Session();
                     session.sessionId = json.sessionId;
+                    session.sessionName = json.sessionName;
                     session.mode = json.mode;
                     session.type = json.type;
                     session.minCards = json.minCards;
