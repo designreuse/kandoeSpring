@@ -43,6 +43,9 @@ public class ThemeServiceImpl implements ThemeService {
         if(theme != null && theme.getCards() != null)
             Hibernate.initialize(theme.getCards());
 
+        if(theme != null && theme.getSubThemes() != null)
+            Hibernate.initialize(theme.getSubThemes());
+
         return theme;
     }
 
@@ -115,7 +118,11 @@ public class ThemeServiceImpl implements ThemeService {
         //http://stackoverflow.com/questions/5027013/hibernate-lazy-load-application-design
         Hibernate.initialize(creator.getThemes());
         List<Theme> themes = creator.getThemes();
-        themes.stream().forEach(t -> Hibernate.initialize(t.getCards()));
+        themes.stream().forEach(t -> {
+            Hibernate.initialize(t.getCards());
+            if(t.getSubThemes() != null)
+                Hibernate.initialize(t.getSubThemes());
+        });
         return creator.getThemes();
     }
 
