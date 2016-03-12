@@ -3,6 +3,7 @@ package be.kdg.kandoe.backend.services.api;
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
+import org.hibernate.SessionException;
 
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface SessionService {
 	Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException;
 
     List<Session> findSessionByThemeId(Integer themeId, Integer userId) throws SessionServiceException;
+
+    void updateCardPosition(Integer cardId, int newPostion,Integer userId, Integer sessionId) throws SessionServiceException;
 }

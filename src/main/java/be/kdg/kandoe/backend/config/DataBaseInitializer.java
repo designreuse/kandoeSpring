@@ -201,6 +201,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         Session session = new Session();
         CardSession cardSession = new CardSession();
         UserSession userSession = new UserSession();
+        UserSession userSession1 = new UserSession();
         if(sessionRepository.findOne(1) == null && user.getId() != null ){
             session.setStartTime(LocalDateTime.now());
             session.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
@@ -222,7 +223,10 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             List<UserSession> userSessions = new ArrayList<>();
 
             userSession.setUser(user);
+            userSession1.setUser(user2);
+            userSession1.setUserPosition(1);
             userSessions.add(userSession);
+            userSessions.add(userSession1);
            // userSession = userSessionRepository.save(userSession);
 
             session.setUserSessions(userSessions);

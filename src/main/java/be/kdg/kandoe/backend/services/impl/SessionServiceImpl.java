@@ -13,6 +13,7 @@ import be.kdg.kandoe.backend.services.api.*;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.hibernate.Hibernate;
+import org.hibernate.SessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class SessionServiceImpl implements SessionService{
+public class SessionServiceImpl implements SessionService {
 
     private final SessionRepository sessionRepository;
     private final UserService userService;
@@ -51,7 +52,7 @@ public class SessionServiceImpl implements SessionService{
             User user = userService.findUserById(userId);
             List<UserSession> userSessions = user.getUserSessions();
             Hibernate.initialize(userSessions);
-            if(userSessions!= null && userSessions.stream().anyMatch(u -> u.getSession().getId().equals(sessionId))){
+            if (userSessions != null && userSessions.stream().anyMatch(u -> u.getSession().getId().equals(sessionId))) {
                 Session s = sessionRepository.findOne(sessionId);
                 Hibernate.initialize(s.getCardSessions());
                 Hibernate.initialize(s.getTheme());
@@ -64,7 +65,7 @@ public class SessionServiceImpl implements SessionService{
     }
 
     @Override
-    public List<Session> findSessionsCurrentUser(Integer userId) throws SessionServiceException{
+    public List<Session> findSessionsCurrentUser(Integer userId) throws SessionServiceException {
         try {
             User user = userService.findUserById(userId);
             List<UserSession> userSessions = user.getUserSessions();
@@ -77,7 +78,7 @@ public class SessionServiceImpl implements SessionService{
                 Hibernate.initialize(userSession.getSession().getCardSessions());
             }
             return sessions;
-        } catch(UserServiceException ex){
+        } catch (UserServiceException ex) {
             throw new SessionServiceException(ex.getMessage());
         }
     }
@@ -89,9 +90,9 @@ public class SessionServiceImpl implements SessionService{
             List<UserSession> userSessions = user.getUserSessions();
             List<Session> themeSessions = new ArrayList<>();
             Hibernate.initialize(userSessions);
-            if(userSessions!= null && userSessions.stream().anyMatch(u -> u.getSession().getTheme().getThemeId().equals(themeId))){
+            if (userSessions != null && userSessions.stream().anyMatch(u -> u.getSession().getTheme().getThemeId().equals(themeId))) {
                 List<Session> s = sessionRepository.findAll();
-                for (Session session : s){
+                for (Session session : s) {
                     Hibernate.initialize(session.getCardSessions());
                     Hibernate.initialize(session.getTheme());
                     themeSessions.add(session);
@@ -109,10 +110,10 @@ public class SessionServiceImpl implements SessionService{
     public Session createSession(Session session, Integer themeId, Integer userId) throws SessionServiceException {
         Theme theme = themeService.findThemeById(themeId);
 
-        if(theme == null)
+        if (theme == null)
             throw new SessionServiceException("Theme does not exist");
 
-        if(!theme.getCreator().getId().equals(userId))
+        if (!theme.getCreator().getId().equals(userId))
             throw new SessionServiceException("You are not the creator of this theme");
 
         session.setTheme(theme);
@@ -128,7 +129,7 @@ public class SessionServiceImpl implements SessionService{
             userSession.setUserPosition(i++);
             userSessions.add(userSession);
             List<UserSession> us = user.getUserSessions();
-            if(us == null)
+            if (us == null)
                 us = new ArrayList<>();
             us.add(userSession);
             user.setUserSessions(us);
@@ -150,12 +151,12 @@ public class SessionServiceImpl implements SessionService{
         Theme theme = session.getTheme();
 
         List<CardSession> cardSessions = session.getCardSessions();
-        if(cardSessions == null)
+        if (cardSessions == null)
             cardSessions = new ArrayList<>();
 
         for (Card card : cards) {
-            if(!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))){
-                if(theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))){
+            if (!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))) {
+                if (theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
                     CardSession cardSession = new CardSession();
                     cardSession.setCard(cardService.findCardById(card.getId()));
                     cardSession.setPosition(0);
@@ -163,7 +164,7 @@ public class SessionServiceImpl implements SessionService{
                     cardSessions.add(cardSession);
 
                     List<CardSession> cs = card.getCardSessions();
-                    if(cs == null)
+                    if (cs == null)
                         cs = new ArrayList<>();
                     cs.add(cardSession);
                     card.setCardSessions(cs);
@@ -184,5 +185,21 @@ public class SessionServiceImpl implements SessionService{
         return session;
     }
 
-
+    @Override
+    public void updateCardPosition(Integer cardId, int currentPosition, Integer userId, Integer sessionId) throws SessionServiceException {
+        Session session = findSessionById(sessionId, userId);
+        CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
+        UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
+        if (userSession.getUser().getId().equals(userId)) {
+            cardSession.setPosition(currentPosition+1);
+            for (UserSession u : session.getUserSessions()) {
+                if (u.getUserPosition() == 0) {
+                    u.setUserPosition(session.getUserSessions().size()-1);
+                } else {
+                    u.setUserPosition(u.getUserPosition() - 1);
+                }
+            }
+        }
+        sessionRepository.save(session);
+    }
 }

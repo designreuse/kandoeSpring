@@ -153,5 +153,4 @@ public class UserRestController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
-
 }

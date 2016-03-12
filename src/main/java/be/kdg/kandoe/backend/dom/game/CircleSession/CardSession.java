@@ -71,4 +71,6 @@ public class CardSession implements Serializable, Identifiable<Integer> {
     public void setSession(Session session) {
         this.session = session;
     }
+
+
 }

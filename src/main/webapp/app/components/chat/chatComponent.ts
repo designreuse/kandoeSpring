@@ -49,13 +49,11 @@ export class ChatComponent {
     message:String = "empty";
 
     constructor(http:Http) {
-        this.http = http;
-        /* this.ws = new WebSocket('ws://localhost:9966/Kandoe/chat');
+         this.http = http;
+        /* this.ws = new SockJS('/Kandoe/chat');
          ChatComponent.messages[0] = ("This is a test message");
 
-         this.stompclient =
-
-         //this.stompclient.connect("chicken.rmq.cloudamqp.com");
+         this.stompclient = Stomp.over(ws);
 
          this.ws.onopen = function () {
          console.log("Connection openned");

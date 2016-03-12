@@ -130,7 +130,6 @@ public class OrganisationRestController {
     public ResponseEntity<List<OrganisationDTO>> getOrganisationsCurrentUser(@AuthenticationPrincipal User user){
         if(user != null && user.getUsername() != null){
             List<Organisation> orgs = userService.findOrganisations(user);
-
             return new ResponseEntity<>(organisationAssembler.toResources(orgs), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
