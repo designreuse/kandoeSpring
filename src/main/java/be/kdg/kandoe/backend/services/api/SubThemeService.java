@@ -9,7 +9,6 @@ public interface SubThemeService {
     SubTheme findSubThemeByName(String name);
     SubTheme saveSubTheme(SubTheme subTheme, Integer headThemeId);
     List<SubTheme> findSubThemes();
-
-   SubTheme updateSubTheme(SubTheme subTheme);
+    SubTheme updateSubTheme(SubTheme subTheme);
 
 }

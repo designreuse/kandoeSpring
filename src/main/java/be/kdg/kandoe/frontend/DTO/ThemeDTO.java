@@ -22,6 +22,8 @@ public class ThemeDTO extends ResourceSupport implements Serializable {
 
     private List<CardDTO> cards;
 
+    private int countSubthemes;
+
     public Integer getThemeId() {
         return themeId;
     }
@@ -68,5 +70,13 @@ public class ThemeDTO extends ResourceSupport implements Serializable {
 
     public void setCards(List<CardDTO> cards) {
         this.cards = cards;
+    }
+
+    public int getCountSubthemes() {
+        return countSubthemes;
+    }
+
+    public void setCountSubthemes(int countSubthemes) {
+        this.countSubthemes = countSubthemes;
     }
 }
