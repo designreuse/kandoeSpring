@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.services.impl;
 
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.OrganisationRepository;
 import be.kdg.kandoe.backend.services.api.OrganisationService;
@@ -54,6 +55,9 @@ public class OrganisationServiceImpl implements OrganisationService{
             org.getThemes().stream().forEach(t -> {
                 if(t.getCards() != null)
                     Hibernate.initialize(t.getCards());
+
+                if(t.getSubThemes() != null)
+                    Hibernate.initialize(t.getSubThemes());
             });
 
         return org;
