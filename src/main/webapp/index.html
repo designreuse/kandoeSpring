@@ -29,52 +29,6 @@
     <!--Websocket -->
     <script src="//cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
     <script src="resources/stomp.js"></script>
-    <script type="text/javascript">
-        var stompClient = null;
-        function connect() {
-            var socket = new SockJS('/Kandoe/chat'); //local
-            //var socket = new SockJS('/chat'); // wildfly
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, function (frame) {
-                setConnected(true);
-                stompClient.subscribe('/topic/chat', function (greeting) {
-                    var json = JSON.parse(greeting.body);
-                    showGreeting(json.username, json.content);
-                });
-            });
-        }
-
-        function setConnected(connected) {
-            document.getElementById('connect').disabled = connected;
-            document.getElementById('disconnect').disabled = !connected;
-        }
-
-        function disconnect() {
-            if (stompClient != null) {
-                stompClient.disconnect();
-            }
-            setConnected(false);
-        }
-
-        function sendName() {
-            var token = localStorage.getItem("id_token");
-
-            var element = document.getElementById('sendchatmessage');
-            var name = element.value;
-            stompClient.send("/chat", {}, JSON.stringify({'name': name, 'token': token}));
-            element.value = "";
-            element.focus();
-        }
-
-        function showGreeting(username, message) {
-            var response = document.getElementById('receivedMessage');
-            var p = document.createElement('p');
-            p.style.wordWrap = 'break-word';
-            p.appendChild(document.createTextNode(username + ': ' + message));
-            response.appendChild(p);
-        }
-
-    </script>
     <!-- -->
 
     <link rel="stylesheet" href="./app/css/bootstrap.css">

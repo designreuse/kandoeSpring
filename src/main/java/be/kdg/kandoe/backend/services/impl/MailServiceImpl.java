@@ -52,8 +52,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendMailToUsers(List<String> recipients, String subject, String text) {
-        for (String r: recipients
-             ) {
+        for (String r: recipients) {
             String recipientEmail = userService.findUserByUsername(r).getEmail();
             sendMail(recipientEmail,subject,text);
         }
@@ -68,8 +67,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendMailToUsersByUserId(List<Integer> ids, String subject, String text) {
-        for (Integer id: ids
-                ) {
+        for (Integer id: ids) {
             String recipientEmail = userService.findUserById(id).getEmail();
             sendMail(recipientEmail,subject,text);
         }
@@ -86,8 +84,6 @@ public class MailServiceImpl implements MailService {
             message.setText(text);
 
             Transport.send(message);
-
-            System.out.println("Done");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

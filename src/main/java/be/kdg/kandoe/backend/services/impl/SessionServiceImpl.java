@@ -35,15 +35,17 @@ public class SessionServiceImpl implements SessionService {
     private final ThemeService themeService;
     private final CardSessionRepository cardSessionRepository;
     private final CardService cardService;
+    private final MailService mailService;
 
     @Autowired
     public SessionServiceImpl(SessionRepository sessionRepository, UserService userService, ThemeService themeService,
-                              CardSessionRepository cardSessionRepository, CardService cardService) {
+                              CardSessionRepository cardSessionRepository, CardService cardService, MailService mailService) {
         this.sessionRepository = sessionRepository;
         this.userService = userService;
         this.themeService = themeService;
         this.cardSessionRepository = cardSessionRepository;
         this.cardService = cardService;
+        this.mailService = mailService;
     }
 
     @Override
@@ -138,6 +140,10 @@ public class SessionServiceImpl implements SessionService {
 
         for (UserSession userSession : userSessions) {
             userSession.setSession(session);
+
+            //todo send mail
+           /* mailService.sendMailToUserByUserId(userSession.getUser().getId(), "Kandoe - Invitation for session",
+                    "A new kandoe has been created for an organisation you're member of");    */
         }
 
         return session;
@@ -188,6 +194,7 @@ public class SessionServiceImpl implements SessionService {
         Session session = findSessionById(sessionId, userId);
         CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
         UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
+
         if (userSession.getUser().getId().equals(userId)) {
             cardSession.setPosition(currentPosition+1);
             for (UserSession u : session.getUserSessions()) {

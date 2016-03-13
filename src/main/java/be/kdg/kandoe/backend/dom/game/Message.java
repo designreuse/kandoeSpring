@@ -17,7 +17,6 @@ public class Message implements Serializable, Identifiable<Integer>{
     @GeneratedValue
     private Integer messageId;
 
-    //todo change name?
     @Column(name = "Content", nullable = false)
     private String content;
 

@@ -77,7 +77,6 @@ public class CardRestController {
                                                      HttpServletRequest request) {
 
         if(user != null && user.getId() != null) {
-            System.out.println("qefmioejfmqeoifjqzemiofj");
             if(file.getContentType().split("/")[0].equals("image")){
                 Card card_in = mapper.map(cardDTO, Card.class);
                 Card card_out = cardService.saveCard(card_in, cardDTO.getThemeId());

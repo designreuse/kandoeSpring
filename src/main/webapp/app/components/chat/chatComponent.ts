@@ -2,6 +2,7 @@ import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {Http} from "angular2/http";
+import {Message} from "../../DOM/circleSession/message";
 /**
  * Created by Jorda on 3/6/2016.
  */
@@ -14,41 +15,50 @@ import {Http} from "angular2/http";
 })
 
 export class ChatComponent {
-    http:Http;
-    ws;
     stompclient;
-    static messages:String[] = [];
-    message:String = "empty";
+    messages: Message[] = [];
+    message: String = "";
 
-    constructor(http:Http) {
-         this.http = http;
-         /*this.ws = new SockJs('/Kandoe/chat');
-         ChatComponent.messages[0] = ("This is a test message");
+    constructor() {
 
-         this.stompclient = Stomp.over(ws);
-
-         this.ws.onopen = function () {
-         console.log("Connection openned");
-         };
-         this.ws.onclose = function (event) {
-         console.log(event.code);
-         };
-         this.ws.onmessage = function (data) {
-         console.log("incoming message: " + data.data);
-         ChatComponent.messages[ChatComponent.messages.length + 1] = data.data;
-         };   */
     }
 
-    getMessages():String[] {
-        return ChatComponent.messages;
+    connect() {
+        var socket = new SockJS('/Kandoe/chat'); //local
+        //var socket = new SockJS('/chat'); // wildfly
+        this.stompClient = Stomp.over(socket);
+        this.stompClient.connect({}, frame => {
+            this.setConnected(true);
+
+            this.stompClient.subscribe('/topic/chat', greeting => {
+                this.showMessage(JSON.parse(greeting.body));
+            });
+        });
     }
 
-    onSubmit() {
-        //alert(this.message);
-        //this.ws.send(this.message);
-        //alert("message sent");
+    setConnected(conn: boolean) {
+        document.getElementById('connect').disabled = conn;
+        document.getElementById('disconnect').disabled = !conn;
     }
 
+    disconnect() {
+        if (this.stompClient != null) {
+            this.stompClient.disconnect();
+        }
+        this.setConnected(false);
+    }
+
+    sendMessage(chatElement) {
+        var token = localStorage.getItem("id_token");
+
+        this.stompClient.send("/chat", {}, JSON.stringify({'name': this.message, 'token': token}));
+        this.message = "";
+        chatElement.focus();
+    }
+
+    showMessage(json: string) {
+        this.messages.push(Message.fromJson(json));
+    }
 }
 
 /*
