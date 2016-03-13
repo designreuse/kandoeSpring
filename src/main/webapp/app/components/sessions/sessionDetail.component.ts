@@ -7,6 +7,7 @@ import {Session} from "../../DOM/circleSession/session";
 import {UserService} from "../../service/userService";
 import {User} from "../../DOM/users/user";
 import {Person} from "../../DOM/users/person";
+import {CardService} from "../../service/cardService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -26,13 +27,17 @@ export class SessionDetailComponent implements OnInit{
     private users: User[] = [];
     private user: User = User.createEmpty();
     private userService: UserService;
+    private cardService: CardService;
+    private card:Card = Card.createEmpty();
+    private file:File = null;
 
 
-    constructor(sesService: SessionService, userService:UserService, router: Router, routeParams: RouteParams){
+    constructor(sesService: SessionService, userService:UserService, cardService:CardService, router: Router, routeParams: RouteParams){
         this.sessionService = sesService;
         this.router = router;
         this.sessionId = +routeParams.params["id"];
         this.userService = userService;
+        this.cardService = cardService;
     }
 
     ngOnInit(){
@@ -74,30 +79,27 @@ export class SessionDetailComponent implements OnInit{
         }
     }
 
-    showFullDescription(i){
-        var id= "#" + i;
-        var cardid = "#desc-"+i;
-        var arrowid = "#arrow-" + i;
-        var description = $(document).find($(id));
-        var carddescription = $(document).find($(cardid));
-        var arrow = $(document). find($(arrowid));
-        description.css("display", "inherit");
-        arrow.css("display", "inherit");
-        carddescription.css("display", "none");
+    /*
+    ----------------------------------- ADD CARD ----------------------------------------
+     */
 
+    onAddCard(){
+        this.card.themeId = +this.session.theme.themeId;
+        this.cardService.createCard(this.card, this.file).subscribe(res => {
+            /*var popup = document.getElementById("popup-addCard");
+            $(popup).css("visibility", "hidden");*/
+            this.file = null;
+            this.session.theme.cards.push(res);
+        })
     }
 
-    hideFullDescription(i){
-        var id= "#" + i;
-        var cardid = "#desc-"+i;
-        var arrowid = "#arrow-" + i;
-        var description = $(document).find($(id));
-        var carddescription = $(document).find($(cardid));
-        var arrow = $(document). find($(arrowid));
-        description.css("display", "none");
-        arrow.css("display", "none");
-        carddescription.css("display", "");
+    onFileChange($event){
+        this.file = $event.target.files[0];
     }
+
+    /*
+    ----------------------------------- CARD SELECTION ----------------------------------
+     */
 
     onSelectCard($event){
         this.countChecked();
@@ -131,5 +133,34 @@ export class SessionDetailComponent implements OnInit{
                 console.log(e.text());
             });
         }
+    }
+
+    /*
+     ------------------------- CARD DESCRIPTION SLIDE-OVER -------------------------
+     */
+
+    showFullDescription(i){
+        var id= "#" + i;
+        var cardid = "#desc-"+i;
+        var arrowid = "#arrow-" + i;
+        var description = $(document).find($(id));
+        var carddescription = $(document).find($(cardid));
+        var arrow = $(document). find($(arrowid));
+        description.css("display", "inherit");
+        arrow.css("display", "inherit");
+        carddescription.css("display", "none");
+
+    }
+
+    hideFullDescription(i){
+        var id= "#" + i;
+        var cardid = "#desc-"+i;
+        var arrowid = "#arrow-" + i;
+        var description = $(document).find($(id));
+        var carddescription = $(document).find($(cardid));
+        var arrow = $(document). find($(arrowid));
+        description.css("display", "none");
+        arrow.css("display", "none");
+        carddescription.css("display", "");
     }
 }
