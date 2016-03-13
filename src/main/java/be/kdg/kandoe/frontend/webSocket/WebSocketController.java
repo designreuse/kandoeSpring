@@ -1,12 +1,14 @@
 package be.kdg.kandoe.frontend.webSocket;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import be.kdg.kandoe.backend.dom.users.User;
+import be.kdg.kandoe.backend.services.api.SessionService;
 import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -15,21 +17,31 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebSocketController {
 
+    private final UserService userService;
+    private final SessionService sessionService;
+
     @Autowired
-    UserService userService;
+    public WebSocketController(UserService userService, SessionService sessionService) {
+        this.userService = userService;
+        this.sessionService = sessionService;
+    }
 
     @MessageMapping("/chat")
     @SendTo("/topic/chat")
-    public Greeting processChat(HelloMessage chat) throws Exception {
+    public Greeting processChat(HelloMessage chat) {
         String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
                 .parseClaimsJws(chat.getToken().replace("\"", "")).getBody().getSubject();
         User u = userService.findUserByUsername(username);
 
         if(u != null){
-            System.out.println("WebSocketMessageController has been triggered: " + chat.getName());
-            return new Greeting(u.getUsername(), chat.getName());
-        }
+            try {
+                Session s = sessionService.addMessageToChat(chat.getSessionId(), chat.getContent(), u.getId());
+                return new Greeting(u.getUsername(), chat.getContent());
+            } catch (SessionServiceException e) {
+                return null;
+            }
 
+        }
         return null;
     }
 }
