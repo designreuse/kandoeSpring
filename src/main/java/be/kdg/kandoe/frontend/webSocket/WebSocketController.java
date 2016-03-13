@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebSocketController {
 
-    @MessageMapping("/chat")
+/*    @MessageMapping("/chat")
     @SendTo("/topic/chat")
     public Greeting processChat(HelloMessage chat) throws Exception {
         System.out.println("WebSocketMessageController has been triggered: " + chat.getName());
         return new Greeting("Text Message is: " + chat.getName());
-    }
+    }*/
 }
