@@ -966,3 +966,43 @@ footer {
     background: inherit;
     left: 20px;
 }
+
+/*
+--------------------------------- ADD CARD -----------------------------
+*/
+.input-add-card {
+    margin-bottom: 20px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.btn-primary-add-card {
+    color: #fff;
+    background: #ff9c44;
+    border: #ff9c44;
+    padding: 7px;
+}
+
+.btn-primary-add-card:hover {
+    color: #fff;
+    background: #ffb951;
+}
