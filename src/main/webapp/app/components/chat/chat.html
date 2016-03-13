@@ -33,18 +33,16 @@
             </div>
 
         </div>
-        <div class="send-container">
-            <form class="col-lg-offset-2 col-lg-8" method="post" role="form">
-                <textarea class="col-lg-8 send-message" rows="1" placeholder="Write your message..." id="sendchatmessage"></textarea>
-                <a href="" class=" col-lg-4 btn-send" role="button" onclick="sendName();">
-                    Send
-                </a>
-            </form>
 
-            <div>
-                <button id="connect" onclick="connect();">Connect</button>
-                <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
-            </div>
+        <div class="send-container">
+                <textarea class="col-lg-8 send-message" rows="1" placeholder="Write your message..." id="sendchatmessage"></textarea>
+                <button class=" col-lg-4 btn-send" onclick="sendName();">
+                    Send
+                </button>
+        </div>
+        <div class="send-container">
+            <button id="connect" onclick="connect();">Connect</button>
+            <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
         </div>
     </div>
 </div>

@@ -56,7 +56,8 @@ System.register(["angular2/core", "angular2/http"], function(exports_1) {
                 ChatComponent = __decorate([
                     core_1.Component({
                         selector: 'userprofile',
-                        template: "\n    <head>\n\n    </head>\n    <div class=\"container\">\n        <div>\n            <form  class=\"col-lg-offset-2 col-lg-8\" method=\"post\" role=\"form\">\n                <div class=\"form-group\">\n                    <label>TextMessage</label>\n                    <input type=\"text\" placeholder=\"Enter chat\" class=\"form-control\" id=\"sendchatmessage\">\n                </div>\n                <div class=\"row\">\n                    <button type=\"button\" class=\"btn btn-lg btn-wide btn-primary\" onclick=\"sendName();\">Add</button>\n                </div>\n            </form>\n        </div>\n\n        <div>\n            <button id=\"connect\" onclick=\"connect();\">Connect</button>\n            <button id=\"disconnect\" disabled=\"disabled\" onclick=\"disconnect();\">Disconnect</button>\n        </div>\n\n\n        <div class=\"container\" id=\"receivedMessage\">\n\n        </div>\n        <div *ngFor=\"#message of getMessages()\">\n            <p>{{message}}</p>\n        </div>\n    </div>\n    ",
+                        templateUrl: 'app/components/chat/chat.html',
+                        styleUrls: ['app/css/chat.css'],
                         inputs: ['messages']
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
@@ -68,4 +69,35 @@ System.register(["angular2/core", "angular2/http"], function(exports_1) {
         }
     }
 });
+/*
+ <head>
+
+ </head>
+ <div class="container">
+ <div>
+ <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
+ <div class="form-group">
+ <label>TextMessage</label>
+ <input type="text" placeholder="Enter chat" class="form-control" id="sendchatmessage">
+ </div>
+ <div class="row">
+ <button type="button" class="btn btn-lg btn-wide btn-primary" onclick="sendName();">Add</button>
+ </div>
+ </form>
+ </div>
+
+ <div>
+ <button id="connect" onclick="connect();">Connect</button>
+ <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+ </div>
+
+
+ <div class="container" id="receivedMessage">
+
+ </div>
+ <div *ngFor="#message of getMessages()">
+ <p>{{message}}</p>
+ </div>
+ </div>
+ */ 
 //# sourceMappingURL=chatComponent.js.map

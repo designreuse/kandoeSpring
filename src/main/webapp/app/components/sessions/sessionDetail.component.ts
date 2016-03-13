@@ -14,7 +14,6 @@ import {Person} from "../../DOM/users/person";
     selector: 'session-detail',
     directives: [ROUTER_DIRECTIVES, RouterLink],
     templateUrl: 'app/components/sessions/sessionDetail.html',
-    styleUrls:  ['app/css/chat.css'],
 })
 
 export class SessionDetailComponent implements OnInit{

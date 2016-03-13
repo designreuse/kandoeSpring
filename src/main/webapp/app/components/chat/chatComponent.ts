@@ -8,37 +8,8 @@ import {Http} from "angular2/http";
 
 @Component({
     selector: 'userprofile',
-    template: `
-    <head>
-
-    </head>
-    <div class="container">
-        <div>
-            <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
-                <div class="form-group">
-                    <label>TextMessage</label>
-                    <input type="text" placeholder="Enter chat" class="form-control" id="sendchatmessage">
-                </div>
-                <div class="row">
-                    <button type="button" class="btn btn-lg btn-wide btn-primary" onclick="sendName();">Add</button>
-                </div>
-            </form>
-        </div>
-
-        <div>
-            <button id="connect" onclick="connect();">Connect</button>
-            <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
-        </div>
-
-
-        <div class="container" id="receivedMessage">
-
-        </div>
-        <div *ngFor="#message of getMessages()">
-            <p>{{message}}</p>
-        </div>
-    </div>
-    `,
+    templateUrl: 'app/components/chat/chat.html',
+    styleUrls:  ['app/css/chat.css'],
     inputs: ['messages']
 })
 
@@ -79,3 +50,35 @@ export class ChatComponent {
     }
 
 }
+
+/*
+ <head>
+
+ </head>
+ <div class="container">
+ <div>
+ <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
+ <div class="form-group">
+ <label>TextMessage</label>
+ <input type="text" placeholder="Enter chat" class="form-control" id="sendchatmessage">
+ </div>
+ <div class="row">
+ <button type="button" class="btn btn-lg btn-wide btn-primary" onclick="sendName();">Add</button>
+ </div>
+ </form>
+ </div>
+
+ <div>
+ <button id="connect" onclick="connect();">Connect</button>
+ <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+ </div>
+
+
+ <div class="container" id="receivedMessage">
+
+ </div>
+ <div *ngFor="#message of getMessages()">
+ <p>{{message}}</p>
+ </div>
+ </div>
+ */

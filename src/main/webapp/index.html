@@ -32,7 +32,7 @@
     <script type="text/javascript">
         var stompClient = null;
         function connect() {
-            var socket = new SockJS('/Kandoe/chat');
+            var socket = new SockJS('/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
@@ -58,7 +58,7 @@
 
         function sendName() {
             var name = document.getElementById('sendchatmessage').value;
-            stompClient.send("/Kandoe/chat", {}, JSON.stringify({'name': name}));
+            stompClient.send("/chat", {}, JSON.stringify({'name': name}));
         }
 
         function showGreeting(message) {
