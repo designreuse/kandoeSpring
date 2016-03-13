@@ -878,6 +878,13 @@ footer {
     transform: skew(8deg) rotate(3deg);
 }
 
+.card-ingame-container-playing{
+    position: absolute;
+    z-index: 10;
+    height: 75px;
+    width: 50px;
+}
+
 .card-ingame-img {
     position: relative;
     height: inherit;
@@ -911,6 +918,19 @@ footer {
     color: #1E8BC3;
 }
 
+.overlay-circle {
+    position: absolute;
+    background: rgba(0,0,0,0);
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+}
+
+.overlay-element {
+    background: rgba(255, 255, 255, 0.6);
+    position: absolute;
+}
 
 /*
 ------------------------- MATERIAL CHECKBOX SLIDER -------------

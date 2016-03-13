@@ -70,9 +70,17 @@
             <div class="row">
                 <div class="center-container">
                     <svg id="circlesvg" width="100%" height="100%">
-                        <circle *ngFor="#siz of size" [attr.cx]="calculateWidthCentre()" [attr.cy]="calculateHeightCentre()"
+                        <circle *ngFor="#siz of size" [attr.id]="'circle-'+siz" [attr.cx]="calculateWidthCentre()" [attr.cy]="calculateHeightCentre()"
                                 [attr.r]="60 + (60*siz)" stroke="#f7f7f7" stroke-width="8" fill="#1E8BC3"/>
                     </svg>
+                    <div class="overlay-circle">
+                        <div *ngFor="#card of cards; #i = index" class="overlay-element card-ingame-container-playing" [attr.id]="i" [attr.style]="getPosition(i)">
+                            <div class="card-overlay-element center-container">
+                                <h4 class="card-ingame-nr">{{i+1}}</h4>
+                                <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-ingame-img img-thumbnail"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,6 +89,11 @@
         </div>
     </div>
 </div>
+
+<!--
+---------------------------------- SCREEN IF USER HAS NOT CHOSEN CARDS YET -------------------------
+-->
+
 <div class="container main" *ngIf="!session.chosenCards">
     <div class="row">
         <div class="col-xs-12 col-sm-offset-3 col-sm-6">
@@ -104,8 +117,6 @@
                 </ul>
             </div>
             <div *ngIf="session.userAddCards">
-                <!--<div class="list-group">
-                    <div class="list-group-item"> -->
                 <h3>Add your own card</h3>
                 <div class="form">
                         <div class="input-group input-add-card">
@@ -122,19 +133,7 @@
                             </div>
                         </div>
                 </div>
-                   <!-- </div>
-                </div> -->
             </div>
-                <!--<div *ngFor="#card of session.theme.cards">
-                    <div class="checkbox">
-                        <label><input type="checkbox" [value]="card.cardId" (change)="onSelectCard($event)">
-                            <div class="card-before-game-container">
-                            <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-before-game-img img-thumbnail">
-                            <span>{{card.description}}</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>-->
         </div>
     </div>
     <div class="row">

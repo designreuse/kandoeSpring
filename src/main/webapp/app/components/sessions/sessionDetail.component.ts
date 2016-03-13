@@ -31,6 +31,8 @@ export class SessionDetailComponent implements OnInit{
     private card:Card = Card.createEmpty();
     private file:File = null;
 
+    private cardsOnCircle: Card[] = [];
+
 
     constructor(sesService: SessionService, userService:UserService, cardService:CardService, router: Router, routeParams: RouteParams){
         this.sessionService = sesService;
@@ -56,6 +58,43 @@ export class SessionDetailComponent implements OnInit{
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+
+        /*this.cardsOnCircle = this.cards;
+        var startWidth = this.calculateWidthCentre;
+        /*var startHeight = document.getElementById("circle-"+(this.size.length - 1)).style.getPropertyValue("top");
+        var startHeight = 100;
+        for(var i = 0; i < this.session.size; i++){
+            var el = "'#"+i+"'";
+            $("#1").on("load", function(){
+                $("#1").css("top", startHeight);
+                $("#1").css("left", startWidth);
+             i++;});
+        }*/
+    }
+
+    getPosition(i){
+        var c = this.cards[i];
+        var position = this.session.size - 1 - c.position;
+
+        var id = "#" + i;
+        var el = $(document).find($(id));
+        var elWidthPx = $(el).css("width");
+        var elWidth = parseInt(elWidthPx, 10);
+        var elHeightPx = $(el).css("height");
+        var elHeight = parseInt(elHeightPx, 10);
+
+        var circle = document.getElementById("circle-"+position);
+        var radius = Number($(circle).attr("r"));
+
+        var rotationDegree = 360/(this.cards.length);
+        var step = (2*Math.PI)/this.cards.length;
+        var middleWidth = this.calculateWidthCentre();
+        var middleHeight = this.calculateHeightCentre();
+
+        var x = Math.round(middleWidth + radius * Math.cos(step*i) - elWidth / 2);
+        var y = Math.round(middleHeight + radius * Math.sin(step*i) - elHeight / 2);
+
+        return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90+(rotationDegree*i)) + "deg)";
     }
 
     calculateWidthCentre(){

@@ -33,7 +33,7 @@ export class SessionService {
     public createSession(session:Session):Observable<Response> {
         return this.securityService.post(this.path + 'sessions', JSON.stringify(session), true);
     }
-
+    
     public addCards(cardIds: Array<number>, sessionId: number): Observable<Session>{
         var cards: Card[] = [];
         for(var i = 0; i < cardIds.length; i++){
