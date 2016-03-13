@@ -21,6 +21,9 @@ System.register(["angular2/core", "../../DOM/circleSession/message"], function(e
                 message_1 = message_1_1;
             }],
         execute: function() {
+            /**
+             * Created by Jorda on 3/6/2016.
+             */
             ChatComponent = (function () {
                 function ChatComponent() {
                     this.messages = [];

@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../DOM/circleSession/session", "../../service/userService", "../../DOM/users/user"], function(exports_1) {
+System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../DOM/card", "../../DOM/circleSession/session", "../../service/userService", "../../DOM/users/user", "../../service/cardService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, TokenHelper_1, router_1, sessionService_1, session_1, userService_1, user_1;
+    var core_1, TokenHelper_1, router_1, sessionService_1, card_1, session_1, userService_1, user_1, cardService_1;
     var SessionDetailComponent;
     return {
         setters:[
@@ -26,6 +26,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
             function (sessionService_1_1) {
                 sessionService_1 = sessionService_1_1;
             },
+            function (card_1_1) {
+                card_1 = card_1_1;
+            },
             function (session_1_1) {
                 session_1 = session_1_1;
             },
@@ -34,19 +37,25 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
             },
             function (user_1_1) {
                 user_1 = user_1_1;
+            },
+            function (cardService_1_1) {
+                cardService_1 = cardService_1_1;
             }],
         execute: function() {
             SessionDetailComponent = (function () {
-                function SessionDetailComponent(sesService, userService, router, routeParams) {
+                function SessionDetailComponent(sesService, userService, cardService, router, routeParams) {
                     this.session = session_1.Session.createEmpty();
                     this.size = [];
                     this.cards = [];
                     this.users = [];
                     this.user = user_1.User.createEmpty();
+                    this.card = card_1.Card.createEmpty();
+                    this.file = null;
                     this.sessionService = sesService;
                     this.router = router;
                     this.sessionId = +routeParams.params["id"];
                     this.userService = userService;
+                    this.cardService = cardService;
                 }
                 SessionDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -83,28 +92,25 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         }
                     }
                 };
-                SessionDetailComponent.prototype.showFullDescription = function (i) {
-                    var id = "#" + i;
-                    var cardid = "#desc-" + i;
-                    var arrowid = "#arrow-" + i;
-                    var description = $(document).find($(id));
-                    var carddescription = $(document).find($(cardid));
-                    var arrow = $(document).find($(arrowid));
-                    description.css("display", "inherit");
-                    arrow.css("display", "inherit");
-                    carddescription.css("display", "none");
+                /*
+                ----------------------------------- ADD CARD ----------------------------------------
+                 */
+                SessionDetailComponent.prototype.onAddCard = function () {
+                    var _this = this;
+                    this.card.themeId = +this.session.theme.themeId;
+                    this.cardService.createCard(this.card, this.file).subscribe(function (res) {
+                        /*var popup = document.getElementById("popup-addCard");
+                        $(popup).css("visibility", "hidden");*/
+                        _this.file = null;
+                        _this.session.theme.cards.push(res);
+                    });
                 };
-                SessionDetailComponent.prototype.hideFullDescription = function (i) {
-                    var id = "#" + i;
-                    var cardid = "#desc-" + i;
-                    var arrowid = "#arrow-" + i;
-                    var description = $(document).find($(id));
-                    var carddescription = $(document).find($(cardid));
-                    var arrow = $(document).find($(arrowid));
-                    description.css("display", "none");
-                    arrow.css("display", "none");
-                    carddescription.css("display", "");
+                SessionDetailComponent.prototype.onFileChange = function ($event) {
+                    this.file = $event.target.files[0];
                 };
+                /*
+                ----------------------------------- CARD SELECTION ----------------------------------
+                 */
                 SessionDetailComponent.prototype.onSelectCard = function ($event) {
                     this.countChecked();
                 };
@@ -137,6 +143,31 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         });
                     }
                 };
+                /*
+                 ------------------------- CARD DESCRIPTION SLIDE-OVER -------------------------
+                 */
+                SessionDetailComponent.prototype.showFullDescription = function (i) {
+                    var id = "#" + i;
+                    var cardid = "#desc-" + i;
+                    var arrowid = "#arrow-" + i;
+                    var description = $(document).find($(id));
+                    var carddescription = $(document).find($(cardid));
+                    var arrow = $(document).find($(arrowid));
+                    description.css("display", "inherit");
+                    arrow.css("display", "inherit");
+                    carddescription.css("display", "none");
+                };
+                SessionDetailComponent.prototype.hideFullDescription = function (i) {
+                    var id = "#" + i;
+                    var cardid = "#desc-" + i;
+                    var arrowid = "#arrow-" + i;
+                    var description = $(document).find($(id));
+                    var carddescription = $(document).find($(cardid));
+                    var arrow = $(document).find($(arrowid));
+                    description.css("display", "none");
+                    arrow.css("display", "none");
+                    carddescription.css("display", "");
+                };
                 SessionDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
@@ -144,7 +175,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
                 var _a, _b;

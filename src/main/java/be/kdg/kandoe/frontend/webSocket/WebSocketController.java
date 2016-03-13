@@ -9,11 +9,9 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by Jordan on 8/03/2016.
@@ -37,16 +35,14 @@ public class WebSocketController {
                 .parseClaimsJws(chat.getToken().replace("\"", "")).getBody().getSubject();
         User u = userService.findUserByUsername(username);
 
-        if(u != null){
+        if (u != null) {
             try {
                 Session s = sessionService.addMessageToChat(chat.getSessionId(), chat.getContent(), u.getId());
-                return new Greeting(u.getUsername(), chat.getContent());
+                return new Greeting(u.getUsername(), chat.getContent(), String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()), u.getProfilePicture());
             } catch (SessionServiceException e) {
                 return null;
             }
-            System.out.println("WebSocketMessageController has been triggered: " + chat.getName());
-            return new Greeting(u.getUsername(), chat.getName(), String.valueOf(LocalDateTime.now().getHour() +":"+LocalDateTime.now().getMinute()), u.getProfilePicture());
-        }
+
 
         }
         return null;
