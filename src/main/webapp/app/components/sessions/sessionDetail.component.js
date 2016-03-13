@@ -143,6 +143,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         selector: 'session-detail',
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
+                        styleUrls: ['app/css/chat.css'],
                     }), 
                     __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], SessionDetailComponent);

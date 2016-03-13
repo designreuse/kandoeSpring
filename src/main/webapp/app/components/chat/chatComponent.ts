@@ -12,7 +12,7 @@ import {Http} from "angular2/http";
     <head>
 
     </head>
-    <div>
+    <div class="container">
         <div>
             <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
                 <div class="form-group">
@@ -31,7 +31,8 @@ import {Http} from "angular2/http";
         </div>
 
 
-        <div id="receivedMessage">
+        <div class="container" id="receivedMessage">
+
         </div>
         <div *ngFor="#message of getMessages()">
             <p>{{message}}</p>
@@ -50,7 +51,7 @@ export class ChatComponent {
 
     constructor(http:Http) {
          this.http = http;
-        /* this.ws = new SockJS('/Kandoe/chat');
+         /*this.ws = new SockJs('/Kandoe/chat');
          ChatComponent.messages[0] = ("This is a test message");
 
          this.stompclient = Stomp.over(ws);
@@ -64,7 +65,7 @@ export class ChatComponent {
          this.ws.onmessage = function (data) {
          console.log("incoming message: " + data.data);
          ChatComponent.messages[ChatComponent.messages.length + 1] = data.data;
-         };*/
+         };   */
     }
 
     getMessages():String[] {

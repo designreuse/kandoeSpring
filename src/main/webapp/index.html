@@ -26,16 +26,13 @@
     <script src="resources/http.dev.js"></script>
     <script src="resources/bootstrap.js"></script>
 
-
-
     <!--Websocket -->
     <script src="resources/sockjs-0.3.4.js"></script>
     <script src="resources/stomp.js"></script>
     <script type="text/javascript">
         var stompClient = null;
-
         function connect() {
-            var socket = new SockJS('/chat');
+            var socket = new SockJS('/Kandoe/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
@@ -61,7 +58,7 @@
 
         function sendName() {
             var name = document.getElementById('sendchatmessage').value;
-            stompClient.send("/chat", {}, JSON.stringify({'name': name}));
+            stompClient.send("/Kandoe/chat", {}, JSON.stringify({'name': name}));
         }
 
         function showGreeting(message) {
@@ -71,6 +68,7 @@
             p.appendChild(document.createTextNode(message));
             response.appendChild(p);
         }
+
     </script>
     <!-- -->
 
