@@ -28,8 +28,8 @@ System.register(["angular2/core", "../../DOM/circleSession/message"], function(e
                 }
                 ChatComponent.prototype.connect = function () {
                     var _this = this;
-                    var socket = new SockJS('/Kandoe/chat'); //local
-                    //var socket = new SockJS('/chat'); // wildfly
+                    //var socket = new SockJS('/Kandoe/chat'); //local
+                    var socket = new SockJS('/chat'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.setConnected(true);
