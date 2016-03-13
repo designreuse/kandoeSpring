@@ -7,7 +7,7 @@ import {Http} from "angular2/http";
  */
 
 @Component({
-    selector: 'userprofile',
+    selector: 'chat',
     templateUrl: 'app/components/chat/chat.html',
     styleUrls:  ['app/css/chat.css'],
     inputs: ['messages']
@@ -45,7 +45,7 @@ export class ChatComponent {
 
     onSubmit() {
         //alert(this.message);
-        this.ws.send(this.message);
+        //this.ws.send(this.message);
         //alert("message sent");
     }
 

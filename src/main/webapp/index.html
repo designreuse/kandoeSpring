@@ -27,18 +27,18 @@
     <script src="resources/bootstrap.js"></script>
 
     <!--Websocket -->
-    <script src="resources/sockjs-0.3.4.js"></script>
+    <script src="//cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
     <script src="resources/stomp.js"></script>
     <script type="text/javascript">
         var stompClient = null;
         function connect() {
-            var socket = new SockJS('/chat');
+            var socket = new SockJS('/Kandoe/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
-                console.log('Connected: ' + frame);
+                setConnected(true);
                 stompClient.subscribe('/topic/chat', function (greeting) {
-                    console.log("Recieved message: " + greeting);
-                    showGreeting(JSON.parse(greeting.body).content);
+                    var json = JSON.parse(greeting.body);
+                    showGreeting(json.username, json.content);
                 });
             });
         }
@@ -53,19 +53,23 @@
                 stompClient.disconnect();
             }
             setConnected(false);
-            console.log("Disconnected");
         }
 
         function sendName() {
-            var name = document.getElementById('sendchatmessage').value;
-            stompClient.send("/chat", {}, JSON.stringify({'name': name}));
+            var token = localStorage.getItem("id_token");
+
+            var element = document.getElementById('sendchatmessage');
+            var name = element.value;
+            stompClient.send("/chat", {}, JSON.stringify({'name': name, 'token': token}));
+            element.value = "";
+            element.focus();
         }
 
-        function showGreeting(message) {
+        function showGreeting(username, message) {
             var response = document.getElementById('receivedMessage');
             var p = document.createElement('p');
             p.style.wordWrap = 'break-word';
-            p.appendChild(document.createTextNode(message));
+            p.appendChild(document.createTextNode(username + ': ' + message));
             response.appendChild(p);
         }
 
