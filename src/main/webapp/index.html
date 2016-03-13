@@ -32,7 +32,8 @@
     <script type="text/javascript">
         var stompClient = null;
         function connect() {
-            var socket = new SockJS('/Kandoe/chat');
+            var socket = new SockJS('/Kandoe/chat'); //local
+            //var socket = new SockJS('/chat'); // wildfly
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 setConnected(true);

@@ -83,16 +83,63 @@
     </div>
 </div>
 <div class="container main" *ngIf="!session.chosenCards">
-    <div class="col-xs-offset-2 col-xs-8 center-container">
-        <div *ngFor="#card of session.theme.cards">
-            <div class="checkbox">
-                <label><input type="checkbox" [value]="card.cardId" (change)="onSelectCard($event)">{{card.description}}</label>
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Pick existing cards</div>
+                <ul class="list-group">
+                    <li *ngFor="#card of session.theme.cards" class="list-group-item card-before-game">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-before-game-img img-thumbnail">
+                            </div>
+                            <div class="col-xs-8">
+                                <span>{{card.description}}</span>
+                            </div>
+                            <div class="col-xs-2 material-switch pull-right">
+                                <input [attr.id]="card.cardId" type="checkbox" [value]="card.cardId" (change)="onSelectCard($event)"/>
+                                <label [attr.for]="card.cardId" class="label-primary"></label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
+            <div *ngIf="session.userAddCards" class="panel panel-default">
+                <div class="panel-heading">Add your own card</div>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <input id="name" type="text" placeholder="Enter card description" class="form-control">
+                            </div>
+                            <div class="col-xs-4">
+                                <button type="button" class="btn btn-info" [disabled]="!sessionForm.form.valid" (click)="onSubmit()">
+                                    Add Card
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!--<div *ngFor="#card of session.theme.cards">
+                    <div class="checkbox">
+                        <label><input type="checkbox" [value]="card.cardId" (change)="onSelectCard($event)">
+                            <div class="card-before-game-container">
+                            <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-before-game-img img-thumbnail">
+                            <span>{{card.description}}</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>-->
         </div>
     </div>
-    <button type="button" class="btn btn-wide btn-primary" (click)="onChooseCards()">
-        Choose cards
-    </button>
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                <button type="button" class="btn btn-wide btn-primary" (click)="onChooseCards()">
+                Choose cards
+                </button>
+        </div>
+    </div>
 </div>
 
 
