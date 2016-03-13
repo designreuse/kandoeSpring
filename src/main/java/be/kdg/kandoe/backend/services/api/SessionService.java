@@ -13,7 +13,7 @@ import java.util.List;
 public interface SessionService {
 
     /**
-     * Find the session by the given id, only if the user is a participant of the session.
+     * Finds the session by the given id, only if the user is a participant of the session.
      * Initializes the userSessions, cardSessions, theme
      * @param sessionId
      * @param userId
@@ -33,4 +33,22 @@ public interface SessionService {
     void updateCardPosition(Integer cardId, int newPostion,Integer userId, Integer sessionId) throws SessionServiceException;
 
     Session addMessageToChat(Integer sessionId, String message, Integer userId) throws SessionServiceException;
+
+    /**
+     * Sets the sessionState to IN_PROGRESS if it is CREATED
+     * @param sessionId
+     * @param userId
+     * @return
+     * @throws SessionServiceException
+     */
+    Session startSession(Integer sessionId, Integer userId) throws SessionServiceException;
+
+    /**
+     * Sets the sessionState to FINISHED if it is IN_PROGRESS
+     * @param sessionId
+     * @param userId
+     * @return
+     * @throws SessionServiceException
+     */
+    Session stopSession(Integer sessionId, Integer userId) throws SessionServiceException;
 }

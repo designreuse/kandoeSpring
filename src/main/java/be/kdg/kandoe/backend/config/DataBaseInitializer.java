@@ -211,6 +211,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             session.setMinCards(2);
             session.setMode(SessionMode.SYNC);
             session.setType(SessionType.IDEA);
+            session.setState(SessionState.CREATED);
             session.setTheme(theme);
             ArrayList<CardSession> cardSessions = new ArrayList<>();
 

@@ -1,5 +1,11 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
+import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.game.CircleSession.SessionMode;
+import be.kdg.kandoe.backend.dom.game.CircleSession.SessionType;
+import be.kdg.kandoe.backend.services.api.SessionService;
+import be.kdg.kandoe.backend.services.api.ThemeService;
+import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
 import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
@@ -51,13 +57,18 @@ public class SessionRestControllerTest {
     @Autowired
     private Filter springSecurityFilterChain;
 
+    @Autowired
+    private SessionService sessionService;
+    @Autowired
+    private ThemeService themeService;
+
     private MockMvc mockMvc;
 
     @Value("${test.token}")
     private String appToken;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(springSecurityFilterChain).build();
@@ -141,5 +152,57 @@ public class SessionRestControllerTest {
                 .content("[{\"cardId\":\"1\"},{\"cardId\":\"3\"},{\"cardId\":\"5\"}]"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void testStartSession() throws Exception {
+        mockMvc.perform(post("/api/sessions/1/start")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.state").value("IN_PROGRESS"));
+    }
+
+    @Test
+    public void testStopSession() throws Exception {
+        Session s = new Session();
+        s.setSessionName("Test session in progress");
+        s.setMode(SessionMode.SYNC);
+        s.setType(SessionType.IDEA);
+        s.setMinCards(1);
+        s.setMaxCards(5);
+        s.setUserAddCards(false);
+        s.setStartTime(LocalDateTime.now());
+        s.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
+        s.setSize(5);
+        s = sessionService.createSession(s, 1, 1);
+        sessionService.startSession(s.getSessionId(), 1);
+
+        mockMvc.perform(post("/api/sessions/" + s.getId() +"/stop")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.state").value("FINISHED"));
+    }
+
+    @Test
+    public void testStopSessionWrongUser() throws Exception {
+        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTZW5uZVdlbnMiLCJmYWNlYm9va0FjY291bnQiOmZhbHNlfQ.2QzOCf1E-rZOzAEmqemLlSXCsFPFrucZJaq9dyOnNqU\"";
+
+        Session s = new Session();
+        s.setSessionName("Test session in progress");
+        s.setMode(SessionMode.SYNC);
+        s.setType(SessionType.IDEA);
+        s.setMinCards(1);
+        s.setMaxCards(5);
+        s.setUserAddCards(false);
+        s.setStartTime(LocalDateTime.now());
+        s.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
+        s.setSize(5);
+        s = sessionService.createSession(s, 1, 1);
+        sessionService.startSession(s.getSessionId(), 1);
+
+        mockMvc.perform(post("/api/sessions/" + s.getId() +"/stop")
+                .header("Authorization", token))
+                .andDo(print())
+                .andExpect(jsonPath("$.state").value("IN_PROGRESS"));
     }
 }

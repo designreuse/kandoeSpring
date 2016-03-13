@@ -3,6 +3,7 @@ package be.kdg.kandoe.backend.services.impl;
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.CardSession;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.game.CircleSession.SessionState;
 import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.other.Organisation;
@@ -137,6 +138,7 @@ public class SessionServiceImpl implements SessionService {
         }
         session.setUserSessions(userSessions);
 
+        session.setState(SessionState.CREATED);
         session = sessionRepository.save(session);
 
         for (UserSession userSession : userSessions) {
@@ -193,20 +195,24 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public void updateCardPosition(Integer cardId, int currentPosition, Integer userId, Integer sessionId) throws SessionServiceException {
         Session session = findSessionById(sessionId, userId);
-        CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
-        UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
 
-        if (userSession.getUser().getId().equals(userId)) {
-            cardSession.setPosition(currentPosition+1);
-            for (UserSession u : session.getUserSessions()) {
-                if (u.getUserPosition() == 0) {
-                    u.setUserPosition(session.getUserSessions().size()-1);
-                } else {
-                    u.setUserPosition(u.getUserPosition() - 1);
+        //todo state
+        //if(session.getState() == SessionState.IN_PROGRESS){
+            CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
+            UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
+
+            if (userSession.getUser().getId().equals(userId)) {
+                cardSession.setPosition(currentPosition+1);
+                for (UserSession u : session.getUserSessions()) {
+                    if (u.getUserPosition() == 0) {
+                        u.setUserPosition(session.getUserSessions().size()-1);
+                    } else {
+                        u.setUserPosition(u.getUserPosition() - 1);
+                    }
                 }
             }
-        }
-        sessionRepository.save(session);
+            sessionRepository.save(session);
+       // }
     }
 
     @Override
@@ -232,5 +238,29 @@ public class SessionServiceImpl implements SessionService {
             }
         }
         throw new SessionServiceException("Session not found");
+    }
+
+    @Override
+    public Session startSession(Integer sessionId, Integer userId) throws SessionServiceException {
+        Session s = findSessionById(sessionId, userId);
+
+        if(s.getState() == SessionState.CREATED){
+            s.setState(SessionState.IN_PROGRESS);
+            s = sessionRepository.save(s);
+        }
+
+        return s;
+    }
+
+    @Override
+    public Session stopSession(Integer sessionId, Integer userId) throws SessionServiceException {
+        Session s = findSessionById(sessionId, userId);
+
+        if(s.getState() == SessionState.IN_PROGRESS && s.getTheme().getCreator().getId().equals(userId)){
+            s.setState(SessionState.FINISHED);
+            s = sessionRepository.save(s);
+        }
+
+        return s;
     }
 }

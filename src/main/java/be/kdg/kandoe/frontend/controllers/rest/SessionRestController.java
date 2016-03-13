@@ -117,4 +117,32 @@ public class SessionRestController {
         }
         return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(value = "/{sessionId}/start", method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> startSession(@PathVariable("sessionId") Integer sessionId,
+                                                   @AuthenticationPrincipal User user){
+        if(user != null){
+            try {
+                Session s = sessionService.startSession(sessionId, user.getId());
+                return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(s), HttpStatus.OK);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{sessionId}/stop", method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> stopSession(@PathVariable("sessionId") Integer sessionId,
+                                                   @AuthenticationPrincipal User user){
+        if(user != null){
+            try {
+                Session s = sessionService.stopSession(sessionId, user.getId());
+                return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(s), HttpStatus.OK);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
+    }
 }

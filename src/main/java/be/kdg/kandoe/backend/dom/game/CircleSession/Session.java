@@ -31,6 +31,9 @@ public class Session implements Serializable, Identifiable<Integer> {
     @Column(name = "Type")
     private SessionType type;
 
+    @Column(name = "State")
+    private SessionState state;
+
     @Column(name = "MinCards")
     private int minCards;
 
@@ -192,5 +195,13 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setMaxCards(int maxCards) {
         this.maxCards = maxCards;
+    }
+
+    public SessionState getState() {
+        return state;
+    }
+
+    public void setState(SessionState state) {
+        this.state = state;
     }
 }

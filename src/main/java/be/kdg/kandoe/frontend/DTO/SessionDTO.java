@@ -1,6 +1,7 @@
 package be.kdg.kandoe.frontend.DTO;
 
 import be.kdg.kandoe.backend.dom.game.CircleSession.SessionMode;
+import be.kdg.kandoe.backend.dom.game.CircleSession.SessionState;
 import be.kdg.kandoe.backend.dom.game.CircleSession.SessionType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.ResourceSupport;
@@ -14,6 +15,7 @@ public class SessionDTO extends ResourceSupport implements Serializable {
     private String sessionName;
     private SessionMode mode;
     private SessionType type;
+    private SessionState state;
     private int minCards;
     private int maxCards;
     private int size;
@@ -147,5 +149,13 @@ public class SessionDTO extends ResourceSupport implements Serializable {
 
     public void setChosenCards(boolean chosenCards) {
         this.chosenCards = chosenCards;
+    }
+
+    public SessionState getState() {
+        return state;
+    }
+
+    public void setState(SessionState state) {
+        this.state = state;
     }
 }
