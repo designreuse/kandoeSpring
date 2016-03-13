@@ -9,6 +9,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * Created by Jordan on 8/03/2016.
  */
@@ -27,7 +30,7 @@ public class WebSocketController {
 
         if(u != null){
             System.out.println("WebSocketMessageController has been triggered: " + chat.getName());
-            return new Greeting(u.getUsername(), chat.getName());
+            return new Greeting(u.getUsername(), chat.getName(), String.valueOf(LocalDateTime.now().getHour() +":"+LocalDateTime.now().getMinute()), u.getProfilePicture());
         }
 
         return null;

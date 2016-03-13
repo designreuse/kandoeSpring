@@ -3,9 +3,6 @@ import {OnInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {Http} from "angular2/http";
 import {Message} from "../../DOM/circleSession/message";
-/**
- * Created by Jorda on 3/6/2016.
- */
 
 @Component({
     selector: 'chat',
@@ -59,36 +56,14 @@ export class ChatComponent {
     showMessage(json: string) {
         this.messages.push(Message.fromJson(json));
     }
+
+    private getImageSrc(url:string): string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        }
+    }
 }
-
-/*
- <head>
-
- </head>
- <div class="container">
- <div>
- <form  class="col-lg-offset-2 col-lg-8" method="post" role="form">
- <div class="form-group">
- <label>TextMessage</label>
- <input type="text" placeholder="Enter chat" class="form-control" id="sendchatmessage">
- </div>
- <div class="row">
- <button type="button" class="btn btn-lg btn-wide btn-primary" onclick="sendName();">Add</button>
- </div>
- </form>
- </div>
-
- <div>
- <button id="connect" onclick="connect();">Connect</button>
- <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
- </div>
-
-
- <div class="container" id="receivedMessage">
-
- </div>
- <div *ngFor="#message of getMessages()">
- <p>{{message}}</p>
- </div>
- </div>
- */

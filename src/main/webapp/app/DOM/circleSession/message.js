@@ -10,6 +10,8 @@ System.register([], function(exports_1) {
                     var message = new Message();
                     message.username = json.username;
                     message.content = json.content;
+                    message.userpicture = json.userpicture;
+                    message.date = json.date;
                     return message;
                 };
                 return Message;

@@ -5,7 +5,6 @@ import {RegisterComponent} from "./register.component";
 import {Home} from "./home";
 import {LoggedInHome} from "./loggedInHome.component";
 import {ThemeComponent} from "./themes/themeComponent";
-import {KandoeCard} from "./kandoeCard";
 import {UserProfileComponent} from "./userprofile.component";
 import {AddOrganisationComponent} from "./organisations/addOrganisation.component";
 import {AddThemeComponent} from "./themes/addThemeComponent";
@@ -37,7 +36,7 @@ declare var jsColor: any;
     {path: '/register', as: 'Register', component: RegisterComponent},
     {path: '/themes', as: 'Themes', component: ThemeComponent},
     {path: 'themes/:id', as: 'ThemeDetail', component: ThemeDetailComponent},
-    {path: '/card', as: 'KandoeCard', component: KandoeCard},
+    /*{path: '/card', as: 'KandoeCard', component: KandoeCard},*/
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},

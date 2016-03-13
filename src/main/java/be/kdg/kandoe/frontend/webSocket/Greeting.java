@@ -8,10 +8,14 @@ import be.kdg.kandoe.backend.dom.users.User;
 public class Greeting {
     private String content;
     private String username;
+    private String userpicture;
+    private String date;
 
-    public Greeting(String username, String content) {
+    public Greeting(String username, String content, String date, String userpicture) {
         this.username = username;
         this.content = content;
+        this.date = date;
+        this.userpicture = userpicture;
     }
 
     public String getContent() {
@@ -28,5 +32,22 @@ public class Greeting {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getUserpicture() {
+        return userpicture;
+    }
+
+    public void setUserpicture(String userpicture) {
+        this.userpicture = userpicture;
     }
 }
