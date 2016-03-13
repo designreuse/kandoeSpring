@@ -36,7 +36,6 @@ declare var jsColor: any;
     {path: '/register', as: 'Register', component: RegisterComponent},
     {path: '/themes', as: 'Themes', component: ThemeComponent},
     {path: 'themes/:id', as: 'ThemeDetail', component: ThemeDetailComponent},
-    /*{path: '/card', as: 'KandoeCard', component: KandoeCard},*/
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},

@@ -3,6 +3,9 @@ import {OnInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {Http} from "angular2/http";
 import {Message} from "../../DOM/circleSession/message";
+/**
+ * Created by Jorda on 3/6/2016.
+ */
 
 @Component({
     selector: 'chat',
@@ -48,7 +51,8 @@ export class ChatComponent {
     sendMessage(chatElement) {
         var token = localStorage.getItem("id_token");
 
-        this.stompClient.send("/chat", {}, JSON.stringify({'name': this.message, 'token': token}));
+        //todo change sessionId to variable
+        this.stompClient.send("/chat", {}, JSON.stringify({'content': this.message, 'token': token, 'sessionId': 1}));
         this.message = "";
         chatElement.focus();
     }

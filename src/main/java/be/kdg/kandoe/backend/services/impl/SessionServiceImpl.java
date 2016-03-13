@@ -4,6 +4,7 @@ import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.CardSession;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
+import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
@@ -206,5 +207,30 @@ public class SessionServiceImpl implements SessionService {
             }
         }
         sessionRepository.save(session);
+    }
+
+    @Override
+    public Session addMessageToChat(Integer sessionId, String message, Integer userId) throws SessionServiceException {
+        Session s = findSessionById(sessionId, userId);
+
+        if(s != null){
+            try {
+                Message m = new Message();
+                m.setContent(message);
+                m.setSender(userService.findUserById(userId));
+
+                List<Message> chat = s.getChat();
+                if(chat == null)
+                    chat = new ArrayList<>();
+
+                chat.add(m);
+                s.setChat(chat);
+                s = sessionRepository.save(s);
+                return s;
+            } catch (UserServiceException e){
+                throw new SessionServiceException(e.getMessage(), e);
+            }
+        }
+        throw new SessionServiceException("Session not found");
     }
 }

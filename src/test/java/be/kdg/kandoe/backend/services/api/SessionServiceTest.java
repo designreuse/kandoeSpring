@@ -71,4 +71,18 @@ public class SessionServiceTest {
         sessionService.updateCardPosition(cardSession.getCard().getId(),0,userSession.getUser().getId(),s.getId());
         assertEquals("The cardPosition should be 0",original,cardSession.getPosition());
     }
+
+    @Test
+    public void testAddMessageToSession() throws Exception {
+        Session s = sessionService.findSessionById(1,1);
+        int chatSize = s.getChat().size();
+
+        s = sessionService.addMessageToChat(s.getSessionId(), "testtesttest", 1);
+        assertEquals("The message should have been added to the chat", chatSize+1, s.getChat().size());
+    }
+
+    @Test(expected = SessionServiceException.class)
+    public void testAddMessageToWrongSession() throws Exception {
+        sessionService.addMessageToChat(-1, "testtesttest", 1);
+    }
 }

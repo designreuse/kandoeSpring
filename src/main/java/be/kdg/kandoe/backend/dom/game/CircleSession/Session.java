@@ -63,7 +63,7 @@ public class Session implements Serializable, Identifiable<Integer> {
     @OneToMany(targetEntity = Snapshot.class)
     private List<Snapshot> snapshots;
 
-    @OneToMany(targetEntity = Message.class)
+    @OneToMany(targetEntity = Message.class, cascade = CascadeType.ALL)
     private List<Message> chat;
 
     public Session() {

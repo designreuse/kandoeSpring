@@ -50,7 +50,8 @@ System.register(["angular2/core", "../../DOM/circleSession/message"], function(e
                 };
                 ChatComponent.prototype.sendMessage = function (chatElement) {
                     var token = localStorage.getItem("id_token");
-                    this.stompClient.send("/chat", {}, JSON.stringify({ 'name': this.message, 'token': token }));
+                    //todo change sessionId to variable
+                    this.stompClient.send("/chat", {}, JSON.stringify({ 'content': this.message, 'token': token, 'sessionId': 1 }));
                     this.message = "";
                     chatElement.focus();
                 };
