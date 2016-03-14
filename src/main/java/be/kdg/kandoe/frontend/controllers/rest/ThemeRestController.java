@@ -62,7 +62,7 @@ public class ThemeRestController {
     @RequestMapping(value = "/{themeId}", method = RequestMethod.GET)
     public ResponseEntity<ThemeDTO> getThemeById(@PathVariable(value = "themeId") int themeId){
         Theme theme = themeService.findThemeById(themeId);
-        System.out.println(theme.getOrganisation().getOrganisationName());
+
         return new ResponseEntity<>(themeAssembler.toResource(theme), HttpStatus.OK);
     }
 

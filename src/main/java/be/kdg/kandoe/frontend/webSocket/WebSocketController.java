@@ -42,6 +42,8 @@ public class WebSocketController {
             } catch (SessionServiceException e) {
                 return null;
             }
+          
+
         }
         return null;
     }

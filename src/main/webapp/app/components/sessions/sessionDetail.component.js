@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../DOM/card", "../../DOM/circleSession/session", "../../service/userService", "../../DOM/users/user", "../../service/cardService"], function(exports_1) {
+System.register(['angular2/core', "../../security/TokenHelper", "angular2/router", "../../service/sessionService", "../../DOM/card", "../../DOM/circleSession/session", "../../service/userService", "../../DOM/users/user", "../../service/cardService", "../chat/chatComponent"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, TokenHelper_1, router_1, sessionService_1, card_1, session_1, userService_1, user_1, cardService_1;
+    var core_1, TokenHelper_1, router_1, sessionService_1, card_1, session_1, userService_1, user_1, cardService_1, chatComponent_1;
     var SessionDetailComponent;
     return {
         setters:[
@@ -38,6 +38,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
             },
             function (cardService_1_1) {
                 cardService_1 = cardService_1_1;
+            },
+            function (chatComponent_1_1) {
+                chatComponent_1 = chatComponent_1_1;
             }],
         execute: function() {
             SessionDetailComponent = (function () {
@@ -206,13 +209,12 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
                         selector: 'session-detail',
-                        directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
+                        directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink, chatComponent_1.ChatComponent],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, router_1.Router, router_1.RouteParams])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
-                var _a, _b;
             })();
             exports_1("SessionDetailComponent", SessionDetailComponent);
         }

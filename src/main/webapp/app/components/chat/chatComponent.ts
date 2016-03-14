@@ -1,4 +1,4 @@
-import {Component} from "angular2/core";
+import {Component, Input} from "angular2/core";
 import {OnInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {Http} from "angular2/http";
@@ -18,14 +18,16 @@ export class ChatComponent {
     stompclient;
     messages: Message[] = [];
     message: String = "";
+    @Input() sessionId: number;
 
     constructor() {
-
+        this.disconnect();
     }
 
     connect() {
-        //var socket = new SockJS('/Kandoe/chat'); //local
-        var socket = new SockJS('/chat'); // wildfly
+        this.disconnect();
+        var socket = new SockJS('/Kandoe/chat'); //local
+        //var socket = new SockJS('/chat'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
             this.setConnected(true);
@@ -52,7 +54,7 @@ export class ChatComponent {
         var token = localStorage.getItem("id_token");
 
         //todo change sessionId to variable
-        this.stompClient.send("/chat", {}, JSON.stringify({'content': this.message, 'token': token, 'sessionId': 1}));
+        this.stompClient.send("/chat", {}, JSON.stringify({'content': this.message, 'token': token, 'sessionId': this.sessionId}));
         this.message = "";
         chatElement.focus();
     }

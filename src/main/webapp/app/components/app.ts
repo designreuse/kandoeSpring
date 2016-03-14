@@ -8,6 +8,8 @@ import {ThemeComponent} from "./themes/themeComponent";
 import {UserProfileComponent} from "./userprofile.component";
 import {AddOrganisationComponent} from "./organisations/addOrganisation.component";
 import {AddThemeComponent} from "./themes/addThemeComponent";
+import {AddSubThemeComponent} from "./themes/subThemes/addSubTheme.component";
+import {SubThemeComponent} from "./themes/subThemes/subTheme.component";
 import {OrganisationDetailComponent} from "./organisations/organisationDetail.component";
 import {ThemeDetailComponent} from "./themes/themeDetailComponent";
 import {ChatComponent} from "./chat/chatComponent";
@@ -38,6 +40,8 @@ declare var jsColor: any;
     {path: 'themes/:id', as: 'ThemeDetail', component: ThemeDetailComponent},
     {path: '/userprofile', as: 'Userprofile', component: UserProfileComponent},
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
+    {path: '/themes/addSubTheme', name: 'AddSubTheme', component: AddSubThemeComponent},
+    {path: '/subThemes', name: 'SubThemes', component: SubThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},
 
     {path: 'themes/:id/addCard', as: 'AddCard', component: AddCardComponent},
