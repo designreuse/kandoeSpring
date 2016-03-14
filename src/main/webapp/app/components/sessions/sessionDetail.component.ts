@@ -8,12 +8,13 @@ import {UserService} from "../../service/userService";
 import {User} from "../../DOM/users/user";
 import {Person} from "../../DOM/users/person";
 import {CardService} from "../../service/cardService";
+import {ChatComponent} from "../chat/chatComponent";
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
     selector: 'session-detail',
-    directives: [ROUTER_DIRECTIVES, RouterLink],
+    directives: [ROUTER_DIRECTIVES, RouterLink, ChatComponent],
     templateUrl: 'app/components/sessions/sessionDetail.html',
 })
 

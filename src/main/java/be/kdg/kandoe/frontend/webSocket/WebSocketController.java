@@ -7,8 +7,10 @@ import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
@@ -38,13 +40,18 @@ public class WebSocketController {
         if (u != null) {
             try {
                 Session s = sessionService.addMessageToChat(chat.getSessionId(), chat.getContent(), u.getId());
-                return new Greeting(u.getUsername(), chat.getContent(), String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()), u.getProfilePicture());
+                Greeting gr = new Greeting(u.getUsername(), chat.getContent(),
+                        String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()),
+                        u.getProfilePicture());
+
+                return new Greeting(u.getUsername(), chat.getContent(),
+                        String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()),
+                        u.getProfilePicture());
             } catch (SessionServiceException e) {
                 return null;
             }
-
-
         }
+
         return null;
     }
 }
