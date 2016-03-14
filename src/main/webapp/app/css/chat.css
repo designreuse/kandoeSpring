@@ -197,9 +197,8 @@ body::-webkit-scrollbar {
 }
 
 .send-container {
-  margin: 10px auto;
   padding: 10px;
-  height: 40px;
+  height: 50px;
   border-top: 1px solid #ddd;
   background: #F2F2F2;
 }
@@ -237,5 +236,8 @@ body::-webkit-scrollbar {
 .navbar-chat-header a span {
   height: 40px;
   line-height: 40px;
+}
 
+.cursor-point {
+  cursor: pointer;
 }

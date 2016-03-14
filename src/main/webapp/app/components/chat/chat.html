@@ -8,41 +8,45 @@
                         Chat - Session Name
 
                     </a>
-                    <a class="col-lg-3 pull-right">
+                    <a class="col-lg-3 pull-right" data-toggle="collapse" data-target="#chat-open">
                         <span class="badge">4</span>
-                        <span class="icon-chat glyphicon glyphicon-chevron-down"></span>
+                        <span class="icon-chat glyphicon glyphicon-chevron-down cursor-point" id="open"></span>
                     </a>
                 </div>
             </div>
         </nav>
-        <div class="msg-wrap" id="receivedMessage">
-            <div class="alert alert-info msg-date">
-                <strong>Today</strong>
-            </div>
-            <!-- for each message in CHAT -->
-            <div class="media msg" *ngFor="#message of messages">
-                <a class="pull-left" href="#">
-                    <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 50px; height: 50px;"
-                         [src]="getImageSrc(message.userpicture)">
-                </a>
-                <div class="media-body">
-                    <h5 class="media-heading col-lg-7">{{message.username}}</h5>
-                    <small class="pull-right time col-lg-5"><i class="fa fa-clock-o"></i> {{message.date}}</small>
-                    <small class="col-lg-12">{{message.content}}</small>
+        <div class="collapse in" id="chat-open">
+            <div class="msg-wrap" id="receivedMessage">
+                <div class="alert alert-info msg-date">
+                    <strong>Today</strong>
                 </div>
+                <!-- for each message in CHAT -->
+                <div class="media msg" *ngFor="#message of messages">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="holder.js/64x64" alt="64x64"
+                             style="width: 50px; height: 50px;"
+                             [src]="getImageSrc(message.userpicture)">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading col-lg-7">{{message.username}}</h5>
+                        <small class="pull-right time col-lg-5"><i class="fa fa-clock-o"></i> {{message.date}}</small>
+                        <small class="col-lg-12">{{message.content}}</small>
+                    </div>
+                </div>
+
             </div>
 
-        </div>
-
-        <div class="send-container">
-                <textarea #chatInput class="col-lg-8 send-message" rows="1" placeholder="Write your message..." id="sendchatmessage" [(ngModel)]="message"></textarea>
+            <div class="send-container">
+                <textarea #chatInput class="col-lg-8 send-message" rows="1" placeholder="Write your message..."
+                          id="sendchatmessage" [(ngModel)]="message"></textarea>
                 <button class=" col-lg-4 btn-send" (click)="sendMessage(chatInput)">
                     Send
                 </button>
-        </div>
-        <div class="send-container">
-            <button id="connect" (click)="connect()">Connect</button>
-            <button id="disconnect" disabled="disabled" (click)="disconnect()">Disconnect</button>
+            </div>
+            <div class="send-container">
+                <button id="connect" (click)="connect()">Connect</button>
+                <button id="disconnect" disabled="disabled" (click)="disconnect()">Disconnect</button>
+            </div>
         </div>
     </div>
 </div>
