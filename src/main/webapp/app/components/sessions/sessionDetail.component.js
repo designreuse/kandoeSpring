@@ -52,6 +52,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.user = user_1.User.createEmpty();
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
+                    this.cardsOnCircle = [];
                     this.sessionService = sesService;
                     this.router = router;
                     this.sessionId = +routeParams.params["id"];
@@ -74,6 +75,41 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
+                };
+                SessionDetailComponent.prototype.getPosition = function (i) {
+                    var c = this.cards[i];
+                    var position = this.session.size - 1 - c.position;
+                    var id = "#" + i;
+                    var el = $(document).find($(id));
+                    var elWidthPx = $(el).css("width");
+                    var elWidth = parseInt(elWidthPx, 10);
+                    var elHeightPx = $(el).css("height");
+                    var elHeight = parseInt(elHeightPx, 10);
+                    var circle = document.getElementById("circle-" + position);
+                    var radius = Number($(circle).attr("r"));
+                    var rotationDegree = 360 / (this.cards.length);
+                    var step = (2 * Math.PI) / this.cards.length;
+                    var middleWidth = this.calculateWidthCentre();
+                    var middleHeight = this.calculateHeightCentre();
+                    var x = Math.round(middleWidth + radius * Math.cos(step * i) - elWidth / 2);
+                    var y = Math.round(middleHeight + radius * Math.sin(step * i) - elHeight / 2);
+                    return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90 + (rotationDegree * i)) + "deg)";
+                };
+                SessionDetailComponent.prototype.changePosition = function (i) {
+                    var card = this.cards[i];
+                    var id = "#" + i;
+                    var el = $(document).find($(id));
+                    card.position = card.position + 1;
+                    if (card.position < (this.session.size - 1)) {
+                        $(el).load("index.php");
+                    }
+                    else if (card.position == (this.session.size - 1)) {
+                        $(document).find("#card-element-winner").text(card.description);
+                        var img = $(document).find("#card-img-winner");
+                        img.attr("src", this.getImageSrc(card.imageURL));
+                        var popup = $(document).find("#winner-popup");
+                        $(popup).css("visibility", "visible");
+                    }
                 };
                 SessionDetailComponent.prototype.calculateWidthCentre = function () {
                     var width = document.getElementById("circlesvg").getBoundingClientRect().width;

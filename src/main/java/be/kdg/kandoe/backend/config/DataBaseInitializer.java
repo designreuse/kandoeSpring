@@ -3,6 +3,7 @@ package be.kdg.kandoe.backend.config;
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.*;
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.Address;
 import be.kdg.kandoe.backend.dom.users.Person;
@@ -41,6 +42,8 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
     private ThemeRepository themeRepository;
     @Autowired
     private ThemeService themeService;
+    @Autowired
+    private SubThemeService subThemeService;
     @Autowired
     private CardRepository cardRepository;
     @Autowired
@@ -126,7 +129,16 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             theme2 = themeService.saveTheme(theme2, mailUser.getUserId(), org2.getId());
         }
 
-        Card card = new Card();
+        SubTheme subTheme = new SubTheme();
+        if (themeRepository.findThemeByThemeName("SubThemeKdG") == null && mailUser.getId() != null) {
+        subTheme.setThemeName("SubThemeKdG");
+            subTheme.setDescription("KdG Subtheme description");
+            subTheme.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
+            subTheme.setOrganisation(org);
+            subTheme=subThemeService.saveSubTheme(subTheme,theme.getThemeId());
+
+        }
+            Card card = new Card();
         if (cardRepository.findCardByDescription("KdGCard longer description to check if everything works accordingly") == null) {
             card.setDescription("KdGCard longer description to check if everything works accordingly");
             card.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");

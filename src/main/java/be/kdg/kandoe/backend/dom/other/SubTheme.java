@@ -18,6 +18,9 @@ public class SubTheme extends Theme implements Serializable, Identifiable<Intege
         this.theme = theme;
     }
 
+    public SubTheme() {
+    }
+
     public Theme getTheme() {
         return theme;
     }
