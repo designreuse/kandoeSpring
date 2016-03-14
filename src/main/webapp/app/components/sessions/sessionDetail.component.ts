@@ -59,17 +59,6 @@ export class SessionDetailComponent implements OnInit{
             this.user = u;
         });
 
-        /*this.cardsOnCircle = this.cards;
-        var startWidth = this.calculateWidthCentre;
-        /*var startHeight = document.getElementById("circle-"+(this.size.length - 1)).style.getPropertyValue("top");
-        var startHeight = 100;
-        for(var i = 0; i < this.session.size; i++){
-            var el = "'#"+i+"'";
-            $("#1").on("load", function(){
-                $("#1").css("top", startHeight);
-                $("#1").css("left", startWidth);
-             i++;});
-        }*/
     }
 
     getPosition(i){
@@ -95,6 +84,22 @@ export class SessionDetailComponent implements OnInit{
         var y = Math.round(middleHeight + radius * Math.sin(step*i) - elHeight / 2);
 
         return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90+(rotationDegree*i)) + "deg)";
+    }
+
+    changePosition(i){
+        var card = this.cards[i];
+        var id = "#" + i;
+        var el = $(document).find($(id));
+        card.position = card.position + 1;
+        if(card.position < (this.session.size-1)) {
+            $(el).load("index.php");
+        } else if(card.position == (this.session.size-1)){
+            $(document).find("#card-element-winner").text(card.description);
+            var img = $(document).find("#card-img-winner");
+            img.attr("src", this.getImageSrc(card.imageURL));
+            var popup = $(document).find("#winner-popup");
+            $(popup).css("visibility", "visible");
+        }
     }
 
     calculateWidthCentre(){

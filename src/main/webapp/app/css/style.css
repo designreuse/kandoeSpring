@@ -933,6 +933,57 @@ footer {
 }
 
 /*
+------------------------- WINNER POP-UP -------------
+*/
+
+#winner-popup {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    height:100%;
+    width: 100%;
+    visibility: hidden;
+    z-index: 20;
+}
+
+#card-img-winner{
+    max-width: 150px;
+    max-height: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#card-element-winner{
+    margin: 20px;
+}
+
+.winner-popup-container {
+    margin: 70px auto;
+    padding: 10px;
+    background: #f7f7f7;
+    border-radius: 5px;
+    width: 50%;
+    position: relative;
+    top: 25%;
+    transition: all 5s ease-in-out;
+}
+
+.winner-text{
+    color: white;
+    position: relative;
+    top: 25%;
+}
+
+.winner-text-container{
+    min-height: 150px;
+    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(8, 8, 8, 0.25)), url(../resources/winner.jpg);
+}
+
+/*
 ------------------------- MATERIAL CHECKBOX SLIDER -------------
 */
 

@@ -74,7 +74,7 @@
                                 [attr.r]="60 + (60*siz)" stroke="#f7f7f7" stroke-width="8" fill="#1E8BC3"/>
                     </svg>
                     <div class="overlay-circle">
-                        <div *ngFor="#card of cards; #i = index" class="overlay-element card-ingame-container-playing" [attr.id]="i" [attr.style]="getPosition(i)">
+                        <div *ngFor="#card of cards; #i = index" class="overlay-element card-ingame-container-playing" [attr.id]="i" [attr.style]="getPosition(i)" (click)="changePosition(i)">
                             <div class="card-overlay-element center-container">
                                 <h4 class="card-ingame-nr">{{i+1}}</h4>
                                 <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-ingame-img img-thumbnail"/>
@@ -89,6 +89,21 @@
         </div>
     </div>
 </div>
+
+<!--
+---------------------------------- SCREEN IF CARD REACHES MIDDLE-------------------------
+-->
+
+<div id="winner-popup" class="container-popup">
+    <div class="winner-popup-container center-container">
+        <div class="winner-text-container">
+            <h2 class="winner-text"> THE CHOSEN ONE</h2>
+        </div>
+        <img id="card-img-winner" class="img-responsive img-rounded"/>
+        <h4 id="card-element-winner"></h4>
+    </div>
+</div>
+
 
 <!--
 ---------------------------------- SCREEN IF USER HAS NOT CHOSEN CARDS YET -------------------------
