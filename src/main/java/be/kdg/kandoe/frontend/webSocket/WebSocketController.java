@@ -42,8 +42,26 @@ public class WebSocketController {
             } catch (SessionServiceException e) {
                 return null;
             }
+        }
+        return null;
+    }
 
+    @MessageMapping("/circleSession")
+    @SendTo("/topic/circleSession")
+    public NextMove processMove(CurrentMove move) {
+        String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
+                .parseClaimsJws(move.getToken().replace("\"", "")).getBody().getSubject();
+        User u = userService.findUserByUsername(username);
 
+        if (u != null) {
+            try {
+                sessionService.updateCardPosition(move.getCardId(), u.getUserId(), move.getSessionId());
+                Session currentSession = sessionService.findSessionById(move.getSessionId(),u.getUserId());
+                int currentUserId = currentSession.getUserSessions().stream().filter(cu-> cu.getUserPosition()==0).findFirst().get().getUser().getUserId();
+                return new NextMove(move.getCardId(),currentUserId);
+            } catch (SessionServiceException e) {
+                return null;
+            }
         }
         return null;
     }
