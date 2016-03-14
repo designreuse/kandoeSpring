@@ -39,8 +39,8 @@ export class ChatComponent {
 
     connect() {
         this.disconnect();
-        var socket = new SockJS('/Kandoe/chat'); //local
-        //var socket = new SockJS('/chat'); // wildfly
+        //var socket = new SockJS('/Kandoe/chat'); //local
+        var socket = new SockJS('/chat'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
             this.setConnected(true);
