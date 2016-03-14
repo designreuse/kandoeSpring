@@ -62,7 +62,7 @@ export class SessionDetailComponent implements OnInit{
 
     }
 
-    getPosition(i){
+    getPosition(i, cardId ?: number){
         var c = this.cards[i];
         var position = this.session.size - 1 - c.position;
 
@@ -81,8 +81,8 @@ export class SessionDetailComponent implements OnInit{
         var middleWidth = this.calculateWidthCentre();
         var middleHeight = this.calculateHeightCentre();
 
-        var x = Math.round(middleWidth + radius * Math.cos(step*i) - elWidth / 2);
-        var y = Math.round(middleHeight + radius * Math.sin(step*i) - elHeight / 2);
+        var x = Math.round(middleWidth + radius * Math.cos(step*i) - (elWidth+10) / 2);
+        var y = Math.round(middleHeight + radius * Math.sin(step*i) - (elWidth+20)/2);
 
         return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90+(rotationDegree*i)) + "deg)";
     }
@@ -186,26 +186,22 @@ export class SessionDetailComponent implements OnInit{
 
     showFullDescription(i){
         var id= "#" + i;
-        var cardid = "#desc-"+i;
-        var arrowid = "#arrow-" + i;
-        var description = $(document).find($(id));
-        var carddescription = $(document).find($(cardid));
-        var arrow = $(document). find($(arrowid));
-        description.css("display", "inherit");
-        arrow.css("display", "inherit");
-        carddescription.css("display", "none");
+        var descid = "#desc-"+i;
+        var cardIngame = $(document).find($(id));
+        var carddescription = $(document).find($(descid));
+        cardIngame.css("background","rgb(255, 156, 68)");
+        cardIngame.css("color","white");
+        carddescription.css("display", "inherit");
 
     }
 
     hideFullDescription(i){
         var id= "#" + i;
-        var cardid = "#desc-"+i;
-        var arrowid = "#arrow-" + i;
-        var description = $(document).find($(id));
-        var carddescription = $(document).find($(cardid));
-        var arrow = $(document). find($(arrowid));
-        description.css("display", "none");
-        arrow.css("display", "none");
-        carddescription.css("display", "");
+        var descid = "#desc-"+i;
+        var cardIngame = $(document).find($(id));
+        var carddescription = $(document).find($(descid));
+        cardIngame.css("background", "rgba(255, 255, 255, 0.6)");
+        cardIngame.css("color","rgb(0,0,0)");
+        carddescription.css("display", "none");
     }
 }

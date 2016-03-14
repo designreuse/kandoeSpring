@@ -76,7 +76,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         _this.user = u;
                     });
                 };
-                SessionDetailComponent.prototype.getPosition = function (i) {
+                SessionDetailComponent.prototype.getPosition = function (i, cardId) {
                     var c = this.cards[i];
                     var position = this.session.size - 1 - c.position;
                     var id = "#" + i;
@@ -91,8 +91,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     var step = (2 * Math.PI) / this.cards.length;
                     var middleWidth = this.calculateWidthCentre();
                     var middleHeight = this.calculateHeightCentre();
-                    var x = Math.round(middleWidth + radius * Math.cos(step * i) - elWidth / 2);
-                    var y = Math.round(middleHeight + radius * Math.sin(step * i) - elHeight / 2);
+                    var x = Math.round(middleWidth + radius * Math.cos(step * i) - (elWidth + 10) / 2);
+                    var y = Math.round(middleHeight + radius * Math.sin(step * i) - (elWidth + 20) / 2);
                     return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90 + (rotationDegree * i)) + "deg)";
                 };
                 SessionDetailComponent.prototype.changePosition = function (i) {
@@ -185,25 +185,21 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                  */
                 SessionDetailComponent.prototype.showFullDescription = function (i) {
                     var id = "#" + i;
-                    var cardid = "#desc-" + i;
-                    var arrowid = "#arrow-" + i;
-                    var description = $(document).find($(id));
-                    var carddescription = $(document).find($(cardid));
-                    var arrow = $(document).find($(arrowid));
-                    description.css("display", "inherit");
-                    arrow.css("display", "inherit");
-                    carddescription.css("display", "none");
+                    var descid = "#desc-" + i;
+                    var cardIngame = $(document).find($(id));
+                    var carddescription = $(document).find($(descid));
+                    cardIngame.css("background", "rgb(255, 156, 68)");
+                    cardIngame.css("color", "white");
+                    carddescription.css("display", "inherit");
                 };
                 SessionDetailComponent.prototype.hideFullDescription = function (i) {
                     var id = "#" + i;
-                    var cardid = "#desc-" + i;
-                    var arrowid = "#arrow-" + i;
-                    var description = $(document).find($(id));
-                    var carddescription = $(document).find($(cardid));
-                    var arrow = $(document).find($(arrowid));
-                    description.css("display", "none");
-                    arrow.css("display", "none");
-                    carddescription.css("display", "");
+                    var descid = "#desc-" + i;
+                    var cardIngame = $(document).find($(id));
+                    var carddescription = $(document).find($(descid));
+                    cardIngame.css("background", "rgba(255, 255, 255, 0.6)");
+                    cardIngame.css("color", "rgb(0,0,0)");
+                    carddescription.css("display", "none");
                 };
                 SessionDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
@@ -212,9 +208,10 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink, chatComponent_1.ChatComponent],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
+                var _a, _b;
             })();
             exports_1("SessionDetailComponent", SessionDetailComponent);
         }
