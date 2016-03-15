@@ -5905,6 +5905,7 @@ button.close {
 
 .modal-content {
     position: relative;
+    width: 70%;
     background-color: #fff;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
