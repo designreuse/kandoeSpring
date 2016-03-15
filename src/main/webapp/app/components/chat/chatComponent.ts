@@ -28,7 +28,7 @@ export class ChatComponent {
     sendMessage(chatElement){
         this.emitMessage.emit(this.message);
 
-        chatElement.content="";
+        this.message="";
         chatElement.focus();
     }
 

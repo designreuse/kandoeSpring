@@ -25,9 +25,7 @@ export class ThemeComponent implements OnInit {
     private userService:UserService;
     private cardService:CardService;
     private file:File = null;
-    private cards:Card[] = [];
     private card:Card = Card.createEmpty();
-    private themeId:number;
 
     constructor(private _themeService:ThemeService, router:Router, private _userService:UserService,
                 cardService:CardService) {
@@ -65,6 +63,8 @@ export class ThemeComponent implements OnInit {
             } else {
                 return url.replace(/"/g, "");
             }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
 
@@ -75,19 +75,24 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
+    onAddCard(themeId: number){
+        this.card.themeId = themeId;
+    }
+
     onSubmit() {
-        this.card.themeId = +this.themeId;
-        this.cardService.createCard(this.card, this.file).subscribe(res => {
-            var popup = document.getElementById("popup-addCard");
-            $(popup).css("visibility", "hidden");
-            this.router.navigate(['/Themes']);
-            document.location.reload();
-            this.file = null;
-        }, error => {
-            //todo change error display
-            this.file = null;
-            alert(error.text());
-        });
+        if(this.card.description){
+            this.cardService.createCard(this.card, this.file).subscribe(card => {
+                var popup = document.getElementById("popup-addCard");
+                $(popup).css("visibility", "hidden");
+                this.themes.find(th => th.themeId == card.themeId).cards.push(card);
+                this.card.description = null;
+                this.file = null;
+            }, error => {
+                //todo change error display
+                this.file = null;
+                alert(error.text());
+            });
+        }
     }
 
     private rotateCard($event) {

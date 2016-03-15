@@ -239,7 +239,7 @@ export class SessionDetailComponent implements OnInit{
                         card = c;
                     }
                 }*/
-                console.log(result);
+
                 var resultii=JSON.parse(result.body);
                 var ii;
                 var card;
@@ -249,13 +249,13 @@ export class SessionDetailComponent implements OnInit{
                         card = this.cards[i];
                     }
                 }
-                console.log("userId: " + this.user.userId);
-                console.log("resultii.userId: " + resultii.nextUserId);
+
                 if(resultii.nextUserId == this.user.userId){
                     this.canPlay = true;
                 } else{
                     this.canPlay = false;
                 }
+
                 var id = "#"+ ii;
                 var el = $(document).find($(id));
                 card.position = card.position + 1;

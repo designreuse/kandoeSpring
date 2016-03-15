@@ -58,12 +58,12 @@
         </div>
         <div class="form-group">
             <label>Logo</label>
-            <input type="file" multiple="false" (change)="onFileChange($event)">
+            <input type="file" (change)="onFileChange($event)">
         </div>
         <div class="items">
             <div class="item">
                 <div class="id"><p>1</p></div>
-                <img alt="logo" src="../../resources/noimgplaceholder.png" id="imgOut"/>
+                <img alt="logo" src="./app/resources/noimgplaceholder.png" id="imgOut"/>
                 <div class="info">
                     <h2 class="title">{{organisation.organisationName}}</h2>
                     <p class="desc">{{organisation.address}}</p>

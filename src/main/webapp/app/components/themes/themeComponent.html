@@ -158,7 +158,7 @@
                                                 <a href="#popup-addCard">
                                                     <button id="addcard-btn" type="button"
                                                             class="btn btn-primary btn-wide theme-cards-btn"
-                                                            data-toggle="modal" data-target="#add-card">Add card
+                                                            data-toggle="modal" data-target="#add-card" (click)="onAddCard(theme.themeId)">Add card
                                                     </button>
                                                 </a>
                                             </div>
@@ -215,13 +215,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Logo</label>
-                                    <input type="file" multiple="false" (change)="onFileChange($event)">
+                                    <input type="file" (change)="onFileChange($event)">
                                 </div>
                                 <div class="row">
                                     <div class="center-container ">
                                         <div class="col-sm-offset-3 col-sm-8">
                                             <div class="session-card">
-                                                <img src="" id="cardimg"/>
+                                                <img src="./app/resources/noimgplaceholder.png" id="cardimg"/>
                                                 <p class="session-card-description">{{card.description}} <br/>
                                                 </p>
                                             </div>

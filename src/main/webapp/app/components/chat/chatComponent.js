@@ -29,7 +29,7 @@ System.register(["angular2/core"], function(exports_1) {
                 }
                 ChatComponent.prototype.sendMessage = function (chatElement) {
                     this.emitMessage.emit(this.message);
-                    chatElement.content = "";
+                    this.message = "";
                     chatElement.focus();
                 };
                 ChatComponent.prototype.getImageSrc = function (url) {

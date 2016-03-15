@@ -2,9 +2,11 @@ package be.kdg.kandoe.frontend;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ITCreateCards {
@@ -24,10 +26,22 @@ public class ITCreateCards {
         element = driver.findElement(By.xpath(".//*[@id='login-form']/div/button"));
         element.click();
         (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("loggedin-home")) != null);
+        element = driver.findElement(By.linkText("THEMES"));
+        element.click();
+        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("theme")) != null);
         element = driver.findElement(By.xpath(".//*[@id='sort-list']/ul/li[2]/div/div/div[1]/div[2]/div[2]/button"));
         element.click();
+        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.id("addcard-btn")) != null);
         element = driver.findElement(By.xpath(".//*[@id='addcard-btn']"));
-
+        driver.manage().window().maximize();
+        element.click();
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(".//*[@id='add-card']/div/div/div[2]/div/div/div/form/div[1]/input")));
+        element = driver.findElement(By.xpath(".//*[@id='add-card']/div/div/div[2]/div/div/div/form/div[1]/input"));
+        sendKeysPerCharacter(element, "TestCard");
+        element = driver.findElement(By.xpath(".//*[@id='add-card']/div/div/div[3]/button"));
+        element.click();
+        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.linkText("TestCard")) != null);
     }
 
     private void sendKeysPerCharacter(WebElement element, String keys) {
