@@ -173,19 +173,17 @@
     </div>
 </div>
 
-<!--Popup addCard -->
-<div id="popup-addCard" class="containerpopup overlay" (mouseup)="closePopup()" >
-    <div class="popup">
-        <a [routerLink]="['/Themes']"  (click)="closePopup()"  id="close-popup" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right glyphicon glyphicon-remove-circle"></a>
-        <header class="popup-header">
-            <div class="container page-headercard">
-                <h4>Add new card</h4>
-            </div>
-        </header>
-
-        <div class="container popup-main nopaddingleft bottomfixes">
-            <div class="col-xs-12 col-sm-offset-1 col-sm-10">
-                <div class="row">
+<div class="container ">
+    <!-- Modal -->
+    <div class="modal fade" id="add-card" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add new card</h4>
+                </div>
+                <div class="modal-body">
                     <form method="post" role="form">
 
                         <div class="form-group">
@@ -200,7 +198,7 @@
                         </div>
                         <div class="row">
                             <div class="center-container ">
-                                <div class="col-sm-offset-3 col-sm-8">
+                                <div class="col-sm-8">
                                     <div class="session-card">
                                         <img src="" id="cardimg"/>
                                         <p class="session-card-description">{{card.description}} <br/></p>
@@ -208,19 +206,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-offset-1 col-sm-11 nopadding-nomargin">
-                                <button type="button" class="btn btn-lg btn-wide btn-primary" (click)="onSubmit()">Add
-                                </button>
-                            </div>
-                        </div>
+
 
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-info" data-dismiss="modal" (click)="onSubmit()">Add new card</button>
                 </div>
             </div>
 
         </div>
-
     </div>
+
 </div>
+
+
 
