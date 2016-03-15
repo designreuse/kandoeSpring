@@ -29,6 +29,7 @@ System.register(["./person", "./address"], function(exports_1) {
                     user.username = json.username;
                     user.email = json.email;
                     user.profilePicture = json.profilePicture;
+                    user.userId = json.userId;
                     user.person = new person_1.Person();
                     if (json.person) {
                         user.person = person_1.Person.fromJson(user.person);

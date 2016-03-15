@@ -55,7 +55,7 @@ public class SessionServiceTest {
         CardSession cardSession = s.getCardSessions().stream().filter(cs -> cs.getPosition()==0).findFirst().get();
         UserSession userSession = s.getUserSessions().stream().filter(us -> us.getUserPosition()==0).findFirst().get();
         int original = cardSession.getPosition();
-        sessionService.updateCardPosition(cardSession.getCard().getId(),0,userSession.getUser().getId(),s.getId());
+        sessionService.updateCardPosition(cardSession.getCard().getId(),userSession.getUser().getId(),s.getId());
         assertEquals("The cardPosition should be 1",original+1,cardSession.getPosition());
         assertEquals("The UserPosition should have been updated",s.getUserSessions().size()-1,userSession.getUserPosition());
     }
@@ -68,7 +68,7 @@ public class SessionServiceTest {
         UserSession userSession = s.getUserSessions().stream().filter(us -> us.getUserPosition()==1).findFirst().get();
 
         int original = cardSession.getPosition();
-        sessionService.updateCardPosition(cardSession.getCard().getId(),0,userSession.getUser().getId(),s.getId());
+        sessionService.updateCardPosition(cardSession.getCard().getId(),userSession.getUser().getId(),s.getId());
         assertEquals("The cardPosition should be 0",original,cardSession.getPosition());
     }
 
