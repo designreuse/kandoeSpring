@@ -59,7 +59,7 @@ public class SubThemeRestControllerTest {
     @Test
     public void testCreateSubTheme() throws Exception{
         JSONObject subTheme = new JSONObject();
-        subTheme.put("themeName", "TestSubTheme");
+        subTheme.put("subThemeName", "TestSubTheme");
         subTheme.put("description", "TestDescription");
         JSONObject org = new JSONObject();
         org.put("organisationId", 1);
@@ -77,7 +77,7 @@ public class SubThemeRestControllerTest {
     @Test
     public void testCreateSubThemeWithoutOrganisation() throws Exception {
         JSONObject subTheme = new JSONObject();
-        subTheme.put("themeName", "TestSubTheme");
+        subTheme.put("subThemeName", "TestSubTheme");
         subTheme.put("description", "TestDescription");
 
         mockMvc.perform(post("/api/subThemes")
