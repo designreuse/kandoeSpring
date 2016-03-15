@@ -8,9 +8,9 @@ import java.util.List;
 
 public class SubThemeDTO extends ResourceSupport implements Serializable {
 
-    private Integer themeId;
+    private Integer subThemeId;
 
-    private String themeName;
+    private String subThemeName;
 
     private String description;
 
@@ -20,20 +20,30 @@ public class SubThemeDTO extends ResourceSupport implements Serializable {
 
     private List<CardDTO> cards;
 
+    private Integer themeId;
+
+    public Integer getSubThemeId() {
+        return subThemeId;
+    }
+
+    public void setSubThemeId(Integer subThemeId) {
+        this.subThemeId = subThemeId;
+    }
+
+    public String getSubThemeName() {
+        return subThemeName;
+    }
+
+    public void setSubThemeName(String subThemeName) {
+        this.subThemeName = subThemeName;
+    }
+
     public Integer getThemeId() {
         return themeId;
     }
 
     public void setThemeId(Integer themeId) {
         this.themeId = themeId;
-    }
-
-    public String getThemeName() {
-        return themeName;
-    }
-
-    public void setThemeName(String themeName) {
-        this.themeName = themeName;
     }
 
     public String getDescription() {

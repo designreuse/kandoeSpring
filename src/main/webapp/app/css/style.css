@@ -868,6 +868,7 @@ footer {
     z-index: 10;
     height: 75px;
     width: 50px;
+    transition: 2s;
 }
 
 .card-ingame-img {
@@ -956,7 +957,7 @@ footer {
     width: 50%;
     position: relative;
     top: 25%;
-    transition: all 5s ease-in-out;
+    transition: 4s ease-in;
 }
 
 .winner-text{

@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="chat -ingame col-sm-12 col-md-2">
-			<chat [sessionId]="sessionId"></chat>
+			<chat [sessionId]="sessionId" (emitMessage)="sendMessage($event)" [messages]="messages"></chat>
         </div>
     </div>
     

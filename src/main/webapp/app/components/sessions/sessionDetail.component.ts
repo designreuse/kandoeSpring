@@ -9,6 +9,8 @@ import {User} from "../../DOM/users/user";
 import {Person} from "../../DOM/users/person";
 import {CardService} from "../../service/cardService";
 import {ChatComponent} from "../chat/chatComponent";
+import {Message} from "../../DOM/circleSession/message";
+import {Json} from "angular2/src/facade/lang";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -24,15 +26,17 @@ export class SessionDetailComponent implements OnInit{
     private session: Session = Session.createEmpty();
     private sessionId: number;
     private size: Array<number> = [];
-    private cards: Card[] = [];
+    private cards: Card[] = [Card.createEmpty()];
     private users: User[] = [];
     private user: User = User.createEmpty();
     private userService: UserService;
     private cardService: CardService;
     private card:Card = Card.createEmpty();
     private file:File = null;
+    private canPlay:Boolean = false;
 
-    private cardsOnCircle: Card[] = [];
+    stompClient;
+    messages: Message[] = [];
 
 
     constructor(sesService: SessionService, userService:UserService, cardService:CardService, router: Router, routeParams: RouteParams){
@@ -41,6 +45,7 @@ export class SessionDetailComponent implements OnInit{
         this.sessionId = +routeParams.params["id"];
         this.userService = userService;
         this.cardService = cardService;
+        this.connect();
     }
 
     ngOnInit(){
@@ -50,6 +55,7 @@ export class SessionDetailComponent implements OnInit{
             for(var i = 0; i < s.size; i++){
                 this.size[i] = --j;
             }
+            console.log(s.cards);
             this.cards = s.cards;
             this.users = s.users;
         }, e => {
@@ -57,8 +63,14 @@ export class SessionDetailComponent implements OnInit{
         });
 
         this.userService.getCurrentUser().subscribe(u => {
+            console.log(u);
             this.user = u;
+            if(this.user.position == 0){
+                this.canPlay = true;
+            }
         });
+
+
 
     }
 
@@ -91,15 +103,15 @@ export class SessionDetailComponent implements OnInit{
         var card = this.cards[i];
         var id = "#" + i;
         var el = $(document).find($(id));
-        card.position = card.position + 1;
-        if(card.position < (this.session.size-1)) {
+        if(card.position < (this.session.size-1) && this.canPlay) {
+            this.stompClient.send("/move", {}, JSON.stringify({'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId}));
             $(el).load("index.php");
         } else if(card.position == (this.session.size-1)){
             $(document).find("#card-element-winner").text(card.description);
             var img = $(document).find("#card-img-winner");
             img.attr("src", this.getImageSrc(card.imageURL));
             var popup = $(document).find("#winner-popup");
-            $(popup).css("visibility", "visible");
+            $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 1000);
         }
     }
 
@@ -203,5 +215,77 @@ export class SessionDetailComponent implements OnInit{
         cardIngame.css("background", "rgba(255, 255, 255, 0.6)");
         cardIngame.css("color","rgb(0,0,0)");
         carddescription.css("display", "none");
+    }
+
+    /*
+    -------------------------------WebSockets-------------------------------------
+    */
+
+    connect() {
+        this.disconnect();
+        var socket = new SockJS('/Kandoe/circleSession'); //local
+        //var socket = new SockJS('/chat'); // wildfly
+        this.stompClient = Stomp.over(socket);
+        this.stompClient.connect({}, frame => {
+
+            this.stompClient.subscribe('/topic/chat', greeting => {
+                this.showMessage(JSON.parse(greeting.body));
+            });
+
+            this.stompClient.subscribe('/topic/move', result => {
+                /*var card = null;
+                for(var c in this.cards){
+                    if(result.cardId == c.cardId){
+                        card = c;
+                    }
+                }*/
+                console.log(result);
+                var resultii=JSON.parse(result.body);
+                var ii;
+                var card;
+                for (var i = 0; i < this.cards.length; i++){
+                    if(this.cards[i].cardId == resultii.cardId){
+                        ii = i;
+                        card = this.cards[i];
+                    }
+                }
+                console.log("userId: " + this.user.userId);
+                console.log("resultii.userId: " + resultii.nextUserId);
+                if(resultii.nextUserId == this.user.userId){
+                    this.canPlay = true;
+                } else{
+                    this.canPlay = false;
+                }
+                var id = "#"+ ii;
+                var el = $(document).find($(id));
+                card.position = card.position + 1;
+                if(card.position < (this.session.size-1)) {
+                    $(el).load("index.php");
+                } else if(card.position == (this.session.size-1)){
+                    $(document).find("#card-element-winner").text(card.description);
+                    var img = $(document).find("#card-img-winner");
+                    img.attr("src", this.getImageSrc(card.imageURL));
+                    var popup = $(document).find("#winner-popup");
+                    $(popup).css("visibility", "visible");
+                }
+            });
+        });
+
+    }
+
+    disconnect() {
+        if (this.stompClient != null) {
+            this.stompClient.disconnect();
+        }
+    }
+
+    sendMessage(message) {
+        var token = localStorage.getItem("id_token");
+
+        this.stompClient.send("/chat", {}, JSON.stringify({'content': message, 'token': token, 'sessionId': this.sessionId}));
+    }
+
+    showMessage(json: string) {
+        this.messages.push(Message.fromJson(json));
     }
 }
