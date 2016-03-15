@@ -3,6 +3,8 @@ import {OnInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {Http} from "angular2/http";
 import {Message} from "../../DOM/circleSession/message";
+import {Output} from "angular2/core";
+import {EventEmitter} from "angular2/core";
 /**
  * Created by Jorda on 3/6/2016.
  */
@@ -15,65 +17,19 @@ import {Message} from "../../DOM/circleSession/message";
 })
 
 export class ChatComponent {
-    stompclient;
-    messages: Message[] = [];
-    message: String = "";
+    @Input() messages: Message[] = [];
+     message: string = "";
     @Input() sessionId: number;
+    @Output() emitMessage:EventEmitter<string> = new EventEmitter();
 
     constructor() {
-        this.disconnect();
-        var socket = new SockJS('/Kandoe/chat'); //local
-        //var socket = new SockJS('/chat'); // wildfly
-        this.stompClient = Stomp.over(socket);
-        this.stompClient.connect({}, frame => {
-            this.setConnected(true);
-
-            this.stompClient.subscribe('/topic/chat', greeting => {
-                this.showMessage(JSON.parse(greeting.body));
-            });
-
-            this.stompclient
-
-        });
     }
 
-    connect() {
-        this.disconnect();
-        //var socket = new SockJS('/Kandoe/chat'); //local
-        var socket = new SockJS('/chat'); // wildfly
-        this.stompClient = Stomp.over(socket);
-        this.stompClient.connect({}, frame => {
-            this.setConnected(true);
+    sendMessage(chatElement){
+        this.emitMessage.emit(this.message);
 
-            this.stompClient.subscribe('/topic/chat', greeting => {
-                this.showMessage(JSON.parse(greeting.body));
-            });
-        });
-    }
-
-    setConnected(conn: boolean) {
-        document.getElementById('connect').disabled = conn;
-        document.getElementById('disconnect').disabled = !conn;
-    }
-
-    disconnect() {
-        if (this.stompClient != null) {
-            this.stompClient.disconnect();
-        }
-        this.setConnected(false);
-    }
-
-    sendMessage(chatElement) {
-        var token = localStorage.getItem("id_token");
-
-        //todo change sessionId to variable
-        this.stompClient.send("/chat", {}, JSON.stringify({'content': this.message, 'token': token, 'sessionId': this.sessionId}));
-        this.message = "";
+        chatElement.content="";
         chatElement.focus();
-    }
-
-    showMessage(json: string) {
-        this.messages.push(Message.fromJson(json));
     }
 
     private getImageSrc(url:string): string {

@@ -13,7 +13,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
-
 /**
  * Created by Jordan on 16/02/2016.
  */

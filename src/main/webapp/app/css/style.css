@@ -868,6 +868,7 @@ footer {
     z-index: 10;
     height: 75px;
     width: 50px;
+    transition: 2s;
 }
 
 .card-ingame-img {

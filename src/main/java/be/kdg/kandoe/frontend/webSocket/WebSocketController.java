@@ -48,8 +48,8 @@ public class WebSocketController {
         return null;
     }
 
-    @MessageMapping("/circleSession")
-    @SendTo("/topic/circleSession")
+    @MessageMapping("/move")
+    @SendTo("/topic/move")
     public NextMove processMove(CurrentMove move) {
         String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
                 .parseClaimsJws(move.getToken().replace("\"", "")).getBody().getSubject();

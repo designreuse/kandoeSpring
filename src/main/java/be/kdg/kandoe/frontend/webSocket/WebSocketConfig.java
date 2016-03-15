@@ -23,7 +23,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-        stompEndpointRegistry.addEndpoint("/chat").withSockJS();
+        stompEndpointRegistry.addEndpoint("/circleSession").withSockJS();
     }
 
     @Override
