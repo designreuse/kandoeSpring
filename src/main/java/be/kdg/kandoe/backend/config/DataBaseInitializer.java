@@ -45,6 +45,8 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
     @Autowired
     private SubThemeService subThemeService;
     @Autowired
+    private SubThemeRepository subThemeRepository;
+    @Autowired
     private CardRepository cardRepository;
     @Autowired
     private CardService cardService;
@@ -130,8 +132,8 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         }
 
         SubTheme subTheme = new SubTheme();
-        if (themeRepository.findThemeByThemeName("SubThemeKdG") == null && mailUser.getId() != null) {
-        subTheme.setThemeName("SubThemeKdG");
+        if (subThemeRepository.findSubThemeBySubThemeName("SubThemeKdG") == null && mailUser.getId() != null) {
+            subTheme.setSubThemeName("SubThemeKdG");
             subTheme.setDescription("KdG Subtheme description");
             subTheme.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
             subTheme.setOrganisation(org);

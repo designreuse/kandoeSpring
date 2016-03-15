@@ -3,18 +3,15 @@ package be.kdg.kandoe.backend.services.impl;
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.SubThemeRepository;
-import be.kdg.kandoe.backend.persistence.api.ThemeRepository;
-import be.kdg.kandoe.backend.persistence.api.UserRepository;
-import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.SubThemeService;
-import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.api.ThemeService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,12 +22,14 @@ import java.util.List;
 @Transactional
 public class SubThemeServiceImpl implements SubThemeService {
     private final SubThemeRepository subThemeRepository;
+    private final ThemeService themeService;
 
 
     @Autowired
-    public SubThemeServiceImpl(SubThemeRepository subThemeRepository) {
+    public SubThemeServiceImpl(SubThemeRepository subThemeRepository, ThemeService themeService) {
         this.subThemeRepository = subThemeRepository;
 
+        this.themeService = themeService;
     }
 
     @Override
@@ -40,11 +39,22 @@ public class SubThemeServiceImpl implements SubThemeService {
 
     @Override
     public SubTheme findSubThemeByName(String name) {
-        return subThemeRepository.findSubThemeByThemeName(name);
+        return subThemeRepository.findSubThemeBySubThemeName(name);
     }
 
     @Override
-    public SubTheme saveSubTheme(SubTheme subTheme, Integer headThemeId) {
+    public SubTheme saveSubTheme(SubTheme subTheme, Integer themeId) {
+       /* Theme theme = themeService.findThemeById(themeId);
+        List<SubTheme> subThemes;
+        if(theme.getSubThemes()!=null) {
+            subThemes = theme.getSubThemes();
+        } else {
+            subThemes = new ArrayList<>();
+        }
+        subThemes.add(subTheme);
+        theme.setSubThemes(subThemes); */
+
+        subTheme.setTheme(themeService.findThemeById(themeId));
         return subThemeRepository.save(subTheme);
     }
 
