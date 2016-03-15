@@ -724,7 +724,6 @@ footer {
 .popup-main {
     width: 90%;
     background-color: #f7f7f7;
-
 }
 
 .noborder{
@@ -736,11 +735,18 @@ footer {
 
 }
 
+@media (min-width: 768px) {
+    .modal-dialog {
+        margin: 100px auto;
+    }
+}
+
 .containerpopup {
     padding-right: 0;
     padding-left: 0;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    display: none;
 }
 
 .overlay {
