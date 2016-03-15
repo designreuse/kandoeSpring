@@ -236,7 +236,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             card.setCardSessions(cardSessions);
             session.setCardSessions(cardSessions);
 
-            session.setUserAddCards(false);
+            session.setUserAddCards(true);
             List<UserSession> userSessions = new ArrayList<>();
 
             userSession.setUser(user);

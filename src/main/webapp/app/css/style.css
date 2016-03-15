@@ -957,7 +957,7 @@ footer {
     width: 50%;
     position: relative;
     top: 25%;
-    transition: all 5s ease-in-out;
+    transition: 4s ease-in;
 }
 
 .winner-text{
