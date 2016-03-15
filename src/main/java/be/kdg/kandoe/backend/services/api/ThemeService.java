@@ -2,6 +2,7 @@ package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 
 import java.util.List;

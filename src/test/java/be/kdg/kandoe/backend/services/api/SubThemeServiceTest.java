@@ -41,7 +41,7 @@ public class SubThemeServiceTest {
         subtheme.setTheme(theme);
         subtheme.setSubThemeName("KdGSubTheme");
         subtheme.setDescription("kdGSubTheme description");
-        subThemeService.saveSubTheme(subtheme, 1);
+        subThemeService.saveSubTheme(subtheme,(Integer) 1);
 
         assertEquals(subtheme.getSubThemeName(),"KdGSubTheme");
 

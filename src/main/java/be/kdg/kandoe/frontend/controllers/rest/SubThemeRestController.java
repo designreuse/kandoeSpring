@@ -65,7 +65,7 @@ public class SubThemeRestController {
             if(subThemeDTO.getOrganisation() != null){
                 SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
 
-                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getId());
+                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,subTheme_in.getTheme().getThemeId());
                 logger.info(this.getClass().toString() + ": adding new subtheme " + subTheme_out.getId());
 
                 return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out), HttpStatus.CREATED);
@@ -86,7 +86,7 @@ public class SubThemeRestController {
             if(subThemeDTO.getOrganisation() != null){
                 if(file.getContentType().split("/")[0].equals("image")){
                     SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
-                    SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getId());
+                    SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,subTheme_in.getTheme().getThemeId());
 
                     String newFilename = String.format("%d.%s", subTheme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
                     String filePath = request.getServletContext().getRealPath("/resources/images/themes/");
