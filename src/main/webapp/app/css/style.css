@@ -24,6 +24,10 @@
 
 body {
     padding-top: 0;
+    position: relative;
+    margin: 0;
+    padding-bottom: 100px;
+    min-height: 100%;
     font-family: "Open Sans", sans-serif;
     background: repeating-linear-gradient(45deg, #F9F9F9, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 5px);
 }
@@ -558,8 +562,10 @@ footer {
 }
 
 .footer {
-    position: relative;
+    position: absolute;
+    right: 0;
     bottom: 0;
+    left: 0;
     padding: 35px 0;
     background-color: #333;
     color: white;
@@ -718,7 +724,6 @@ footer {
 .popup-main {
     width: 90%;
     background-color: #f7f7f7;
-
 }
 
 .noborder{
@@ -730,11 +735,18 @@ footer {
 
 }
 
+@media (min-width: 768px) {
+    .modal-dialog {
+        margin: 100px auto;
+    }
+}
+
 .containerpopup {
     padding-right: 0;
     padding-left: 0;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    display: none;
 }
 
 .overlay {
