@@ -2,16 +2,15 @@ package be.kdg.kandoe.frontend;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ITCreateOrganisation {
+public class ITCreateCards {
 
     @Test
-    public void testCreateOrganisation() throws InterruptedException {
+    public void testCreateCards() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Arne\\Documents\\KdG\\3\\Integratieproject 2\\Code\\kandoe\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("http://localhost:9966/Kandoe");
@@ -25,18 +24,10 @@ public class ITCreateOrganisation {
         element = driver.findElement(By.xpath(".//*[@id='login-form']/div/button"));
         element.click();
         (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("loggedin-home")) != null);
-        element = driver.findElement(By.linkText("ORGANISATIONS"));
+        element = driver.findElement(By.xpath(".//*[@id='sort-list']/ul/li[2]/div/div/div[1]/div[2]/div[2]/button"));
         element.click();
-        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
-        element = driver.findElement(By.xpath(".//*[@id='org-list']/div/div/ul/div/li/a"));
-        element.click();
-        element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/div[1]/input"));
-        sendKeysPerCharacter(element, "TestOrganisation");
-        element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/div[2]/input"));
-        sendKeysPerCharacter(element, "TestAddress");
-        element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/button"));
-        element.click();
-        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
+        element = driver.findElement(By.xpath(".//*[@id='addcard-btn']"));
+
     }
 
     private void sendKeysPerCharacter(WebElement element, String keys) {
