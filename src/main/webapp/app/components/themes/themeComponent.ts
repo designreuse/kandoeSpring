@@ -75,22 +75,6 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    showPopup(id:number) {
-        this.themeId = id;
-       /* var background = document.getElementById('everything');
-        var popup=document.getElementById('popup-addCard');
-
-        $(popup).css('visibility', 'visible');
-        $(background).css('background','rgba(0, 0, 0, 0.7)')*/
-    }
-
-     closePopup(){
-        var popup = document.getElementById('popup-addCard');
-        $(popup).css('display', 'none');
-         this.router.navigate(['/Themes']);
-         document.location.reload();
-    }
-
     onSubmit() {
         this.card.themeId = +this.themeId;
         this.cardService.createCard(this.card, this.file).subscribe(res => {

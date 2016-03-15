@@ -24,6 +24,10 @@
 
 body {
     padding-top: 0;
+    position: relative;
+    margin: 0;
+    padding-bottom: 100px;
+    min-height: 100%;
     font-family: "Open Sans", sans-serif;
     background: repeating-linear-gradient(45deg, #F9F9F9, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 5px);
 }
@@ -75,6 +79,9 @@ hr {
 .nopaddingleft {
     padding-left: 0;
 }
+.nopaddingtop {
+    padding-top: 0;
+}
 
 .nopadding-nomargin {
     padding: 0 !important;
@@ -122,6 +129,10 @@ hr {
 
 .btn-wide {
     width: 100%;
+}
+
+.btn-half {
+    width: 32.5%;
 }
 
 .btn-primary {
@@ -551,8 +562,10 @@ footer {
 }
 
 .footer {
-    position: relative;
+    position: absolute;
+    right: 0;
     bottom: 0;
+    left: 0;
     padding: 35px 0;
     background-color: #333;
     color: white;
@@ -710,9 +723,11 @@ footer {
 
 .popup-main {
     width: 90%;
-    padding: 30px;
     background-color: #f7f7f7;
+}
 
+.noborder{
+    border: none;
 }
 
 #close-popup{
@@ -720,12 +735,18 @@ footer {
 
 }
 
+@media (min-width: 768px) {
+    .modal-dialog {
+        margin: 100px auto;
+    }
+}
+
 .containerpopup {
     padding-right: 0;
     padding-left: 0;
-    height: 145%;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    display: none;
 }
 
 .overlay {
@@ -738,6 +759,7 @@ footer {
     transition: opacity 500ms;
     visibility: hidden;
     opacity: 0;
+    z-index: 5;
 }
 
 .overlay:target {
@@ -753,10 +775,11 @@ footer {
     width: 30%;
     position: relative;
     transition: all 5s ease-in-out;
+    z-index: 10;
 }
 
 .popup-header {
-    margin: 0 5%;
+    margin: 0 1.5%;
 }
 
 .page-headercard {
@@ -784,7 +807,6 @@ footer {
 
 .bottomfixes {
     padding-bottom: 0;
-    margin-bottom: 20px;
 }
 
 /*

@@ -85,20 +85,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
-                ThemeComponent.prototype.showPopup = function (id) {
-                    this.themeId = id;
-                    /* var background = document.getElementById('everything');
-                     var popup=document.getElementById('popup-addCard');
-             
-                     $(popup).css('visibility', 'visible');
-                     $(background).css('background','rgba(0, 0, 0, 0.7)')*/
-                };
-                ThemeComponent.prototype.closePopup = function () {
-                    var popup = document.getElementById('popup-addCard');
-                    $(popup).css('display', 'none');
-                    this.router.navigate(['/Themes']);
-                    document.location.reload();
-                };
                 ThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
                     this.card.themeId = +this.themeId;
@@ -258,9 +244,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, cardService_1.CardService])
                 ], ThemeComponent);
                 return ThemeComponent;
+                var _a;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }
