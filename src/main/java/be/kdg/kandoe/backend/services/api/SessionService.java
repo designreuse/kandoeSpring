@@ -30,7 +30,7 @@ public interface SessionService {
 
     List<Session> findSessionByThemeId(Integer themeId, Integer userId) throws SessionServiceException;
 
-    void updateCardPosition(Integer cardId, int newPostion,Integer userId, Integer sessionId) throws SessionServiceException;
+    void updateCardPosition(Integer cardId,Integer userId, Integer sessionId) throws SessionServiceException;
 
     Session addMessageToChat(Integer sessionId, String message, Integer userId) throws SessionServiceException;
 

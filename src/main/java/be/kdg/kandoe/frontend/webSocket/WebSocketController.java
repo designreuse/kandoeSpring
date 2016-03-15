@@ -7,10 +7,8 @@ import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
@@ -40,18 +38,33 @@ public class WebSocketController {
         if (u != null) {
             try {
                 Session s = sessionService.addMessageToChat(chat.getSessionId(), chat.getContent(), u.getId());
-                Greeting gr = new Greeting(u.getUsername(), chat.getContent(),
-                        String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()),
-                        u.getProfilePicture());
+                return new Greeting(u.getUsername(), chat.getContent(), String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()), u.getProfilePicture());
+            } catch (SessionServiceException e) {
+                return null;
+            }
+          
 
-                return new Greeting(u.getUsername(), chat.getContent(),
-                        String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()),
-                        u.getProfilePicture());
+        }
+        return null;
+    }
+
+    @MessageMapping("/circleSession")
+    @SendTo("/topic/circleSession")
+    public NextMove processMove(CurrentMove move) {
+        String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
+                .parseClaimsJws(move.getToken().replace("\"", "")).getBody().getSubject();
+        User u = userService.findUserByUsername(username);
+
+        if (u != null) {
+            try {
+                sessionService.updateCardPosition(move.getCardId(), u.getUserId(), move.getSessionId());
+                Session currentSession = sessionService.findSessionById(move.getSessionId(),u.getUserId());
+                int currentUserId = currentSession.getUserSessions().stream().filter(cu-> cu.getUserPosition()==0).findFirst().get().getUser().getUserId();
+                return new NextMove(move.getCardId(),currentUserId);
             } catch (SessionServiceException e) {
                 return null;
             }
         }
-
         return null;
     }
 }

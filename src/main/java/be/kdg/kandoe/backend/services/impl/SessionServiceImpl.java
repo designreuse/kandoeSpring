@@ -195,7 +195,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void updateCardPosition(Integer cardId, int currentPosition, Integer userId, Integer sessionId) throws SessionServiceException {
+    public void updateCardPosition(Integer cardId, Integer userId, Integer sessionId) throws SessionServiceException {
         Session session = findSessionById(sessionId, userId);
 
         //todo state
@@ -204,7 +204,7 @@ public class SessionServiceImpl implements SessionService {
             UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
 
             if (userSession.getUser().getId().equals(userId)) {
-                cardSession.setPosition(currentPosition+1);
+                cardSession.setPosition(cardSession.getPosition()+1);
                 for (UserSession u : session.getUserSessions()) {
                     if (u.getUserPosition() == 0) {
                         u.setUserPosition(session.getUserSessions().size()-1);

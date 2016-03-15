@@ -15,7 +15,6 @@
                 <li class="active" ><a href="#">KAN<span>DOES</span></a></li>
                 <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
                 <li><a [routerLink]="['/Themes']">THEMES</a></li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -51,7 +50,7 @@
                         <h4 class="card-ingame-nr">{{i+1}}</h4>
                         <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-ingame-img img-thumbnail">
                         <div class="hover-description-container">
-                            <div class="card-ingame-hover-description" [attr.id]="i">{{card.description}}</div>
+                            <div class="card-ingame-hover-description" [attr.id]="'desc-'+i">{{card.description}}</div>
                         </div>
                     </li>
                 </div>

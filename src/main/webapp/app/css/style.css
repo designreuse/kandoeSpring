@@ -387,7 +387,7 @@ section {
     margin: 0 auto;
 }
 
-/* -------- PAGE CONTENT ------------ */
+/* -------------------------------- PAGE CONTENT ------------------------------------ */
 
 .main {
     width: 90%;
@@ -826,7 +826,6 @@ footer {
 #cardimg {
     width: 125px;
     height: 180px;
-
 }
 
 .session-card-description {
@@ -837,6 +836,7 @@ footer {
     position: absolute;
     margin-bottom: 0;
     padding-bottom: 15px;
+    z-index: 9;
 }
 
 /*
@@ -845,7 +845,8 @@ footer {
 
 .card-ingame-container {
     display: inline-block;
-    background: rgba(255, 156, 68, 0.4);
+    background: rgb(255, 156, 68);
+    color: white;
     padding: 0 10px;
     margin: 5px;
     float: left;
@@ -853,33 +854,13 @@ footer {
     min-width: 80px;
     max-width: 100px;
     position: relative;
-    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-}
-
-.card-ingame-container:before, .card-ingame-container:after {
-    position: absolute;
-    z-index: -1;
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    top: 50%;
-    bottom: 0;
-    left: 10px;
-    right: 10px;
-    -moz-border-radius: 100px / 10px;
-    border-radius: 100px / 10px;
-}
-
-.card-ingame-container:after {
-    right: 10px;
-    left: auto;
-    -webkit-transform: skew(8deg) rotate(3deg);
-    -moz-transform: skew(8deg) rotate(3deg);
-    -ms-transform: skew(8deg) rotate(3deg);
-    -o-transform: skew(8deg) rotate(3deg);
-    transform: skew(8deg) rotate(3deg);
+    border: solid white 3px;
+    -webkit-border-radius:8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
 }
 
 .card-ingame-container-playing{
@@ -901,7 +882,7 @@ footer {
     border: 2px solid #FFF;
     color: #EEE;
     background: #333 repeat-x 0 0;
-    z-index: 10;
+    z-index: 5;
     padding: 14px 20px;
     margin-top: 10px;
     line-height: 16px;
@@ -909,7 +890,7 @@ footer {
 
 .hover-description-container {
     position: absolute;
-    z-index: 10;
+    z-index: 5;
 }
 
 #circlesvg {
@@ -925,15 +906,19 @@ footer {
 .overlay-circle {
     position: absolute;
     background: rgba(0,0,0,0);
-    top:0px;
-    bottom:0px;
-    left:0px;
-    right:0px;
+    top:0;
+    left:0;
 }
 
 .overlay-element {
     background: rgba(255, 255, 255, 0.6);
     position: absolute;
+    -webkit-border-radius:8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
 }
 
 /*
@@ -941,11 +926,9 @@ footer {
 */
 
 #winner-popup {
-    position: absolute;
+    position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
     background: rgba(0, 0, 0, 0.7);
     height:100%;
     width: 100%;
