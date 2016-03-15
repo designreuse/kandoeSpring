@@ -45,7 +45,6 @@ System.register(['angular2/core', "./uploadService", "../security/securityServic
                         .map(function (card) { return card_1.Card.fromJson(card); });
                 };
                 CardService.prototype.createCard = function (card, file) {
-                    console.log(card);
                     var value;
                     if (file) {
                         value = this.uploadService.uploadFile(JSON.stringify(card), file, this.path + 'cards/image');

@@ -31,8 +31,7 @@ export class CardService {
             .map((card: Card) => Card.fromJson(card));
     }
 
-    public createCard(card: Card, file?: File): Observable<Response> {
-        console.log(card);
+    public createCard(card: Card, file?: File): Observable<Card> {
         var value: Observable<Response>;
         if(file){
             value = this.uploadService.uploadFile(JSON.stringify(card), file, this.path + 'cards/image')

@@ -155,39 +155,41 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException {
         Session session = findSessionById(sessionId, userId);
-        Theme theme = session.getTheme();
+        if(session.getState() == SessionState.CREATED){
+            Theme theme = session.getTheme();
 
-        List<CardSession> cardSessions = session.getCardSessions();
-        if (cardSessions == null)
-            cardSessions = new ArrayList<>();
+            List<CardSession> cardSessions = session.getCardSessions();
+            if (cardSessions == null)
+                cardSessions = new ArrayList<>();
 
-        for (Card card : cards) {
-            if (!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))) {
-                if (theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
-                    CardSession cardSession = new CardSession();
-                    cardSession.setCard(cardService.findCardById(card.getId()));
-                    cardSession.setPosition(0);
-                    cardSessionRepository.save(cardSession);
-                    cardSessions.add(cardSession);
+            for (Card card : cards) {
+                if (!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))) {
+                    if (theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
+                        CardSession cardSession = new CardSession();
+                        cardSession.setCard(cardService.findCardById(card.getId()));
+                        cardSession.setPosition(0);
+                        cardSessionRepository.save(cardSession);
+                        cardSessions.add(cardSession);
 
-                    List<CardSession> cs = card.getCardSessions();
-                    if (cs == null)
-                        cs = new ArrayList<>();
-                    cs.add(cardSession);
-                    card.setCardSessions(cs);
+                        List<CardSession> cs = card.getCardSessions();
+                        if (cs == null)
+                            cs = new ArrayList<>();
+                        cs.add(cardSession);
+                        card.setCardSessions(cs);
+                    }
                 }
             }
-        }
-        session.setCardSessions(cardSessions);
+            session.setCardSessions(cardSessions);
 
+            UserSession userSession = session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(userId))
+                    .findFirst().get();
+            userSession.setChosenCards(true);
 
-        UserSession userSession = session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(userId))
-                .findFirst().get();
-        userSession.setChosenCards(true);
-
-        session = sessionRepository.save(session);
-        for (CardSession cardSession : cardSessions) {
-            cardSession.setSession(session);
+            session = sessionRepository.save(session);
+            for (CardSession cardSession : cardSessions) {
+                cardSession.setSession(session);
+            }
+            return session;
         }
         return session;
     }
