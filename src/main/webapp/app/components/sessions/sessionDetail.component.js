@@ -118,7 +118,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         var img = $(document).find("#card-img-winner");
                         img.attr("src", this.getImageSrc(card.imageURL));
                         var popup = $(document).find("#winner-popup");
-                        $(popup).css("visibility", "visible");
+                        $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 1000);
                     }
                 };
                 SessionDetailComponent.prototype.calculateWidthCentre = function () {
@@ -284,9 +284,10 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink, chatComponent_1.ChatComponent],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
+                var _a, _b;
             })();
             exports_1("SessionDetailComponent", SessionDetailComponent);
         }

@@ -111,7 +111,7 @@ export class SessionDetailComponent implements OnInit{
             var img = $(document).find("#card-img-winner");
             img.attr("src", this.getImageSrc(card.imageURL));
             var popup = $(document).find("#winner-popup");
-            $(popup).css("visibility", "visible");
+            $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 1000);
         }
     }
 
