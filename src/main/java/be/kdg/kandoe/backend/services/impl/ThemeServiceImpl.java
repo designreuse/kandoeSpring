@@ -135,4 +135,12 @@ public class ThemeServiceImpl implements ThemeService {
         theme.getCards().stream().forEach(c -> Hibernate.initialize(c.getCardSessions()));
         return theme.getCards();
     }
+
+    @Override
+    public List<SubTheme> findThemeSubThemes(Integer themeId) {
+        Theme theme = findThemeById(themeId);
+        Hibernate.initialize(theme.getSubThemes());
+        theme.getSubThemes().stream().forEach(st -> Hibernate.initialize(st.getSubThemeId()));
+        return theme.getSubThemes();
+    }
 }

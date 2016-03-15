@@ -1,16 +1,15 @@
 package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.game.Card;
-import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
-import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
-import be.kdg.kandoe.frontend.DTO.OrganisationDTO;
+import be.kdg.kandoe.frontend.DTO.SubThemeDTO;
 import be.kdg.kandoe.frontend.DTO.ThemeDTO;
 import be.kdg.kandoe.frontend.assemblers.CardAssembler;
-import be.kdg.kandoe.frontend.assemblers.OrganisationAssembler;
+import be.kdg.kandoe.frontend.assemblers.SubThemeAssembler;
 import be.kdg.kandoe.frontend.assemblers.ThemeAssembler;
 import be.kdg.kandoe.frontend.util.FileUtils;
 import ma.glasnost.orika.MapperFacade;
@@ -25,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,14 +39,16 @@ public class ThemeRestController {
     private final ThemeService themeService;
     private final ThemeAssembler themeAssembler;
     private final CardAssembler cardAssembler;
+    private final SubThemeAssembler subThemeAssembler;
     private final MapperFacade mapper;
 
     @Autowired
     public ThemeRestController(ThemeService themeService, ThemeAssembler themeAssembler, CardAssembler cardAssembler,
-                               MapperFacade mapper) {
+                               SubThemeAssembler subThemeAssembler, MapperFacade mapper) {
         this.themeService = themeService;
         this.themeAssembler = themeAssembler;
         this.cardAssembler = cardAssembler;
+        this.subThemeAssembler = subThemeAssembler;
         this.mapper = mapper;
     }
 
@@ -139,5 +139,18 @@ public class ThemeRestController {
             return new ResponseEntity<List<CardDTO>>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<List<CardDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{themeId}/subThemes", method = RequestMethod.GET)
+    public ResponseEntity<List<SubThemeDTO>> getSubThemeByThemeId(@AuthenticationPrincipal User user,
+                                                                  @PathVariable(value = "themeId") Integer themeId){
+        if (user != null){
+            if (themeId != null){
+                List<SubTheme> subThemes = themeService.findThemeSubThemes(themeId);
+                return new ResponseEntity<List<SubThemeDTO>>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
+            }
+            return new ResponseEntity<List<SubThemeDTO>>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<List<SubThemeDTO>>(HttpStatus.UNAUTHORIZED);
     }
 }

@@ -28,4 +28,6 @@ public interface ThemeService {
 
     List<Card> findThemeCards(Integer themeId);
 
+    List<SubTheme> findThemeSubThemes(Integer themeId);
+
 }
