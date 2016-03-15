@@ -70,7 +70,8 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                 Home.prototype.login = function () {
                     var login = document.getElementById("login-form");
                     var register = document.getElementById("register-form");
-                    login.scrollIntoView();
+                    $('html,body').animate({
+                        scrollTop: $(".login-section").offset().top }, 'slow');
                     login.style.animationTimingFunction = "ease-in-out";
                     login.style.display = "block";
                     register.style.display = "none";
@@ -78,7 +79,8 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                 Home.prototype.register = function () {
                     var login = document.getElementById("login-form");
                     var register = document.getElementById("register-form");
-                    register.scrollIntoView();
+                    $('html,body').animate({
+                        scrollTop: $(".login-section").offset().top }, 'slow');
                     register.style.animationTimingFunction = "ease-in-out";
                     register.style.animationDuration = "3s";
                     login.style.display = "none";
@@ -135,22 +137,12 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     }),
                     core_1.Injectable(),
                     __param(3, core_1.Inject('App.BackEndPath')), 
-                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService, securityService_1.SecurityService, String])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, securityService_1.SecurityService, String])
                 ], Home);
                 return Home;
+                var _a;
             })();
             exports_1("Home", Home);
-            $(function () {
-                $('a[href^="#login-form"]').click(function (e) {
-                    var target = $(this).attr('href');
-                    var strip = target.slice(1);
-                    var anchor = $("a[name='" + strip + "']");
-                    e.preventDefault();
-                    $('html,body').animate({
-                        scrollTop: anchor.offset().top
-                    }, 'slow');
-                });
-            });
         }
     }
 });
