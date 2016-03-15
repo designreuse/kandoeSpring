@@ -131,6 +131,10 @@ hr {
     width: 100%;
 }
 
+.btn-half {
+    width: 32.5%;
+}
+
 .btn-primary {
     background: #ff9c44;
     border: #ff9c44;
@@ -735,7 +739,6 @@ footer {
 .containerpopup {
     padding-right: 0;
     padding-left: 0;
-    height: 145%;
     margin-right: auto;
     margin-left: auto
 }
