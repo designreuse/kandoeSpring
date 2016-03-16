@@ -160,9 +160,10 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/sessions/addSession.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, router_1.Router, themeService_1.ThemeService, organisationService_1.OrganisationService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, themeService_1.ThemeService, organisationService_1.OrganisationService])
                 ], AddSession);
                 return AddSession;
+                var _a;
             })();
             exports_1("AddSession", AddSession);
         }
