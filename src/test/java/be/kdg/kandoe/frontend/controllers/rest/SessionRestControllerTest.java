@@ -205,4 +205,12 @@ public class SessionRestControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.state").value("IN_PROGRESS"));
     }
+
+    @Test
+    public void testGetChatHistory() throws Exception {
+        mockMvc.perform(get("/api/sessions/1/chat")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
 }

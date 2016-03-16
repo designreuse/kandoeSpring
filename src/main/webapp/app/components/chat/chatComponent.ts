@@ -1,10 +1,8 @@
-import {Component, Input} from "angular2/core";
-import {OnInit} from "angular2/core";
+import {Component, Input, OnInit, Output, EventEmitter} from "angular2/core";
 import {Router} from "angular2/router";
 import {Http} from "angular2/http";
 import {Message} from "../../DOM/circleSession/message";
-import {Output} from "angular2/core";
-import {EventEmitter} from "angular2/core";
+import {SessionService} from "../../service/sessionService";
 /**
  * Created by Jorda on 3/6/2016.
  */
@@ -16,11 +14,12 @@ import {EventEmitter} from "angular2/core";
     inputs: ['messages']
 })
 
-export class ChatComponent {
-    @Input() messages: Message[] = [];
-     message: string = "";
+export class ChatComponent{
     @Input() sessionId: number;
+    @Input() messages: Message[] = [];
     @Output() emitMessage:EventEmitter<string> = new EventEmitter();
+
+    message: string = "";
 
     constructor() {
     }

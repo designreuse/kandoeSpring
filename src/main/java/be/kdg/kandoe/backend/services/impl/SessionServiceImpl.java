@@ -20,9 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by amy on 7/03/2016.
@@ -93,7 +95,9 @@ public class SessionServiceImpl implements SessionService {
             List<Session> themeSessions = new ArrayList<>();
             Hibernate.initialize(userSessions);
             if (userSessions != null && userSessions.stream().anyMatch(u -> u.getSession().getTheme().getThemeId().equals(themeId))) {
-                List<Session> s = sessionRepository.findAll();
+                List<Session> s = userSessions.stream().
+                        filter(userSession -> userSession.getSession().getTheme().getThemeId().equals(themeId))
+                        .map(UserSession::getSession).collect(Collectors.toList());
                 for (Session session : s) {
                     Hibernate.initialize(session.getCardSessions());
                     Hibernate.initialize(session.getTheme());
@@ -218,7 +222,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Session addMessageToChat(Integer sessionId, String message, Integer userId) throws SessionServiceException {
+    public Session addMessageToChat(Integer sessionId, String message, Integer userId, LocalDateTime date) throws SessionServiceException {
         Session s = findSessionById(sessionId, userId);
 
         if(s != null){
@@ -226,6 +230,7 @@ public class SessionServiceImpl implements SessionService {
                 Message m = new Message();
                 m.setContent(message);
                 m.setSender(userService.findUserById(userId));
+                m.setDate(date);
 
                 List<Message> chat = s.getChat();
                 if(chat == null)
@@ -264,5 +269,12 @@ public class SessionServiceImpl implements SessionService {
         }
 
         return s;
+    }
+
+    @Override
+    public List<Message> getChatHistory(Integer sessionId, Integer userId) throws SessionServiceException {
+        Session s = findSessionById(sessionId, userId);
+        Hibernate.initialize(s.getChat());
+        return s.getChat();
     }
 }

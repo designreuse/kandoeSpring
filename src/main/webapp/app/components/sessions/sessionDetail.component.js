@@ -85,6 +85,12 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             _this.canPlay = true;
                         }
                     });
+                    this.sessionService.getChatHistory(this.sessionId).subscribe(function (messages) {
+                        console.log(JSON.stringify(messages));
+                        _this.messages = messages;
+                    }, function (e) {
+                        console.log(e.text());
+                    });
                 };
                 SessionDetailComponent.prototype.getPosition = function (i, cardId) {
                     var c = this.cards[i];
@@ -225,12 +231,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             _this.showMessage(JSON.parse(greeting.body));
                         });
                         _this.stompClient.subscribe('/topic/move', function (result) {
-                            /*var card = null;
-                            for(var c in this.cards){
-                                if(result.cardId == c.cardId){
-                                    card = c;
-                                }
-                            }*/
                             var resultii = JSON.parse(result.body);
                             var ii;
                             var card;

@@ -2,9 +2,11 @@ package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import org.hibernate.SessionException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ public interface SessionService {
 
     void updateCardPosition(Integer cardId,Integer userId, Integer sessionId) throws SessionServiceException;
 
-    Session addMessageToChat(Integer sessionId, String message, Integer userId) throws SessionServiceException;
+    Session addMessageToChat(Integer sessionId, String message, Integer userId, LocalDateTime date) throws SessionServiceException;
 
     /**
      * Sets the sessionState to IN_PROGRESS if it is CREATED
@@ -51,4 +53,6 @@ public interface SessionService {
      * @throws SessionServiceException
      */
     Session stopSession(Integer sessionId, Integer userId) throws SessionServiceException;
+
+    List<Message> getChatHistory(Integer sessionId, Integer userId) throws SessionServiceException;
 }

@@ -70,7 +70,12 @@ export class SessionDetailComponent implements OnInit{
             }
         });
 
-
+        this.sessionService.getChatHistory(this.sessionId).subscribe((messages: Message[]) => {
+            console.log(JSON.stringify(messages));
+            this.messages = messages;
+        }, e => {
+            console.log(e.text());
+        })
 
     }
 
@@ -233,13 +238,6 @@ export class SessionDetailComponent implements OnInit{
             });
 
             this.stompClient.subscribe('/topic/move', result => {
-                /*var card = null;
-                for(var c in this.cards){
-                    if(result.cardId == c.cardId){
-                        card = c;
-                    }
-                }*/
-
                 var resultii=JSON.parse(result.body);
                 var ii;
                 var card;
