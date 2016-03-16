@@ -34,8 +34,9 @@ public class SubThemeAssembler  extends ResourceAssemblerSupport<SubTheme, SubTh
     @Override
     public SubThemeDTO toResource(SubTheme entity) {
         SubThemeDTO subThemeDTO = mapper.map(entity, SubThemeDTO.class);
+        subThemeDTO.setThemeId(entity.getTheme().getThemeId());
 
-        subThemeDTO.setThemeId(entity.getId());
+        subThemeDTO.setSubThemeId(entity.getId());
         return subThemeDTO;
     }
 
