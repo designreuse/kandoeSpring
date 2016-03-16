@@ -33,7 +33,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Autowired
     public ThemeServiceImpl(ThemeRepository themeRepository, UserRepository userRepository, UserService userService, OrganisationService organisationService) {
         this.themeRepository = themeRepository;
-        this.userRepository=userRepository;
+        this.userRepository = userRepository;
         this.userService = userService;
         this.organisationService = organisationService;
     }
@@ -41,10 +41,10 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public Theme findThemeById(int Id) {
         Theme theme = themeRepository.findOne(Id);
-        if(theme != null && theme.getCards() != null)
+        if (theme != null && theme.getCards() != null)
             Hibernate.initialize(theme.getCards());
 
-        if(theme != null && theme.getSubThemes() != null)
+        if (theme != null && theme.getSubThemes() != null)
             Hibernate.initialize(theme.getSubThemes());
 
         return theme;
@@ -61,7 +61,7 @@ public class ThemeServiceImpl implements ThemeService {
         theme.setCreator(creator);
 
         List<Theme> themes = creator.getThemes();
-        if(themes == null){
+        if (themes == null) {
             themes = new ArrayList<>();
         }
         themes.add(theme);
@@ -69,7 +69,7 @@ public class ThemeServiceImpl implements ThemeService {
 
         Organisation org = organisationService.findOrganisationById(orgId);
         List<Theme> orgThemes = org.getThemes();
-        if(orgThemes == null){
+        if (orgThemes == null) {
             orgThemes = new ArrayList<>();
         }
         orgThemes.add(theme);
@@ -121,7 +121,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<Theme> themes = creator.getThemes();
         themes.stream().forEach(t -> {
             Hibernate.initialize(t.getCards());
-            if(t.getSubThemes() != null)
+            if (t.getSubThemes() != null)
                 Hibernate.initialize(t.getSubThemes());
         });
         return creator.getThemes();
@@ -139,8 +139,11 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public List<SubTheme> findThemeSubThemes(Integer themeId) {
         Theme theme = findThemeById(themeId);
+
         Hibernate.initialize(theme.getSubThemes());
         theme.getSubThemes().stream().forEach(st -> Hibernate.initialize(st.getSubThemeId()));
         return theme.getSubThemes();
     }
+
+
 }

@@ -100,6 +100,14 @@ public class SessionRestControllerTest {
     }
 
     @Test
+    public void testGetSessionsBySubThemeId() throws Exception {
+        mockMvc.perform(get("/api/sessions/subtheme/1")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].sessionId", is(2)));
+    }
+
+    @Test
     public void testCreateSession() throws Exception {
         JSONObject session = new JSONObject();
         session.put("sessionName","First session name");
@@ -174,7 +182,7 @@ public class SessionRestControllerTest {
         s.setStartTime(LocalDateTime.now());
         s.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
         s.setSize(5);
-        s = sessionService.createSession(s, 1, 1);
+        s = sessionService.createSession(s, 1,0, 1);
         sessionService.startSession(s.getSessionId(), 1);
 
         mockMvc.perform(post("/api/sessions/" + s.getId() +"/stop")
@@ -197,7 +205,7 @@ public class SessionRestControllerTest {
         s.setStartTime(LocalDateTime.now());
         s.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
         s.setSize(5);
-        s = sessionService.createSession(s, 1, 1);
+        s = sessionService.createSession(s, 1,0, 1);
         sessionService.startSession(s.getSessionId(), 1);
 
         mockMvc.perform(post("/api/sessions/" + s.getId() +"/stop")

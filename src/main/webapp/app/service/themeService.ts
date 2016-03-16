@@ -4,6 +4,7 @@ import {Organisation} from "../DOM/organisation";
 import {Http, Response, HTTP_PROVIDERS} from 'angular2/http'
 import {Injectable, Inject} from 'angular2/core'
 import {Theme} from "../DOM/theme";
+import {SubTheme} from "../DOM/subTheme";
 import {User} from "../DOM/users/user";
 import {SecurityService} from "../security/securityService";
 import {UploadService} from "./uploadService";
@@ -52,8 +53,14 @@ export class ThemeService {
     }
 
     public getThemeCards(themeId: number): Observable<Card[]> {
-        return this.securityService.get(this.path + 'themes/' + themeId + '/cards', true)
+    return this.securityService.get(this.path + 'themes/' + themeId + '/cards', true)
+        .map(res => res.json())
+        .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
+}
+
+    public getThemeSubThemes(themeId: number): Observable<SubTheme[]> {
+        return this.securityService.get(this.path + 'themes/' + themeId + '/subThemes', true)
             .map(res => res.json())
-            .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
+            .map((subthemes: Array<SubTheme>) => subthemes.map((subtheme: SubTheme) => SubTheme.fromJson(subtheme)));
     }
 }

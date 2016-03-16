@@ -629,6 +629,7 @@ footer {
     box-shadow: none;
 }
 
+
 .add-user > .input-group-btn .btn,
 .add-org > .input-group-btn .btn {
     border-radius: 0px;
@@ -716,6 +717,8 @@ footer {
 .cards {
 
 }
+
+
 
 /*
 --------------------- Add card popup ------------------------------

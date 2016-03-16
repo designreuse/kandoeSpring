@@ -7,6 +7,7 @@ import be.kdg.kandoe.backend.dom.game.CircleSession.SessionState;
 import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.persistence.api.CardSessionRepository;
@@ -15,7 +16,6 @@ import be.kdg.kandoe.backend.services.api.*;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.hibernate.Hibernate;
-import org.hibernate.SessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,16 +37,18 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
     private final UserService userService;
     private final ThemeService themeService;
+    private final SubThemeService subThemeService;
     private final CardSessionRepository cardSessionRepository;
     private final CardService cardService;
     private final MailService mailService;
 
     @Autowired
     public SessionServiceImpl(SessionRepository sessionRepository, UserService userService, ThemeService themeService,
-                              CardSessionRepository cardSessionRepository, CardService cardService, MailService mailService) {
+                              SubThemeService subThemeService, CardSessionRepository cardSessionRepository, CardService cardService, MailService mailService) {
         this.sessionRepository = sessionRepository;
         this.userService = userService;
         this.themeService = themeService;
+        this.subThemeService = subThemeService;
         this.cardSessionRepository = cardSessionRepository;
         this.cardService = cardService;
         this.mailService = mailService;
@@ -94,10 +96,13 @@ public class SessionServiceImpl implements SessionService {
             List<UserSession> userSessions = user.getUserSessions();
             List<Session> themeSessions = new ArrayList<>();
             Hibernate.initialize(userSessions);
-            if (userSessions != null && userSessions.stream().anyMatch(u -> u.getSession().getTheme().getThemeId().equals(themeId))) {
+            if (userSessions != null && userSessions.stream().anyMatch(u -> u.getSession().getTheme() != null &&
+                    u.getSession().getTheme().getThemeId().equals(themeId))) {
+
                 List<Session> s = userSessions.stream().
-                        filter(userSession -> userSession.getSession().getTheme().getThemeId().equals(themeId))
+                        filter(userSession -> userSession.getSession().getTheme() != null&& userSession.getSession().getTheme().getThemeId().equals(themeId))
                         .map(UserSession::getSession).collect(Collectors.toList());
+
                 for (Session session : s) {
                     Hibernate.initialize(session.getCardSessions());
                     Hibernate.initialize(session.getTheme());
@@ -113,17 +118,60 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Session createSession(Session session, Integer themeId, Integer userId) throws SessionServiceException {
-        Theme theme = themeService.findThemeById(themeId);
+    public List<Session> findSessionBySubThemeId(Integer subThemeId, Integer userId) throws SessionServiceException {
+        try {
+            User user = userService.findUserById(userId);
+            List<UserSession> userSessions = user.getUserSessions();
+            List<Session> subThemeSessions = new ArrayList<>();
+            Hibernate.initialize(userSessions);
 
-        if (theme == null)
-            throw new SessionServiceException("Theme does not exist");
+            if (userSessions != null && userSessions.stream().anyMatch(u -> u.getSession().getSubTheme() != null &&
+                    u.getSession().getSubTheme().getSubThemeId().equals(subThemeId))){
 
-        if (!theme.getCreator().getId().equals(userId))
-            throw new SessionServiceException("You are not the creator of this theme");
+                List<Session> s = userSessions.stream().
+                        filter(userSession -> userSession.getSession().getSubTheme() != null&& userSession.getSession().getSubTheme().getSubThemeId().equals(subThemeId))
+                        .map(UserSession::getSession).collect(Collectors.toList());
 
-        session.setTheme(theme);
-        Organisation org = theme.getOrganisation();
+                for (Session session : s){
+                    Hibernate.initialize(session.getCardSessions());
+                    Hibernate.initialize(session.getSubTheme());
+                    subThemeSessions.add(session);
+                }
+                return subThemeSessions;
+            }
+        } catch (UserServiceException e){
+            throw new SessionServiceException(e.getMessage(), e);
+        }
+
+        throw new SessionServiceException("You're not a member of this session");
+    }
+
+    @Override
+    public Session createSession(Session session, Integer themeId, Integer subThemeId,Integer userId) throws SessionServiceException {
+        Organisation org;
+        if (themeId != 0){
+            Theme theme = themeService.findThemeById(themeId);
+            if (theme == null)
+                throw new SessionServiceException("Theme does not exist");
+
+            if (!theme.getCreator().getId().equals(userId))
+                throw new SessionServiceException("You are not the creator of this theme");
+
+            session.setTheme(theme);
+            org = theme.getOrganisation();
+        } else {
+            SubTheme subTheme = subThemeService.findSubThemeById(subThemeId);
+            if (subTheme == null)
+                throw new SessionServiceException("Theme does not exist");
+
+            if (!subTheme.getCreator().getId().equals(userId))
+                throw new SessionServiceException("You are not the creator of this theme");
+
+            session.setSubTheme(subTheme);
+            org = subTheme.getOrganisation();
+        }
+
+
         Set<User> users = org.getUsers();
         users.addAll(org.getOrganisers());
 

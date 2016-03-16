@@ -38,15 +38,18 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             }],
         execute: function() {
             ThemeComponent = (function () {
-                function ThemeComponent(_themeService, router, _userService, cardService) {
+                function ThemeComponent(_themeService, router, _userService, cardService, routeParams) {
                     this._themeService = _themeService;
                     this._userService = _userService;
                     this.themes = [];
+                    this.subThemes = [];
                     this.user = user_1.User.createEmpty();
                     this.file = null;
+                    this.cards = [];
                     this.card = card_1.Card.createEmpty();
                     this.userService = _userService;
                     this.router = router;
+                    this.themeId = +routeParams.params["id"];
                     this.cardService = cardService;
                 }
                 ThemeComponent.prototype.ngOnInit = function () {
@@ -57,6 +60,13 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
+                    for (var i = 0; i < this.themes.length; i++) {
+                        this._themeService.getThemeSubThemes(this.themes[i].themeId).subscribe(function (subThemes) {
+                            for (var j = 0; subThemes.length; j++) {
+                                _this.themes[i].subThemes.push(subThemes[j]);
+                            }
+                        });
+                    }
                     $("#input-search").on("keyup", function () {
                         var rex = new RegExp($(this).val(), "i");
                         $(".searchable-container .items").hide();
@@ -93,9 +103,12 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.card.description) {
-                        this.cardService.createCard(this.card, this.file).subscribe(function (card) {
+                        this.card.themeId = +this.themeId;
+                        this.cardService.createCard(this.card, this.file).subscribe(function (res) {
                             var popup = document.getElementById("popup-addCard");
                             $(popup).css("visibility", "hidden");
+                            /* this.router.navigate(['/Themes']);
+                             document.location.reload();*/
                             _this.themes.find(function (th) { return th.themeId == card.themeId; }).cards.push(card);
                             _this.card.description = null;
                             _this.file = null;
@@ -245,12 +258,12 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
-                        selector: 'Theme',
+                        selector: 'theme',
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService, router_1.RouteParams])
                 ], ThemeComponent);
                 return ThemeComponent;
             })();

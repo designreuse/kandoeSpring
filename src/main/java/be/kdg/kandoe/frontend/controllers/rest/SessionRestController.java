@@ -88,12 +88,31 @@ public class SessionRestController {
         return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
     }
 
+    @RequestMapping(method = {RequestMethod.GET}, value = "/subtheme/{subThemeId}")
+    public ResponseEntity<List<SessionDTO>> getSessionsBySubThemeId(@PathVariable("subThemeId") int subThemeId, @AuthenticationPrincipal User user){
+        if (user != null){
+            try {
+                List<Session> sessions = this.sessionService.findSessionBySubThemeId(subThemeId, user.getUserId());
+                return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
+            } catch (SessionServiceException e){
+                return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<List<SessionDTO>>(HttpStatus.UNAUTHORIZED);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<SessionDTO> createSession(@RequestBody SessionDTO sessionDTO, @AuthenticationPrincipal User user){
         if(user != null){
             try {
                 Session session_in = mapper.map(sessionDTO, Session.class);
-                Session session_out = sessionService.createSession(session_in, sessionDTO.getThemeId(), user.getId());
+                Session session_out;
+                if (sessionDTO.getThemeId() == null){
+                    session_out = sessionService.createSession(session_in, 0,sessionDTO.getSubThemeId() , user.getId());
+                } else {
+                    session_out = sessionService.createSession(session_in, sessionDTO.getThemeId(),0 , user.getId());
+                }
+
 
                 return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(session_out), HttpStatus.CREATED);
             } catch (SessionServiceException e) {

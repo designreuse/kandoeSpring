@@ -228,8 +228,8 @@ export class SessionDetailComponent implements OnInit{
 
     connect() {
         this.disconnect();
-        var socket = new SockJS('/Kandoe/circleSession'); //local
-        //var socket = new SockJS('/chat'); // wildfly
+        //var socket = new SockJS('/Kandoe/circleSession'); //local
+        var socket = new SockJS('/chat'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
 

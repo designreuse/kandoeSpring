@@ -4,6 +4,7 @@ import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
+import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SubThemeDTO;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.io.IOException;
 import java.util.List;
 
@@ -142,10 +144,10 @@ public class ThemeRestController {
     }
 
     @RequestMapping(value = "/{themeId}/subThemes", method = RequestMethod.GET)
-    public ResponseEntity<List<SubThemeDTO>> getSubThemeByThemeId(@AuthenticationPrincipal User user,
-                                                                  @PathVariable(value = "themeId") Integer themeId){
-        if (user != null){
-            if (themeId != null){
+    public ResponseEntity<List<SubThemeDTO>> getThemeSubThemes(@AuthenticationPrincipal User user,
+                                                       @PathVariable(value = "themeId") Integer themeId) {
+        if(user != null){
+            if(themeId != null){
                 List<SubTheme> subThemes = themeService.findThemeSubThemes(themeId);
                 return new ResponseEntity<List<SubThemeDTO>>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
             }
@@ -153,4 +155,6 @@ public class ThemeRestController {
         }
         return new ResponseEntity<List<SubThemeDTO>>(HttpStatus.UNAUTHORIZED);
     }
+
+
 }

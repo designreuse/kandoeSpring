@@ -66,7 +66,7 @@ import {Response} from "angular2/http";
             </div>
         </div>
 
-        <button type="button" class="btn btn-lg btn-info" (click)="onSubmit()">Register</button>
+        <button type="button" class="btn btn-primary btn-wide" (click)="onSubmit()">Register</button>
         </div>
     </form>
     `,
