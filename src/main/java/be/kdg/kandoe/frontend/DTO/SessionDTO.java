@@ -23,10 +23,12 @@ public class SessionDTO extends ResourceSupport implements Serializable {
     private String endTime;
     private boolean userAddCards;
     private Integer themeId;
+    private Integer subThemeId;
     private boolean chosenCards;
     private List<CardDTO> cards;
     private List<UserDTO> users;
     private ThemeDTO theme;
+    private SubThemeDTO subTheme;
 
     public SessionDTO() {
     }
@@ -157,5 +159,21 @@ public class SessionDTO extends ResourceSupport implements Serializable {
 
     public void setState(SessionState state) {
         this.state = state;
+    }
+
+    public Integer getSubThemeId() {
+        return subThemeId;
+    }
+
+    public void setSubThemeId(Integer subThemeId) {
+        this.subThemeId = subThemeId;
+    }
+
+    public SubThemeDTO getSubTheme() {
+        return subTheme;
+    }
+
+    public void setSubTheme(SubThemeDTO subTheme) {
+        this.subTheme = subTheme;
     }
 }

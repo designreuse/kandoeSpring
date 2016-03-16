@@ -24,11 +24,13 @@ public interface SessionService {
 
     List<Session> findSessionsCurrentUser(Integer userId) throws SessionServiceException;
 
-    Session createSession(Session session, Integer themeId, Integer userId) throws SessionServiceException;
+    Session createSession(Session session, Integer themeId,Integer subthemeId ,Integer userId) throws SessionServiceException;
 
 	Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException;
 
     List<Session> findSessionByThemeId(Integer themeId, Integer userId) throws SessionServiceException;
+
+    List<Session> findSessionBySubThemeId(Integer subThemeId, Integer userid) throws SessionServiceException;
 
     void updateCardPosition(Integer cardId,Integer userId, Integer sessionId) throws SessionServiceException;
 

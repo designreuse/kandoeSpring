@@ -2,6 +2,7 @@ package be.kdg.kandoe.backend.dom.game.CircleSession;
 
 import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.game.Snapshot;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.Identifiable;
@@ -62,6 +63,9 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     @ManyToOne(targetEntity = Theme.class)
     private Theme theme;
+
+    @ManyToOne(targetEntity = SubTheme.class)
+    private SubTheme subTheme;
 
     @OneToMany(targetEntity = Snapshot.class)
     private List<Snapshot> snapshots;
@@ -203,5 +207,13 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setState(SessionState state) {
         this.state = state;
+    }
+
+    public SubTheme getSubTheme() {
+        return subTheme;
+    }
+
+    public void setSubTheme(SubTheme subTheme) {
+        this.subTheme = subTheme;
     }
 }

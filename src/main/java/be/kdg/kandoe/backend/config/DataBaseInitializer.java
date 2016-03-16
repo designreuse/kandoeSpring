@@ -259,5 +259,52 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             cardSession.setSession(session);
             cardSessionRepository.save(cardSession);
         }
+
+        Session sessionSubThema = new Session();
+        CardSession cardSessionSubThema = new CardSession();
+        UserSession userSessionSubThema = new UserSession();
+        UserSession userSession1SubThema = new UserSession();
+        if(sessionRepository.findOne(2) == null && user.getId() != null ){
+            sessionSubThema.setStartTime(LocalDateTime.now());
+            sessionSubThema.setSessionName("Session Subtheme");
+            sessionSubThema.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
+            sessionSubThema.setMaxCards(4);
+            sessionSubThema.setMinCards(2);
+            sessionSubThema.setMode(SessionMode.SYNC);
+            sessionSubThema.setType(SessionType.IDEA);
+            sessionSubThema.setState(SessionState.CREATED);
+            sessionSubThema.setSubTheme(subTheme);
+            ArrayList<CardSession> cardSessions = new ArrayList<>();
+
+            cardSessionSubThema.setCard(card);
+
+            cardSessions.add(cardSessionSubThema);
+            //cardSession = cardSessionRepository.save(cardSession);
+            card.setCardSessions(cardSessions);
+            sessionSubThema.setCardSessions(cardSessions);
+
+            sessionSubThema.setUserAddCards(true);
+            List<UserSession> userSessions = new ArrayList<>();
+
+            userSessionSubThema.setUser(user);
+            userSession1SubThema.setUser(user2);
+            userSession1.setUserPosition(1);
+            userSessions.add(userSessionSubThema);
+            userSessions.add(userSession1SubThema);
+            // userSession = userSessionRepository.save(userSession);
+
+            sessionSubThema.setUserSessions(userSessions);
+            sessionSubThema.setSize(6);
+            sessionSubThema = sessionRepository.save(sessionSubThema);
+            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSessionSubThema, userSession)));
+            userRepository.save(user);
+            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1SubThema, userSession1)));
+            userSessionSubThema.setSession(sessionSubThema);
+            userSession1SubThema.setSession(sessionSubThema);
+            userSessionRepository.save(userSessionSubThema);
+            userSessionRepository.save(userSession1SubThema);
+            cardSession.setSession(sessionSubThema);
+            cardSessionRepository.save(cardSessionSubThema);
+        }
     }
 }
