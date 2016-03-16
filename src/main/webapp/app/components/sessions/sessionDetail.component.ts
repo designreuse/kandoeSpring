@@ -34,6 +34,7 @@ export class SessionDetailComponent implements OnInit{
     private card:Card = Card.createEmpty();
     private file:File = null;
     private canPlay:Boolean = false;
+    private playUserId: Number  = 0;
 
     stompClient;
     messages: Message[] = [];
@@ -239,6 +240,7 @@ export class SessionDetailComponent implements OnInit{
 
             this.stompClient.subscribe('/topic/move', result => {
                 var resultii=JSON.parse(result.body);
+                this.playUserId = resultii.nextUserId;
                 var ii;
                 var card;
                 for (var i = 0; i < this.cards.length; i++){
