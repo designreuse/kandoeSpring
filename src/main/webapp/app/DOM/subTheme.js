@@ -17,8 +17,8 @@ System.register(["./organisation", './card'], function(exports_1) {
                 SubTheme.fromJson = function (json) {
                     var subTheme = new SubTheme();
                     subTheme.iconURL = json.iconURL;
-                    subTheme.themeId = json.themeId;
-                    subTheme.themeName = json.themeName;
+                    subTheme.subThemeId = json.subThemeId;
+                    subTheme.subThemeName = json.subThemeName;
                     subTheme.description = json.description;
                     if (json.organisation) {
                         subTheme.organisation = organisation_1.Organisation.fromJson(json.organisation);

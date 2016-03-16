@@ -7,12 +7,13 @@ import {Organisation} from "../../DOM/organisation";
 import {UserService} from "../../service/userService";
 import {User} from "../../DOM/users/user";
 import {Card} from "../../DOM/card";
+import {SubTheme} from "../../DOM/subTheme";
 import {CardService} from "../../service/cardService";
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
-    selector: 'Theme',
+    selector: 'theme',
     directives: [ROUTER_DIRECTIVES, RouterLink],
     templateUrl: 'app/components/themes/themeComponent.html',
     inputs: ['themes']
@@ -20,17 +21,21 @@ import {CardService} from "../../service/cardService";
 
 export class ThemeComponent implements OnInit {
     public themes:Theme[] = [];
+    private subThemes:SubTheme[] = [];
     private user:User = User.createEmpty();
     private router:Router;
     private userService:UserService;
     private cardService:CardService;
     private file:File = null;
+    private cards:Card[] = [];
     private card:Card = Card.createEmpty();
+    private themeId:number;
 
     constructor(private _themeService:ThemeService, router:Router, private _userService:UserService,
-                cardService:CardService) {
+                cardService:CardService, routeParams:RouteParams) {
         this.userService = _userService;
         this.router = router;
+        this.themeId = +routeParams.params["id"];
         this.cardService = cardService;
     }
 
@@ -42,6 +47,17 @@ export class ThemeComponent implements OnInit {
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+
+
+        for (var i = 0; i < this.themes.length; i++) {
+            this._themeService.getThemeSubThemes(this.themes[i].themeId).subscribe(subThemes => {
+                for (var j = 0; subThemes.length; j++) {
+                    this.themes[i].subThemes.push(subThemes[j]);
+                }
+            });
+
+        }
+
         $("#input-search").on("keyup", function () {
             var rex = new RegExp($(this).val(), "i");
             $(".searchable-container .items").hide();
@@ -80,10 +96,13 @@ export class ThemeComponent implements OnInit {
     }
 
     onSubmit() {
-        if(this.card.description){
-            this.cardService.createCard(this.card, this.file).subscribe(card => {
+        if (this.card.description) {
+            this.card.themeId = +this.themeId;
+            this.cardService.createCard(this.card, this.file).subscribe(res => {
                 var popup = document.getElementById("popup-addCard");
                 $(popup).css("visibility", "hidden");
+                /* this.router.navigate(['/Themes']);
+                 document.location.reload();*/
                 this.themes.find(th => th.themeId == card.themeId).cards.push(card);
                 this.card.description = null;
                 this.file = null;

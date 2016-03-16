@@ -61,6 +61,7 @@ public class SubThemeRestControllerTest {
         JSONObject subTheme = new JSONObject();
         subTheme.put("subThemeName", "TestSubTheme");
         subTheme.put("description", "TestDescription");
+
         JSONObject org = new JSONObject();
         org.put("organisationId", 1);
         org.put("organisationName", "Karel De Grote");
@@ -89,11 +90,5 @@ public class SubThemeRestControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
- /*   @Test
-    public void testGetSubThemeCards() throws Exception {
-        mockMvc.perform(get("/api/subThemes/1/cards")
-                .header("Authorization", appToken))
-                .andDo(print())
-                .andExpect(jsonPath("$.[0].description", is("KdGCard longer description to check if everything works accordingly")));
-    }*/
+
 }

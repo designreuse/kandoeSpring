@@ -42,9 +42,10 @@ System.register(['angular2/core', "../../../security/TokenHelper", "../../../ser
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/themes/subThemes/subTheme.html',
                     }), 
-                    __metadata('design:paramtypes', [subThemeService_1.SubThemeService, router_1.Router])
+                    __metadata('design:paramtypes', [subThemeService_1.SubThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
                 ], SubThemeComponent);
                 return SubThemeComponent;
+                var _a;
             })();
             exports_1("SubThemeComponent", SubThemeComponent);
         }

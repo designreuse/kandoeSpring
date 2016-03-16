@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
                 <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
-                <li  class="active" ><a [routerLink]="['/Themes']">THEMES</a></li>
+                <li class="active"><a [routerLink]="['/Themes']">THEMES</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -64,7 +64,7 @@
                     <a [routerLink]="['/OrganisationDetail', {id:org.organisationId}]">
                         <div class="item">
                             <div class="id"><p>{{org.organisationId}}</p></div>
-                            <img alt="logo" [src]="getImageSrc(org.logoUrl, org.organisationId)" />
+                            <img alt="logo" [src]="getImageSrc(org.logoUrl, org.organisationId)"/>
                             <div class="info">
                                 <h2 class="title">{{org.organisationName}}</h2>
                                 <p class="desc">{{org.address}}</p>
@@ -96,6 +96,22 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+
+            <h4>Subthemes <a class="glyphicon glyphicon-plus" href="subThemes/addSubTheme.component.ts"></a></h4>
+            <form>
+                <ul>
+                    <li *ngFor="#subTheme of subThemes">
+                        {{subTheme.description}}
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
             <h4>Cards</h4>
@@ -106,7 +122,8 @@
 
                 <div class="form-group">
                     <label>Description</label>
-                    <input type="text" placeholder="Enter Description" class="form-control" [(ngModel)]="newCard.description">
+                    <input type="text" placeholder="Enter Description" class="form-control"
+                           [(ngModel)]="newCard.description">
                 </div>
                 <div class="form-group">
                     <label>Logo</label>

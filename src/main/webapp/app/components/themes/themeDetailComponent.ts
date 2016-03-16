@@ -10,11 +10,12 @@ import {User} from "../../DOM/users/user";
 import {UserService} from "../../service/userService";
 import {Card} from "../../DOM/card";
 import {CardService} from "../../service/cardService";
+import {SubTheme} from "../../DOM/subTheme";
 
 @CanActivate(() => tokenNotExpired())
 
 @Component({
-    selector: 'Theme',
+    selector: 'theme-detail',
     directives: [ROUTER_DIRECTIVES, RouterLink],
     templateUrl: 'app/components/themes/themeDetailComponent.html',
     inputs: ['theme']
@@ -25,6 +26,7 @@ export class ThemeDetailComponent implements OnInit {
     private themeId: number;
     public org:Organisation=Organisation.createEmpty();
 	private cards: Card[] = [];
+    private subThemes: SubTheme[]=[];
     private newCard: Card = Card.createEmpty();
     private file: File = null;
     private cardService: CardService;
@@ -51,6 +53,13 @@ export class ThemeDetailComponent implements OnInit {
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+
+
+            this._themeService.getThemeSubThemes(this.themeId).subscribe(subThemes => {
+               this.subThemes=subThemes;
+            });
+
+
     }
 
     createCard() {

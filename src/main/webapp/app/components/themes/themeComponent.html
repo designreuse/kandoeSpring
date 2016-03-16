@@ -99,32 +99,47 @@
                                             <img [src]="getImageSrc(theme.iconURL)"/>
                                         </a>
                                     </div>
+
                                     <div class="themeContent">
                                         <div class="mainContent center-container">
                                             <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
                                                 <h3 class="name">{{theme.themeName}}</h3>
-                                                <p class="description">{{theme.description}}</p>
+                                                <p class="description">{{theme.description}} </p>
+                                            </a>
+                                            <a [routerLink]="['/SubThemes', {id:theme.themeId}]">
+                                                <h3 class="name">subThemes: {{theme.subThemes.length}}</h3>
+                                                <br>
                                             </a>
 
-                                            <div *ngIf="theme.subThemes==null">
-                                                <p>{{theme.subThemes}}</p>
-                                                <div class="subtheme" *ngFor="#subTheme of theme.subThemes">
-                                                    <a [routerLink]="['/SubThemeDetail', {id:subtheme.themeId}]">
-                                                        <h3 class="name">{{subTheme.themeName}}</h3>
-                                                        <p class="description">{{subTheme.description</p>
+                                            <ul class="tag-list list-inline">
+                                                <li><i class="glyphicon glyphicon-bookmark"></i> tag1</li>
+                                                <li><i class="glyphicon glyphicon-bookmark"></i> tag2</li>
+                                                <li><i class="glyphicon glyphicon-bookmark"></i> tag3</li>
+                                            </ul>
 
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div *ngIf="theme.getSubThemes==null">
-                                                <button [routerLink]="['/AddSubTheme',{id:theme.themeId}]"
-                                                        class="btn btn-primary btn-add-theme">
-                                                    Create a new SubTheme
-                                                </button>
-                                            </div>
+                                            <!--
+                                                                                     <div *ngIf="!theme.subThemes.length ==0">
+
+                                                                                         <div class="subtheme" *ngFor="#subTheme of theme.subThemes">
+                                                                                             <a [routerLink]="['/SubThemesDetail', {id:subTheme.subThemeId}]">
+                                                                                                 <h3 class="name">{{subTheme.subThemeName}}</h3>
+                                                                                                 <p classion">{{subTheme.description}}</p>
+
+                                                                                             </a>
+                                                                                         </div>
+                                                                                     </div>
+                                                                         <!--            <div *ngIf="theme.subThemes.length ==0">
+                                                                                          <button [routerLink]="['/AddSubTheme',{id:theme.themeId}]"
+                                                                                                 class="btn btn-primary btn-add-theme">
+                                                                                             Create a new SubTheme
+                                                                                         </button>
+                                                                                     </div>
+
+                                        -->
                                             <br>
                                             <h3 class="name">Organisation</h3>
                                             <p class="description">{{theme.organisation.organisationName}}</p>
+
                                         </div>
                                         <div class="theme-card-footer">
                                             <button class="btn btn-simple" (click)="rotateCard($event)">
@@ -190,7 +205,7 @@
 
 <!-- popup -->
 <div id="add-card" class="modal fade containerpopup" role="dialog">
-<!-- Modal -->
+    <!-- Modal -->
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">

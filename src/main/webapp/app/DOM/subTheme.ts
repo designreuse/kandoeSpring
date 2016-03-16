@@ -3,8 +3,8 @@ import {Organisation} from "./organisation";
 import {Card} from './card';
 
 export class SubTheme{
-    themeId:number;
-    themeName:string;
+    subThemeId:number;
+    subThemeName:string;
     description:string;
     organisation:Organisation;
     iconURL:string;
@@ -17,8 +17,8 @@ export class SubTheme{
     static fromJson(json:any):SubTheme{
         var subTheme = new SubTheme();
         subTheme.iconURL=json.iconURL;
-        subTheme.themeId = json.themeId;
-        subTheme.themeName = json.themeName;
+        subTheme.subThemeId = json.subThemeId;
+        subTheme.subThemeName = json.subThemeName;
         subTheme.description = json.description;
 
         if(json.organisation){

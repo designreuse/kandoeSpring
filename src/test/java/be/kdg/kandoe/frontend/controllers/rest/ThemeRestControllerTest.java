@@ -108,8 +108,8 @@ public class ThemeRestControllerTest {
                 .andExpect(jsonPath("$.[0].description", is("KdGCard longer description to check if everything works accordingly")));
     }
 
-    @Test
-    public void testGetThemeSubthemes() throws Exception {
+     @Test
+    public void testGetThemeSubThemes() throws Exception {
         mockMvc.perform(get("/api/themes/1/subThemes")
                 .header("Authorization", appToken))
                 .andDo(print())

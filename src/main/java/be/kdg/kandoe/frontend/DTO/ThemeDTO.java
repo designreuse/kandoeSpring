@@ -1,5 +1,6 @@
 package be.kdg.kandoe.frontend.DTO;
 
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
@@ -21,6 +22,16 @@ public class ThemeDTO extends ResourceSupport implements Serializable {
     private OrganisationDTO organisation;
 
     private List<CardDTO> cards;
+
+    private List<SubThemeDTO> subThemes;
+
+    public List<SubThemeDTO> getSubThemes() {
+        return subThemes;
+    }
+
+    public void setSubThemes(List<SubThemeDTO> subThemes) {
+        this.subThemes = subThemes;
+    }
 
     private int countSubthemes;
 
