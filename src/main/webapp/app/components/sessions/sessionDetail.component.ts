@@ -139,6 +139,8 @@ export class SessionDetailComponent implements OnInit{
             } else {
                 return url.replace(/"/g, "");
             }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
 
@@ -250,11 +252,7 @@ export class SessionDetailComponent implements OnInit{
                     }
                 }
 
-                if(resultii.nextUserId == this.user.userId){
-                    this.canPlay = true;
-                } else{
-                    this.canPlay = false;
-                }
+                this.canPlay = resultii.nextUserId == this.user.userId;
 
                 var id = "#"+ ii;
                 var el = $(document).find($(id));

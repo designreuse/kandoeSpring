@@ -145,6 +145,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             return url.replace(/"/g, "");
                         }
                     }
+                    else {
+                        return "./app/resources/noimgplaceholder.png";
+                    }
                 };
                 /*
                 ----------------------------------- ADD CARD ----------------------------------------
@@ -242,12 +245,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                                     card = _this.cards[i];
                                 }
                             }
-                            if (resultii.nextUserId == _this.user.userId) {
-                                _this.canPlay = true;
-                            }
-                            else {
-                                _this.canPlay = false;
-                            }
+                            _this.canPlay = resultii.nextUserId == _this.user.userId;
                             var id = "#" + ii;
                             var el = $(document).find($(id));
                             card.position = card.position + 1;

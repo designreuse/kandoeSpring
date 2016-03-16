@@ -42,14 +42,6 @@ export class LoggedInHome implements OnInit{
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
-
-        /*$('.show-btn').on('click', function () {
-            $('div.kandoe-session-card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-        });
-/*
-        $('.card-reveal .close').on('click', function () {
-            $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-        });*/
     }
 
     logout() {
@@ -57,14 +49,14 @@ export class LoggedInHome implements OnInit{
         this.router.navigate(['/Home']);
     }
 
-    private getImageSrc(url:string): string {
-            if (url) {
-                if (url.indexOf("http://") > -1) {
-                    return url;
-                } else {
-                    return url.replace(/"/g, "");
-                }
+    private getImageSrc(url:string, backupUrl?: string): string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
+                return url;
+            } else {
+                return url.replace(/"/g, "");
             }
+        }
     }
 
     showReveal(i) {

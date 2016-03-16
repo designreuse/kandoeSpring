@@ -28,7 +28,7 @@ public class Theme implements Serializable, Identifiable<Integer> {
     @Column(name = "ThemeIcon")
     private String iconURL;
 
-    @OneToMany(targetEntity = SubTheme.class)
+    @OneToMany(targetEntity = SubTheme.class, fetch = FetchType.EAGER)
     private List<SubTheme> subThemes;
 
     @ManyToOne(targetEntity = Organisation.class)
