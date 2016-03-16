@@ -52,7 +52,9 @@ export class Home {
     login() {
       var login = document.getElementById("login-form");
         var register = document.getElementById("register-form");
-        login.scrollIntoView();
+        $('html,body').animate({
+                scrollTop: $(".login-section").offset().top},
+            'slow');
         login.style.animationTimingFunction="ease-in-out";
         login.style.display = "block";
         register.style.display = "none";
@@ -62,7 +64,9 @@ export class Home {
     register() {
         var login = document.getElementById("login-form");
         var register = document.getElementById("register-form");
-        register.scrollIntoView();
+        $('html,body').animate({
+                scrollTop: $(".login-section").offset().top},
+            'slow');
         register.style.animationTimingFunction="ease-in-out";
         register.style.animationDuration="3s";
         login.style.display = "none";
@@ -119,19 +123,3 @@ export class Home {
     }
 
 }
-$(function(){
-    $('a[href^="#login-form"]').click(function(e){
-        var target=$(this).attr('href')
-        var strip= target.slice(1);
-        var anchor=$("a[name='" +strip +"']")
-
-        e.preventDefault();
-
-        $('html,body').animate({
-            scrollTop: anchor.offset().top
-        },'slow');
-
-
-    });
-
-});

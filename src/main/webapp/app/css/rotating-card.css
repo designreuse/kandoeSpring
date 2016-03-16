@@ -131,9 +131,10 @@
     line-height: 20px;
 }
 .themeCard .description{
-    color: #999999;
+    color: #444;
     margin-bottom: 20px;
     font-size: 13px;
+    font-weight: 400;
 }
 .themeCard .theme-card-footer {
     border-top: 1px solid #EEEEEE;

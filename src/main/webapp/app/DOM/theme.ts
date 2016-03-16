@@ -1,6 +1,7 @@
 import {Link} from "./link";
 import {Organisation} from "./organisation";
 import {Card} from './card';
+import {SubTheme} from "./subTheme";
 /**
  * Created by Jordan on 19/02/2016.
  */
@@ -11,6 +12,7 @@ export class Theme{
     organisation:Organisation;
     iconURL:string;
     cards: Card[] = [];
+    subThemes: SubTheme[]=[];
 
     constructor() {
 
@@ -31,6 +33,12 @@ export class Theme{
             theme.cards = [];
             for(var i = 0; i < json.cards.length; i++){
                 theme.cards[i] = Card.fromJson(json.cards[i]);
+            }
+        }
+        if(json.subThemes){
+            theme.subThemes=[];
+            for(var i=0;i<json.subThemes.length;i++){
+                theme.subThemes[i]=SubTheme.fromJson(json.subThemes[i])
             }
         }
         return theme;

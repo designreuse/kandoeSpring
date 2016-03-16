@@ -113,6 +113,8 @@ export class OrganisationDetailComponent implements OnInit {
             } else {
                 return url.replace(/"/g, "");
             }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
 

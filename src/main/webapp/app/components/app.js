@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', "./organisations/organisations.component", "./register.component", "./home", "./loggedInHome.component", "./themes/themeComponent", "./userprofile.component", "./organisations/addOrganisation.component", "./themes/addThemeComponent", "./themes/subThemes/addSubTheme.component", "./themes/subThemes/subTheme.component", "./organisations/organisationDetail.component", "./themes/themeDetailComponent", "./chat/chatComponent", "./sessions/sessionDetail.component", "./cards/addCard.component", "./sessions/addSession"], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', "./organisations/organisations.component", "./register.component", "./home", "./loggedInHome.component", "./themes/themeComponent", "./userprofile.component", "./organisations/addOrganisation.component", "./themes/addThemeComponent", "./themes/subThemes/addSubTheme.component", "./themes/subThemes/subTheme.component", "./organisations/organisationDetail.component", "./themes/themeDetailComponent", "./chat/chatComponent", "./sessions/sessionDetail.component", "./cards/addCard.component", "./sessions/addSession", "./themes/subThemes/subThemeDetail.component"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, organisations_component_1, register_component_1, home_1, loggedInHome_component_1, themeComponent_1, userprofile_component_1, addOrganisation_component_1, addThemeComponent_1, addSubTheme_component_1, subTheme_component_1, organisationDetail_component_1, themeDetailComponent_1, chatComponent_1, sessionDetail_component_1, addCard_component_1, addSession_1;
+    var core_1, router_1, organisations_component_1, register_component_1, home_1, loggedInHome_component_1, themeComponent_1, userprofile_component_1, addOrganisation_component_1, addThemeComponent_1, addSubTheme_component_1, subTheme_component_1, organisationDetail_component_1, themeDetailComponent_1, chatComponent_1, sessionDetail_component_1, addCard_component_1, addSession_1, subThemeDetail_component_1;
     var AppComponent;
     return {
         setters:[
@@ -65,6 +65,9 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
             },
             function (addSession_1_1) {
                 addSession_1 = addSession_1_1;
+            },
+            function (subThemeDetail_component_1_1) {
+                subThemeDetail_component_1 = subThemeDetail_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -90,8 +93,9 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
                         { path: '/userprofile', as: 'Userprofile', component: userprofile_component_1.UserProfileComponent },
                         { path: '/themes/addTheme', name: 'AddTheme', component: addThemeComponent_1.AddThemeComponent },
                         { path: '/themes/addSubTheme', name: 'AddSubTheme', component: addSubTheme_component_1.AddSubThemeComponent },
-                        { path: '/subThemes', name: 'SubThemes', component: subTheme_component_1.SubThemeComponent },
                         { path: '/chat', name: 'Chat', component: chatComponent_1.ChatComponent },
+                        { path: '/themes/:id/subThemesDetail', name: 'SubThemesDetail', component: subThemeDetail_component_1.SubThemeDetailComponent },
+                        { path: '/themes/:id/subThemes', name: 'SubThemes', component: subTheme_component_1.SubThemeComponent },
                         { path: 'themes/:id/addCard', as: 'AddCard', component: addCard_component_1.AddCardComponent },
                         { path: '/sessions/:id', as: 'SessionDetail', component: sessionDetail_component_1.SessionDetailComponent },
                         { path: '/sessions/addSession', as: 'AddSession', component: addSession_1.AddSession }
