@@ -8,14 +8,12 @@ System.register(["angular2/core"], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, core_2, core_3;
+    var core_1;
     var ChatComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-                core_2 = core_1_1;
-                core_3 = core_1_1;
             }],
         execute: function() {
             /**
@@ -24,8 +22,8 @@ System.register(["angular2/core"], function(exports_1) {
             ChatComponent = (function () {
                 function ChatComponent() {
                     this.messages = [];
+                    this.emitMessage = new core_1.EventEmitter();
                     this.message = "";
-                    this.emitMessage = new core_3.EventEmitter();
                 }
                 ChatComponent.prototype.sendMessage = function (chatElement) {
                     this.emitMessage.emit(this.message);
@@ -44,15 +42,15 @@ System.register(["angular2/core"], function(exports_1) {
                 };
                 __decorate([
                     core_1.Input(), 
-                    __metadata('design:type', Array)
-                ], ChatComponent.prototype, "messages", void 0);
-                __decorate([
-                    core_1.Input(), 
                     __metadata('design:type', Number)
                 ], ChatComponent.prototype, "sessionId", void 0);
                 __decorate([
-                    core_2.Output(), 
-                    __metadata('design:type', core_3.EventEmitter)
+                    core_1.Input(), 
+                    __metadata('design:type', Array)
+                ], ChatComponent.prototype, "messages", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', core_1.EventEmitter)
                 ], ChatComponent.prototype, "emitMessage", void 0);
                 ChatComponent = __decorate([
                     core_1.Component({

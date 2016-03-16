@@ -16,6 +16,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
 import javax.validation.constraints.AssertFalse;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class SessionServiceTest {
         CardSession cardSession = s.getCardSessions().stream().filter(cs -> cs.getPosition()==0).findFirst().get();
         UserSession userSession = s.getUserSessions().stream().filter(us -> us.getUserPosition()==0).findFirst().get();
         int original = cardSession.getPosition();
+
         sessionService.updateCardPosition(cardSession.getCard().getId(),userSession.getUser().getId(),s.getId());
         assertEquals("The cardPosition should be 1",original+1,cardSession.getPosition());
         assertEquals("The UserPosition should have been updated",s.getUserSessions().size()-1,userSession.getUserPosition());
@@ -77,12 +79,12 @@ public class SessionServiceTest {
         Session s = sessionService.findSessionById(1,1);
         int chatSize = s.getChat().size();
 
-        s = sessionService.addMessageToChat(s.getSessionId(), "testtesttest", 1);
+        s = sessionService.addMessageToChat(s.getSessionId(), "testtesttest", 1, LocalDateTime.now());
         assertEquals("The message should have been added to the chat", chatSize+1, s.getChat().size());
     }
 
     @Test(expected = SessionServiceException.class)
     public void testAddMessageToWrongSession() throws Exception {
-        sessionService.addMessageToChat(-1, "testtesttest", 1);
+        sessionService.addMessageToChat(-1, "testtesttest", 1, LocalDateTime.now());
     }
 }

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -269,7 +270,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Session addMessageToChat(Integer sessionId, String message, Integer userId) throws SessionServiceException {
+    public Session addMessageToChat(Integer sessionId, String message, Integer userId, LocalDateTime date) throws SessionServiceException {
         Session s = findSessionById(sessionId, userId);
 
         if(s != null){
@@ -277,6 +278,7 @@ public class SessionServiceImpl implements SessionService {
                 Message m = new Message();
                 m.setContent(message);
                 m.setSender(userService.findUserById(userId));
+                m.setDate(date);
 
                 List<Message> chat = s.getChat();
                 if(chat == null)
@@ -315,5 +317,12 @@ public class SessionServiceImpl implements SessionService {
         }
 
         return s;
+    }
+
+    @Override
+    public List<Message> getChatHistory(Integer sessionId, Integer userId) throws SessionServiceException {
+        Session s = findSessionById(sessionId, userId);
+        Hibernate.initialize(s.getChat());
+        return s.getChat();
     }
 }

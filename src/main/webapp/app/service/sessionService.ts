@@ -7,6 +7,7 @@ import {Session} from "../DOM/circleSession/session";
 import {Theme} from "../DOM/theme";
 import {Response} from "angular2/http";
 import {Card} from "../DOM/card";
+import {Message} from "../DOM/circleSession/message";
 
 @Injectable()
 export class SessionService {
@@ -44,5 +45,11 @@ export class SessionService {
         return this.securityService.post(this.path + 'sessions/' + sessionId + '/addCards', JSON.stringify(cards), true)
             .map(res => res.json())
             .map((session:Session) => Session.fromJson(session));
+    }
+
+    public getChatHistory(sessionId: number): Observable<Array<Message>> {
+        return this.securityService.get(this.path + 'sessions/' + sessionId + '/chat', true)
+            .map(res => res.json())
+            .map((messages: Array<Message>) => messages.map((message: Message) => Message.fromJson(message)));
     }
 }

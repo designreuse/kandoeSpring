@@ -34,7 +34,6 @@ public class Greeting {
         this.username = username;
     }
 
-
     public String getDate() {
         return date;
     }

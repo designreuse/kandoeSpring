@@ -37,13 +37,16 @@ public class WebSocketController {
 
         if (u != null) {
             try {
-                Session s = sessionService.addMessageToChat(chat.getSessionId(), chat.getContent(), u.getId());
-                return new Greeting(u.getUsername(), chat.getContent(), String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()), u.getProfilePicture());
+                Session s = sessionService.addMessageToChat(chat.getSessionId(), chat.getContent(),
+                        u.getId(), LocalDateTime.now());
+
+                return new Greeting(u.getUsername(), chat.getContent(),
+                        String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()),
+                        u.getProfilePicture());
+
             } catch (SessionServiceException e) {
                 return null;
             }
-          
-
         }
         return null;
     }

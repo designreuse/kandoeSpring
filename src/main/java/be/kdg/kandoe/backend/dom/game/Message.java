@@ -1,10 +1,12 @@
 package be.kdg.kandoe.backend.dom.game;
 
 import be.kdg.kandoe.backend.dom.users.User;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by amy on 10/02/2016.
@@ -22,6 +24,10 @@ public class Message implements Serializable, Identifiable<Integer>{
 
     @ManyToOne(targetEntity = User.class)
     private User sender;
+
+    @Column(name = "Date", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime date;
 
     public String getContent() {
         return content;
@@ -42,5 +48,21 @@ public class Message implements Serializable, Identifiable<Integer>{
     @Override
     public Integer getId() {
         return messageId;
+    }
+
+    public Integer getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Integer messageId) {
+        this.messageId = messageId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', "../security/securityService", 'angular2/core', "../DOM/circleSession/session", "../DOM/card"], function(exports_1) {
+System.register(['rxjs/add/operator/map', "../security/securityService", 'angular2/core', "../DOM/circleSession/session", "../DOM/card", "../DOM/circleSession/message"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,7 +11,7 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var securityService_1, core_1, session_1, card_1;
+    var securityService_1, core_1, session_1, card_1, message_1;
     var SessionService;
     return {
         setters:[
@@ -27,6 +27,9 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
             },
             function (card_1_1) {
                 card_1 = card_1_1;
+            },
+            function (message_1_1) {
+                message_1 = message_1_1;
             }],
         execute: function() {
             SessionService = (function () {
@@ -57,6 +60,11 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
                     return this.securityService.post(this.path + 'sessions/' + sessionId + '/addCards', JSON.stringify(cards), true)
                         .map(function (res) { return res.json(); })
                         .map(function (session) { return session_1.Session.fromJson(session); });
+                };
+                SessionService.prototype.getChatHistory = function (sessionId) {
+                    return this.securityService.get(this.path + 'sessions/' + sessionId + '/chat', true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (messages) { return messages.map(function (message) { return message_1.Message.fromJson(message); }); });
                 };
                 SessionService = __decorate([
                     core_1.Injectable(),

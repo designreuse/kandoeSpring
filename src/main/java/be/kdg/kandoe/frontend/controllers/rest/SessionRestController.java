@@ -2,23 +2,27 @@ package be.kdg.kandoe.frontend.controllers.rest;
 
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
+import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.SessionService;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SessionDTO;
 import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
+import be.kdg.kandoe.frontend.webSocket.Greeting;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
+import org.h2.command.ddl.GrantRevoke;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by amy on 7/03/2016.
@@ -164,5 +168,23 @@ public class SessionRestController {
             }
         }
         return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{sessionId}/chat")
+    public ResponseEntity<List<Greeting>> getChatHistory(@PathVariable("sessionId") Integer sessionId,
+                                                         @AuthenticationPrincipal User user) {
+        if(user != null) {
+            try {
+                List<Message> messages = sessionService.getChatHistory(sessionId, user.getUserId());
+                List<Greeting> greetings = messages.stream().map(m -> new Greeting(m.getSender().getUsername(), m.getContent(),
+                        String.valueOf(m.getDate().getHour() + ":" + m.getDate().getMinute()),
+                        m.getSender().getProfilePicture())).collect(Collectors.toList());
+                return new ResponseEntity<List<Greeting>>(greetings, HttpStatus.OK);
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<List<Greeting>>(HttpStatus.BAD_REQUEST);
+            }
+
+        }
+        return new ResponseEntity<List<Greeting>>(HttpStatus.UNAUTHORIZED);
     }
 }

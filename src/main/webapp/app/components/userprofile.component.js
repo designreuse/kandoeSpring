@@ -110,10 +110,9 @@ System.register(['angular2/core', "../DOM/users/user", "../service/userService",
                         selector: 'userprofile',
                         templateUrl: 'app/components/userprofile.html'
                     }), 
-                    __metadata('design:paramtypes', [userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [userService_1.UserService, router_1.Router])
                 ], UserProfileComponent);
                 return UserProfileComponent;
-                var _a;
             })();
             exports_1("UserProfileComponent", UserProfileComponent);
         }
