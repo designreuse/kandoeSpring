@@ -23,7 +23,8 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SubThemeServiceImpl implements SubThemeService {
+public class
+SubThemeServiceImpl implements SubThemeService {
     private final SubThemeRepository subThemeRepository;
     private final ThemeService themeService;
     private final UserRepository userRepository;
@@ -57,6 +58,7 @@ public class SubThemeServiceImpl implements SubThemeService {
         }
         subThemes.add(subTheme);
         theme.setSubThemes(subThemes);
+        subTheme.setTheme(theme);
         SubTheme sub = subThemeRepository.save(subTheme);
         themeService.updateTheme(theme);
         return sub;
