@@ -65,6 +65,7 @@ public class SubThemeRestControllerTest {
         org.put("organisationId", 1);
         org.put("organisationName", "Karel De Grote");
         subTheme.put("organisation", org);
+        subTheme.put("themeId", 1);
 
         mockMvc.perform(post("/api/subThemes")
                 .header("Authorization", appToken)

@@ -63,6 +63,9 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                             return url.replace(/"/g, "");
                         }
                     }
+                    else {
+                        return "./app/resources/noimgplaceholder.png";
+                    }
                 };
                 OrganisationsComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");

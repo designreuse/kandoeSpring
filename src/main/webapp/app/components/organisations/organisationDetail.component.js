@@ -124,6 +124,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                             return url.replace(/"/g, "");
                         }
                     }
+                    else {
+                        return "./app/resources/noimgplaceholder.png";
+                    }
                 };
                 OrganisationDetailComponent.prototype.rotateCard = function ($event) {
                     var card = $event.target;

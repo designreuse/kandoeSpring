@@ -49,6 +49,8 @@ export class OrganisationsComponent implements OnInit {
             } else {
                 return url.replace(/"/g, "");
             }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
     logout() {
