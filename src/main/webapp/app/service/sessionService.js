@@ -66,6 +66,9 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
                         .map(function (res) { return res.json(); })
                         .map(function (messages) { return messages.map(function (message) { return message_1.Message.fromJson(message); }); });
                 };
+                SessionService.prototype.checkCanPlay = function (sessionId) {
+                    return this.securityService.get(this.path + 'sessions/' + sessionId + '/canPlay', true);
+                };
                 SessionService = __decorate([
                     core_1.Injectable(),
                     __param(0, core_1.Inject('App.BackEndPath')), 

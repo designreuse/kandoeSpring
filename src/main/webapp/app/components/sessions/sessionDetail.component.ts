@@ -55,7 +55,7 @@ export class SessionDetailComponent implements OnInit{
             for(var i = 0; i < s.size; i++){
                 this.size[i] = --j;
             }
-            console.log(s.cards);
+
             this.cards = s.cards;
             this.users = s.users;
         }, e => {
@@ -63,11 +63,14 @@ export class SessionDetailComponent implements OnInit{
         });
 
         this.userService.getCurrentUser().subscribe(u => {
-            console.log(u);
             this.user = u;
-            if(this.user.position == 0){
+            /*if(this.user.position == 0){
                 this.canPlay = true;
-            }
+            }*/
+            this.sessionService.checkCanPlay(this.sessionId).subscribe(r => {
+                console.log(r.json());
+                this.canPlay = r.json();
+            })
         });
 
         this.sessionService.getChatHistory(this.sessionId).subscribe((messages: Message[]) => {
@@ -230,8 +233,8 @@ export class SessionDetailComponent implements OnInit{
 
     connect() {
         this.disconnect();
-        //var socket = new SockJS('/Kandoe/circleSession'); //local
-        var socket = new SockJS('/circleSession'); // wildfly
+        var socket = new SockJS('/Kandoe/circleSession'); //local
+        //var socket = new SockJS('/circleSession'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
 

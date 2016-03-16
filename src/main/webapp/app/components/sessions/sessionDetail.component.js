@@ -72,18 +72,20 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         for (var i = 0; i < s.size; i++) {
                             _this.size[i] = --j;
                         }
-                        console.log(s.cards);
                         _this.cards = s.cards;
                         _this.users = s.users;
                     }, function (e) {
                         _this.router.navigate(["/LoggedInHome"]);
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
-                        console.log(u);
                         _this.user = u;
-                        if (_this.user.position == 0) {
-                            _this.canPlay = true;
-                        }
+                        /*if(this.user.position == 0){
+                            this.canPlay = true;
+                        }*/
+                        _this.sessionService.checkCanPlay(_this.sessionId).subscribe(function (r) {
+                            console.log(r.json());
+                            _this.canPlay = r.json();
+                        });
                     });
                     this.sessionService.getChatHistory(this.sessionId).subscribe(function (messages) {
                         console.log(JSON.stringify(messages));
@@ -226,8 +228,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
-                    //var socket = new SockJS('/Kandoe/circleSession'); //local
-                    var socket = new SockJS('/circleSession'); // wildfly
+                    var socket = new SockJS('/Kandoe/circleSession'); //local
+                    //var socket = new SockJS('/circleSession'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {

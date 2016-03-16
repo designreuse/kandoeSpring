@@ -187,4 +187,14 @@ public class SessionRestController {
         }
         return new ResponseEntity<List<Greeting>>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(value = "/{sessionId}/canPlay")
+    public ResponseEntity<Boolean> checkCanPlay(@PathVariable("sessionId") Integer sessionId,
+                                                @AuthenticationPrincipal User user) {
+        if(user != null){
+            boolean canPlay = sessionService.checkCanPlay(sessionId, user.getId());
+            return new ResponseEntity<Boolean>(canPlay, HttpStatus.OK);
+        }
+        return new ResponseEntity<Boolean>(HttpStatus.UNAUTHORIZED);
+    }
 }
