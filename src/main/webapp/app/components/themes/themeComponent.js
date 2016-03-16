@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../DOM/card", "../../service/cardService"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../DOM/card", "../../DOM/subTheme", "../../service/cardService", "../../service/subThemeService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, TokenHelper_1, userService_1, user_1, card_1, cardService_1;
+    var core_1, router_1, themeService_1, TokenHelper_1, userService_1, user_1, card_1, subTheme_1, cardService_1, subThemeService_1;
     var ThemeComponent;
     return {
         setters:[
@@ -33,16 +33,22 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             function (card_1_1) {
                 card_1 = card_1_1;
             },
+            function (subTheme_1_1) {
+                subTheme_1 = subTheme_1_1;
+            },
             function (cardService_1_1) {
                 cardService_1 = cardService_1_1;
+            },
+            function (subThemeService_1_1) {
+                subThemeService_1 = subThemeService_1_1;
             }],
         execute: function() {
             ThemeComponent = (function () {
-                function ThemeComponent(_themeService, router, _userService, cardService, routeParams) {
+                function ThemeComponent(_themeService, router, _userService, cardService, routeParams, subThemeService) {
                     this._themeService = _themeService;
                     this._userService = _userService;
                     this.themes = [];
-                    this.subThemes = [];
+                    this.subTheme = subTheme_1.SubTheme.createEmpty();
                     this.user = user_1.User.createEmpty();
                     this.file = null;
                     this.cards = [];
@@ -51,6 +57,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.router = router;
                     this.themeId = +routeParams.params["id"];
                     this.cardService = cardService;
+                    this.subThemeService = subThemeService;
                 }
                 ThemeComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -97,20 +104,39 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
+                ThemeComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
                 ThemeComponent.prototype.onAddCard = function (themeId) {
                     this.card.themeId = themeId;
+                };
+                ThemeComponent.prototype.onAddSubTheme = function (themeId) {
+                    this.subTheme.subThemeId = themeId;
                 };
                 ThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.card.description) {
-                        this.card.themeId = +this.themeId;
-                        this.cardService.createCard(this.card, this.file).subscribe(function (res) {
-                            var popup = document.getElementById("popup-addCard");
-                            $(popup).css("visibility", "hidden");
-                            /* this.router.navigate(['/Themes']);
-                             document.location.reload();*/
+                        this.cardService.createCard(this.card, this.file).subscribe(function (card) {
                             _this.themes.find(function (th) { return th.themeId == card.themeId; }).cards.push(card);
                             _this.card.description = null;
+                            _this.file = null;
+                        }, function (error) {
+                            //todo change error display
+                            _this.file = null;
+                            alert(error.text());
+                        });
+                    }
+                };
+                ThemeComponent.prototype.onSubmitSubTheme = function () {
+                    var _this = this;
+                    if (this.subTheme.description) {
+                        this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
+                            _this.router.navigate("['/Themes',{id:theme.themeId}]");
+                            document.location.reload();
+                            _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
+                            _this.subTheme.description = null;
                             _this.file = null;
                         }, function (error) {
                             //todo change error display
@@ -263,9 +289,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService, router_1.RouteParams])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, cardService_1.CardService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object, subThemeService_1.SubThemeService])
                 ], ThemeComponent);
                 return ThemeComponent;
+                var _a, _b;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }
