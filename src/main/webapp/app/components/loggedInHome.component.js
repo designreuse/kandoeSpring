@@ -49,19 +49,12 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
-                    /*$('.show-btn').on('click', function () {
-                        $('div.kandoe-session-card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-                    });
-            /*
-                    $('.card-reveal .close').on('click', function () {
-                        $('div.card-reveal[data-rel=' + $(this).data('rel') + ']').slideToggle('slow');
-                    });*/
                 };
                 LoggedInHome.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
                 };
-                LoggedInHome.prototype.getImageSrc = function (url) {
+                LoggedInHome.prototype.getImageSrc = function (url, backupUrl) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
                             return url;

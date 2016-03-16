@@ -66,6 +66,8 @@ export class AddOrganisationComponent implements OnInit{
             } else {
                 return url.replace(/"/g, "");
             }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
 }
