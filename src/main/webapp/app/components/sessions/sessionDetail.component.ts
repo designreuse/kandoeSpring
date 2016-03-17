@@ -34,11 +34,9 @@ export class SessionDetailComponent implements OnInit{
     private card:Card = Card.createEmpty();
     private file:File = null;
     private canPlay:Boolean = false;
-    private playUserId: Number  = 0;
 
     stompClient;
     messages: Message[] = [];
-
 
     constructor(sesService: SessionService, userService:UserService, cardService:CardService, router: Router, routeParams: RouteParams){
         this.sessionService = sesService;
@@ -77,7 +75,21 @@ export class SessionDetailComponent implements OnInit{
         }, e => {
             console.log(e.text());
         })
+    }
 
+    getVisibility(userId){
+        var currUser = null;
+        for(var j = 0; j < this.users.length; j++){
+            var u = this.users[j];
+            if(u.userId == userId){
+                currUser = u;
+            }
+        }
+        if(currUser.position == 0) {
+            return("visibility: visible");
+        }else {
+            return("visibility: hidden");
+        }
     }
 
     getPosition(i, cardId ?: number){
@@ -109,15 +121,29 @@ export class SessionDetailComponent implements OnInit{
         var card = this.cards[i];
         var id = "#" + i;
         var el = $(document).find($(id));
+        var stopId = "#play-" + this.user.userId;
+        var stopped = $(document).find($(stopId));
+        var next = null;
+        for(var j = 0; j < this.users.length; j++){
+            var u = this.users[j];
+            if(u.position == 1){
+                next = u;
+            }
+        }
+
+        var playId = "#play-" + (u.userId);
+        var playing = $(document).find($(playId));
+        $(playing).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2000);
+        $(stopped).css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}, 2000);
         if(card.position < (this.session.size-1) && this.canPlay) {
             this.stompClient.send("/move", {}, JSON.stringify({'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId}));
-            $(el).load("index.php");
+            $(el).load("sessionDetail.html");
         } else if(card.position == (this.session.size-1)){
             $(document).find("#card-element-winner").text(card.description);
             var img = $(document).find("#card-img-winner");
             img.attr("src", this.getImageSrc(card.imageURL));
             var popup = $(document).find("#winner-popup");
-            $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 1000);
+            $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2500);
         }
     }
 
@@ -151,8 +177,6 @@ export class SessionDetailComponent implements OnInit{
     onAddCard(){
         this.card.themeId = +this.session.theme.themeId;
         this.cardService.createCard(this.card, this.file).subscribe(res => {
-            /*var popup = document.getElementById("popup-addCard");
-            $(popup).css("visibility", "hidden");*/
             this.file = null;
             this.session.theme.cards.push(res);
         })
@@ -231,8 +255,8 @@ export class SessionDetailComponent implements OnInit{
 
     connect() {
         this.disconnect();
-        //var socket = new SockJS('/Kandoe/circleSession'); //local
-        var socket = new SockJS('/chat'); // wildfly
+        var socket = new SockJS('/Kandoe/circleSession'); //local
+        //var socket = new SockJS('/chat'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
 
@@ -242,7 +266,6 @@ export class SessionDetailComponent implements OnInit{
 
             this.stompClient.subscribe('/topic/move', result => {
                 var resultii=JSON.parse(result.body);
-                this.playUserId = resultii.nextUserId;
                 var ii;
                 var card;
                 for (var i = 0; i < this.cards.length; i++){
@@ -252,19 +275,26 @@ export class SessionDetailComponent implements OnInit{
                     }
                 }
 
+                var playId = "#play-" + resultii.nextUserId;
+                var stopId = "#play-" + this.user.userId;
+                var playing = $(document).find($(playId));
+                var stopped = $(document).find($(stopId));
+                $(playing).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2000);
+                $(stopped).css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}, 2000);
+
                 this.canPlay = resultii.nextUserId == this.user.userId;
 
                 var id = "#"+ ii;
                 var el = $(document).find($(id));
                 card.position = card.position + 1;
                 if(card.position < (this.session.size-1)) {
-                    $(el).load("index.php");
+                    $(el).load("sessionDetail.html");
                 } else if(card.position == (this.session.size-1)){
                     $(document).find("#card-element-winner").text(card.description);
                     var img = $(document).find("#card-img-winner");
                     img.attr("src", this.getImageSrc(card.imageURL));
                     var popup = $(document).find("#winner-popup");
-                    $(popup).css("visibility", "visible");
+                    $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2500);
                 }
             });
         });

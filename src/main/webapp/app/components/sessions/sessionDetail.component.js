@@ -56,7 +56,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
                     this.canPlay = false;
-                    this.playUserId = 0;
                     this.messages = [];
                     this.sessionService = sesService;
                     this.router = router;
@@ -93,6 +92,21 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         console.log(e.text());
                     });
                 };
+                SessionDetailComponent.prototype.getVisibility = function (userId) {
+                    var currUser = null;
+                    for (var j = 0; j < this.users.length; j++) {
+                        var u = this.users[j];
+                        if (u.userId == userId) {
+                            currUser = u;
+                        }
+                    }
+                    if (currUser.position == 0) {
+                        return ("visibility: visible");
+                    }
+                    else {
+                        return ("visibility: hidden");
+                    }
+                };
                 SessionDetailComponent.prototype.getPosition = function (i, cardId) {
                     var c = this.cards[i];
                     var position = this.session.size - 1 - c.position;
@@ -116,16 +130,29 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     var card = this.cards[i];
                     var id = "#" + i;
                     var el = $(document).find($(id));
+                    var stopId = "#play-" + this.user.userId;
+                    var stopped = $(document).find($(stopId));
+                    var next = null;
+                    for (var j = 0; j < this.users.length; j++) {
+                        var u = this.users[j];
+                        if (u.position == 1) {
+                            next = u;
+                        }
+                    }
+                    var playId = "#play-" + (u.userId);
+                    var playing = $(document).find($(playId));
+                    $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
+                    $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
                     if (card.position < (this.session.size - 1) && this.canPlay) {
                         this.stompClient.send("/move", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId }));
-                        $(el).load("index.php");
+                        $(el).load("sessionDetail.html");
                     }
                     else if (card.position == (this.session.size - 1)) {
                         $(document).find("#card-element-winner").text(card.description);
                         var img = $(document).find("#card-img-winner");
                         img.attr("src", this.getImageSrc(card.imageURL));
                         var popup = $(document).find("#winner-popup");
-                        $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 1000);
+                        $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
                     }
                 };
                 SessionDetailComponent.prototype.calculateWidthCentre = function () {
@@ -156,8 +183,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     var _this = this;
                     this.card.themeId = +this.session.theme.themeId;
                     this.cardService.createCard(this.card, this.file).subscribe(function (res) {
-                        /*var popup = document.getElementById("popup-addCard");
-                        $(popup).css("visibility", "hidden");*/
                         _this.file = null;
                         _this.session.theme.cards.push(res);
                     });
@@ -227,8 +252,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
-                    //var socket = new SockJS('/Kandoe/circleSession'); //local
-                    var socket = new SockJS('/chat'); // wildfly
+                    var socket = new SockJS('/Kandoe/circleSession'); //local
+                    //var socket = new SockJS('/chat'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {
@@ -236,7 +261,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         });
                         _this.stompClient.subscribe('/topic/move', function (result) {
                             var resultii = JSON.parse(result.body);
-                            _this.playUserId = resultii.nextUserId;
                             var ii;
                             var card;
                             for (var i = 0; i < _this.cards.length; i++) {
@@ -245,19 +269,25 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                                     card = _this.cards[i];
                                 }
                             }
+                            var playId = "#play-" + resultii.nextUserId;
+                            var stopId = "#play-" + _this.user.userId;
+                            var playing = $(document).find($(playId));
+                            var stopped = $(document).find($(stopId));
+                            $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
+                            $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
                             _this.canPlay = resultii.nextUserId == _this.user.userId;
                             var id = "#" + ii;
                             var el = $(document).find($(id));
                             card.position = card.position + 1;
                             if (card.position < (_this.session.size - 1)) {
-                                $(el).load("index.php");
+                                $(el).load("sessionDetail.html");
                             }
                             else if (card.position == (_this.session.size - 1)) {
                                 $(document).find("#card-element-winner").text(card.description);
                                 var img = $(document).find("#card-img-winner");
                                 img.attr("src", _this.getImageSrc(card.imageURL));
                                 var popup = $(document).find("#winner-popup");
-                                $(popup).css("visibility", "visible");
+                                $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
                             }
                         });
                     });

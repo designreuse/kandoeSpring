@@ -70,7 +70,7 @@
                         </div><!-- kandoe-session-card image -->
             
                         <div class="kandoe-session-card-content">
-                            <span class="kandoe-session-card-title">{{session.sessionId}}</span>
+                            <span class="kandoe-session-card-title">{{session.sessionName}}</span>
                             <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="showReveal(i)">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
@@ -84,7 +84,7 @@
                             </div><!-- kandoe-session-card actions -->
                         </div>
                         <div class="kandoe-session-card-reveal" [attr.id]="i">
-                            <span class="kandoe-session-card-title"><h3>{{session.sessionId}}</h3></span> <button type="button" class="close" data-rel="1" data-dismiss="modal" aria-label="Close" (click)="closeReveal(i)"><span aria-hidden="true">×</span></button>
+                            <span class="kandoe-session-card-title"><h3>{{session.sessionName}}</h3></span> <button type="button" class="close" data-rel="1" data-dismiss="modal" aria-label="Close" (click)="closeReveal(i)"><span aria-hidden="true">×</span></button>
                             <h4>Cards</h4>
                             <ul>
                                 <li *ngFor="#card of session.cards">{{card.description}}</li>
