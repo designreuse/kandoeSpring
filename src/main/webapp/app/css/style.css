@@ -8,7 +8,6 @@
     min-width: 50px;
 }
 
-
 /*
 --------------------- General ------------------------------
 */
@@ -79,6 +78,7 @@ hr {
 .nopaddingleft {
     padding-left: 0;
 }
+
 .nopaddingtop {
     padding-top: 0;
 }
@@ -97,6 +97,10 @@ hr {
     margin-left: 20px;
 }
 
+.plus-size {
+    font-size: 14px;
+}
+
 /*
 --------------------- Buttons ------------------------------
 */
@@ -109,7 +113,7 @@ hr {
     transition: all 0.3s ease;
 }
 
-.btn-add-theme{
+.btn-add-theme {
     margin: 0 !important;
 }
 
@@ -141,6 +145,11 @@ hr {
     height: 50px;
     margin-bottom: 20px;
     margin-top: 30px;
+}
+
+.btn-add {
+    background: #ff9c44;
+    border: #ff9c44;
 }
 
 .btn-create {
@@ -337,7 +346,7 @@ section {
     font-weight: 600 !important;
 }
 
-.no-bold{
+.no-bold {
     font-weight: normal !important;
 }
 
@@ -629,7 +638,6 @@ footer {
     box-shadow: none;
 }
 
-
 .add-user > .input-group-btn .btn,
 .add-org > .input-group-btn .btn {
     border-radius: 0px;
@@ -698,9 +706,24 @@ footer {
 
 .card-img-theme {
     max-width: 40%;
-    height: 75px;
+    height: 50px;
     float: left;
     margin-right: 10px;
+}
+
+.open-fixed-height {
+    max-height: 180px;
+    overflow: auto;
+}
+
+.card-img-themesmall {
+    max-width: 100%;
+    float: left;
+    margin-right: 10px;
+}
+
+.card-theme-container {
+
 }
 
 .fontsize-card {
@@ -714,11 +737,12 @@ footer {
     list-style-type: none;
 }
 
-.cards {
-
+.img-theme-overview {
+    margin: 5px;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
-
-
 
 /*
 --------------------- Add card popup ------------------------------
@@ -729,11 +753,11 @@ footer {
     background-color: #f7f7f7;
 }
 
-.noborder{
+.noborder {
     border: none;
 }
 
-#close-popup{
+#close-popup {
     float: right;
 
 }
@@ -853,6 +877,11 @@ footer {
     height: 180px;
 }
 
+#subthemeImg {
+    width: 125px;
+    height: 180px;
+}
+
 .session-card-description {
     color: white !important;
     background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.6));
@@ -880,7 +909,7 @@ footer {
     max-width: 100px;
     position: relative;
     border: solid white 3px;
-    -webkit-border-radius:8px;
+    -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
@@ -888,7 +917,7 @@ footer {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
 }
 
-.card-ingame-container-playing{
+.card-ingame-container-playing {
     position: absolute;
     z-index: 10;
     height: 75px;
@@ -931,15 +960,15 @@ footer {
 
 .overlay-circle {
     position: absolute;
-    background: rgba(0,0,0,0);
-    top:0;
-    left:0;
+    background: rgba(0, 0, 0, 0);
+    top: 0;
+    left: 0;
 }
 
 .overlay-element {
     background: rgba(255, 255, 255, 0.6);
     position: absolute;
-    -webkit-border-radius:8px;
+    -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
@@ -989,13 +1018,13 @@ footer {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.7);
-    height:100%;
+    height: 100%;
     width: 100%;
     visibility: hidden;
     z-index: 20;
 }
 
-#card-img-winner{
+#card-img-winner {
     max-width: 150px;
     max-height: 150px;
     display: block;
@@ -1003,7 +1032,7 @@ footer {
     margin-right: auto;
 }
 
-#card-element-winner{
+#card-element-winner {
     margin: 20px;
 }
 
@@ -1018,13 +1047,13 @@ footer {
     transition: 4s ease-in;
 }
 
-.winner-text{
+.winner-text {
     color: white;
     position: relative;
     top: 25%;
 }
 
-.winner-text-container{
+.winner-text-container {
     min-height: 150px;
     background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(8, 8, 8, 0.25)), url(../resources/winner.jpg);
 }
@@ -1033,11 +1062,11 @@ footer {
 ------------------------- MATERIAL CHECKBOX SLIDER -------------
 */
 
-.card-before-game-img{
+.card-before-game-img {
     height: 50px;
 }
 
-.card-before-game{
+.card-before-game {
     padding-top: 20px;
 }
 
@@ -1058,11 +1087,12 @@ footer {
     border-radius: 8px;
     content: '';
     height: 16px;
-    position:absolute;
+    position: absolute;
     opacity: 0.3;
     transition: all 0.4s ease-in-out;
     width: 40px;
 }
+
 .material-switch > label::after {
     background: rgb(255, 255, 255);
     border-radius: 16px;
@@ -1075,10 +1105,12 @@ footer {
     transition: all 0.3s ease-in-out;
     width: 24px;
 }
+
 .material-switch > input[type="checkbox"]:checked + label::before {
     background: inherit;
     opacity: 0.5;
 }
+
 .material-switch > input[type="checkbox"]:checked + label::after {
     background: inherit;
     left: 20px;

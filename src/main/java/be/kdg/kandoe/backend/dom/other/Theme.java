@@ -7,6 +7,7 @@ import org.springframework.hateoas.Identifiable;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by amy on 10/02/2016.
@@ -29,7 +30,7 @@ public class Theme implements Serializable, Identifiable<Integer> {
     private String iconURL;
 
     @OneToMany(targetEntity = SubTheme.class, fetch = FetchType.EAGER)
-    private List<SubTheme> subThemes;
+    private Set<SubTheme> subThemes;
 
     @ManyToOne(targetEntity = Organisation.class)
     private Organisation organisation;
@@ -74,11 +75,11 @@ public class Theme implements Serializable, Identifiable<Integer> {
         this.iconURL = iconURL;
     }
 
-    public List<SubTheme> getSubThemes() {
+    public Set<SubTheme> getSubThemes() {
         return subThemes;
     }
 
-    public void setSubThemes(List<SubTheme> subThemes) {
+    public void setSubThemes(Set<SubTheme> subThemes) {
         this.subThemes = subThemes;
     }
 

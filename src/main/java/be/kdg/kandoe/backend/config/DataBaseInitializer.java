@@ -132,7 +132,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         }
 
         SubTheme subTheme = new SubTheme();
-        if (subThemeRepository.findSubThemeBySubThemeName("SubThemeKdG") == null && mailUser.getId() != null) {
+        if (subThemeRepository.findOne(1) == null && mailUser.getId() != null) {
             subTheme.setSubThemeName("SubThemeKdG");
             subTheme.setDescription("KdG Subtheme description");
             subTheme.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
@@ -140,7 +140,8 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             subTheme=subThemeService.saveSubTheme(subTheme,theme.getThemeId());
 
         }
-            Card card = new Card();
+
+        Card card = new Card();
         if (cardRepository.findCardByDescription("KdGCard longer description to check if everything works accordingly") == null) {
             card.setDescription("KdGCard longer description to check if everything works accordingly");
             card.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
@@ -288,7 +289,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
 
             userSessionSubThema.setUser(user);
             userSession1SubThema.setUser(user2);
-            userSession1.setUserPosition(1);
+            userSession1SubThema.setUserPosition(1);
             userSessions.add(userSessionSubThema);
             userSessions.add(userSession1SubThema);
             // userSession = userSessionRepository.save(userSession);

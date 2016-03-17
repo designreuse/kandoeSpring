@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "../security/TokenHelper", "../DOM/users/user", "../service/userService", "../service/sessionService"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "../security/TokenHelper", "../DOM/users/user", "../service/userService", "../service/sessionService", "../service/themeService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, TokenHelper_1, user_1, userService_1, sessionService_1;
+    var core_1, router_1, TokenHelper_1, user_1, userService_1, sessionService_1, themeService_1;
     var LoggedInHome;
     return {
         setters:[
@@ -29,11 +29,15 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
             },
             function (sessionService_1_1) {
                 sessionService_1 = sessionService_1_1;
+            },
+            function (themeService_1_1) {
+                themeService_1 = themeService_1_1;
             }],
         execute: function() {
             LoggedInHome = (function () {
-                function LoggedInHome(_sessionService, router, userService) {
+                function LoggedInHome(_sessionService, router, userService, themeservice) {
                     this._sessionService = _sessionService;
+                    this.themeservice = themeservice;
                     this.router = null;
                     this.user = user_1.User.createEmpty();
                     this.sessions = [];
@@ -81,10 +85,9 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/loggedInHome.html'
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, router_1.Router, userService_1.UserService, themeService_1.ThemeService])
                 ], LoggedInHome);
                 return LoggedInHome;
-                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }

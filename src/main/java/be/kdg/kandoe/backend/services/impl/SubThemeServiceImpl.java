@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Annelies on 19/02/2016.
@@ -50,18 +52,21 @@ SubThemeServiceImpl implements SubThemeService {
     @Override
     public SubTheme saveSubTheme(SubTheme subTheme, Integer themeId) {
         Theme theme = themeService.findThemeById(themeId);
-        List<SubTheme> subThemes;
+
+        subTheme.setTheme(theme);
+        subTheme = subThemeRepository.save(subTheme);
+
+        Set<SubTheme> subThemes;
         if (theme.getSubThemes() != null){
             subThemes = theme.getSubThemes();
         } else {
-            subThemes = new ArrayList<>();
+            subThemes = new HashSet<>();
         }
         subThemes.add(subTheme);
         theme.setSubThemes(subThemes);
-        subTheme.setTheme(theme);
-        SubTheme sub = subThemeRepository.save(subTheme);
         themeService.updateTheme(theme);
-        return sub;
+
+        return subTheme;
     }
 
     @Override

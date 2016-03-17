@@ -38,6 +38,7 @@ export class SessionDetailComponent implements OnInit{
     stompClient;
     messages: Message[] = [];
 
+
     constructor(sesService: SessionService, userService:UserService, cardService:CardService, router: Router, routeParams: RouteParams){
         this.sessionService = sesService;
         this.router = router;
@@ -61,11 +62,8 @@ export class SessionDetailComponent implements OnInit{
             this.router.navigate(["/LoggedInHome"])
         });
 
-        this.userService.getCurrentUser().subscribe(u => {            
+        this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
-            /*if(this.user.position == 0){
-                this.canPlay = true;
-            }*/
             this.sessionService.checkCanPlay(this.sessionId).subscribe(r => {
                 console.log(r.json());
                 this.canPlay = r.json();
@@ -258,8 +256,8 @@ export class SessionDetailComponent implements OnInit{
 
     connect() {
         this.disconnect();
-        //var socket = new SockJS('/Kandoe/circleSession'); //local
-        var socket = new SockJS('/chat'); // wildfly
+        var socket = new SockJS('/Kandoe/circleSession'); //local
+        //var socket = new SockJS('/circleSession'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
 

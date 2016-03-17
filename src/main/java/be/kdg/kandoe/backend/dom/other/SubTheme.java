@@ -60,8 +60,6 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
         this.subThemeId = subThemeId;
     }
 
-
-
     public String getDescription() {
         return description;
     }
@@ -113,7 +111,7 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
 
     @Override
     public Integer getId() {
-        return null;
+        return subThemeId;
     }
 
 }
