@@ -33,6 +33,7 @@ export class ThemeDetailComponent implements OnInit {
     private router:Router;
     private card: Card = Card.createEmpty();
     private file: File = null;
+    private csvFile: File = null;
     private cardService: CardService;
     private subThemeService: SubThemeService;
     private user: User = User.createEmpty();
@@ -129,6 +130,17 @@ export class ThemeDetailComponent implements OnInit {
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
+    }
+
+    selectCardsFromCSV($event){
+        this.csvFile = $event.target.files[0];
+    }
+
+    onSubmitCsv(){
+        this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(c => {
+            this.csvFile = null;
+            this.cards.push(c);
+        })
     }
 
 

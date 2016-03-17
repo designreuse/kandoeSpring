@@ -61,6 +61,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.themes = [];
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
+                    this.csvFile = null;
                     this.user = user_1.User.createEmpty();
                     this.userService = userService;
                     this.router = router;
@@ -143,6 +144,16 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
                 };
+                ThemeDetailComponent.prototype.selectCardsFromCSV = function ($event) {
+                    this.csvFile = $event.target.files[0];
+                };
+                ThemeDetailComponent.prototype.onSubmitCsv = function () {
+                    var _this = this;
+                    this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (c) {
+                        _this.csvFile = null;
+                        _this.cards.push(c);
+                    });
+                };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -169,9 +180,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService, subThemeService_1.SubThemeService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
+                var _a, _b;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }
