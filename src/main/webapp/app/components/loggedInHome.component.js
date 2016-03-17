@@ -58,7 +58,7 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
                 };
-                LoggedInHome.prototype.getImageSrc = function (url, backupUrl) {
+                LoggedInHome.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
                             return url;
@@ -85,9 +85,10 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/loggedInHome.html'
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, router_1.Router, userService_1.UserService, themeService_1.ThemeService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, themeService_1.ThemeService])
                 ], LoggedInHome);
                 return LoggedInHome;
+                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }

@@ -2,6 +2,7 @@ package be.kdg.kandoe.backend.dom.users;
 
 import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import org.hibernate.annotations.Fetch;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by amy on 10/02/2016.
@@ -63,6 +65,9 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     @OneToMany(targetEntity = Theme.class)
     private List<Theme> themes;
 
+    @OneToMany(targetEntity = SubTheme.class)
+    private Set<SubTheme> subThemes;
+
     @OneToMany(targetEntity = UserSession.class)
     private List<UserSession> userSessions;
 
@@ -80,6 +85,7 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
         this.roles = roles;
         this.organisations = organisations;
         this.themes = themes;
+        this.subThemes=subThemes;
         this.userSessions = userSessions;
         this.newUser = true;
     }
@@ -193,6 +199,14 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
 
     public void setThemes(List<Theme> themes) {
         this.themes = themes;
+    }
+
+    public Set<SubTheme> getSubThemes() {
+        return subThemes;
+    }
+
+    public void setSubThemes(Set<SubTheme> subThemes) {
+        this.subThemes = subThemes;
     }
 
     public List<UserSession> getUserSessions() {

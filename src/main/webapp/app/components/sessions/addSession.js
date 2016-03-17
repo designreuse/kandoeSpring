@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../DOM/circleSession/session", "../../service/sessionService", "angular2/router", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../service/themeService", "../../service/organisationService"], function(exports_1) {
+System.register(['angular2/core', "../../DOM/circleSession/session", "../../service/sessionService", "angular2/router", "../../security/TokenHelper", "../../service/userService", "../../DOM/users/user", "../../service/themeService", "../../service/organisationService", "../../service/subThemeService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, session_1, sessionService_1, router_1, TokenHelper_1, userService_1, user_1, themeService_1, organisationService_1;
+    var core_1, session_1, sessionService_1, router_1, TokenHelper_1, userService_1, user_1, themeService_1, organisationService_1, subThemeService_1;
     var DateTimeFormat, AddSession;
     return {
         setters:[
@@ -38,12 +38,16 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
             },
             function (organisationService_1_1) {
                 organisationService_1 = organisationService_1_1;
+            },
+            function (subThemeService_1_1) {
+                subThemeService_1 = subThemeService_1_1;
             }],
         execute: function() {
             AddSession = (function () {
-                function AddSession(sessionService, _userService, router, themeService, organisationService) {
+                function AddSession(sessionService, _userService, router, themeService, organisationService, subThemeService) {
                     this._userService = _userService;
                     this.session = session_1.Session.createEmpty();
+                    this.subThemes = [];
                     this.user = user_1.User.createEmpty();
                     this.types = ['PROBLEM', 'IDEA'];
                     this.modes = ['ASYNC', 'SYNC'];
@@ -52,6 +56,7 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this._userService = _userService;
                     this.themeService = themeService;
                     this.organisationService = organisationService;
+                    this.subThemeService = subThemeService;
                     this.users = [];
                 }
                 AddSession.prototype.ngOnInit = function () {
@@ -64,6 +69,14 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         _this.users = _this.session.users;
                         _this.session.theme = _this.currentTheme;
                         _this.showUsersOrganisation();
+                    });
+                    this.subThemeService.getUserSubThemes().subscribe(function (subThemes) {
+                        _this.subThemes = subThemes;
+                        _this.session.subTheme.subThemeId = subThemes[0].subThemeId;
+                        _this.currentSubTheme = subThemes[0];
+                        _this.cards = _this.currentSubTheme.cards;
+                        _this.users = _this.session.users;
+                        _this.session.subTheme = _this.currentSubTheme;
                     });
                     this._userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
@@ -79,6 +92,12 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this.session.theme = this.currentTheme;
                     this.session.themeId = this.currentTheme.themeId;
                     this.showUsersOrganisation();
+                };
+                AddSession.prototype.selectSubTheme = function ($event) {
+                    this.currentSubTheme = this.subThemes.find(function (st) { return st.subThemeName === $event.target.value; });
+                    this.session.subTheme = this.currentSubTheme;
+                    this.session.themeId = this.currentSubTheme.subThemeId;
+                    this.showUsersOrganisationSubTheme();
                 };
                 AddSession.prototype.showUsersOrganisation = function () {
                     var _this = this;
@@ -97,6 +116,24 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         });
                     });
                     this.cards = this.currentTheme.cards;
+                };
+                AddSession.prototype.showUsersOrganisationSubTheme = function () {
+                    var _this = this;
+                    this.users = [];
+                    console.log("showOrganisationUsers");
+                    this.organisationService.getOrganisationOrganisers(this.currentSubTheme.organisation.organisationId).subscribe(function (users) {
+                        users.forEach(function (u) {
+                            console.log(JSON.stringify(u));
+                            _this.users.push(u);
+                        });
+                    });
+                    this.organisationService.getOrganisationMembers(this.currentSubTheme.organisation.organisationId).subscribe(function (users) {
+                        users.forEach(function (u) {
+                            console.log(JSON.stringify(u));
+                            _this.users.push(u);
+                        });
+                    });
+                    this.cards = this.currentSubTheme.cards;
                 };
                 AddSession.prototype.selectMode = function ($event) {
                     this.session.type = $event.target.value;
@@ -160,7 +197,7 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/sessions/addSession.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, themeService_1.ThemeService, organisationService_1.OrganisationService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, themeService_1.ThemeService, organisationService_1.OrganisationService, subThemeService_1.SubThemeService])
                 ], AddSession);
                 return AddSession;
                 var _a;
