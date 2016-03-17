@@ -141,8 +141,7 @@ public class ThemeServiceImpl implements ThemeService {
         Theme theme = findThemeById(themeId);
 
         Hibernate.initialize(theme.getSubThemes());
-        theme.getSubThemes().stream().forEach(st -> Hibernate.initialize(st.getSubThemeId()));
-        return theme.getSubThemes();
+        return new ArrayList<>(theme.getSubThemes());
     }
 
 

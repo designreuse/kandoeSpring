@@ -79,11 +79,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
-                        /*if(this.user.position == 0){
-                            this.canPlay = true;
-                        }*/
                         _this.sessionService.checkCanPlay(_this.sessionId).subscribe(function (r) {
-                            console.log(r.json());
                             _this.canPlay = r.json();
                         });
                     });

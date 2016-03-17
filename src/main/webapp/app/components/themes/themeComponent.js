@@ -104,11 +104,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var _this = this;
                     if (this.card.description) {
                         this.card.themeId = +this.themeId;
-                        this.cardService.createCard(this.card, this.file).subscribe(function (res) {
+                        this.cardService.createCard(this.card, this.file).subscribe(function (card) {
                             var popup = document.getElementById("popup-addCard");
                             $(popup).css("visibility", "hidden");
-                            /* this.router.navigate(['/Themes']);
-                             document.location.reload();*/
                             _this.themes.find(function (th) { return th.themeId == card.themeId; }).cards.push(card);
                             _this.card.description = null;
                             _this.file = null;

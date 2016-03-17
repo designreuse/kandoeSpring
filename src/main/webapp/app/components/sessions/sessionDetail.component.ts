@@ -64,11 +64,7 @@ export class SessionDetailComponent implements OnInit{
 
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
-            /*if(this.user.position == 0){
-                this.canPlay = true;
-            }*/
             this.sessionService.checkCanPlay(this.sessionId).subscribe(r => {
-                console.log(r.json());
                 this.canPlay = r.json();
             })
         });

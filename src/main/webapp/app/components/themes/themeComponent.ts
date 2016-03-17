@@ -98,11 +98,9 @@ export class ThemeComponent implements OnInit {
     onSubmit() {
         if (this.card.description) {
             this.card.themeId = +this.themeId;
-            this.cardService.createCard(this.card, this.file).subscribe(res => {
+            this.cardService.createCard(this.card, this.file).subscribe(card => {
                 var popup = document.getElementById("popup-addCard");
                 $(popup).css("visibility", "hidden");
-                /* this.router.navigate(['/Themes']);
-                 document.location.reload();*/
                 this.themes.find(th => th.themeId == card.themeId).cards.push(card);
                 this.card.description = null;
                 this.file = null;
