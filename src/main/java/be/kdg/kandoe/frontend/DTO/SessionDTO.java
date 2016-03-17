@@ -30,6 +30,7 @@ public class SessionDTO extends ResourceSupport implements Serializable {
     private ThemeDTO theme;
     private SubThemeDTO subTheme;
 
+
     public SessionDTO() {
     }
 

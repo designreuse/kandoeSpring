@@ -1,6 +1,7 @@
 import {Card} from "../card";
 import {User} from "../users/user";
 import {Theme} from "../theme";
+import {SubTheme} from "../subTheme";
 
 export class Session {
     sessionId: number;
@@ -18,6 +19,7 @@ export class Session {
     cards: Card[];
     users: User[];
     theme: Theme;
+    subTheme:SubTheme;
 
 
     constructor() {
@@ -58,12 +60,17 @@ export class Session {
             session.theme = Theme.fromJson(json.theme);
         }
 
+        if(json.subTheme){
+            session.subTheme=SubTheme.fromJson(json.subTheme);
+        }
+
         return session;
     }
 
     static createEmpty(): Session {
         var session = new Session();
         session.theme = Theme.createEmpty();
+        session.subTheme=SubTheme.createEmpty();
         return session;
     }
 }

@@ -10,6 +10,8 @@ import {Theme} from "../../DOM/theme";
 import {Card} from "../../DOM/card";
 import {OrganisationService} from "../../service/organisationService";
 import DateTimeFormat = Intl.DateTimeFormat;
+import {SubTheme} from "../../DOM/subTheme";
+import {SubThemeService} from "../../service/subThemeService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -35,8 +37,11 @@ export class AddSession implements OnInit{
 
     private organisationService:OrganisationService;
     private themes:Theme[];
+    private subThemes:SubTheme[]=[];
     private currentTheme:Theme;
+    private currentSubTheme: SubTheme;
     private themeService:ThemeService;
+    private subThemeService: SubThemeService;
     private router:Router;
     private user: User = User.createEmpty();
     private cards:Card[];
@@ -46,12 +51,14 @@ export class AddSession implements OnInit{
 
 
 
-    constructor(sessionService:SessionService, private _userService:UserService, router:Router, themeService: ThemeService, organisationService : OrganisationService) {
+    constructor(sessionService:SessionService, private _userService:UserService, router:Router,
+                themeService: ThemeService, organisationService : OrganisationService, subThemeService: SubThemeService) {
         this.sessionService = sessionService;
         this.router = router;
         this._userService=_userService;
         this.themeService=themeService;
         this.organisationService=organisationService;
+        this.subThemeService =subThemeService;
         this.users=[];
 
     }
@@ -68,6 +75,16 @@ export class AddSession implements OnInit{
 
             this.showUsersOrganisation()
         });
+
+        this.subThemeService.getUserSubThemes().subscribe((subThemes:SubTheme[])=> {
+            this.subThemes = subThemes;
+            this.session.subTheme.subThemeId = subThemes[0].subThemeId;
+            this.currentSubTheme = subThemes[0];
+            this.cards = this.currentSubTheme.cards;
+            this.users = this.session.users;
+            this.session.subTheme = this.currentSubTheme;
+        });
+
         this._userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
@@ -88,6 +105,14 @@ export class AddSession implements OnInit{
         this.showUsersOrganisation();
     }
 
+    selectSubTheme($event) {
+        this.currentSubTheme = this.subThemes.find(st => st.subThemeName === $event.target.value);
+        this.session.subTheme = this.currentSubTheme;
+        this.session.themeId = this.currentSubTheme.subThemeId;
+        this.showUsersOrganisationSubTheme();
+
+    }
+
     showUsersOrganisation(){
         this.users = [];
         console.log("showOrganisationUsers") ;
@@ -104,6 +129,24 @@ export class AddSession implements OnInit{
             })
         });
         this.cards = this.currentTheme.cards;
+    }
+
+    showUsersOrganisationSubTheme(){
+        this.users = [];
+        console.log("showOrganisationUsers") ;
+        this.organisationService.getOrganisationOrganisers(this.currentSubTheme.organisation.organisationId).subscribe(users => {
+            users.forEach(u =>{
+                console.log(JSON.stringify(u));
+                this.users.push(u);
+            })
+        });
+        this.organisationService.getOrganisationMembers(this.currentSubTheme.organisation.organisationId).subscribe(users => {
+            users.forEach(u => {
+                console.log(JSON.stringify(u));
+                this.users.push(u);
+            })
+        });
+        this.cards = this.currentSubTheme.cards;
     }
 
     selectMode($event){

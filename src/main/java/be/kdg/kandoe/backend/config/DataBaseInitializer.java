@@ -135,9 +135,9 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         if (subThemeRepository.findOne(1) == null && mailUser.getId() != null) {
             subTheme.setSubThemeName("SubThemeKdG");
             subTheme.setDescription("KdG Subtheme description");
-            subTheme.setIconURL("http://www.dandai.be/Resources/imgp1791.jpeg");
+            subTheme.setIconURL("http://www.droscher.com/gallery3/var/albums/travel/Anniversary2011/Antwerp-0021.jpg?m=1310969231.jpeg");
             subTheme.setOrganisation(org);
-            subTheme=subThemeService.saveSubTheme(subTheme,theme.getThemeId());
+            subTheme=subThemeService.saveSubTheme(subTheme,user.getUserId(), theme.getThemeId());
 
         }
 

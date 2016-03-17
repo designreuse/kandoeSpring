@@ -76,10 +76,22 @@
         <div class="form-group">
             <label>Theme</label>
             <select class="form-control" (change)="selectTheme($event)" required ngControl="theme" #theme="ngForm">
-                <option  *ngFor="#t of themes" [value]="t.themeName">{{t.themeName}}</option>
+                <option *ngFor="#t of themes" [value]="t.themeName">{{t.themeName}}</option>
             </select>
             <div [hidden]="theme.valid" class="alert alert-danger">
                 Theme is required
+            </div>
+        </div>
+        <div *ngIf="!session.theme.subThemes.length==0">
+            <div class="form-group">
+                <label>SubTheme</label>
+                <select class="form-control" (change)="selectSubTheme($event)" required ngControl="subTheme"
+                        #subTheme="ngForm">
+                    <option *ngFor="#st of subThemes" [value]="st.subThemeName">{{st.subThemeName}}</option>
+                </select>
+                <div [hidden]="subTheme.valid" class="alert alert-danger">
+                    SubTheme is required
+                </div>
             </div>
         </div>
 
@@ -128,13 +140,13 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="minCards">Min. cards / member</label>
-                <input name="minCards" id="minCards" type="number"  min="1" max="6" value="1" class="form-control"
-                   [(ngModel)]="session.minCards" required>
+                <input name="minCards" id="minCards" type="number" min="1" max="6" value="1" class="form-control"
+                       [(ngModel)]="session.minCards" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="maxCards">Max. cards / member</label>
                 <input name="maxCards" id="maxCards" type="number" min="1" max="6" value="1" class="form-control"
-                   [(ngModel)]="session.maxCards" required>
+                       [(ngModel)]="session.maxCards" required>
             </div>
         </div>
 
@@ -158,7 +170,8 @@
                 <input type="number" maxlength="2" min="1" max="12" placeholder="month" class="form-control-date"
                        required
                        [(ngModel)]="endMonth">
-                <input type="number" maxlength="2" min="1" max="31" value="1" placeholder="day" class="form-control-date" required
+                <input type="number" maxlength="2" min="1" max="31" value="1" placeholder="day"
+                       class="form-control-date" required
                        [(ngModel)]="endDay">
                 <!--<input type="datetime-local" placeholder="Enter session enddate" class="form-control" [(ngModel)]="endTime" required>-->
             </div>
@@ -178,7 +191,7 @@
         </div>
 
         <hr>
-        <button type="button" class="btn btn-wide btn-info" [disabled]="!sessionForm.form.valid" (click)="onSubmit()">
+        <button type="button" class="btn btn-wide btn-primary" [disabled]="!sessionForm.form.valid" (click)="onSubmit()">
             Create new session
         </button>
 

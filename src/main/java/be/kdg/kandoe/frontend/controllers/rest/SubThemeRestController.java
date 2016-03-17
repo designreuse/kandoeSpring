@@ -7,6 +7,7 @@ import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.SubThemeService;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SubThemeDTO;
+import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.CardAssembler;
 import be.kdg.kandoe.frontend.assemblers.SubThemeAssembler;
 import be.kdg.kandoe.frontend.util.FileUtils;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/subThemes")
@@ -65,7 +67,7 @@ public class SubThemeRestController {
             if(subThemeDTO.getOrganisation() != null){
                 SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
 
-                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,subThemeDTO.getThemeId());
+                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,user.getUserId() ,subThemeDTO.getThemeId());
                 logger.info(this.getClass().toString() + ": adding new subtheme " + subTheme_out.getId());
 
                 return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out), HttpStatus.CREATED);
@@ -86,10 +88,10 @@ public class SubThemeRestController {
             if(subThemeDTO.getOrganisation() != null){
                 if(file.getContentType().split("/")[0].equals("image")){
                     SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
-                    SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,subThemeDTO.getThemeId());
+                    SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(),subThemeDTO.getThemeId());
 
                     String newFilename = String.format("%d.%s", subTheme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
-                    String filePath = request.getServletContext().getRealPath("/resources/images/themes/");
+                    String filePath = request.getServletContext().getRealPath("/resources/images/subThemes/");
 
                     try {
                         FileUtils.saveFile(filePath, newFilename, file);
@@ -97,7 +99,7 @@ public class SubThemeRestController {
                         return new ResponseEntity<>("Failed to save image", HttpStatus.INTERNAL_SERVER_ERROR);
                     }
 
-                    subTheme_out.setIconURL("resources/images/themes/" + newFilename);
+                    subTheme_out.setIconURL("resources/images/subThemes/" + newFilename);
                     subThemeService.updateSubTheme(subTheme_out);
 
                     return new ResponseEntity<>(HttpStatus.CREATED);
@@ -109,16 +111,16 @@ public class SubThemeRestController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-   /* @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
     public ResponseEntity<List<SubThemeDTO>> getSubThemesCurrentUser(@AuthenticationPrincipal User user){
         if(user != null){
-            List<SubTheme> subThemes = subThemeService.findThemeByCreator(user.getId());
+            Set<SubTheme> subThemes = subThemeService.findSubThemeByCreator(user.getId());
 
             return new ResponseEntity<>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }*/
+    }
 
     @RequestMapping(value = "/{themeId}/cards", method = RequestMethod.GET)
     public ResponseEntity<List<CardDTO>> getSubThemeCards(@AuthenticationPrincipal User user,

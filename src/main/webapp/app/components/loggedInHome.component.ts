@@ -36,9 +36,11 @@ export class LoggedInHome implements OnInit{
     }
 
     ngOnInit(){
+
         this._sessionService.getUserSessions().subscribe((sessions:Session[])=>{
             console.log(JSON.stringify(sessions));
             this.sessions = sessions;
+
         });
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
@@ -50,7 +52,7 @@ export class LoggedInHome implements OnInit{
         this.router.navigate(['/Home']);
     }
 
-    private getImageSrc(url:string, backupUrl?: string): string {
+    private getImageSrc(url:string): string {
         if (url) {
             if (url.indexOf("http://") > -1) {
                 return url;
