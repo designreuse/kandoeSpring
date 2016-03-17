@@ -224,8 +224,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
-                    var socket = new SockJS('/Kandoe/circleSession'); //local
-                    //var socket = new SockJS('/circleSession'); // wildfly
+                    //var socket = new SockJS('/Kandoe/circleSession'); //local
+                    var socket = new SockJS('/circleSession'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {

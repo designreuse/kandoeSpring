@@ -13,7 +13,6 @@ public class ITCreateOrganisation {
 
     @Test
     public void testCreateOrganisation() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Arne\\Documents\\KdG\\3\\Integratieproject 2\\Code\\kandoe\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("http://localhost:9966/Kandoe");
         driver.manage().window().maximize();
@@ -24,13 +23,13 @@ public class ITCreateOrganisation {
         element = driver.findElement(By.id("password"));
         element.click();
         sendKeysPerCharacter(element, "test123");
-        element = driver.findElement(By.xpath("./*//*[@id='login-form']/div/button"));
+        element = driver.findElement(By.xpath(".*//*//**//*[@id='login-form']/div/button"));
         element.click();
         (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("loggedin-home")) != null);
         element = driver.findElement(By.linkText("ORGANISATIONS"));
         element.click();
         (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
-        element = driver.findElement(By.xpath("./*//*[@id='org-list']/div/div/ul/div/li/a"));
+        element = driver.findElement(By.xpath(".*//*//**//*[@id='org-list']/div/div/ul/div/li/a"));
         element.click();
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("html/body/my-kandoe/add-organisation/div/form/div[1]/input")));

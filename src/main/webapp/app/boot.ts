@@ -21,6 +21,7 @@ import {UploadService} from "./service/uploadService";
 import {ThemeService} from "./service/themeService";
 import {CardService} from "./service/cardService";
 import {SessionService} from "./service/sessionService";
+import {SubThemeService} from "./service/subThemeService";
 
 
 bootstrap(AppComponent,
@@ -33,6 +34,7 @@ bootstrap(AppComponent,
     UploadService,
     CardService,
     SessionService,
+    SubThemeService,
     // http
     HTTP_PROVIDERS,
     // routing

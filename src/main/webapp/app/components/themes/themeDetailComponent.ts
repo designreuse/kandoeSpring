@@ -11,6 +11,7 @@ import {UserService} from "../../service/userService";
 import {Card} from "../../DOM/card";
 import {CardService} from "../../service/cardService";
 import {SubTheme} from "../../DOM/subTheme";
+import {SubThemeService} from "../../service/subThemeService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -27,24 +28,32 @@ export class ThemeDetailComponent implements OnInit {
     public org:Organisation=Organisation.createEmpty();
 	private cards: Card[] = [];
     private subThemes: SubTheme[]=[];
-    private newCard: Card = Card.createEmpty();
+    private subTheme: SubTheme=SubTheme.createEmpty();
+    private themes:Theme[]=[];
+    private router:Router;
+    private card: Card = Card.createEmpty();
     private file: File = null;
     private cardService: CardService;
-    private newTag:string = "";
+    private subThemeService: SubThemeService;
     private user: User = User.createEmpty();
     private userService: UserService;
 
-    constructor(private _themeService:ThemeService, private _router:Router, userService:UserService,
-                routeParams: RouteParams, cardService: CardService) {
+    constructor(private _themeService:ThemeService,  router:Router, userService:UserService,
+                routeParams: RouteParams, cardService: CardService, subThemeService: SubThemeService) {
         this.userService = userService;
+        this.router=router;
 		this.themeId = +routeParams.params["id"];
         this.cardService = cardService;
+        this.subThemeService=subThemeService;
     }
 
     ngOnInit() {
         this._themeService.getTheme(this.themeId).subscribe(theme => {
             this.theme = theme;
             this.org=this.theme.organisation;
+        });
+        this._themeService.getUserThemes(this.themeId).subscribe((themes:Theme[]) => {
+            this.themes = themes;
         });
         this._themeService.getThemeCards(this.themeId).subscribe(cards => {
             this.cards = cards;
@@ -62,41 +71,83 @@ export class ThemeDetailComponent implements OnInit {
 
     }
 
+    onSubmit() {
+        if (this.card.description) {
+        this.card.themeId = +this.themeId;
+        this.cardService.createCard(this.card, this.file).subscribe(res => {
+
+            this.router.navigate("['/Themes',{id:theme.themeId}]");
+            document.location.reload();
+            this.themes.find(th => th.themeId == res.themeId).cards.push(res);
+             this.card.description = null;
+            this.file = null;
+        }, error => {
+            //todo change error display
+            this.file = null;
+            alert(error.text());
+        });
+        }
+    }
+    onSubmitSubTheme() {
+        if (this.subTheme.description) {
+            this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
+
+                 this.router.navigate("['/Themes',{id:theme.themeId}]");
+                 document.location.reload();
+                this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
+                this.subTheme.description = null;
+                this.file = null;
+            }, error => {
+                //todo change error display
+                this.file = null;
+                alert(error.text());
+            });
+        }
+    }
+
     createCard() {
-        this.newCard.themeId = this.themeId;
-        this.cardService.createCard(this.newCard, this.file).subscribe(c => {
+        this.card.themeId = this.themeId;
+        this.cardService.createCard(this.card, this.file).subscribe(c => {
             this.file = null;
             this.cards.push(c);
         })
     }
 
+    onAddCard(themeId: number){
+        this.card.themeId = themeId;
+    }
+    onAddSubTheme(themeId: number){
+        this.subTheme.subThemeId = themeId;
+    }
     onFileChange($event){
         this.file = $event.target.files[0];
+
+        var output = document.getElementById("cardimg");
+        output.src = URL.createObjectURL($event.target.files[0]);
     }
 
     logout() {
         localStorage.removeItem("id_token");
-        this._router.navigate(['/Home']);
+        this.router.navigate(['/Home']);
     }
 
-    getImageSrc(url: string): string {
-        if(url){
-            if(url.indexOf("http://") > -1){
+
+    private getImageSrc(url:string):string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
                 return url;
             } else {
                 return url.replace(/"/g, "");
             }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
+    onFileChangeSubTheme($event) {
+        this.file = $event.target.files[0];
 
-    addTag(){
-        if (this.newTag) {
-
-        }
+        var output = document.getElementById("subthemeImg");
+        output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    removeTag(event){
-        var self = event.target;
-        $(self).closest(".tag").remove();
-    }
-}
+   }

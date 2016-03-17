@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../DOM/theme", "../../DOM/organisation", "../../DOM/users/user", "../../service/userService", "../../DOM/card", "../../service/cardService"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "../../service/themeService", "../../security/TokenHelper", "../../DOM/theme", "../../DOM/organisation", "../../DOM/users/user", "../../service/userService", "../../DOM/card", "../../service/cardService", "../../DOM/subTheme", "../../service/subThemeService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1, router_2, user_1, userService_1, card_1, cardService_1;
+    var core_1, router_1, themeService_1, TokenHelper_1, theme_1, organisation_1, router_2, user_1, userService_1, card_1, cardService_1, subTheme_1, subThemeService_1;
     var ThemeDetailComponent;
     return {
         setters:[
@@ -42,29 +42,40 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
             },
             function (cardService_1_1) {
                 cardService_1 = cardService_1_1;
+            },
+            function (subTheme_1_1) {
+                subTheme_1 = subTheme_1_1;
+            },
+            function (subThemeService_1_1) {
+                subThemeService_1 = subThemeService_1_1;
             }],
         execute: function() {
             ThemeDetailComponent = (function () {
-                function ThemeDetailComponent(_themeService, _router, userService, routeParams, cardService) {
+                function ThemeDetailComponent(_themeService, router, userService, routeParams, cardService, subThemeService) {
                     this._themeService = _themeService;
-                    this._router = _router;
                     this.theme = theme_1.Theme.createEmpty();
                     this.org = organisation_1.Organisation.createEmpty();
                     this.cards = [];
                     this.subThemes = [];
-                    this.newCard = card_1.Card.createEmpty();
+                    this.subTheme = subTheme_1.SubTheme.createEmpty();
+                    this.themes = [];
+                    this.card = card_1.Card.createEmpty();
                     this.file = null;
-                    this.newTag = "";
                     this.user = user_1.User.createEmpty();
                     this.userService = userService;
+                    this.router = router;
                     this.themeId = +routeParams.params["id"];
                     this.cardService = cardService;
+                    this.subThemeService = subThemeService;
                 }
                 ThemeDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._themeService.getTheme(this.themeId).subscribe(function (theme) {
                         _this.theme = theme;
                         _this.org = _this.theme.organisation;
+                    });
+                    this._themeService.getUserThemes(this.themeId).subscribe(function (themes) {
+                        _this.themes = themes;
                     });
                     this._themeService.getThemeCards(this.themeId).subscribe(function (cards) {
                         _this.cards = cards;
@@ -76,20 +87,61 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         _this.subThemes = subThemes;
                     });
                 };
+                ThemeDetailComponent.prototype.onSubmit = function () {
+                    var _this = this;
+                    if (this.card.description) {
+                        this.card.themeId = +this.themeId;
+                        this.cardService.createCard(this.card, this.file).subscribe(function (res) {
+                            _this.router.navigate("['/Themes',{id:theme.themeId}]");
+                            document.location.reload();
+                            _this.themes.find(function (th) { return th.themeId == res.themeId; }).cards.push(res);
+                            _this.card.description = null;
+                            _this.file = null;
+                        }, function (error) {
+                            //todo change error display
+                            _this.file = null;
+                            alert(error.text());
+                        });
+                    }
+                };
+                ThemeDetailComponent.prototype.onSubmitSubTheme = function () {
+                    var _this = this;
+                    if (this.subTheme.description) {
+                        this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
+                            _this.router.navigate("['/Themes',{id:theme.themeId}]");
+                            document.location.reload();
+                            _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
+                            _this.subTheme.description = null;
+                            _this.file = null;
+                        }, function (error) {
+                            //todo change error display
+                            _this.file = null;
+                            alert(error.text());
+                        });
+                    }
+                };
                 ThemeDetailComponent.prototype.createCard = function () {
                     var _this = this;
-                    this.newCard.themeId = this.themeId;
-                    this.cardService.createCard(this.newCard, this.file).subscribe(function (c) {
+                    this.card.themeId = this.themeId;
+                    this.cardService.createCard(this.card, this.file).subscribe(function (c) {
                         _this.file = null;
                         _this.cards.push(c);
                     });
                 };
+                ThemeDetailComponent.prototype.onAddCard = function (themeId) {
+                    this.card.themeId = themeId;
+                };
+                ThemeDetailComponent.prototype.onAddSubTheme = function (themeId) {
+                    this.subTheme.subThemeId = themeId;
+                };
                 ThemeDetailComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeDetailComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
-                    this._router.navigate(['/Home']);
+                    this.router.navigate(['/Home']);
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
@@ -100,14 +152,14 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             return url.replace(/"/g, "");
                         }
                     }
-                };
-                ThemeDetailComponent.prototype.addTag = function () {
-                    if (this.newTag) {
+                    else {
+                        return "./app/resources/noimgplaceholder.png";
                     }
                 };
-                ThemeDetailComponent.prototype.removeTag = function (event) {
-                    var self = event.target;
-                    $(self).closest(".tag").remove();
+                ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
@@ -117,7 +169,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
             })();

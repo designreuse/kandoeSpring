@@ -14,6 +14,7 @@ import {Session} from "../DOM/circleSession/session";
 import {Theme} from "../DOM/theme";
 import {Card} from "../DOM/card";
 import {Organisation} from "../DOM/organisation";
+import {ThemeService} from "../service/themeService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -29,7 +30,7 @@ export class LoggedInHome implements OnInit{
     private userService: UserService;
     public sessions:Session[] =  [];
 
-    constructor(private _sessionService:SessionService, router:Router, userService: UserService) {
+    constructor(private _sessionService:SessionService, router:Router, userService: UserService, private themeservice: ThemeService) {
         this.router = router;
         this.userService = userService;
     }

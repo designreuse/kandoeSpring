@@ -9,6 +9,7 @@ import {User} from "../../DOM/users/user";
 import {Card} from "../../DOM/card";
 import {SubTheme} from "../../DOM/subTheme";
 import {CardService} from "../../service/cardService";
+import {SubThemeService} from "../../service/subThemeService";
 
 @CanActivate(() => tokenNotExpired())
 
@@ -21,22 +22,24 @@ import {CardService} from "../../service/cardService";
 
 export class ThemeComponent implements OnInit {
     public themes:Theme[] = [];
-    private subThemes:SubTheme[] = [];
+    private subTheme:SubTheme = SubTheme.createEmpty();
     private user:User = User.createEmpty();
     private router:Router;
     private userService:UserService;
     private cardService:CardService;
+    private subThemeService:SubThemeService;
     private file:File = null;
     private cards:Card[] = [];
     private card:Card = Card.createEmpty();
     private themeId:number;
 
     constructor(private _themeService:ThemeService, router:Router, private _userService:UserService,
-                cardService:CardService, routeParams:RouteParams) {
+                cardService:CardService, routeParams:RouteParams, subThemeService:SubThemeService) {
         this.userService = _userService;
         this.router = router;
         this.themeId = +routeParams.params["id"];
         this.cardService = cardService;
+        this.subThemeService = subThemeService;
     }
 
 
@@ -91,18 +94,44 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    onAddCard(themeId: number){
+    onFileChangeSubTheme($event) {
+        this.file = $event.target.files[0];
+
+        var output = document.getElementById("subthemeImg");
+        output.src = URL.createObjectURL($event.target.files[0]);
+    }
+
+
+    onAddCard(themeId:number) {
         this.card.themeId = themeId;
+    }
+
+    onAddSubTheme(themeId:number) {
+        this.subTheme.subThemeId = themeId;
     }
 
     onSubmit() {
         if (this.card.description) {
-            this.card.themeId = +this.themeId;
             this.cardService.createCard(this.card, this.file).subscribe(card => {
-                var popup = document.getElementById("popup-addCard");
-                $(popup).css("visibility", "hidden");
                 this.themes.find(th => th.themeId == card.themeId).cards.push(card);
                 this.card.description = null;
+                this.file = null;
+            }, error => {
+                //todo change error display
+                this.file = null;
+                alert(error.text());
+            });
+        }
+    }
+
+    onSubmitSubTheme() {
+        if (this.subTheme.description) {
+            this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
+
+                this.router.navigate("['/Themes',{id:theme.themeId}]");
+                document.location.reload();
+                this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
+                this.subTheme.description = null;
                 this.file = null;
             }, error => {
                 //todo change error display
@@ -253,7 +282,6 @@ export class ThemeComponent implements OnInit {
             $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
         }
     }
-
 
 
 }
