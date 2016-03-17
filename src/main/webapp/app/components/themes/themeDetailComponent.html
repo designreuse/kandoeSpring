@@ -80,8 +80,7 @@
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
 
-            <h4>Subthemes <a class="glyphicon glyphicon-plus plus-size" data-toggle="modal" data-target="#add-subTheme"
-                             (click)="onAddSubTheme(theme.themeId)"></a></h4>
+            <h4>Subthemes <a data-toggle="modal" data-target="#add-subTheme" (click)="onAddSubTheme(theme.themeId)"> + </a> </h4>
             <form>
                 <ul class="ul-show-cards">
                     <div class="row">
@@ -102,9 +101,8 @@
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
             <h4>Cards
-                <a class="glyphicon glyphicon-plus plus-size plus-size" data-toggle="modal" data-target="#add-card"
-                   (click)="onAddCard(theme.themeId)">
-                </a>
+                <a class="plus-card" data-toggle="modal" data-target="#add-card" (click)="onAddCard(theme.themeId)">+ 1</a>
+                <a class="plus-card" (click)="onSubmitCSV()">+ CSV </a> <input class="plus-card" type="file" (change)="onCSVFileChange($event)">
             </h4>
             <form>
                 <ul class="ul-show-cards">

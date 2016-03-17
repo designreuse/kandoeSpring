@@ -56,6 +56,15 @@ public class SubThemeRestControllerTest {
                 .addFilter(springSecurityFilterChain).build();
     }
 
+
+    @Test
+    public void testGetThemesCurrentUser() throws Exception {
+        mockMvc.perform(get("/api/subThemes/currentUser")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].subThemeName", is("SubThemeKdG")));
+    }
+
     @Test
     public void testCreateSubTheme() throws Exception{
         JSONObject subTheme = new JSONObject();

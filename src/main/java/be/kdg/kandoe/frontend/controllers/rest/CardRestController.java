@@ -3,10 +3,12 @@ package be.kdg.kandoe.frontend.controllers.rest;
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.CardService;
+import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.assemblers.CardAssembler;
 import be.kdg.kandoe.frontend.util.FileUtils;
 import ma.glasnost.orika.MapperFacade;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -18,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -46,7 +48,44 @@ public class CardRestController {
         }else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @RequestMapping(value = "/{themeId}/csv", method = {RequestMethod.POST})
+    public ResponseEntity<List<CardDTO>> createCardsFromCSV(@PathVariable("themeId") int themeId, @RequestPart("csvFile") MultipartFile file, @AuthenticationPrincipal User user, HttpServletRequest request) throws IOException {
+        if (user != null) {
+            List<Card> cards = null;
+
+            String separator = File.separator;
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            String path = request.getSession().getServletContext().getRealPath("/") + "csv" + separator + (themeId) + file.getName() + "." + extension;
+
+            System.out.println("Saving csv to " + path);
+
+            File csvFile = new File(path);
+            if (! csvFile.getParentFile().exists())
+                csvFile.getParentFile().mkdirs();
+
+            if (! csvFile.exists())
+                csvFile.createNewFile();
+
+            FileOutputStream os = new FileOutputStream(csvFile);
+            os.write(file.getBytes());
+            os.close();
+
+            try {
+                cards = this.cardService.createCardsfromCSV(path);
+                for(Card c : cards){
+                    Card card_out = cardService.saveCard(c, themeId);
+                    logger.info(this.getClass().toString() + ": adding new card " + card_out.getId());
+                }
+            } catch (ConvertorException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(this.cardAssembler.toResources(cards), HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
 
     @RequestMapping(value = {"/{cardId}"},method = {RequestMethod.GET})
     public ResponseEntity<CardDTO> getCardById(@PathVariable("cardId") int cardId, @AuthenticationPrincipal User user) {

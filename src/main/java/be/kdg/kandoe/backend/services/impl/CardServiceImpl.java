@@ -5,6 +5,8 @@ import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.persistence.api.CardRepository;
 import be.kdg.kandoe.backend.services.api.CardService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
+import be.kdg.kandoe.backend.services.convertors.CsvToCardConvertor;
+import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +25,13 @@ public class CardServiceImpl implements CardService {
 
     private final CardRepository cardRepository;
     private final ThemeService themeService;
+    private final CsvToCardConvertor cardConvertor;
 
     @Autowired
-    public CardServiceImpl(CardRepository cardRepository, ThemeService themeService) {
+    public CardServiceImpl(CardRepository cardRepository, ThemeService themeService, CsvToCardConvertor cardConvertor) {
         this.cardRepository = cardRepository;
         this.themeService = themeService;
+        this.cardConvertor = cardConvertor;
     }
 
     @Override
@@ -59,6 +63,12 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<Card> findCards() {
         return cardRepository.findAll();
+    }
+
+    @Override
+    public List<Card> createCardsfromCSV(String csvFileName) throws ConvertorException {
+       return cardConvertor.toCards(csvFileName);
+
     }
 
     @Override

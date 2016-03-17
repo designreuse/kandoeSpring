@@ -64,9 +64,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this._themeService.getUserThemes().subscribe(function (themes) {
                         _this.themes = themes;
                     });
-                    this.userService.getCurrentUser().subscribe(function (u) {
-                        _this.user = u;
-                    });
+                    this.userService.getCurrentUser().subscribe(function (data) { _this.user = data; }, function (error) { console.log(error); }, function () { });
                     for (var i = 0; i < this.themes.length; i++) {
                         this._themeService.getThemeSubThemes(this.themes[i].themeId).subscribe(function (subThemes) {
                             for (var j = 0; subThemes.length; j++) {
@@ -289,9 +287,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService, router_1.RouteParams, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, cardService_1.CardService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object, subThemeService_1.SubThemeService])
                 ], ThemeComponent);
                 return ThemeComponent;
+                var _a, _b;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }

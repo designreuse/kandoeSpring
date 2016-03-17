@@ -47,9 +47,11 @@ export class ThemeComponent implements OnInit {
         this._themeService.getUserThemes().subscribe((themes:Theme[])=> {
             this.themes = themes;
         });
-        this.userService.getCurrentUser().subscribe(u => {
-            this.user = u;
-        });
+        this.userService.getCurrentUser().subscribe(
+            (data) => { this.user = data; },
+            (error) => { console.log(error) },
+            ()=> {  }
+        );
 
 
         for (var i = 0; i < this.themes.length; i++) {

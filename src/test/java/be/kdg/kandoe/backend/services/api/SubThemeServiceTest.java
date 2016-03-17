@@ -41,20 +41,20 @@ public class SubThemeServiceTest {
         subtheme.setTheme(theme);
         subtheme.setSubThemeName("KdGSubTheme");
         subtheme.setDescription("kdGSubTheme description");
-        subThemeService.saveSubTheme(subtheme,(Integer) 1);
+        subThemeService.saveSubTheme(subtheme,1,1);
 
         assertEquals(subtheme.getSubThemeName(),"KdGSubTheme");
 
     }
 
-    @Test
+   /* @Test
     public void testUpdateSubTheme() {
-        SubTheme subTheme = subThemeService.findSubThemeByName("KdGSubTheme");
+        SubTheme subTheme = subThemeService.findSubThemeByName("SubThemeKdG");
         subTheme.setSubThemeName("KdGsubUpdate");
         subThemeService.updateSubTheme(subTheme);
         assertEquals("The SubThemeName should be 'KdGsubUpdate' ",subTheme.getSubThemeName(),"KdGsubUpdate");
 
-    }
+    }*/
 
 }
 

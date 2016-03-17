@@ -1,5 +1,5 @@
-System.register(["../card", "../users/user", "../theme"], function(exports_1) {
-    var card_1, user_1, theme_1;
+System.register(["../card", "../users/user", "../theme", "../subTheme"], function(exports_1) {
+    var card_1, user_1, theme_1, subTheme_1;
     var Session;
     return {
         setters:[
@@ -11,6 +11,9 @@ System.register(["../card", "../users/user", "../theme"], function(exports_1) {
             },
             function (theme_1_1) {
                 theme_1 = theme_1_1;
+            },
+            function (subTheme_1_1) {
+                subTheme_1 = subTheme_1_1;
             }],
         execute: function() {
             Session = (function () {
@@ -46,11 +49,15 @@ System.register(["../card", "../users/user", "../theme"], function(exports_1) {
                     if (json.theme) {
                         session.theme = theme_1.Theme.fromJson(json.theme);
                     }
+                    if (json.subTheme) {
+                        session.subTheme = subTheme_1.SubTheme.fromJson(json.subTheme);
+                    }
                     return session;
                 };
                 Session.createEmpty = function () {
                     var session = new Session();
                     session.theme = theme_1.Theme.createEmpty();
+                    session.subTheme = subTheme_1.SubTheme.createEmpty();
                     return session;
                 };
                 return Session;

@@ -61,30 +61,48 @@
                     </div>
                 </div>
                 <div *ngFor="#session of sessions; #i = index" class="kandoe-session-card-container col-sm-12 col-md-4">
+
+                    <!--Cards theme object -->
+
+
                     <div class="kandoe-session-card">
                         <div class="kandoe-session-card-image">
-                            <img [src]="getImageSrc(session.theme.iconURL)" class="img-responsive">
-                            <div class="caption post-content">
-                                <h3 style="color:#f9f9f9">{{session.theme.themeName}}</h3>
+
+                            <div *ngIf="session.subTheme==null">
+                                <img [src]="getImageSrc(session.theme.iconURL)" class="img-responsive">
+                                <div class="caption post-content">
+                                    <h3 style="color:#f9f9f9">{{session.theme.themeName}}</h3>
+                                </div>
                             </div>
-                        </div><!-- kandoe-session-card image -->
-            
+                            <div *ngIf="session.theme==null">
+                                <img [src]="getImageSrc(session.subTheme.iconURL)" class="img-responsive">
+                                <div class="caption post-content">
+                                    <h3 style="color:#f9f9f9">{{session.subTheme.subThemeName}}</h3>
+                                </div>
+                            </div>
+                        </div>
                         <div class="kandoe-session-card-content">
-                            <span class="kandoe-session-card-title">{{session.sessionId}}</span>
+                            <span class="kandoe-session-card-title">{{session.sessionName}}</span>
                             <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="showReveal(i)">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                         </div><!-- kandoe-session-card content -->
                         <div class="row nopadding-nomargin">
                             <div class="kandoe-session-card-action col-sm-12">
-                                <div class="padding-left-5 col-sm-2"><label>ID<p class="no-bold">{{session.sessionId}}</p></label></div>
-                                <div class="padding-left-5 col-sm-5"><label><span class="glyphicon glyphicon-time"></span> END <p class="no-bold">{{session.endTime}}</p></label></div>
-                                <div class="padding-left-5 col-sm-3"><label>TYPE<p class="no-bold">{{session.type}}</p></label></div>
-                                <div class="padding-left-5 col-sm-2"><button type="button" [routerLink]="['/SessionDetail', {id:session.sessionId}]" class="btn btn-custom pull-right"><span class="glyphicon glyphicon-chevron-right"></span></button></div>
+                                <div class="padding-left-5 col-sm-7"><label><span
+                                        class="glyphicon glyphicon-time"></span> END <p class="no-bold">
+                                    {{session.endTime}}</p></label></div>
+                                <div class="padding-left-5 col-sm-3"><label>TYPE<p class="no-bold">
+                                    {{session.type}}</p></label></div>
+                                <div class="padding-left-5 col-sm-2">
+                                    <button type="button" [routerLink]="['/SessionDetail', {id:session.sessionId}]"
+                                            class="btn btn-custom pull-right"><span
+                                            class="glyphicon glyphicon-chevron-right"></span></button>
+                                </div>
                             </div><!-- kandoe-session-card actions -->
                         </div>
                         <div class="kandoe-session-card-reveal" [attr.id]="i">
-                            <span class="kandoe-session-card-title"><h3>{{session.sessionId}}</h3></span> <button type="button" class="close" data-rel="1" data-dismiss="modal" aria-label="Close" (click)="closeReveal(i)"><span aria-hidden="true">×</span></button>
+                            <span class="kandoe-session-card-title"><h3>{{session.sessionName}}</h3></span> <button type="button" class="close" data-rel="1" data-dismiss="modal" aria-label="Close" (click)="closeReveal(i)"><span aria-hidden="true">×</span></button>
                             <h4>Cards</h4>
                             <ul>
                                 <li *ngFor="#card of session.cards">{{card.description}}</li>
@@ -98,6 +116,6 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
