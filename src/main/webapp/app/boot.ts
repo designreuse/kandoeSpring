@@ -21,6 +21,7 @@ import {UploadService} from "./service/uploadService";
 import {ThemeService} from "./service/themeService";
 import {CardService} from "./service/cardService";
 import {SessionService} from "./service/sessionService";
+import {SubThemeService} from "./service/subThemeService";
 
 
 bootstrap(AppComponent,
@@ -33,6 +34,7 @@ bootstrap(AppComponent,
     UploadService,
     CardService,
     SessionService,
+    SubThemeService,
     // http
     HTTP_PROVIDERS,
     // routing
@@ -40,7 +42,7 @@ bootstrap(AppComponent,
     provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
     provide(APP_BASE_HREF, {useValue: "/"}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    provide('App.BackEndPath', {useValue: "https://wildfly-teamiip2kdgbe.rhcloud.com/api/"}),
+    provide('App.BackEndPath', {useValue: " http://localhost:9966/Kandoe/api/"}),
     provide('App.DevPath', {useValue: "http://localhost:9966/Kandoe/api/"})
 ]);
 //  https://wildfly-teamiip2kdgbe.rhcloud.com/api/

@@ -57,4 +57,6 @@ public interface SessionService {
     Session stopSession(Integer sessionId, Integer userId) throws SessionServiceException;
 
     List<Message> getChatHistory(Integer sessionId, Integer userId) throws SessionServiceException;
+
+    boolean checkCanPlay(Integer sessionId, Integer userId);
 }

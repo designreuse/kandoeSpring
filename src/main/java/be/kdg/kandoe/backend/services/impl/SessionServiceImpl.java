@@ -265,7 +265,7 @@ public class SessionServiceImpl implements SessionService {
                     }
                 }
             }
-            sessionRepository.save(session);
+            session = sessionRepository.save(session);
        // }
     }
 
@@ -324,5 +324,18 @@ public class SessionServiceImpl implements SessionService {
         Session s = findSessionById(sessionId, userId);
         Hibernate.initialize(s.getChat());
         return s.getChat();
+    }
+
+    @Override
+    public boolean checkCanPlay(Integer sessionId, Integer userId){
+        Session s = sessionRepository.findOne(sessionId);
+
+        if(s != null){
+            if(s.getUserSessions().stream().filter(u -> u.getUser().getId().equals(userId))
+                    .findFirst().get().getUserPosition() == 0){
+                return true;
+            }
+        }
+        return false;
     }
 }

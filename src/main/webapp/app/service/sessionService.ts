@@ -52,4 +52,8 @@ export class SessionService {
             .map(res => res.json())
             .map((messages: Array<Message>) => messages.map((message: Message) => Message.fromJson(message)));
     }
+
+    public checkCanPlay(sessionId: number): Observable<Response> {
+        return this.securityService.get(this.path + 'sessions/' + sessionId + '/canPlay', true);
+    }
 }
