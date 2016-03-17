@@ -118,7 +118,6 @@ public class SubThemeRestController {
 
             return new ResponseEntity<>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 

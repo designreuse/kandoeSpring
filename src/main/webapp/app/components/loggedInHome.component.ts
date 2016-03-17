@@ -24,20 +24,19 @@ import {ThemeService} from "../service/themeService";
     templateUrl: 'app/components/loggedInHome.html'
 })
 
-export class LoggedInHome implements OnInit{
+export class LoggedInHome implements OnInit {
     private router:Router = null;
-    private user: User = User.createEmpty();
-    private userService: UserService;
-    public sessions:Session[] =  [];
+    private user:User = User.createEmpty();
+    private userService:UserService;
+    public sessions:Session[] = [];
 
-    constructor(private _sessionService:SessionService, router:Router, userService: UserService, private themeservice: ThemeService) {
+    constructor(private _sessionService:SessionService, router:Router, userService:UserService, private themeservice:ThemeService) {
         this.router = router;
         this.userService = userService;
     }
 
-    ngOnInit(){
-
-        this._sessionService.getUserSessions().subscribe((sessions:Session[])=>{
+    ngOnInit() {
+        this._sessionService.getUserSessions().subscribe((sessions:Session[])=> {
             console.log(JSON.stringify(sessions));
             this.sessions = sessions;
 
@@ -52,7 +51,7 @@ export class LoggedInHome implements OnInit{
         this.router.navigate(['/Home']);
     }
 
-    private getImageSrc(url:string): string {
+    private getImageSrc(url:string):string {
         if (url) {
             if (url.indexOf("http://") > -1) {
                 return url;
@@ -68,7 +67,7 @@ export class LoggedInHome implements OnInit{
         el.slideToggle("slow");
     }
 
-    closeReveal(i){
+    closeReveal(i) {
         var id = "#" + i;
         var el = $(document).find($(id));
         el.slideToggle("slow");
