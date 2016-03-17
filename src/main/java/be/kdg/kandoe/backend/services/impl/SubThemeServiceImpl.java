@@ -95,7 +95,6 @@ public class SubThemeServiceImpl implements SubThemeService {
                 Hibernate.initialize(t.getSubThemes());*/
         });
         return creator.getSubThemes();
-
     }
 
     @Override

@@ -12,7 +12,6 @@ public interface SubThemeService {
     SubTheme saveSubTheme(SubTheme subTheme, Integer userId, Integer headThemeId);
     List<SubTheme> findSubThemes();
     SubTheme updateSubTheme(SubTheme subTheme);
-
     Set<SubTheme> findSubThemeByCreator(Integer userId);
     List<Card> findSubThemeCards(Integer themeId);
 

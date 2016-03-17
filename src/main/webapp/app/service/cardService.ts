@@ -37,9 +37,12 @@ export class CardService {
             value = this.uploadService.uploadFile(JSON.stringify(card), file, this.path + 'cards/image')
         } else {
             value = this.securityService.post(this.path + 'cards', JSON.stringify(card), true);
-
         }
         return value.map(res => res.json())
             .map((card: Card) => Card.fromJson(card));
+    }
+
+    public createCardFromCSV(themeId: number, csvFile: File): Observable<Card>{
+        return this.uploadService.uploadCSVFile("", csvFile, this.path + "cards/" + themeId + "/csv");
     }
 }

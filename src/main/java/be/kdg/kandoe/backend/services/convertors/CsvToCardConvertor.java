@@ -35,7 +35,7 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
 
         try {
             BufferedReader csvReader;
-            csvReader = new BufferedReader(new FileReader(new FilePathService().getFile(csvFileName)));
+            csvReader = new BufferedReader(new FileReader(csvFileName));
 
             int line = 0;
             List<String> headers = new ArrayList<>(2);

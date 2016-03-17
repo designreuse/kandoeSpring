@@ -744,6 +744,16 @@ footer {
     border-radius: 4px;
 }
 
+.plus-card{
+    border: solid 1px #444;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 5px;
+}
+.plus-card:hover {
+    border: solid 1px #ff9c44;
+}
+
 /*
 --------------------- Add card popup ------------------------------
 */
@@ -974,6 +984,39 @@ footer {
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
     -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+}
+
+.users-ingame{
+    margin-top: 50px;
+    overflow: hidden;
+}
+
+.user-container-ingame{
+    height: 100px;
+}
+
+.user-name-container{
+    padding-top: 10px;
+}
+
+.user-name-ingame{
+    text-shadow: white -1px 1px;
+    font-size: large;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.user-img-ingame{
+    margin: 5px;
+    float: left;
+    width: 75px;
+    height: 75px;
+}
+
+.playing-user{
+    font-variant: small-caps;
+    color: yellowgreen;
+    font-weight: 400;
 }
 
 /*

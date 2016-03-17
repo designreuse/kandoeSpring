@@ -61,6 +61,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.themes = [];
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
+                    this.csvFile = null;
                     this.user = user_1.User.createEmpty();
                     this.userService = userService;
                     this.router = router;
@@ -142,6 +143,19 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeDetailComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
+                };
+                ThemeDetailComponent.prototype.onCSVFileChange = function ($event) {
+                    this.csvFile = $event.target.files[0];
+                };
+                ThemeDetailComponent.prototype.onSubmitCSV = function () {
+                    var _this = this;
+                    if (!this.csvFile)
+                        return;
+                    console.log("File type: " + this.csvFile.type);
+                    this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (data) {
+                        console.log(data);
+                        _this.cards.push(data);
+                    }, function (error) { console.log("Error uploading csv: " + error); }, function () { console.log("gefefeffv"); });
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {

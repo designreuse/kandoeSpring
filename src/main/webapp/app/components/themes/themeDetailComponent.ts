@@ -33,6 +33,7 @@ export class ThemeDetailComponent implements OnInit {
     private router:Router;
     private card: Card = Card.createEmpty();
     private file: File = null;
+    private csvFile: File = null;
     private cardService: CardService;
     private subThemeService: SubThemeService;
     private user: User = User.createEmpty();
@@ -121,7 +122,6 @@ export class ThemeDetailComponent implements OnInit {
     }
     onFileChange($event){
         this.file = $event.target.files[0];
-
         var output = document.getElementById("cardimg");
         output.src = URL.createObjectURL($event.target.files[0]);
     }
@@ -129,6 +129,22 @@ export class ThemeDetailComponent implements OnInit {
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
+    }
+
+    onCSVFileChange($event){
+        this.csvFile = $event.target.files[0];
+    }
+
+    onSubmitCSV(){
+        if (! this.csvFile) return;
+        console.log("File type: " + this.csvFile.type);
+        this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
+            (data) => {
+                console.log(data);
+                this.cards.push(data); },
+            (error) => { console.log("Error uploading csv: " + error); },
+            () => {console.log("gefefeffv")}
+        );
     }
 
 

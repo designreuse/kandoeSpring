@@ -59,7 +59,6 @@ public class SubThemeRestControllerTest {
 
     @Test
     public void testGetThemesCurrentUser() throws Exception {
-
         mockMvc.perform(get("/api/subThemes/currentUser")
                 .header("Authorization", appToken))
                 .andDo(print())
