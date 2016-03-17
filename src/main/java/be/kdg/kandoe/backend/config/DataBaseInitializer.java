@@ -137,7 +137,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             subTheme.setDescription("KdG Subtheme description");
             subTheme.setIconURL("http://www.droscher.com/gallery3/var/albums/travel/Anniversary2011/Antwerp-0021.jpg?m=1310969231.jpeg");
             subTheme.setOrganisation(org);
-            subTheme=subThemeService.saveSubTheme(subTheme,user.getUserId(), theme.getThemeId());
+            subTheme = subThemeService.saveSubTheme(subTheme, user.getUserId(), theme.getThemeId());
 
         }
 
@@ -199,7 +199,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         }
 
         User user3 = new User();
-        if(userRepository.findUserByUsername("JordanParezys") == null){
+        if (userRepository.findUserByUsername("JordanParezys") == null) {
             Person p = new Person();
             p.setFirstname("Jordan");
             p.setLastname("Parezys");
@@ -218,7 +218,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         CardSession cardSession = new CardSession();
         UserSession userSession = new UserSession();
         UserSession userSession1 = new UserSession();
-        if(sessionRepository.findOne(1) == null && user.getId() != null ){
+        if (sessionRepository.findOne(1) == null && user.getId() != null) {
             session.setStartTime(LocalDateTime.now());
             session.setSessionName("First session name");
             session.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
@@ -245,7 +245,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             userSession1.setUserPosition(1);
             userSessions.add(userSession);
             userSessions.add(userSession1);
-           // userSession = userSessionRepository.save(userSession);
+            // userSession = userSessionRepository.save(userSession);
 
             session.setUserSessions(userSessions);
             session.setSize(6);
@@ -261,11 +261,59 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             cardSessionRepository.save(cardSession);
         }
 
+        Session session2 = new Session();
+        CardSession cardSession2 = new CardSession();
+        UserSession userSession2 = new UserSession();
+        UserSession userSession3 = new UserSession();
+        if (sessionRepository.findOne(2) == null && user.getId() != null) {
+            session2.setStartTime(LocalDateTime.now());
+            session2.setSessionName("Async");
+            session2.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
+            session2.setMaxCards(4);
+            session2.setMinCards(2);
+            session2.setMode(SessionMode.ASYNC);
+            session2.setType(SessionType.IDEA);
+            session2.setState(SessionState.CREATED);
+            session2.setTheme(theme);
+            ArrayList<CardSession> cardSessions = new ArrayList<>();
+
+            cardSession2.setCard(card);
+
+            cardSessions.add(cardSession2);
+            //cardSession = cardSessionRepository.save(cardSession);
+            card.setCardSessions(cardSessions);
+            session2.setCardSessions(cardSessions);
+
+            session2.setUserAddCards(true);
+            List<UserSession> userSessions = new ArrayList<>();
+
+            userSession2.setUser(user);
+            userSession3.setUser(user2);
+            userSession3.setUserPosition(1);
+            userSessions.add(userSession2);
+            userSessions.add(userSession3);
+            // userSession = userSessionRepository.save(userSession);
+
+            session2.setUserSessions(userSessions);
+            session2.setSize(6);
+            session2.setPlaytime(5);
+            session2 = sessionRepository.save(session2);
+            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession, userSession2)));
+            userRepository.save(user);
+            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1, userSession3)));
+            userSession2.setSession(session2);
+            userSession3.setSession(session2);
+            userSessionRepository.save(userSession2);
+            userSessionRepository.save(userSession3);
+            cardSession.setSession(session2);
+            cardSessionRepository.save(cardSession2);
+        }
+
         Session sessionSubThema = new Session();
         CardSession cardSessionSubThema = new CardSession();
         UserSession userSessionSubThema = new UserSession();
         UserSession userSession1SubThema = new UserSession();
-        if(sessionRepository.findOne(2) == null && user.getId() != null ){
+        if (sessionRepository.findOne(2) == null && user.getId() != null) {
             sessionSubThema.setStartTime(LocalDateTime.now());
             sessionSubThema.setSessionName("Session Subtheme");
             sessionSubThema.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));
@@ -297,9 +345,9 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             sessionSubThema.setUserSessions(userSessions);
             sessionSubThema.setSize(6);
             sessionSubThema = sessionRepository.save(sessionSubThema);
-            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSessionSubThema, userSession)));
+            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession,userSession2,userSessionSubThema)));
             userRepository.save(user);
-            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1SubThema, userSession1)));
+            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1,userSession3,userSession1SubThema)));
             userSessionSubThema.setSession(sessionSubThema);
             userSession1SubThema.setSession(sessionSubThema);
             userSessionRepository.save(userSessionSubThema);

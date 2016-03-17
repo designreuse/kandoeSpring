@@ -73,6 +73,9 @@ public class Session implements Serializable, Identifiable<Integer> {
     @OneToMany(targetEntity = Message.class, cascade = CascadeType.ALL)
     private List<Message> chat;
 
+    @Column(name="PlayTime")
+    private int playtime;
+
     public Session() {
     }
 
@@ -215,5 +218,13 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setSubTheme(SubTheme subTheme) {
         this.subTheme = subTheme;
+    }
+
+    public int getPlaytime() {
+        return playtime;
+    }
+
+    public void setPlaytime(int playtime) {
+        this.playtime = playtime;
     }
 }

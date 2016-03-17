@@ -1,10 +1,7 @@
 package be.kdg.kandoe.backend.services.impl;
 
 import be.kdg.kandoe.backend.dom.game.Card;
-import be.kdg.kandoe.backend.dom.game.CircleSession.CardSession;
-import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
-import be.kdg.kandoe.backend.dom.game.CircleSession.SessionState;
-import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
+import be.kdg.kandoe.backend.dom.game.CircleSession.*;
 import be.kdg.kandoe.backend.dom.game.Message;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
@@ -17,13 +14,15 @@ import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.time.ZoneId;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -41,10 +40,12 @@ public class SessionServiceImpl implements SessionService {
     private final CardSessionRepository cardSessionRepository;
     private final CardService cardService;
     private final MailService mailService;
+    private Map<Integer,ScheduledFuture> timers;
+    private final TaskScheduler taskScheduler;
 
     @Autowired
     public SessionServiceImpl(SessionRepository sessionRepository, UserService userService, ThemeService themeService,
-                              SubThemeService subThemeService, CardSessionRepository cardSessionRepository, CardService cardService, MailService mailService) {
+                              SubThemeService subThemeService, CardSessionRepository cardSessionRepository, CardService cardService, MailService mailService,TaskScheduler taskScheduler) {
         this.sessionRepository = sessionRepository;
         this.userService = userService;
         this.themeService = themeService;
@@ -52,6 +53,8 @@ public class SessionServiceImpl implements SessionService {
         this.cardSessionRepository = cardSessionRepository;
         this.cardService = cardService;
         this.mailService = mailService;
+        this.taskScheduler = taskScheduler;
+        this.timers = new HashMap<>();
     }
 
     @Override
@@ -201,6 +204,9 @@ public class SessionServiceImpl implements SessionService {
                     "A new kandoe has been created for an organisation you're member of");    */
         }
 
+        taskScheduler.schedule(new SessionUpdate(session.getId()), Date.from(session.getStartTime().atZone(ZoneId.systemDefault()).toInstant()));
+
+
         return session;
     }
 
@@ -247,26 +253,38 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    @Transactional
     public void updateCardPosition(Integer cardId, Integer userId, Integer sessionId) throws SessionServiceException {
         Session session = findSessionById(sessionId, userId);
-
+        if (timers.get(sessionId)!=null) {
+            timers.get(sessionId).cancel(false);
+        }
         //todo state
-        //if(session.getState() == SessionState.IN_PROGRESS){
-            CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
-            UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
-
-            if (userSession.getUser().getId().equals(userId)) {
-                cardSession.setPosition(cardSession.getPosition()+1);
-                for (UserSession u : session.getUserSessions()) {
-                    if (u.getUserPosition() == 0) {
-                        u.setUserPosition(session.getUserSessions().size()-1);
-                    } else {
-                        u.setUserPosition(u.getUserPosition() - 1);
-                    }
+        //if (session.getState() == SessionState.IN_PROGRESS) {
+        CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
+        UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
+        System.out.println("Current UserName: " + userSession.getUser().getUsername());
+        if (userSession.getUser().getId().equals(userId)) {
+            System.out.println("the if statement succeeded");
+            cardSession.setPosition(cardSession.getPosition() + 1);
+            for (UserSession u : session.getUserSessions()) {
+                if (u.getUserPosition() == 0) {
+                    u.setUserPosition(session.getUserSessions().size() - 1);
+                } else {
+                    u.setUserPosition(u.getUserPosition() - 1);
                 }
             }
-            session = sessionRepository.save(session);
-       // }
+        }
+
+        if (session.getMode() == SessionMode.ASYNC) {
+            Date date = new Date();
+            date.setTime(date.getTime() + (session.getPlaytime() * 1000));
+            System.out.println(date);
+            timers.put(session.getId(),taskScheduler.schedule(new RemindTask(session), date));
+        }
+
+        sessionRepository.save(session);
+        //}
     }
 
     @Override
@@ -330,6 +348,8 @@ public class SessionServiceImpl implements SessionService {
     public boolean checkCanPlay(Integer sessionId, Integer userId){
         Session s = sessionRepository.findOne(sessionId);
 
+        System.out.println("CanPlay: " + s.getUserSessions().stream().filter(us -> us.getUserPosition() == 0).findFirst().get().getUser().getUsername());
+
         if(s != null){
             if(s.getUserSessions().stream().filter(u -> u.getUser().getId().equals(userId))
                     .findFirst().get().getUserPosition() == 0){
@@ -337,5 +357,47 @@ public class SessionServiceImpl implements SessionService {
             }
         }
         return false;
+    }
+
+    class RemindTask implements Runnable{
+        Session session;
+
+        public RemindTask(Session session) {
+            this.session = session;
+        }
+
+        public void run() {
+            System.out.println("Time's up!");
+            String userName = session.getUserSessions().stream().filter(us -> us.getUserPosition() == 0).findFirst().get().getUser().getUsername();
+            System.out.println(userName);
+            for (UserSession us : session.getUserSessions()) {
+                if (us.getUserPosition() == 0) {
+                    us.setUserPosition(session.getUserSessions().size() - 1);
+                } else {
+                    us.setUserPosition(us.getUserPosition() - 1);
+                }
+            }
+            System.out.println(session.getUserSessions().stream().filter(us -> us.getUserPosition() == 0).findFirst().get().getUser().getUsername());
+
+            sessionRepository.save(session);
+            System.out.println("Sending mail!");
+            //mailService.sendMailToUser(userName, "Failed to make a move", "Dear " + userName + ", \n You have failed to make a move. \n your turn has been passed on to the next user. \n Please be available at your next turn.");
+            System.out.println("mail sent!");
+        }
+    }
+
+    class SessionUpdate implements Runnable {
+        private int sessionId;
+
+        public SessionUpdate(int sessionId) {
+            this.sessionId = sessionId;
+        }
+
+        @Override
+        public void run() {
+            Session session = sessionRepository.findOne(sessionId);
+            session.setState(SessionState.IN_PROGRESS);
+            sessionRepository.save(session);
+        }
     }
 }
