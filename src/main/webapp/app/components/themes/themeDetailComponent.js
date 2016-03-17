@@ -144,15 +144,18 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
                 };
-                ThemeDetailComponent.prototype.selectCardsFromCSV = function ($event) {
+                ThemeDetailComponent.prototype.onCSVFileChange = function ($event) {
                     this.csvFile = $event.target.files[0];
                 };
-                ThemeDetailComponent.prototype.onSubmitCsv = function () {
+                ThemeDetailComponent.prototype.onSubmitCSV = function () {
                     var _this = this;
-                    this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (c) {
-                        _this.csvFile = null;
-                        _this.cards.push(c);
-                    });
+                    if (!this.csvFile)
+                        return;
+                    console.log("File type: " + this.csvFile.type);
+                    this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (data) {
+                        console.log(data);
+                        _this.cards.push(data);
+                    }, function (error) { console.log("Error uploading csv: " + error); }, function () { console.log("gefefeffv"); });
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {

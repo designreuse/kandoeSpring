@@ -122,7 +122,6 @@ export class ThemeDetailComponent implements OnInit {
     }
     onFileChange($event){
         this.file = $event.target.files[0];
-
         var output = document.getElementById("cardimg");
         output.src = URL.createObjectURL($event.target.files[0]);
     }
@@ -132,15 +131,20 @@ export class ThemeDetailComponent implements OnInit {
         this.router.navigate(['/Home']);
     }
 
-    selectCardsFromCSV($event){
+    onCSVFileChange($event){
         this.csvFile = $event.target.files[0];
     }
 
-    onSubmitCsv(){
-        this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(c => {
-            this.csvFile = null;
-            this.cards.push(c);
-        })
+    onSubmitCSV(){
+        if (! this.csvFile) return;
+        console.log("File type: " + this.csvFile.type);
+        this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
+            (data) => {
+                console.log(data);
+                this.cards.push(data); },
+            (error) => { console.log("Error uploading csv: " + error); },
+            () => {console.log("gefefeffv")}
+        );
     }
 
 

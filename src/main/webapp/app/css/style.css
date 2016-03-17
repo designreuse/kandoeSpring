@@ -744,6 +744,16 @@ footer {
     border-radius: 4px;
 }
 
+.plus-card{
+    border: solid 1px #444;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 5px;
+}
+.plus-card:hover {
+    border: solid 1px #ff9c44;
+}
+
 /*
 --------------------- Add card popup ------------------------------
 */

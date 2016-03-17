@@ -55,6 +55,9 @@ System.register(['angular2/core', "./uploadService", "../security/securityServic
                     return value.map(function (res) { return res.json(); })
                         .map(function (card) { return card_1.Card.fromJson(card); });
                 };
+                CardService.prototype.createCardFromCSV = function (themeId, csvFile) {
+                    return this.uploadService.uploadCSVFile("", csvFile, this.path + "cards/" + themeId + "/csv");
+                };
                 CardService = __decorate([
                     core_1.Injectable(),
                     __param(0, core_1.Inject('App.BackEndPath')), 
