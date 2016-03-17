@@ -113,7 +113,6 @@ public class SessionRestController {
                     session_out = sessionService.createSession(session_in, sessionDTO.getThemeId(),0 , user.getId());
                 }
 
-
                 return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(session_out), HttpStatus.CREATED);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);

@@ -64,7 +64,7 @@ public class Session implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Theme.class)
     private Theme theme;
 
-    @ManyToOne(targetEntity = SubTheme.class)
+    @ManyToOne(targetEntity = SubTheme.class, cascade = CascadeType.ALL)
     private SubTheme subTheme;
 
     @OneToMany(targetEntity = Snapshot.class)

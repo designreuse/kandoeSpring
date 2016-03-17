@@ -31,30 +31,26 @@ public class SubThemeServiceTest {
     private ThemeService themeService;
 
     @Test
-    @Before
     public void testSaveSubTheme() throws Exception {
-        Theme theme = new Theme("KdG");
-        theme.setDescription("KdGParent description");
-        themeService.saveTheme(theme, 1,1);
-
-        SubTheme subtheme = new SubTheme();
+       Theme theme=themeService.findThemeById(1);
+               SubTheme subtheme = new SubTheme();
         subtheme.setTheme(theme);
-        subtheme.setSubThemeName("KdGSubTheme");
+        subtheme.setSubThemeName("KdGSubThemetest");
         subtheme.setDescription("kdGSubTheme description");
         subThemeService.saveSubTheme(subtheme,1,1);
 
-        assertEquals(subtheme.getSubThemeName(),"KdGSubTheme");
+        assertEquals(subtheme.getSubThemeName(),"KdGSubThemetest");
 
     }
 
-   /* @Test
+    @Test
     public void testUpdateSubTheme() {
         SubTheme subTheme = subThemeService.findSubThemeByName("SubThemeKdG");
         subTheme.setSubThemeName("KdGsubUpdate");
         subThemeService.updateSubTheme(subTheme);
         assertEquals("The SubThemeName should be 'KdGsubUpdate' ",subTheme.getSubThemeName(),"KdGsubUpdate");
 
-    }*/
+    }
 
 }
 
