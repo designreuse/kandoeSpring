@@ -63,7 +63,6 @@ System.register(['rxjs/add/operator/map', "rxjs/Observable", 'angular2/http', 'a
                             var response = new http_1.Response(responseOptions);
                             if (http_utils_2.isSuccess(status)) {
                                 responseObserver.next(response);
-                                // TODO(gdi2290): defer complete if array buffer until done
                                 responseObserver.complete();
                                 return;
                             }
@@ -106,7 +105,6 @@ System.register(['rxjs/add/operator/map', "rxjs/Observable", 'angular2/http', 'a
                                 var response = new http_1.Response(responseOptions);
                                 if (http_utils_2.isSuccess(status)) {
                                     responseObserver.next(response);
-                                    // TODO(gdi2290): defer complete if array buffer until done
                                     responseObserver.complete();
                                     return;
                                 }

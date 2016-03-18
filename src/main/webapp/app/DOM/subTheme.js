@@ -29,6 +29,9 @@ System.register(["./organisation", './card'], function(exports_1) {
                             subTheme.cards[i] = card_1.Card.fromJson(json.cards[i]);
                         }
                     }
+                    if (json.themeId) {
+                        subTheme.themeId = json.themeId;
+                    }
                     return subTheme;
                 };
                 SubTheme.createEmpty = function () {

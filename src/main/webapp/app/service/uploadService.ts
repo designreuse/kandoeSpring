@@ -47,7 +47,6 @@ export class UploadService {
 
                 if (isSuccess(status)) {
                     responseObserver.next(response);
-                    // TODO(gdi2290): defer complete if array buffer until done
                     responseObserver.complete();
                     return;
                 }
@@ -97,7 +96,6 @@ export class UploadService {
 
                     if (isSuccess(status)) {
                         responseObserver.next(response);
-                        // TODO(gdi2290): defer complete if array buffer until done
                         responseObserver.complete();
                         return;
                     }

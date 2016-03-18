@@ -64,49 +64,43 @@ public class SubThemeRestController {
     public ResponseEntity<SubThemeDTO> createSubTheme(@Valid @RequestBody SubThemeDTO subThemeDTO,
                                                 @AuthenticationPrincipal User user) {
         if (user != null && user.getId() != null) {
-            if(subThemeDTO.getOrganisation() != null){
-                SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
+            SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
 
-                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,user.getUserId() ,subThemeDTO.getThemeId());
-                logger.info(this.getClass().toString() + ": adding new subtheme " + subTheme_out.getId());
+            SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,user.getUserId() ,subThemeDTO.getThemeId());
+            logger.info(this.getClass().toString() + ": adding new subtheme " + subTheme_out.getId());
 
-                return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out), HttpStatus.CREATED);
-            }
-            return new ResponseEntity<SubThemeDTO>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out), HttpStatus.CREATED);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
-    public ResponseEntity<String> createSubTheme(@RequestPart("body") SubThemeDTO subThemeDTO,
+    public ResponseEntity<SubThemeDTO> createSubTheme(@RequestPart("body") SubThemeDTO subThemeDTO,
                                               @RequestPart("file") MultipartFile file,
                                               @AuthenticationPrincipal User user,
                                               HttpServletRequest request) {
 
         if(user != null && user.getId() != null) {
-            if(subThemeDTO.getOrganisation() != null){
-                if(file.getContentType().split("/")[0].equals("image")){
-                    SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
-                    SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(),subThemeDTO.getThemeId());
+            if(file.getContentType().split("/")[0].equals("image")){
+                SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
+                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(),subThemeDTO.getThemeId());
 
-                    String newFilename = String.format("%d.%s", subTheme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
-                    String filePath = request.getServletContext().getRealPath("/resources/images/subThemes/");
+                String newFilename = String.format("%d.%s", subTheme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
+                String filePath = request.getServletContext().getRealPath("/resources/images/subThemes/");
 
-                    try {
-                        FileUtils.saveFile(filePath, newFilename, file);
-                    } catch (IOException e) {
-                        return new ResponseEntity<>("Failed to save image", HttpStatus.INTERNAL_SERVER_ERROR);
-                    }
-
-                    subTheme_out.setIconURL("resources/images/subThemes/" + newFilename);
-                    subThemeService.updateSubTheme(subTheme_out);
-
-                    return new ResponseEntity<>(HttpStatus.CREATED);
+                try {
+                    FileUtils.saveFile(filePath, newFilename, file);
+                } catch (IOException e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
-                return new ResponseEntity<>("You have to select an image", HttpStatus.BAD_REQUEST);
+
+                subTheme_out.setIconURL("resources/images/subThemes/" + newFilename);
+                subTheme_out = subThemeService.updateSubTheme(subTheme_out);
+
+                return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out) ,HttpStatus.CREATED);
             }
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }

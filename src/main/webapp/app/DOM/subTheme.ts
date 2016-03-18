@@ -9,6 +9,7 @@ export class SubTheme{
     organisation:Organisation;
     iconURL:string;
     cards: Card[] = [];
+    themeId: number;
 
     constructor() {
 
@@ -30,6 +31,10 @@ export class SubTheme{
             for(var i = 0; i < json.cards.length; i++){
                 subTheme.cards[i] = Card.fromJson(json.cards[i]);
             }
+        }
+
+        if(json.themeId){
+            subTheme.themeId = json.themeId;
         }
         return subTheme;
     }

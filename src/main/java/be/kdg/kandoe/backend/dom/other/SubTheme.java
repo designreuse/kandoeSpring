@@ -100,7 +100,6 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
         this.creator = creator;
     }
 
-
     public Theme getTheme() {
         return theme;
     }

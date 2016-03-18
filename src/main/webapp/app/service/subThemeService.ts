@@ -33,13 +33,15 @@ export class SubThemeService {
             .map((subThemes:Array<SubTheme>) => subThemes.map((subTheme:SubTheme) => SubTheme.fromJson(subTheme)));
     }
 
-    public createSubTheme(subTheme:SubTheme,file?:File):Observable<Response> {
+    public createSubTheme(subTheme:SubTheme,file?:File):Observable<SubTheme> {
+        var response: Observable<Response>;
         if(file){
-            return this.uploadService.uploadFile(JSON.stringify(subTheme), file, this.path + 'subThemes/image');
+            response = this.uploadService.uploadFile(JSON.stringify(subTheme), file, this.path + 'subThemes/image');
         } else {
-            return this.securityService.post(this.path + 'subThemes', JSON.stringify(subTheme), true);
+            response =  this.securityService.post(this.path + 'subThemes', JSON.stringify(subTheme), true);
         }
-
+        return response.map(res => res.json())
+                        .map((st: SubTheme) => SubTheme.fromJson(st));
     }
 
     public getSubTheme(id:number):Observable<SubTheme>{

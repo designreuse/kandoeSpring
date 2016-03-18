@@ -28,7 +28,6 @@ export class ThemeDetailComponent implements OnInit {
     public org:Organisation=Organisation.createEmpty();
 	private cards: Card[] = [];
     private subTheme: SubTheme=SubTheme.createEmpty();
-    private themes:Theme[]=[];
     private router:Router;
     private card: Card = Card.createEmpty();
     private file: File = null;
@@ -52,9 +51,7 @@ export class ThemeDetailComponent implements OnInit {
             this.theme = theme;
             this.org=this.theme.organisation;
         });
-        this._themeService.getUserThemes(this.themeId).subscribe((themes:Theme[]) => {
-            this.themes = themes;
-        });
+
         this._themeService.getThemeCards(this.themeId).subscribe(cards => {
             this.cards = cards;
         });
@@ -70,46 +67,47 @@ export class ThemeDetailComponent implements OnInit {
 
     onSubmit() {
         if (this.card.description) {
-        this.card.themeId = +this.themeId;
-        this.cardService.createCard(this.card, this.file).subscribe(c => {
-             this.card.description = null;
-            this.file = null;
-            this.cards.push(c);
-        }, error => {
-            //todo change error display
-            this.file = null;
-            alert(error.text());
-        });
+            this.card.themeId = this.themeId;
+            this.cardService.createCard(this.card, this.file).subscribe(c => {
+                this.card.description = null;
+                this.file = null;
+                this.cards.push(c);
+            }, error => {
+                //todo change error display
+                this.file = null;
+                alert(error);
+            });
         }
     }
 
     onSubmitSubTheme() {
         if (this.subTheme.description) {
+            this.subTheme.themeId = this.themeId;
+            this.subTheme.subThemeName = this.subTheme.description;
             this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
 
-                this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
+                this.theme.subThemes.push(st);
                 this.subTheme.description = null;
                 this.file = null;
             }, error => {
                 //todo change error display
                 this.file = null;
-                alert(error.text());
+                alert(JSON.stringify(error));
             });
         }
     }
 
-    onAddSubTheme(themeId: number){
-        this.subTheme.subThemeId = themeId;
-    }
     onFileChange($event){
         this.file = $event.target.files[0];
         var output = document.getElementById("cardimg");
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    logout() {
-        localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
+    onFileChangeSubTheme($event) {
+        this.file = $event.target.files[0];
+
+        var output = document.getElementById("subthemeImg");
+        output.src = URL.createObjectURL($event.target.files[0]);
     }
 
     onCSVFileChange($event){
@@ -143,10 +141,8 @@ export class ThemeDetailComponent implements OnInit {
         }
     }
 
-    onFileChangeSubTheme($event) {
-        this.file = $event.target.files[0];
-
-        var output = document.getElementById("subthemeImg");
-        output.src = URL.createObjectURL($event.target.files[0]);
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
     }
 }

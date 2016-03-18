@@ -313,7 +313,7 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
         CardSession cardSessionSubThema = new CardSession();
         UserSession userSessionSubThema = new UserSession();
         UserSession userSession1SubThema = new UserSession();
-        if (sessionRepository.findOne(2) == null && user.getId() != null) {
+        if (sessionRepository.findOne(3) == null && user.getId() != null) {
             sessionSubThema.setStartTime(LocalDateTime.now());
             sessionSubThema.setSessionName("Session Subtheme");
             sessionSubThema.setEndTime(LocalDateTime.of(2016, Month.APRIL, 1, 12, 0));

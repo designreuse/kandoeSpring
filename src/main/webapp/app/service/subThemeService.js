@@ -49,12 +49,15 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/subTheme", ".
                         .map(function (subThemes) { return subThemes.map(function (subTheme) { return subTheme_1.SubTheme.fromJson(subTheme); }); });
                 };
                 SubThemeService.prototype.createSubTheme = function (subTheme, file) {
+                    var response;
                     if (file) {
-                        return this.uploadService.uploadFile(JSON.stringify(subTheme), file, this.path + 'subThemes/image');
+                        response = this.uploadService.uploadFile(JSON.stringify(subTheme), file, this.path + 'subThemes/image');
                     }
                     else {
-                        return this.securityService.post(this.path + 'subThemes', JSON.stringify(subTheme), true);
+                        response = this.securityService.post(this.path + 'subThemes', JSON.stringify(subTheme), true);
                     }
+                    return response.map(function (res) { return res.json(); })
+                        .map(function (st) { return subTheme_1.SubTheme.fromJson(st); });
                 };
                 SubThemeService.prototype.getSubTheme = function (id) {
                     return this.securityService.get(this.path + 'themes/' + id, true)

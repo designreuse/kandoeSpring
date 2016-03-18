@@ -49,8 +49,7 @@ export class ThemeComponent implements OnInit {
         });
         this.userService.getCurrentUser().subscribe(
             (data) => { this.user = data; },
-            (error) => { console.log(error) },
-            ()=> {  }
+            (error) => { console.log(error) }
         );
 
 
@@ -109,7 +108,7 @@ export class ThemeComponent implements OnInit {
     }
 
     onAddSubTheme(themeId:number) {
-        this.subTheme.subThemeId = themeId;
+        this.subTheme.themeId = themeId;
     }
 
     onSubmit() {
@@ -121,24 +120,22 @@ export class ThemeComponent implements OnInit {
             }, error => {
                 //todo change error display
                 this.file = null;
-                alert(error.text());
+                alert(error);
             });
         }
     }
 
     onSubmitSubTheme() {
         if (this.subTheme.description) {
+            this.subTheme.subThemeName = this.subTheme.description;
             this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
-
-                this.router.navigate("['/Themes',{id:theme.themeId}]");
-                document.location.reload();
                 this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
                 this.subTheme.description = null;
                 this.file = null;
             }, error => {
                 //todo change error display
                 this.file = null;
-                alert(error.text());
+                alert(error);
             });
         }
     }

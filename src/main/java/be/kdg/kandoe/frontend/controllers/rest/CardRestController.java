@@ -51,26 +51,18 @@ public class CardRestController {
     }
 
     @RequestMapping(value = "/{themeId}/csv", method = {RequestMethod.POST})
-    public ResponseEntity<List<CardDTO>> createCardsFromCSV(@PathVariable("themeId") int themeId, @RequestPart("csvFile") MultipartFile file, @AuthenticationPrincipal User user, HttpServletRequest request) throws IOException {
+    public ResponseEntity<List<CardDTO>> createCardsFromCSV(@PathVariable("themeId") int themeId,
+                                                            @RequestPart("csvFile") MultipartFile file,
+                                                            @AuthenticationPrincipal User user,
+                                                            HttpServletRequest request) throws IOException {
         if (user != null) {
             List<Card> cards = null;
 
-            String separator = File.separator;
             String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            String path = request.getSession().getServletContext().getRealPath("/") + "csv" + separator + (themeId) + file.getName() + "." + extension;
+            String newFileName = String.format("%s.%s", file.getName(), extension);
+            String path = request.getServletContext().getRealPath(String.format("/resources/csv/%d", themeId));
 
-            System.out.println("Saving csv to " + path);
-
-            File csvFile = new File(path);
-            if (! csvFile.getParentFile().exists())
-                csvFile.getParentFile().mkdirs();
-
-            if (! csvFile.exists())
-                csvFile.createNewFile();
-
-            FileOutputStream os = new FileOutputStream(csvFile);
-            os.write(file.getBytes());
-            os.close();
+            path = FileUtils.saveFile(path, newFileName, file);
 
             try {
                 cards = this.cardService.createCardsfromCSV(path);

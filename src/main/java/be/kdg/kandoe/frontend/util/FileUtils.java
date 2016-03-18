@@ -7,12 +7,14 @@ import java.io.IOException;
 
 public class FileUtils {
 
-    public static void saveFile(String path, String filename, MultipartFile file) throws IOException{
-        File f = new File(path);
+    public static String saveFile(String path, String filename, MultipartFile file) throws IOException{
+        String completePath = path + File.separator + filename;
+        File f = new File(completePath);
+
         if(!f.exists()){
             f.mkdirs();
         }
-        f = new File(path + "/" + filename);
         file.transferTo(f);
+        return completePath;
     }
 }

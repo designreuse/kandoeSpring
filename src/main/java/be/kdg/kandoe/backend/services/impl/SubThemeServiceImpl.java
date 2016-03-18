@@ -52,22 +52,27 @@ public class SubThemeServiceImpl implements SubThemeService {
     @Override
     public SubTheme saveSubTheme(SubTheme subTheme,Integer userId, Integer themeId) {
         User creator = userRepository.getOne(userId);
-        subTheme.setCreator(creator);
-
         Theme theme = themeService.findThemeById(themeId);
-        Set<SubTheme> subThemes=creator.getSubThemes();
 
+        subTheme.setCreator(creator);
         subTheme.setTheme(theme);
-        subTheme = subThemeRepository.save(subTheme);
+        subTheme.setOrganisation(theme.getOrganisation());
+        //subTheme = subThemeRepository.save(subTheme);
 
+        Set<SubTheme> subThemes=creator.getSubThemes();
         if (subThemes== null){
             subThemes = new HashSet<>();
         }
         subThemes.add(subTheme);
-        theme.setSubThemes(subThemes);
         creator.setSubThemes(subThemes);
-        subTheme.setTheme(theme);
-        themeService.updateTheme(theme);
+       // userService.updateUser(creator);
+
+        Set<SubTheme> themeSubThemes = theme.getSubThemes();
+        if(themeSubThemes == null)
+            themeSubThemes = new HashSet<>();
+        themeSubThemes.add(subTheme);
+        theme.setSubThemes(themeSubThemes);
+        //themeService.updateTheme(theme);
 
         return subThemeRepository.save(subTheme);
     }

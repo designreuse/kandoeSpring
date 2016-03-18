@@ -57,7 +57,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.org = organisation_1.Organisation.createEmpty();
                     this.cards = [];
                     this.subTheme = subTheme_1.SubTheme.createEmpty();
-                    this.themes = [];
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
                     this.csvFile = null;
@@ -74,9 +73,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         _this.theme = theme;
                         _this.org = _this.theme.organisation;
                     });
-                    this._themeService.getUserThemes(this.themeId).subscribe(function (themes) {
-                        _this.themes = themes;
-                    });
                     this._themeService.getThemeCards(this.themeId).subscribe(function (cards) {
                         _this.cards = cards;
                     });
@@ -90,7 +86,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeDetailComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.card.description) {
-                        this.card.themeId = +this.themeId;
+                        this.card.themeId = this.themeId;
                         this.cardService.createCard(this.card, this.file).subscribe(function (c) {
                             _this.card.description = null;
                             _this.file = null;
@@ -98,35 +94,35 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         }, function (error) {
                             //todo change error display
                             _this.file = null;
-                            alert(error.text());
+                            alert(error);
                         });
                     }
                 };
                 ThemeDetailComponent.prototype.onSubmitSubTheme = function () {
                     var _this = this;
                     if (this.subTheme.description) {
+                        this.subTheme.themeId = this.themeId;
+                        this.subTheme.subThemeName = this.subTheme.description;
                         this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
-                            _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
+                            _this.theme.subThemes.push(st);
                             _this.subTheme.description = null;
                             _this.file = null;
                         }, function (error) {
                             //todo change error display
                             _this.file = null;
-                            alert(error.text());
+                            alert(JSON.stringify(error));
                         });
                     }
-                };
-                ThemeDetailComponent.prototype.onAddSubTheme = function (themeId) {
-                    this.subTheme.subThemeId = themeId;
                 };
                 ThemeDetailComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
-                ThemeDetailComponent.prototype.logout = function () {
-                    localStorage.removeItem("id_token");
-                    this.router.navigate(['/Home']);
+                ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeDetailComponent.prototype.onCSVFileChange = function ($event) {
                     this.csvFile = $event.target.files[0];
@@ -156,10 +152,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         return "./app/resources/noimgplaceholder.png";
                     }
                 };
-                ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
-                    this.file = $event.target.files[0];
-                    var output = document.getElementById("subthemeImg");
-                    output.src = URL.createObjectURL($event.target.files[0]);
+                ThemeDetailComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
                 };
                 ThemeDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
@@ -169,10 +164,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
-                var _a, _b;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }

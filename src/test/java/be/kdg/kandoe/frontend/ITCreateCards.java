@@ -30,25 +30,6 @@ public class ITCreateCards {
         element = driver.findElement(By.linkText("THEMES"));
         element.click();
         (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("theme")) != null);
-        /*(new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("./*//*[@id='sort-list']/ul/li[2]/div/div/div[1]/div[2]/div[2]/button")));
-        element = driver.findElement(By.xpath("./*//*[@id='sort-list']/ul/li[2]/div/div/div[1]/div[2]/div[2]/button"));
-        element.click();*/
-        /*(new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.xpath("./*//*[@id='expandes']/div[1]/button/a")) != null);
-        element = driver.findElement(By.xpath("./*//*[@id='expandes']/div[1]/button/a"));
-
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).click().perform();
-        //element.click();*/
-
-        /*(new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("./*//*[@id='add-card']/div/div/div[2]/div/div/div/form/div[1]/input")));
-        element = driver.findElement(By.xpath("./*//*[@id='add-card']/div/div/div[2]/div/div/div/form/div[1]/input"));
-        sendKeysPerCharacter(element, "TestCard with selenium");
-        element = driver.findElement(By.xpath("./*//*[@id='add-card']/div/div/div[3]/button"));
-        element.click();
-        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(
-                By.xpath(".*//*//**//*[@id='sort-list']/ul/li[2]/div/div/div[2]/div[2]/div/div[1]/div/ul/div[7]")) != null);*/
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(".//*[@id='sort-list']/ul/li[2]/div/div/div[1]/div[1]/a/img")));
         element = driver.findElement(By.xpath(".//*[@id='sort-list']/ul/li[2]/div/div/div[1]/div[1]/a/img"));
