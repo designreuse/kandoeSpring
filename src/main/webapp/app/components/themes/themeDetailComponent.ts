@@ -27,7 +27,6 @@ export class ThemeDetailComponent implements OnInit {
     private themeId: number;
     public org:Organisation=Organisation.createEmpty();
 	private cards: Card[] = [];
-    private subThemes: SubTheme[]=[];
     private subTheme: SubTheme=SubTheme.createEmpty();
     private themes:Theme[]=[];
     private router:Router;
@@ -64,24 +63,18 @@ export class ThemeDetailComponent implements OnInit {
             this.user = u;
         });
 
-
-            this._themeService.getThemeSubThemes(this.themeId).subscribe(subThemes => {
-               this.subThemes=subThemes;
-            });
-
-
+        this._themeService.getThemeSubThemes(this.themeId).subscribe(subThemes => {
+           this.theme.subThemes=subThemes;
+        });
     }
 
     onSubmit() {
         if (this.card.description) {
         this.card.themeId = +this.themeId;
-        this.cardService.createCard(this.card, this.file).subscribe(res => {
-
-            this.router.navigate("['/Themes',{id:theme.themeId}]");
-            document.location.reload();
-            this.themes.find(th => th.themeId == res.themeId).cards.push(res);
+        this.cardService.createCard(this.card, this.file).subscribe(c => {
              this.card.description = null;
             this.file = null;
+            this.cards.push(c);
         }, error => {
             //todo change error display
             this.file = null;
@@ -89,12 +82,11 @@ export class ThemeDetailComponent implements OnInit {
         });
         }
     }
+
     onSubmitSubTheme() {
         if (this.subTheme.description) {
             this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
 
-                 this.router.navigate("['/Themes',{id:theme.themeId}]");
-                 document.location.reload();
                 this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
                 this.subTheme.description = null;
                 this.file = null;
@@ -106,17 +98,6 @@ export class ThemeDetailComponent implements OnInit {
         }
     }
 
-    createCard() {
-        this.card.themeId = this.themeId;
-        this.cardService.createCard(this.card, this.file).subscribe(c => {
-            this.file = null;
-            this.cards.push(c);
-        })
-    }
-
-    onAddCard(themeId: number){
-        this.card.themeId = themeId;
-    }
     onAddSubTheme(themeId: number){
         this.subTheme.subThemeId = themeId;
     }
@@ -140,13 +121,15 @@ export class ThemeDetailComponent implements OnInit {
         console.log("File type: " + this.csvFile.type);
         this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
             (data) => {
-                console.log(data);
-                this.cards.push(data); },
+                for(var c in data.json()) {
+                    console.log(c);
+                    this.cards.push(c);
+                }
+            },
             (error) => { console.log("Error uploading csv: " + error); },
             () => {console.log("gefefeffv")}
         );
     }
-
 
     private getImageSrc(url:string):string {
         if (url) {
@@ -159,11 +142,11 @@ export class ThemeDetailComponent implements OnInit {
             return "./app/resources/noimgplaceholder.png";
         }
     }
+
     onFileChangeSubTheme($event) {
         this.file = $event.target.files[0];
 
         var output = document.getElementById("subthemeImg");
         output.src = URL.createObjectURL($event.target.files[0]);
     }
-
-   }
+}

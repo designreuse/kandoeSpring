@@ -51,7 +51,7 @@ export class Session {
 
         if(json.users){
             session.users = [];
-            for(var i = 0; i < json.users.lenth; i++){
+            for(var i = 0; i < json.users.length; i++){
                 session.users[i] = User.fromJson(json.users[i]);
             }
         }

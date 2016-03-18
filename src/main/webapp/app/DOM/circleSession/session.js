@@ -42,7 +42,7 @@ System.register(["../card", "../users/user", "../theme", "../subTheme"], functio
                     }
                     if (json.users) {
                         session.users = [];
-                        for (var i = 0; i < json.users.lenth; i++) {
+                        for (var i = 0; i < json.users.length; i++) {
                             session.users[i] = user_1.User.fromJson(json.users[i]);
                         }
                     }
