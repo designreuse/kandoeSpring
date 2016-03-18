@@ -60,6 +60,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.themes = [];
                     this.card = card_1.Card.createEmpty();
                     this.file = null;
+                    this.fileSubtheme = null;
                     this.csvFile = null;
                     this.user = user_1.User.createEmpty();
                     this.userService = userService;
@@ -87,6 +88,13 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         _this.theme.subThemes = subThemes;
                     });
                 };
+                ThemeDetailComponent.prototype.onSelectCardsSubTheme = function ($event) {
+                    this.countChecked();
+                };
+                ThemeDetailComponent.prototype.countChecked = function () {
+                    var count = $("input:checked").length;
+                    $("input:checkbox:not(:checked)").prop('disabled', false);
+                };
                 ThemeDetailComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.card.description) {
@@ -105,16 +113,30 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeDetailComponent.prototype.onSubmitSubTheme = function () {
                     var _this = this;
                     if (this.subTheme.description) {
-                        this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
+                        this.subThemeService.createSubTheme(this.subTheme, this.fileSubtheme).subscribe(function (st) {
                             _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
                             _this.subTheme.description = null;
-                            _this.file = null;
+                            _this.fileSubtheme = null;
                         }, function (error) {
                             //todo change error display
-                            _this.file = null;
+                            _this.fileSubtheme = null;
                             alert(error.text());
                         });
                     }
+                    var count = $("input:checked").length;
+                    var cardIds = Array();
+                    var i = 0;
+                    $("input:checked").each(function () {
+                        cardIds[i++] = $(this).val();
+                        console.log($(this).val());
+                    });
+                    this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(function (subTheme) {
+                        _this.subTheme = subTheme;
+                        _this.cards = subTheme.cards;
+                        _this.subTheme.chosenCards = true;
+                    }, function (e) {
+                        console.log(e.text());
+                    });
                 };
                 ThemeDetailComponent.prototype.onAddSubTheme = function (themeId) {
                     this.subTheme.subThemeId = themeId;
@@ -122,6 +144,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeDetailComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
                     var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.fileSubtheme = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeDetailComponent.prototype.logout = function () {
@@ -141,7 +168,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             console.log(c);
                             _this.cards.push(c);
                         }
-                    }, function (error) { console.log("Error uploading csv: " + error); }, function () { console.log("gefefeffv"); });
+                    }, function (error) {
+                        console.log("Error uploading csv: " + error);
+                    }, function () {
+                        console.log("gefefeffv");
+                    });
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
@@ -155,11 +186,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     else {
                         return "./app/resources/noimgplaceholder.png";
                     }
-                };
-                ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
-                    this.file = $event.target.files[0];
-                    var output = document.getElementById("subthemeImg");
-                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
