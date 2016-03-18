@@ -31,10 +31,10 @@ public class CsvConvertorTest {
     @Autowired
     private CsvToCardConvertor csvToCardConvertor;
 
-    @Value("test")
+    @Value("C:/Users/amy/Documents/School/Ba3/Integratieproject/KandoeSpring/src/main/resources/excel/test.csv")
     private String testFile;
 
-    @Value("falseTest")
+    @Value("C:/Users/amy/Documents/School/Ba3/Integratieproject/KandoeSpring/src/main/resources/excel/falseTest.csv")
     private String falseTestFile;
 
     @Test(expected = ConvertorException.class)
