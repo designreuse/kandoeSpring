@@ -75,6 +75,10 @@ export class ThemeDetailComponent implements OnInit {
     }
 
 
+    /*
+    ------------------------- CARD COMPONENT ------------------------------------
+     */
+
     onSubmit() {
         if (this.card.description) {
             this.card.themeId = this.themeId;
@@ -89,6 +93,33 @@ export class ThemeDetailComponent implements OnInit {
             });
         }
     }
+
+    onFileChange($event) {
+        this.file = $event.target.files[0];
+        var output = document.getElementById("cardimg");
+        output.src = URL.createObjectURL($event.target.files[0]);
+    }
+
+    /*var count = $("input:checked").length;
+
+    var cardIds = Array<number>();
+    var i = 0;
+    $("input:checked").each(function () {
+        cardIds[i++] = $(this).val();
+        console.log($(this).val());
+    });
+    this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
+        this.subTheme = subTheme;
+        this.cards = subTheme.cards;
+        this.subTheme.chosenCards = true;
+
+    }, e => {
+        console.log(e.text());
+    });*/
+
+    /*
+    --------------------- SUBTHEME COMPONENT ---------------------
+     */
 
     onSubmitSubTheme() {
         if (this.subTheme.description) {
@@ -105,30 +136,6 @@ export class ThemeDetailComponent implements OnInit {
                 alert(JSON.stringify(error));
             });
         }
-
-        /*var count = $("input:checked").length;
-
-        var cardIds = Array<number>();
-        var i = 0;
-        $("input:checked").each(function () {
-            cardIds[i++] = $(this).val();
-            console.log($(this).val());
-        });
-        this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
-            this.subTheme = subTheme;
-            this.cards = subTheme.cards;
-            this.subTheme.chosenCards = true;
-
-        }, e => {
-            console.log(e.text());
-        });*/
-    }
-
-
-    onFileChange($event) {
-        this.file = $event.target.files[0];
-        var output = document.getElementById("cardimg");
-        output.src = URL.createObjectURL($event.target.files[0]);
     }
 
     onFileChangeSubTheme($event) {
@@ -137,9 +144,17 @@ export class ThemeDetailComponent implements OnInit {
         var output = document.getElementById("subthemeImg");
         output.src = URL.createObjectURL($event.target.files[0]);
     }
+    /*
+     ------------------------------------ CSV ---------------------------
+     */
 
     onCSVFileChange($event) {
         this.csvFile = $event.target.files[0];
+        var el = $event.target;
+        console.log(el);
+        $(el).closest(".btn-file").css({color: "#333",
+        backgroundColor: "#e6e6e6",
+        borderColor: "#adadad"});
     }
 
     onSubmitCSV() {
@@ -147,8 +162,10 @@ export class ThemeDetailComponent implements OnInit {
         console.log("File type: " + this.csvFile.type);
         this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
             (data) => {
-                console.log(data);
-                this.cards.push(data);
+                for(var c in data.json()) {
+                    console.log(c);
+                    this.cards.push(c);
+                }
             },
             (error) => {
                 console.log("Error uploading csv: " + error);
@@ -158,6 +175,9 @@ export class ThemeDetailComponent implements OnInit {
             }
         );
     }
+    /*
+    --------------------------------- GENERAL ---------------------------
+     */
 
     private getImageSrc(url:string):string {
         if (url) {

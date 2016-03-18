@@ -90,6 +90,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var count = $("input:checked").length;
                     $("input:checkbox:not(:checked)").prop('disabled', false);
                 };
+                /*
+                ------------------------- CARD COMPONENT ------------------------------------
+                 */
                 ThemeDetailComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.card.description) {
@@ -105,6 +108,30 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         });
                     }
                 };
+                ThemeDetailComponent.prototype.onFileChange = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                /*var count = $("input:checked").length;
+            
+                var cardIds = Array<number>();
+                var i = 0;
+                $("input:checked").each(function () {
+                    cardIds[i++] = $(this).val();
+                    console.log($(this).val());
+                });
+                this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
+                    this.subTheme = subTheme;
+                    this.cards = subTheme.cards;
+                    this.subTheme.chosenCards = true;
+            
+                }, e => {
+                    console.log(e.text());
+                });*/
+                /*
+                --------------------- SUBTHEME COMPONENT ---------------------
+                 */
                 ThemeDetailComponent.prototype.onSubmitSubTheme = function () {
                     var _this = this;
                     if (this.subTheme.description) {
@@ -120,35 +147,22 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             alert(JSON.stringify(error));
                         });
                     }
-                    /*var count = $("input:checked").length;
-            
-                    var cardIds = Array<number>();
-                    var i = 0;
-                    $("input:checked").each(function () {
-                        cardIds[i++] = $(this).val();
-                        console.log($(this).val());
-                    });
-                    this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
-                        this.subTheme = subTheme;
-                        this.cards = subTheme.cards;
-                        this.subTheme.chosenCards = true;
-            
-                    }, e => {
-                        console.log(e.text());
-                    });*/
-                };
-                ThemeDetailComponent.prototype.onFileChange = function ($event) {
-                    this.file = $event.target.files[0];
-                    var output = document.getElementById("cardimg");
-                    output.src = URL.createObjectURL($event.target.files[0]);
                 };
                 ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
                     this.file = $event.target.files[0];
                     var output = document.getElementById("subthemeImg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
+                /*
+                 ------------------------------------ CSV ---------------------------
+                 */
                 ThemeDetailComponent.prototype.onCSVFileChange = function ($event) {
                     this.csvFile = $event.target.files[0];
+                    var el = $event.target;
+                    console.log(el);
+                    $(el).closest(".btn-file").css({ color: "#333",
+                        backgroundColor: "#e6e6e6",
+                        borderColor: "#adadad" });
                 };
                 ThemeDetailComponent.prototype.onSubmitCSV = function () {
                     var _this = this;
@@ -156,14 +170,19 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         return;
                     console.log("File type: " + this.csvFile.type);
                     this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (data) {
-                        console.log(data);
-                        _this.cards.push(data);
+                        for (var c in data.json()) {
+                            console.log(c);
+                            _this.cards.push(c);
+                        }
                     }, function (error) {
                         console.log("Error uploading csv: " + error);
                     }, function () {
                         console.log("gefefeffv");
                     });
                 };
+                /*
+                --------------------------------- GENERAL ---------------------------
+                 */
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -189,9 +208,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService, subThemeService_1.SubThemeService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
+                var _a, _b;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }

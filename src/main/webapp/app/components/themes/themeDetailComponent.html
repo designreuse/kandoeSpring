@@ -78,17 +78,28 @@
 
 
     <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
-
-            <h4>Subthemes <a data-toggle="modal" data-target="#add-subTheme"> + </a> </h4>
+        <div class="col-md-offset-2 col-md-8">
+            <div class="row">
+                <div class="col-sm-2">
+                    <h3>Subthemes</h3>
+                </div>
+                <div class="col-sm-9 col-md-10">
+                    <div class="btn-primary-small-container">
+                        <a class="btn btn-primary-small pull-right" data-toggle="modal" data-target="#add-subTheme"> + Add </a>
+                    </div>
+                </div>
+            </div>
             <form>
                 <ul class="ul-show-cards">
                     <div class="row">
-                        <div class="col-xs-4 single-card" *ngFor="#subTheme of theme.subThemes">
-                            <li class="fontsize-card">
-                                <img class="card-img-theme" alt="no image found"
+                        <div class="col-xs-12 col-sm-6 col-lg-4" *ngFor="#subTheme of theme.subThemes">
+                            <li>
+                                <div class="row">
+                                <img class="card-img-theme img-thumbnail img-responsive" alt="no image found"
                                      [src]="getImageSrc(subTheme.iconURL)">
-                                {{subTheme.description}}
+                                <div class="roboto-bold">{{subTheme.subThemeName}}</div>
+                                <div>{{subTheme.description}}</div>
+                                </div>
                             </li>
                         </div>
                     </div>
@@ -99,20 +110,28 @@
 
 
     <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
-            <h4>Cards
-                <a class="plus-card" data-toggle="modal" data-target="#add-card">+ 1</a>
-                <a class="plus-card" (click)="onSubmitCSV()">+ CSV </a> <input class="plus-card" type="file"
-                                                                               (change)="onCSVFileChange($event)">
-            </h4>
+        <div class="col-md-offset-2 col-md-8">
+            <div class="row">
+                <div class="col-sm-2">
+                    <h3>Cards</h3>
+                </div>
+                <div class="col-sm-9 col-md-10">
+                    <span class="btn-group pull-right btn-primary-small-container">
+                        <a class="btn btn-primary-small btn-group" data-toggle="modal" data-target="#add-card" >+ Add One</a>
+                        <a class="btn btn-primary-small btn-group" (click)="onSubmitCSV()">+ Add from CSV </a> <span class="btn btn-primary-small btn-file">Choose CSV File<input type="file" (change)="onCSVFileChange($event)"></span>
+                    </span>
+                </div>
+            </div>
             <form>
                 <ul class="ul-show-cards">
                     <div class="row">
-                        <div class="col-xs-4 single-card" *ngFor="#card of cards">
-                            <li class="fontsize-card">
-                                <img class="card-img-theme" alt="no image found"
+                        <div class="col-xs-12 col-sm-6 col-lg-4 single-card" *ngFor="#card of cards">
+                            <li class="card-theme-container">
+                                <div class="row">
+                                <img class="card-img-theme img-thumbnail img-responsive" alt="no image found"
                                      [src]="getImageSrc(card.imageURL)">
-                                {{card.description}}
+                                <div class="fontsize-card">{{card.description}}</div>
+                                </div>
                             </li>
                         </div>
                     </div>

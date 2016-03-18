@@ -12,15 +12,6 @@
 --------------------- General ------------------------------
 */
 
-/*.well{
-    width: 100%;
-}
-
-.collapse.in {
-    display: inline-block;
-    visibility: visible;
-}  */
-
 body {
     padding-top: 0;
     position: relative;
@@ -147,6 +138,17 @@ hr {
     margin-top: 30px;
 }
 
+.btn-primary-small{
+    background: #ff9c44;
+    border: #f77400;
+    color: #fff;
+    padding: 10px;
+}
+
+.btn-primary-small-container{
+    padding-top: 25px;
+}
+
 .btn-add {
     background: #ff9c44;
     border: #ff9c44;
@@ -197,7 +199,12 @@ hr {
 }
 
 .btn-primary:hover {
+background: #ffb951;
+}
+
+.btn-primary-small:hover {
     background: #ffb951;
+    color: #fff;
 }
 
 .btn-info:hover {
@@ -207,8 +214,7 @@ hr {
 /*-------------- FORMS: Inputs -------------------- */
 
 form {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin: 20px 0;
 
 }
 
@@ -441,7 +447,7 @@ section {
     border-radius: 5px;
     padding: 10px;
     border: 3px solid #ffffff;
-    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(8, 8, 8, 0.50))
+    background: linear-gradient(rgba(57,102,123, 0.50), rgba(57,102,123, 0.50))
 }
 
 #profile-picturenav {
@@ -522,7 +528,7 @@ article {
 }
 
 .navbar {
-    background: #1E8BC3; /*0f6bac?*/
+    background: rgb(57,102,123);/*#1E8BC3; OLD BLUE COLOR*/
     border-width: 0;
 }
 
@@ -576,7 +582,7 @@ footer {
     bottom: 0;
     left: 0;
     padding: 35px 0;
-    background-color: #333;
+    background-color: rgb(57,102,123);
     color: white;
     text-align: center;
     width: 100%;
@@ -700,13 +706,10 @@ footer {
 /*
 --------------------- Theme Overview ------------------------------
 */
-.single-card {
-    min-height: 40%;
-}
 
 .card-img-theme {
-    max-width: 40%;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     float: left;
     margin-right: 10px;
 }
@@ -741,6 +744,21 @@ footer {
 }
 
 .card-theme-container {
+    display: inline-block;
+    background: linear-gradient(rgba(57,102,123, 0.50), rgba(57,102,123, 0.50));
+    color: white;
+    padding: 0 15px;
+    width: 100%;
+    float: left;
+    height: 125px;
+    position: relative;
+    border: solid white 3px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
 
 }
 
@@ -748,6 +766,7 @@ footer {
     font-size: 13px;
     padding-left: 2px;
     text-align: left;
+    padding-top: 10px;
 }
 
 .ul-show-cards {
@@ -771,6 +790,18 @@ footer {
 .plus-card:hover {
     border: solid 1px #ff9c44;
 }
+
+.single-card > .card-theme-container{
+    min-height: 20%;
+    margin: 10px 0;
+}
+
+li > .row > .roboto-bold{
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    padding: 10px;
+}
+
 
 /*
 --------------------- Add card popup ------------------------------
