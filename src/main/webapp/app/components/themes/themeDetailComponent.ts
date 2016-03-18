@@ -29,27 +29,27 @@ export class ThemeDetailComponent implements OnInit {
 	private cards: Card[] = [];
     private subTheme: SubTheme=SubTheme.createEmpty();
     private router:Router;
-    private card: Card = Card.createEmpty();
-    private file: File = null;
-    private csvFile: File = null;
-    private cardService: CardService;
-    private subThemeService: SubThemeService;
-    private user: User = User.createEmpty();
-    private userService: UserService;
+    private card:Card = Card.createEmpty();
+    private file:File = null;
+    private csvFile:File = null;
+    private cardService:CardService;
+    private subThemeService:SubThemeService;
+    private user:User = User.createEmpty();
+    private userService:UserService;
 
-    constructor(private _themeService:ThemeService,  router:Router, userService:UserService,
-                routeParams: RouteParams, cardService: CardService, subThemeService: SubThemeService) {
+    constructor(private _themeService:ThemeService, router:Router, userService:UserService,
+                routeParams:RouteParams, cardService:CardService, subThemeService:SubThemeService) {
         this.userService = userService;
-        this.router=router;
-		this.themeId = +routeParams.params["id"];
+        this.router = router;
+        this.themeId = +routeParams.params["id"];
         this.cardService = cardService;
-        this.subThemeService=subThemeService;
+        this.subThemeService = subThemeService;
     }
 
     ngOnInit() {
         this._themeService.getTheme(this.themeId).subscribe(theme => {
             this.theme = theme;
-            this.org=this.theme.organisation;
+            this.org = this.theme.organisation;
         });
 
         this._themeService.getThemeCards(this.themeId).subscribe(cards => {
@@ -61,9 +61,19 @@ export class ThemeDetailComponent implements OnInit {
         });
 
         this._themeService.getThemeSubThemes(this.themeId).subscribe(subThemes => {
-           this.theme.subThemes=subThemes;
+            this.theme.subThemes = subThemes;
         });
     }
+
+    onSelectCardsSubTheme($event) {
+        this.countChecked();
+    }
+
+    countChecked() {
+        var count = $("input:checked").length;
+        $("input:checkbox:not(:checked)").prop('disabled', false);
+    }
+
 
     onSubmit() {
         if (this.card.description) {
@@ -95,9 +105,27 @@ export class ThemeDetailComponent implements OnInit {
                 alert(JSON.stringify(error));
             });
         }
+
+        /*var count = $("input:checked").length;
+
+        var cardIds = Array<number>();
+        var i = 0;
+        $("input:checked").each(function () {
+            cardIds[i++] = $(this).val();
+            console.log($(this).val());
+        });
+        this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
+            this.subTheme = subTheme;
+            this.cards = subTheme.cards;
+            this.subTheme.chosenCards = true;
+
+        }, e => {
+            console.log(e.text());
+        });*/
     }
 
-    onFileChange($event){
+
+    onFileChange($event) {
         this.file = $event.target.files[0];
         var output = document.getElementById("cardimg");
         output.src = URL.createObjectURL($event.target.files[0]);
@@ -110,22 +138,24 @@ export class ThemeDetailComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    onCSVFileChange($event){
+    onCSVFileChange($event) {
         this.csvFile = $event.target.files[0];
     }
 
-    onSubmitCSV(){
-        if (! this.csvFile) return;
+    onSubmitCSV() {
+        if (!this.csvFile) return;
         console.log("File type: " + this.csvFile.type);
         this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
             (data) => {
-                for(var c in data.json()) {
-                    console.log(c);
-                    this.cards.push(c);
-                }
+                console.log(data);
+                this.cards.push(data);
             },
-            (error) => { console.log("Error uploading csv: " + error); },
-            () => {console.log("gefefeffv")}
+            (error) => {
+                console.log("Error uploading csv: " + error);
+            },
+            () => {
+                console.log("gefefeffv")
+            }
         );
     }
 

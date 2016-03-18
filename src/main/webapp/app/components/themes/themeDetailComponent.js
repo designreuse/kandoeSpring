@@ -83,6 +83,13 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         _this.theme.subThemes = subThemes;
                     });
                 };
+                ThemeDetailComponent.prototype.onSelectCardsSubTheme = function ($event) {
+                    this.countChecked();
+                };
+                ThemeDetailComponent.prototype.countChecked = function () {
+                    var count = $("input:checked").length;
+                    $("input:checkbox:not(:checked)").prop('disabled', false);
+                };
                 ThemeDetailComponent.prototype.onSubmit = function () {
                     var _this = this;
                     if (this.card.description) {
@@ -113,6 +120,22 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             alert(JSON.stringify(error));
                         });
                     }
+                    /*var count = $("input:checked").length;
+            
+                    var cardIds = Array<number>();
+                    var i = 0;
+                    $("input:checked").each(function () {
+                        cardIds[i++] = $(this).val();
+                        console.log($(this).val());
+                    });
+                    this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
+                        this.subTheme = subTheme;
+                        this.cards = subTheme.cards;
+                        this.subTheme.chosenCards = true;
+            
+                    }, e => {
+                        console.log(e.text());
+                    });*/
                 };
                 ThemeDetailComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
@@ -133,11 +156,13 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         return;
                     console.log("File type: " + this.csvFile.type);
                     this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (data) {
-                        for (var c in data.json()) {
-                            console.log(c);
-                            _this.cards.push(c);
-                        }
-                    }, function (error) { console.log("Error uploading csv: " + error); }, function () { console.log("gefefeffv"); });
+                        console.log(data);
+                        _this.cards.push(data);
+                    }, function (error) {
+                        console.log("Error uploading csv: " + error);
+                    }, function () {
+                        console.log("gefefeffv");
+                    });
                 };
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {

@@ -716,6 +716,24 @@ footer {
     overflow: auto;
 }
 
+.choose-card-subtheme{
+    width: 100px;
+    height: 100px;
+}
+
+.choose-subtheme-description{
+    color: white !important;
+    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.6));
+    width: 100px;
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    z-index: 9;
+    overflow: auto;
+    max-height: 100px;
+}
+
 .card-img-themesmall {
     max-width: 100%;
     float: left;
