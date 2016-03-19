@@ -48,8 +48,12 @@ export class ThemeComponent implements OnInit {
             this.themes = themes;
         });
         this.userService.getCurrentUser().subscribe(
-            (data) => { this.user = data; },
-            (error) => { console.log(error) }
+            (data) => {
+                this.user = data;
+            },
+            (error) => {
+                console.log(error)
+            }
         );
 
 
@@ -71,22 +75,9 @@ export class ThemeComponent implements OnInit {
         });
     }
 
-    logout() {
-        localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
-    }
-
-    private getImageSrc(url:string):string {
-        if (url) {
-            if (url.indexOf("http://") > -1) {
-                return url;
-            } else {
-                return url.replace(/"/g, "");
-            }
-        } else {
-            return "./app/resources/noimgplaceholder.png";
-        }
-    }
+    /*
+     --------------------- CARD COMPONENT ---------------------
+     */
 
     onFileChange($event) {
         this.file = $event.target.files[0];
@@ -95,20 +86,8 @@ export class ThemeComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    onFileChangeSubTheme($event) {
-        this.file = $event.target.files[0];
-
-        var output = document.getElementById("subthemeImg");
-        output.src = URL.createObjectURL($event.target.files[0]);
-    }
-
-
     onAddCard(themeId:number) {
         this.card.themeId = themeId;
-    }
-
-    onAddSubTheme(themeId:number) {
-        this.subTheme.themeId = themeId;
     }
 
     onSubmit() {
@@ -125,6 +104,20 @@ export class ThemeComponent implements OnInit {
         }
     }
 
+    /*
+     --------------------- SUBTHEME COMPONENT ---------------------
+     */
+    onAddSubTheme(themeId:number) {
+        this.subTheme.themeId = themeId;
+    }
+
+    onFileChangeSubTheme($event) {
+        this.file = $event.target.files[0];
+
+        var output = document.getElementById("subthemeImg");
+        output.src = URL.createObjectURL($event.target.files[0]);
+    }
+
     onSubmitSubTheme() {
         if (this.subTheme.description) {
             this.subTheme.subThemeName = this.subTheme.description;
@@ -137,6 +130,29 @@ export class ThemeComponent implements OnInit {
                 this.file = null;
                 alert(error);
             });
+        }
+    }
+
+
+    /*
+     --------------------------------- GENERAL ---------------------------
+     */
+
+
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
+    }
+
+    private getImageSrc(url:string):string {
+        if (url) {
+            if (url.indexOf("http://") > -1) {
+                return url;
+            } else {
+                return url.replace(/"/g, "");
+            }
+        } else {
+            return "./app/resources/noimgplaceholder.png";
         }
     }
 

@@ -70,13 +70,16 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                         alert("something went wrong");
                     });
                 };
-                AddThemeComponent.prototype.logout = function () {
-                    localStorage.removeItem("id_token");
-                    this.router.navigate(['/Home']);
-                };
                 AddThemeComponent.prototype.selectOrganisation = function ($event) {
                     var organisation = this.currentOrganisations.find(function (org) { return org.organisationName === $event.target.value; });
                     this.theme.organisation = organisation;
+                };
+                /*
+                 --------------------------------- GENERAL ---------------------------
+                 */
+                AddThemeComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
                 };
                 AddThemeComponent.prototype.getImageSrc = function (url) {
                     if (url) {
