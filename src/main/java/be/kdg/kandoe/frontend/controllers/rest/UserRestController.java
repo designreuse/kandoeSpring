@@ -132,8 +132,8 @@ public class UserRestController {
 
         if(user != null && user.getId() != null) {
             if(file.getContentType().split("/")[0].equals("image")){
-                User user_in = mapperFacade.map(userDTO, User.class);
-                user_in.setPassword(userService.findUserById(user_in.getId()).getPassword());
+                User user_in = userService.findUserById(user.getId());
+                mapperFacade.map(userDTO, user_in);
 
                 String newFilename = String.format("%d.%s", user_in.getId(), file.getOriginalFilename().split("\\.")[1]);
                 String filePath = request.getServletContext().getRealPath("/resources/images/users/");
