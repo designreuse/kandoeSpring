@@ -2,7 +2,12 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
 
 .add-kandoe-card{
-    height: 375px;
+    height: 370px;
+    margin-bottom: 0;
+}
+
+.kandoe-session-card-container{
+    margin-bottom: 20px;
 }
 
 .kandoe-session-card{

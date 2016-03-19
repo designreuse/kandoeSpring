@@ -149,9 +149,17 @@ hr {
     padding-top: 25px;
 }
 
-.btn-add {
-    background: #ff9c44;
-    border: #ff9c44;
+.btn-add-inTheme{
+    width: 15%;
+}
+
+.btn-collapse{
+    padding: 9px;
+    width: 85%;
+}
+
+.btn-group-inTheme{
+    width: 100%;
 }
 
 .btn-create {
@@ -708,8 +716,8 @@ footer {
 */
 
 .card-img-theme {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     float: left;
     margin-right: 10px;
 }
@@ -792,7 +800,7 @@ footer {
 }
 
 .single-card > .card-theme-container{
-    min-height: 20%;
+    height: 10%;
     margin: 10px 0;
 }
 
@@ -802,6 +810,10 @@ li > .row > .roboto-bold{
     padding: 10px;
 }
 
+.panel-collapse{
+    max-height: 170px;
+    overflow-y: auto;
+}
 
 /*
 --------------------- Add card popup ------------------------------

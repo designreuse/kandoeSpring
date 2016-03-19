@@ -90,6 +90,7 @@
                         </div>
                     </li>
                         <li *ngFor="#theme of themes; #i = index" class="col-sm-12 col-md-4">
+                            <!-- THEMECARD -->
                             <div class="themeCard-container manual-flip">
                                 <div class="themeCard">
                                     <div class="front">
@@ -102,14 +103,8 @@
                                             <div class="mainContent center-container">
                                                 <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]">
                                                     <h3 class="name">{{theme.themeName}}</h3>
-                                                    <p class="description">{{theme.description}}</p>
+                                                    <p class="description">{{theme.description}} </p>
                                                 </a>
-                                                <ul class="tag-list list-inline">
-                                                    <li><i class="glyphicon glyphicon-bookmark"></i> tag1</li>
-                                                    <li><i class="glyphicon glyphicon-bookmark"></i> tag2</li>
-                                                    <li><i class="glyphicon glyphicon-bookmark"></i> tag3</li>
-                                                </ul>
-                                                <br>
                                                 <h3 class="name">Organisation</h3>
                                                 <p class="description">{{theme.organisation.organisationName}}</p>
                                             </div>
@@ -122,31 +117,58 @@
                                     </div> <!-- end front panel -->
                                     <div class="back">
                                         <div class="header">
-                                            <h5 class="motto">{{theme.themeName}}</h5>
+                                            <a [routerLink]="['/ThemeDetail', {id:theme.themeId}]"><h5 class="motto">{{theme.themeName}}</h5></a>
                                         </div>
                                         <div class="themeContent nopaddingleft">
                                             <div class="mainContent center-container">
-                                                <h4>Cards</h4>
-                                                <div class="theme-cards-content">
-                                                    <div class="cards" data-spy="scroll">
-                                                    <ul class="ul-show-cards">
-                                                        <div class="single-card" *ngFor="#card of theme.cards">
-                                                            <li class="fontsize-card">
-                                                                <img class="card-img-theme" alt="no image found"
-                                                                     [src]="getImageSrc(card.imageURL)">
-                                                                {{card.description}}
-                                                            </li>
+                                                <!--SHOW CARDS-->
+                                                <div class="panel-group" id="accordion">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <div class="btn-group btn-group-inTheme">
+                                                                <button class="btn btn-default btn-collapse"
+                                                                        data-parent="#accordion" href="#card-open" data-toggle="collapse">
+                                                                    <span class="caret"></span> Show Cards </button>
+                                                                <a class="btn btn-primary-small btn-add-inTheme" data-toggle="modal" data-target="#add-card"
+                                                                   (click)="onAddCard(theme.themeId)" type="button">+</a>
+                                                            </div>
                                                         </div>
-                                                        <br/>
-                                                    </ul>
+                                                        <div id="card-open" class="panel-collapse collapse in">
+                                                            <ul class="padding-left-5">
+                                                                <div *ngFor="#card of theme.cards"
+                                                                     class="single-card pre open-fixed-height">
+                                                                    <li class="fontsize-card">
+                                                                        <img class="card-img-theme" alt="no image found"
+                                                                             [src]="getImageSrc(card.imageURL)">
+                                                                        {{card.description}}
+                                                                    </li>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div>
-                                                    <a href="#popup-addCard">
-                                                        <button class=" btn btn-primary btn-wide theme-cards-btn" (click)="giveId(theme.themeId)">
-                                                            Add card
-                                                        </button>
-                                                    </a>
+                                                    <!--SHOW SUBTHEMES-->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <div class="btn-group btn-group-inTheme">
+                                                                <button class="btn btn-default btn-collapse" data-parent="#accordion" href="#subTheme-open" data-toggle="collapse" type="button">
+                                                                    <span class="caret"></span> Show Subthemes </button>
+                                                                <a class="btn btn-primary-small btn-add-inTheme" data-toggle="modal" data-target="#add-subTheme"
+                                                                   (click)="onAddSubTheme(theme.themeId)">+</a>
+                                                            </div>
+                                                        </div>
+                                                        <div id="subTheme-open" class="panel-collapse collapse">
+                                                            <ul class="padding-left-5">
+                                                                <div *ngFor="#subTheme of theme.subThemes"
+                                                                     class="single-card pre open-fixed-height">
+                                                                    <li class="fontsize-card">
+                                                                        <img class="card-img-theme" alt="no image found"
+                                                                             [src]="getImageSrc(subTheme.iconURL)">
+                                                                        {{subTheme.description}}
+                                                                    </li>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,8 +180,7 @@
                                             <div class="social-links text-center">
                                                 <a href="#facebook" class="facebook"><span
                                                         class="fa fa-facebook"></span></a>
-                                                <a href="#twitter" class="twitter"><span
-                                                        class="fa fa-twitter"></span></a>
+                                                <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
                                                 <a href="#google-plus" class="google-plus"><span
                                                         class="fa fa-google-plus"></span></a>
                                             </div>
@@ -167,6 +188,7 @@
                                     </div> <!-- end back panel -->
                                 </div>
                             </div>
+                            <!-- END THEMECARD -->
                         </li>
                 </ul>
             </div>
