@@ -91,7 +91,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     $("input:checkbox:not(:checked)").prop('disabled', false);
                 };
                 /*
-                ------------------------- CARD COMPONENT ------------------------------------
+                 ------------------------- CARD COMPONENT ------------------------------------
                  */
                 ThemeDetailComponent.prototype.onSubmit = function () {
                     var _this = this;
@@ -113,40 +113,50 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
-                /*var count = $("input:checked").length;
-            
-                var cardIds = Array<number>();
-                var i = 0;
-                $("input:checked").each(function () {
-                    cardIds[i++] = $(this).val();
-                    console.log($(this).val());
-                });
-                this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
-                    this.subTheme = subTheme;
-                    this.cards = subTheme.cards;
-                    this.subTheme.chosenCards = true;
-            
-                }, e => {
-                    console.log(e.text());
-                });*/
                 /*
-                --------------------- SUBTHEME COMPONENT ---------------------
+                 --------------------- SUBTHEME COMPONENT ---------------------
                  */
                 ThemeDetailComponent.prototype.onSubmitSubTheme = function () {
                     var _this = this;
                     if (this.subTheme.description) {
                         this.subTheme.themeId = this.themeId;
-                        this.subTheme.subThemeName = this.subTheme.description;
                         this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
                             _this.theme.subThemes.push(st);
+                            _this.subTheme.subThemeName = null;
                             _this.subTheme.description = null;
                             _this.file = null;
+                            var cardIds = [];
+                            var i = 0;
+                            $("input:checked").each(function () {
+                                cardIds[i] = $(this).val();
+                                i++;
+                            });
+                            _this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(function (subt) {
+                                console.log(st.cards.length);
+                            });
                         }, function (error) {
                             //todo change error display
                             _this.file = null;
                             alert(JSON.stringify(error));
                         });
                     }
+                };
+                ThemeDetailComponent.prototype.addCardsSubTheme = function () {
+                    var _this = this;
+                    var cardIds = Array();
+                    var i = 0;
+                    $("input:checked").each(function () {
+                        cardIds[i++] = $(this).val();
+                        console.log($(this).val());
+                    });
+                    var newSubThemeId = this.theme.subThemes.length + 1;
+                    this.subThemeService.addCardsToSubTheme(cardIds, newSubThemeId).subscribe(function (subTheme) {
+                        _this.subTheme = subTheme;
+                        console.log(newSubThemeId);
+                        /*   this.cards = subTheme.cards;*/
+                    }, function (e) {
+                        alert(e.text());
+                    });
                 };
                 ThemeDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
                     this.file = $event.target.files[0];
@@ -160,9 +170,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.csvFile = $event.target.files[0];
                     var el = $event.target;
                     console.log(el);
-                    $(el).closest(".btn-file").css({ color: "#333",
+                    $(el).closest(".btn-file").css({
+                        color: "#333",
                         backgroundColor: "#e6e6e6",
-                        borderColor: "#adadad" });
+                        borderColor: "#adadad"
+                    });
                 };
                 ThemeDetailComponent.prototype.onSubmitCSV = function () {
                     var _this = this;
@@ -181,7 +193,7 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     });
                 };
                 /*
-                --------------------------------- GENERAL ---------------------------
+                 --------------------------------- GENERAL ---------------------------
                  */
                 ThemeDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {

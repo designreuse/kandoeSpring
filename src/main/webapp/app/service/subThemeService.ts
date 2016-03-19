@@ -55,4 +55,17 @@ export class SubThemeService {
             .map(res => res.json())
             .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
     }
+
+    public addCardsToSubTheme(cardIds: Array<number>, subThemeId: number): Observable<SubTheme>{
+        var cards: Card[] = [];
+        for(var i = 0; i < cardIds.length; i++){
+            var c = new Card();
+            c.cardId = cardIds[i];
+            cards[i] = c;
+
+        }
+        return this.securityService.post(this.path + 'subThemes/' + subThemeId + '/addCards', JSON.stringify(cards), true)
+            .map(res => res.json())
+            .map((subTheme:SubTheme) => SubTheme.fromJson(subTheme));
+    }
 }

@@ -71,7 +71,7 @@ public class SubThemeDTO extends ResourceSupport implements Serializable {
         this.organisation = organisation;
     }
 
-    public Set<CardDTO> getCards() {
+     public Set<CardDTO> getCards() {
         return cards;
     }
 

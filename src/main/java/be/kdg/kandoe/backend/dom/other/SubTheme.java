@@ -32,7 +32,7 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Organisation.class)
     private Organisation organisation;
 
-    @OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Card.class,fetch = FetchType.EAGER)
     private Set<Card> cards;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)

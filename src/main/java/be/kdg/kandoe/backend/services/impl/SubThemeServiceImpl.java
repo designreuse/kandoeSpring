@@ -95,8 +95,8 @@ public class SubThemeServiceImpl implements SubThemeService {
         Hibernate.initialize(creator.getSubThemes());
         Set<SubTheme> subThemes = creator.getSubThemes();
         subThemes.stream().forEach(t -> {
-            Hibernate.initialize(t.getCards());
-          /*  if(t.getSubThemes() != null)
+           /* Hibernate.initialize(t.getCards());
+            if(t.getSubThemes() != null)
                 Hibernate.initialize(t.getSubThemes());*/
         });
         return creator.getSubThemes();
@@ -111,5 +111,28 @@ public class SubThemeServiceImpl implements SubThemeService {
         cards.stream().forEach(c -> Hibernate.initialize(c.getCardSessions()));
 
         return subTheme.getCards();
+    }
+
+    @Override
+    public SubTheme addCardsToSubTheme(Set<Card> cards,Integer subThemeId) {
+        SubTheme subTheme = findSubThemeById(subThemeId);
+
+        Set<Card> subThemeCards = new HashSet<>();
+
+        for (Card card : cards) {
+          /* if (subTheme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
+          */   subThemeCards.add(card);
+                subThemeRepository.save(subTheme);
+
+          /*}*/
+
+        }
+        subTheme.setCards(subThemeCards);
+        System.out.println(subThemeCards.size());
+        System.out.println(subTheme.getCards().size() +"lentge");
+        subThemeRepository.save(subTheme);
+
+        return subTheme;
+
     }
 }

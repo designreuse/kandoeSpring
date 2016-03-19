@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -128,5 +130,22 @@ public class SubThemeRestController {
         return new ResponseEntity<List<CardDTO>>(HttpStatus.UNAUTHORIZED);
     }
 
-
+    @RequestMapping(value = "/{subThemeId}/addCards", method = RequestMethod.POST)
+    public ResponseEntity<SubThemeDTO> addCardsToSubTheme(@RequestBody List<CardDTO> cardDTOs,
+                                                          @PathVariable("subThemeId") Integer subThemeId,
+                                                          @AuthenticationPrincipal User user) {
+        if (user != null) {
+            if (subThemeId != null) {
+                Set<Card> cards = new HashSet<>();
+                for (CardDTO cardDTO : cardDTOs) {
+                    cards.add(mapper.map(cardDTO, Card.class));
+                }
+                SubTheme subTheme = subThemeService.findSubThemeById(subThemeId);
+                subThemeService.addCardsToSubTheme(cards, subThemeId);
+                return new ResponseEntity<SubThemeDTO>(subThemeAssembler.toResource(subTheme), HttpStatus.OK);
+            }
+            return new ResponseEntity<SubThemeDTO>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<SubThemeDTO>(HttpStatus.UNAUTHORIZED);
+    }
 }
