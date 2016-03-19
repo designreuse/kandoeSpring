@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,22 +32,24 @@ public class CsvConvertorTest {
     @Autowired
     private CsvToCardConvertor csvToCardConvertor;
 
-    @Value("C:/Users/amy/Documents/School/Ba3/Integratieproject/KandoeSpring/src/main/resources/excel/test.csv")
+    @Value("test.csv")
     private String testFile;
 
-    @Value("C:/Users/amy/Documents/School/Ba3/Integratieproject/KandoeSpring/src/main/resources/excel/falseTest.csv")
+    @Value("falseTest.csv")
     private String falseTestFile;
 
     @Test(expected = ConvertorException.class)
     public void readFileWithoutHeader() throws ConvertorException{
-        csvToCardConvertor.toCards(falseTestFile);
+        String fullpath = Paths.get("src", "main", "resources", "excel", falseTestFile).toAbsolutePath().toString();
+        csvToCardConvertor.toCards(fullpath);
     }
 
     @Test
     public void readFile() throws ConvertorException {
-        /*List<Card> cards = csvToCardConvertor.toCards(testFile);
+        String fullpath = Paths.get("src", "main", "resources", "excel", testFile).toAbsolutePath().toString();
+        List<Card> cards = csvToCardConvertor.toCards(fullpath);
         cards.forEach(card -> assertThat(card.getDescription(), notNullValue()));
-        assertThat(cards.get(1).getImageURL(), nullValue());*/
+        assertThat(cards.get(1).getImageURL(), nullValue());
     }
 
 

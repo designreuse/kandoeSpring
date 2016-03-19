@@ -75,8 +75,6 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
                     } else {
                         card = new Card(description);
                     }
-                    System.out.println(card.getDescription());
-                    System.out.println(card.getImageURL());
                     cards.add(card);
                 }
                 line++;
