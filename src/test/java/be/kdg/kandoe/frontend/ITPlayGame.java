@@ -72,8 +72,8 @@ public class ITPlayGame {
             js.executeScript("arguments[0].click();", element);
             element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[2]/div/button"));
             element.click();
-
             logout();
+
             login("SenneWens", "test123");
             goToSession();
             (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(
@@ -86,8 +86,41 @@ public class ITPlayGame {
             js.executeScript("arguments[0].click();", element);
             element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[2]/div/button"));
             element.click();
+            logout();
+
+            login("ArneLauryssens", "test123");
+            goToSession();
+            pushCard("1");
+            chat("hallo senne");
+            logout();
+
+            login("SenneWens", "test123");
+            goToSession();
+            chat("hallo arne");
+            pushCard("2");
+            logout();
+
+            login("ArneLauryssens", "test123");
+            goToSession();
+            pushCard("1");
+            pushCard("1");
+            logout();
+
+            login("SenneWens", "test123");
+            goToSession();
+            pushCard("2");
+            logout();
+
+            login("ArneLauryssens", "test123");
+            goToSession();
+            pushCard("1");
+            logout();
+
+            login("SenneWens", "test123");
+            goToSession();
             pushCard("1");
 
+            Thread.sleep(3000);
         } finally {
             driver.quit();
         }
@@ -101,7 +134,6 @@ public class ITPlayGame {
         element = driver.findElement(By.id("username"));
         sendKeysPerCharacter(username);
         element = driver.findElement(By.id("password"));
-        element.click();
         sendKeysPerCharacter(password);
         element = driver.findElement(By.xpath("./*//*[@id='login-form']/div/button"));
         element.click();
@@ -119,14 +151,22 @@ public class ITPlayGame {
 
     private void goToSession() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath(".//*[@id='sort-list']/div[5]/div/div[3]/div/div[3]/button")));
-        element = driver.findElement(By.xpath(".//*[@id='sort-list']/div[5]/div/div[3]/div/div[3]/button"));
+                By.xpath(".//*[@id='sort-list']/div[4]/div/div[3]/div/div[3]/button")));
+        element = driver.findElement(By.xpath(".//*[@id='sort-list']/div[4]/div/div[3]/div/div[3]/button"));
         element.click();
     }
 
     private void pushCard(String id){
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
         element = driver.findElement(By.id(id));
+        element.click();
+    }
+
+    private void chat(String message){
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(By.id("sendchatmessage")));
+        element = driver.findElement(By.id("sendchatmessage"));
+        sendKeysPerCharacter(message);
+        element = driver.findElement(By.xpath(".//*[@id='chat-open']/div[2]/button"));
         element.click();
     }
 

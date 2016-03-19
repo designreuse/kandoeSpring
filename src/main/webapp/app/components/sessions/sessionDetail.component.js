@@ -145,7 +145,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
                         $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
                         if (card.position < (this.session.size - 1) && this.canPlay) {
-                            this.stompClient.send("/move", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId }));
+                            this.stompClient.send("/move", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"),
+                                'sessionId': this.sessionId, 'cardId': card.cardId }));
                             $(el).load("sessionDetail.html");
                         }
                         else if (card.position == (this.session.size - 1)) {
@@ -212,7 +213,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     }
                 };
                 SessionDetailComponent.prototype.onChooseCards = function () {
-                    var _this = this;
                     var count = $("input:checked").length;
                     if (count >= this.session.minCards) {
                         var cardIds = Array();
@@ -221,14 +221,18 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             cardIds[i++] = $(this).val();
                             console.log($(this).val());
                         });
-                        this.sessionService.addCards(cardIds, this.sessionId).subscribe(function (ses) {
-                            _this.session = ses;
-                            _this.cards = ses.cards;
-                            _this.users = ses.users;
-                            _this.session.chosenCards = true;
-                        }, function (e) {
+                        /*this.sessionService.addCards(cardIds, this.sessionId).subscribe(ses => {
+                            this.session = ses;
+                            this.cards = ses.cards;
+                            this.users = ses.users;
+                            this.session.chosenCards = true;
+            
+                        }, e => {
                             console.log(e.text());
-                        });
+                        });*/
+                        this.session.chosenCards = true;
+                        this.stompClient.send("/addCards", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"),
+                            'sessionId': this.sessionId, 'cardIds': cardIds }));
                     }
                 };
                 /*
@@ -258,8 +262,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
-                    var socket = new SockJS('/Kandoe/circleSession'); //local
-                    //var socket = new SockJS('/circleSession'); // wildfly
+                    //var socket = new SockJS('/Kandoe/circleSession'); //local
+                    var socket = new SockJS('/circleSession'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {
@@ -295,6 +299,15 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                                 var popup = $(document).find("#winner-popup");
                                 $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
                             }
+                        });
+                        _this.stompClient.subscribe('/topic/addCards', function (result) {
+                            var json = JSON.parse(result.body);
+                            var session = session_1.Session.fromJson(json);
+                            var chosen = _this.session.chosenCards;
+                            _this.session = session;
+                            _this.cards = session.cards;
+                            _this.users = session.users;
+                            _this.session.chosenCards = chosen;
                         });
                     });
                 };

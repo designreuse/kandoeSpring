@@ -5,6 +5,8 @@ import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.SessionService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
+import be.kdg.kandoe.frontend.DTO.SessionDTO;
+import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,11 +23,13 @@ public class WebSocketController {
 
     private final UserService userService;
     private final SessionService sessionService;
+    private final SessionAssembler sessionAssembler;
 
     @Autowired
-    public WebSocketController(UserService userService, SessionService sessionService) {
+    public WebSocketController(UserService userService, SessionService sessionService, SessionAssembler sessionAssembler) {
         this.userService = userService;
         this.sessionService = sessionService;
+        this.sessionAssembler = sessionAssembler;
     }
 
     @MessageMapping("/chat")
@@ -69,5 +73,20 @@ public class WebSocketController {
             }
         }
         return null;
+    }
+
+    @MessageMapping("/addCards")
+    @SendTo("/topic/addCards")
+    public SessionDTO addCardsToSession(Cards cards){
+        String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
+                .parseClaimsJws(cards.getToken().replace("\"", "")).getBody().getSubject();
+        User u = userService.findUserByUsername(username);
+
+        try {
+            Session session = sessionService.addCardIdsToSession(cards.getSessionId(), cards.getCardIds(), u.getId());
+            return sessionAssembler.toResource(session);
+        } catch (SessionServiceException e) {
+            return null;
+        }
     }
 }

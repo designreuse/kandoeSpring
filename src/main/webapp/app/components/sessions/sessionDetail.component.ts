@@ -139,7 +139,8 @@ export class SessionDetailComponent implements OnInit{
             $(playing).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2000);
             $(stopped).css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}, 2000);
             if(card.position < (this.session.size-1) && this.canPlay) {
-                this.stompClient.send("/move", {}, JSON.stringify({'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId}));
+                this.stompClient.send("/move", {}, JSON.stringify({'token': localStorage.getItem("id_token"),
+                    'sessionId': this.sessionId, 'cardId': card.cardId}));
                 $(el).load("sessionDetail.html");
             } else if(card.position == (this.session.size-1)){
                 $(document).find("#card-element-winner").text(card.description);
@@ -221,7 +222,7 @@ export class SessionDetailComponent implements OnInit{
                 cardIds[i++] = $(this).val();
                 console.log($(this).val());
             });
-            this.sessionService.addCards(cardIds, this.sessionId).subscribe(ses => {
+            /*this.sessionService.addCards(cardIds, this.sessionId).subscribe(ses => {
                 this.session = ses;
                 this.cards = ses.cards;
                 this.users = ses.users;
@@ -229,7 +230,11 @@ export class SessionDetailComponent implements OnInit{
 
             }, e => {
                 console.log(e.text());
-            });
+            });*/
+
+            this.session.chosenCards = true;
+            this.stompClient.send("/addCards", {}, JSON.stringify({'token': localStorage.getItem("id_token"),
+                'sessionId': this.sessionId, 'cardIds': cardIds}));
         }
     }
 
@@ -264,8 +269,8 @@ export class SessionDetailComponent implements OnInit{
 
     connect() {
         this.disconnect();
-        var socket = new SockJS('/Kandoe/circleSession'); //local
-        //var socket = new SockJS('/circleSession'); // wildfly
+        //var socket = new SockJS('/Kandoe/circleSession'); //local
+        var socket = new SockJS('/circleSession'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
 
@@ -306,6 +311,17 @@ export class SessionDetailComponent implements OnInit{
                     $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2500);
                 }
             });
+
+            this.stompClient.subscribe('/topic/addCards', result => {
+                var json = JSON.parse(result.body);
+                var session = Session.fromJson(json);
+
+                var chosen = this.session.chosenCards;
+                this.session = session;
+                this.cards = session.cards;
+                this.users = session.users;
+                this.session.chosenCards = chosen;
+            })
         });
 
     }

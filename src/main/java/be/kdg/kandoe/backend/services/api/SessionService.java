@@ -28,7 +28,9 @@ public interface SessionService {
 
     Session createSession(Session session, Integer themeId,Integer subthemeId ,Integer userId) throws SessionServiceException;
 
-	Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException;
+	Session addCardIdsToSession(Integer sessionId, List<Integer> cardIds, Integer userId) throws SessionServiceException;
+
+    Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException;
 
     List<Session> findSessionByThemeId(Integer themeId, Integer userId) throws SessionServiceException;
 

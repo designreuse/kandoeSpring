@@ -14,8 +14,6 @@ public class CardDTO extends ResourceSupport implements Serializable {
     private String description;
 
     private String imageURL;
-    //private ThemeDTO theme;
-    //private List<CardSessionDTO> cardSessions;
     private Integer themeId;
     private int position;
 
@@ -45,22 +43,6 @@ public class CardDTO extends ResourceSupport implements Serializable {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-
-   /* public ThemeDTO getTheme() {
-        return this.theme;
-    }
-
-    public void setTheme(ThemeDTO theme) {
-        this.theme = theme;
-    }*/
-
-    /*public List<CardSessionDTO> getCardSessions() {
-        return this.cardSessions;
-    }
-
-    public void setCardSessions(List<CardSessionDTO> cardSessions) {
-        this.cardSessions = cardSessions;
-    }*/
 
     public Integer getThemeId() {
         return themeId;

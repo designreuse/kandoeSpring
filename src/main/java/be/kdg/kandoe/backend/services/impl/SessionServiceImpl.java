@@ -15,12 +15,10 @@ import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
@@ -40,12 +38,11 @@ public class SessionServiceImpl implements SessionService {
     private final CardSessionRepository cardSessionRepository;
     private final CardService cardService;
     private final MailService mailService;
-    private Map<Integer,ScheduledFuture> timers;
-    private final TaskScheduler taskScheduler;
 
     @Autowired
     public SessionServiceImpl(SessionRepository sessionRepository, UserService userService, ThemeService themeService,
-                              SubThemeService subThemeService, CardSessionRepository cardSessionRepository, CardService cardService, MailService mailService,TaskScheduler taskScheduler) {
+                              SubThemeService subThemeService, CardSessionRepository cardSessionRepository,
+                              CardService cardService, MailService mailService) {
         this.sessionRepository = sessionRepository;
         this.userService = userService;
         this.themeService = themeService;
@@ -53,8 +50,6 @@ public class SessionServiceImpl implements SessionService {
         this.cardSessionRepository = cardSessionRepository;
         this.cardService = cardService;
         this.mailService = mailService;
-        this.taskScheduler = taskScheduler;
-        this.timers = new HashMap<>();
     }
 
     @Override
@@ -205,15 +200,11 @@ public class SessionServiceImpl implements SessionService {
            /* mailService.sendMailToUserByUserId(userSession.getUser().getId(), "Kandoe - Invitation for session",
                     "A new kandoe has been created for an organisation you're member of");    */
         }
-
-        taskScheduler.schedule(new SessionUpdate(session.getId()), Date.from(session.getStartTime().atZone(ZoneId.systemDefault()).toInstant()));
-
-
         return session;
     }
 
     @Override
-    public Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException {
+    public Session addCardIdsToSession(Integer sessionId, List<Integer> cardIds, Integer userId) throws SessionServiceException {
         Session session = findSessionById(sessionId, userId);
         if(session.getState() == SessionState.CREATED){
             Theme theme = session.getTheme();
@@ -222,11 +213,12 @@ public class SessionServiceImpl implements SessionService {
             if (cardSessions == null)
                 cardSessions = new ArrayList<>();
 
-            for (Card card : cards) {
-                if (!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))) {
-                    if (theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
+            for (Integer cardId : cardIds) {
+                if (!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(cardId))) {
+                    if (theme.getCards().stream().anyMatch(c -> c.getCardId().equals(cardId))) {
+                        Card card = cardService.findCardById(cardId);
                         CardSession cardSession = new CardSession();
-                        cardSession.setCard(cardService.findCardById(card.getId()));
+                        cardSession.setCard(card);
                         cardSession.setPosition(0);
                         cardSessionRepository.save(cardSession);
                         cardSessions.add(cardSession);
@@ -259,13 +251,57 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    public Session addCardsToSession(Integer sessionId, List<Card> cards, Integer userId) throws SessionServiceException {
+        Session session = findSessionById(sessionId, userId);
+        if(session.getState() == SessionState.CREATED){
+            Theme theme = session.getTheme();
+
+            List<CardSession> cardSessions = session.getCardSessions();
+            if (cardSessions == null)
+                cardSessions = new ArrayList<>();
+
+            for (Card card : cards) {
+                if (!cardSessions.stream().anyMatch(cs -> cs.getCard().getCardId().equals(card.getId()))) {
+                    if (theme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
+                        CardSession cardSession = new CardSession();
+                        Card c = cardService.findCardById(card.getId());
+                        cardSession.setCard(c);
+                        cardSession.setPosition(0);
+                        cardSessionRepository.save(cardSession);
+                        cardSessions.add(cardSession);
+
+                        List<CardSession> cs = c.getCardSessions();
+                        if (cs == null)
+                            cs = new ArrayList<>();
+                        cs.add(cardSession);
+                        c.setCardSessions(cs);
+                    }
+                }
+            }
+            session.setCardSessions(cardSessions);
+
+            UserSession userSession = session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(userId))
+                    .findFirst().get();
+            userSession.setChosenCards(true);
+
+            if(session.getUserSessions().stream().allMatch(UserSession::isChosenCards)){
+                session.setState(SessionState.IN_PROGRESS);
+            }
+
+            session = sessionRepository.save(session);
+            for (CardSession cardSession : cardSessions) {
+                cardSession.setSession(session);
+            }
+            return session;
+        }
+        return session;
+    }
+
+    @Override
     @Transactional
     public void updateCardPosition(Integer cardId, Integer userId, Integer sessionId) throws SessionServiceException {
         Session session = findSessionById(sessionId, userId);
-        if (timers.get(sessionId)!=null) {
-            timers.get(sessionId).cancel(false);
-        }
-        //todo state
+
         if (session.getState() == SessionState.IN_PROGRESS) {
             CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
             UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
@@ -284,14 +320,6 @@ public class SessionServiceImpl implements SessionService {
                     session.setState(SessionState.FINISHED);
                 }
             }
-
-            if (session.getMode() == SessionMode.ASYNC) {
-                Date date = new Date();
-                date.setTime(date.getTime() + (session.getPlaytime() * 1000));
-                System.out.println(date);
-                timers.put(session.getId(),taskScheduler.schedule(new RemindTask(session), date));
-            }
-
             sessionRepository.save(session);
         }
     }
@@ -326,7 +354,8 @@ public class SessionServiceImpl implements SessionService {
     public Session startSession(Integer sessionId, Integer userId) throws SessionServiceException {
         Session s = findSessionById(sessionId, userId);
 
-        if(s.getState() == SessionState.CREATED){
+        if(s.getState() == SessionState.CREATED && s.getTheme().getOrganisation().
+                getOrganisers().stream().anyMatch(o -> o.getId().equals(userId))){
             s.setState(SessionState.IN_PROGRESS);
             s = sessionRepository.save(s);
         }
@@ -338,7 +367,8 @@ public class SessionServiceImpl implements SessionService {
     public Session stopSession(Integer sessionId, Integer userId) throws SessionServiceException {
         Session s = findSessionById(sessionId, userId);
 
-        if(s.getState() == SessionState.IN_PROGRESS && s.getTheme().getCreator().getId().equals(userId)){
+        if(s.getState() == SessionState.IN_PROGRESS && s.getTheme().getOrganisation().
+                getOrganisers().stream().anyMatch(o -> o.getId().equals(userId))){
             s.setState(SessionState.FINISHED);
             s = sessionRepository.save(s);
         }
@@ -364,47 +394,5 @@ public class SessionServiceImpl implements SessionService {
             }
         }
         return false;
-    }
-
-    class RemindTask implements Runnable{
-        Session session;
-
-        public RemindTask(Session session) {
-            this.session = session;
-        }
-
-        public void run() {
-            System.out.println("Time's up!");
-            String userName = session.getUserSessions().stream().filter(us -> us.getUserPosition() == 0).findFirst().get().getUser().getUsername();
-            System.out.println(userName);
-            for (UserSession us : session.getUserSessions()) {
-                if (us.getUserPosition() == 0) {
-                    us.setUserPosition(session.getUserSessions().size() - 1);
-                } else {
-                    us.setUserPosition(us.getUserPosition() - 1);
-                }
-            }
-            System.out.println(session.getUserSessions().stream().filter(us -> us.getUserPosition() == 0).findFirst().get().getUser().getUsername());
-
-            sessionRepository.save(session);
-            System.out.println("Sending mail!");
-            //mailService.sendMailToUser(userName, "Failed to make a move", "Dear " + userName + ", \n You have failed to make a move. \n your turn has been passed on to the next user. \n Please be available at your next turn.");
-            System.out.println("mail sent!");
-        }
-    }
-
-    class SessionUpdate implements Runnable {
-        private int sessionId;
-
-        public SessionUpdate(int sessionId) {
-            this.sessionId = sessionId;
-        }
-
-        @Override
-        public void run() {
-            Session session = sessionRepository.findOne(sessionId);
-            session.setState(SessionState.IN_PROGRESS);
-            sessionRepository.save(session);
-        }
     }
 }
