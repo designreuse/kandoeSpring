@@ -53,6 +53,8 @@ public class SessionServiceTest {
     @Test
     public void testMoveCard() throws Exception {
         Session s = sessionService.findSessionById(1,1);
+        sessionService.startSession(s.getSessionId(), 1);
+
         CardSession cardSession = s.getCardSessions().stream().filter(cs -> cs.getPosition()==0).findFirst().get();
         UserSession userSession = s.getUserSessions().stream().filter(us -> us.getUserPosition()==0).findFirst().get();
         int original = cardSession.getPosition();
@@ -65,7 +67,8 @@ public class SessionServiceTest {
     @Test
     public void testMoveCardWrongUser() throws Exception{
         Session s = sessionService.findSessionById(1,1);
-        System.out.println(s.getUserSessions().size());
+        sessionService.startSession(s.getSessionId(), 1);
+
         CardSession cardSession = s.getCardSessions().stream().filter(cs -> cs.getPosition()==0).findFirst().get();
         UserSession userSession = s.getUserSessions().stream().filter(us -> us.getUserPosition()==1).findFirst().get();
 
