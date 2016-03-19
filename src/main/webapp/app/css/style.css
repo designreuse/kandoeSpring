@@ -1226,3 +1226,16 @@ li > .row > .roboto-bold{
     color: #fff;
     background: #ffb951;
 }
+
+/*
+-------------------------- SubTheme Detail ---------------------------
+*/
+
+.hover-subTheme{
+    font-weight:normal;
+    font-size: 20px;
+}
+
+.font-size-normal{
+    font-size: 14px;
+}

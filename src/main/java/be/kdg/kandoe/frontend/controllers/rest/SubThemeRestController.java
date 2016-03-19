@@ -47,26 +47,26 @@ public class SubThemeRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<SubThemeDTO>> getSubThemes(){
+    public ResponseEntity<List<SubThemeDTO>> getSubThemes() {
         List<SubTheme> subThemes = subThemeService.findSubThemes();
 
         return new ResponseEntity<>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{themeId}", method = RequestMethod.GET)
-    public ResponseEntity<SubThemeDTO> getSubThemeById(@PathVariable(value = "themeId") int themeId){
+    public ResponseEntity<SubThemeDTO> getSubThemeById(@PathVariable(value = "themeId") int themeId) {
         SubTheme subTheme = subThemeService.findSubThemeById(themeId);
 
-       return new ResponseEntity<>(subThemeAssembler.toResource(subTheme), HttpStatus.OK);
+        return new ResponseEntity<>(subThemeAssembler.toResource(subTheme), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<SubThemeDTO> createSubTheme(@Valid @RequestBody SubThemeDTO subThemeDTO,
-                                                @AuthenticationPrincipal User user) {
+                                                      @AuthenticationPrincipal User user) {
         if (user != null && user.getId() != null) {
             SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
 
-            SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in,user.getUserId() ,subThemeDTO.getThemeId());
+            SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(), subThemeDTO.getThemeId());
             logger.info(this.getClass().toString() + ": adding new subtheme " + subTheme_out.getId());
 
             return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out), HttpStatus.CREATED);
@@ -77,14 +77,14 @@ public class SubThemeRestController {
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
     public ResponseEntity<SubThemeDTO> createSubTheme(@RequestPart("body") SubThemeDTO subThemeDTO,
-                                              @RequestPart("file") MultipartFile file,
-                                              @AuthenticationPrincipal User user,
-                                              HttpServletRequest request) {
+                                                      @RequestPart("file") MultipartFile file,
+                                                      @AuthenticationPrincipal User user,
+                                                      HttpServletRequest request) {
 
-        if(user != null && user.getId() != null) {
-            if(file.getContentType().split("/")[0].equals("image")){
+        if (user != null && user.getId() != null) {
+            if (file.getContentType().split("/")[0].equals("image")) {
                 SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
-                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(),subThemeDTO.getThemeId());
+                SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(), subThemeDTO.getThemeId());
 
                 String newFilename = String.format("%d.%s", subTheme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
                 String filePath = request.getServletContext().getRealPath("/resources/images/subThemes/");
@@ -98,7 +98,7 @@ public class SubThemeRestController {
                 subTheme_out.setIconURL("resources/images/subThemes/" + newFilename);
                 subTheme_out = subThemeService.updateSubTheme(subTheme_out);
 
-                return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out) ,HttpStatus.CREATED);
+                return new ResponseEntity<>(subThemeAssembler.toResource(subTheme_out), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -106,8 +106,8 @@ public class SubThemeRestController {
     }
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
-    public ResponseEntity<List<SubThemeDTO>> getSubThemesCurrentUser(@AuthenticationPrincipal User user){
-        if(user != null){
+    public ResponseEntity<List<SubThemeDTO>> getSubThemesCurrentUser(@AuthenticationPrincipal User user) {
+        if (user != null) {
             Set<SubTheme> subThemes = subThemeService.findSubThemeByCreator(user.getId());
 
             return new ResponseEntity<>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
@@ -115,12 +115,12 @@ public class SubThemeRestController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @RequestMapping(value = "/{themeId}/cards", method = RequestMethod.GET)
+    @RequestMapping(value = "/{subThemeId}/cards", method = RequestMethod.GET)
     public ResponseEntity<List<CardDTO>> getSubThemeCards(@AuthenticationPrincipal User user,
-                                                       @PathVariable(value = "themeId") Integer themeId) {
-        if(user != null){
-            if(themeId != null){
-                List<Card> cards = subThemeService.findSubThemeCards(themeId);
+                                                          @PathVariable(value = "subThemeId") Integer subThemeId) {
+        if (user != null) {
+            if (subThemeId != null) {
+                Set<Card> cards = subThemeService.findSubThemeCards(subThemeId);
                 return new ResponseEntity<List<CardDTO>>(cardAssembler.toResources(cards), HttpStatus.OK);
             }
             return new ResponseEntity<List<CardDTO>>(HttpStatus.BAD_REQUEST);

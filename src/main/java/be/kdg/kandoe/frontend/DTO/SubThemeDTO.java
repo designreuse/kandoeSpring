@@ -5,6 +5,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public class SubThemeDTO extends ResourceSupport implements Serializable {
 
@@ -18,7 +19,7 @@ public class SubThemeDTO extends ResourceSupport implements Serializable {
 
     private OrganisationDTO organisation;
 
-    private List<CardDTO> cards;
+    private Set<CardDTO> cards;
 
     private Integer themeId;
 
@@ -70,11 +71,11 @@ public class SubThemeDTO extends ResourceSupport implements Serializable {
         this.organisation = organisation;
     }
 
-    public List<CardDTO> getCards() {
+    public Set<CardDTO> getCards() {
         return cards;
     }
 
-    public void setCards(List<CardDTO> cards) {
+    public void setCards(Set<CardDTO> cards) {
         this.cards = cards;
     }
 

@@ -99,12 +99,12 @@ public class SessionRestControllerTest {
                 .andExpect(jsonPath("$.[0].sessionId", is(1)));
     }
 
-    @Test
+   @Test
     public void testGetSessionsBySubThemeId() throws Exception {
         mockMvc.perform(get("/api/sessions/subtheme/1")
                 .header("Authorization", appToken))
                 .andDo(print())
-                .andExpect(jsonPath("$.[0].sessionId", is(2)));
+                .andExpect(jsonPath("$.[0].sessionId", is(3)));
     }
 
     @Test

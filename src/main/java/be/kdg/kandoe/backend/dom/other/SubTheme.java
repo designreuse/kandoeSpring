@@ -7,6 +7,7 @@ import org.springframework.hateoas.Identifiable;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -32,7 +33,7 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
     private Organisation organisation;
 
     @OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
-    private List<Card> cards;
+    private Set<Card> cards;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User creator;
@@ -84,11 +85,11 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
         this.organisation = organisation;
     }
 
-    public List<Card> getCards() {
+    public Set<Card> getCards() {
         return cards;
     }
 
-    public void setCards(List<Card> cards) {
+    public void setCards(Set<Card> cards) {
         this.cards = cards;
     }
 

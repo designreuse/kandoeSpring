@@ -45,13 +45,13 @@ export class SubThemeService {
     }
 
     public getSubTheme(id:number):Observable<SubTheme>{
-        return this.securityService.get(this.path + 'themes/' + id,true)
+        return this.securityService.get(this.path + 'subThemes/' + id,true)
             .map(res => res.json())
             .map((subTheme:SubTheme) => SubTheme.fromJson(subTheme))
     }
 
-    public getSubThemeCards(themeId: number): Observable<Card[]> {
-        return this.securityService.get(this.path + 'subThemes/' + themeId + '/cards', true)
+    public getSubThemeCards(subThemeId: number): Observable<Card[]> {
+        return this.securityService.get(this.path + 'subThemes/' + subThemeId + '/cards', true)
             .map(res => res.json())
             .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
     }

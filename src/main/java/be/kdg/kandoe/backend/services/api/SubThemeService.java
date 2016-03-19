@@ -13,6 +13,6 @@ public interface SubThemeService {
     List<SubTheme> findSubThemes();
     SubTheme updateSubTheme(SubTheme subTheme);
     Set<SubTheme> findSubThemeByCreator(Integer userId);
-    List<Card> findSubThemeCards(Integer themeId);
+    Set<Card> findSubThemeCards(Integer subThemeId);
 
 }

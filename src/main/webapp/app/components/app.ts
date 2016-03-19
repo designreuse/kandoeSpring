@@ -44,7 +44,7 @@ declare var jsColor: any;
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/themes/addSubTheme', name: 'AddSubTheme', component: AddSubThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},
-    {path: '/themes/:id/subThemesDetail', name: 'SubThemesDetail', component: SubThemeDetailComponent},
+    {path: '/subThemesDetail/:id', name: 'SubThemesDetail', component: SubThemeDetailComponent},
     {path: '/themes/:id/subThemes', name: 'SubThemes', component: SubThemeComponent},
     {path: 'themes/:id/addCard', as: 'AddCard', component: AddCardComponent},
     {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent},

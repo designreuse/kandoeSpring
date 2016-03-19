@@ -90,6 +90,8 @@ public class SubThemeRestControllerTest {
         JSONObject subTheme = new JSONObject();
         subTheme.put("subThemeName", "TestSubTheme");
         subTheme.put("description", "TestDescription");
+        subTheme.put("themeId", 1);
+        subTheme.put("organisation",0);
 
         mockMvc.perform(post("/api/subThemes")
                 .header("Authorization", appToken)
@@ -100,4 +102,11 @@ public class SubThemeRestControllerTest {
     }
 
 
+   @Test
+    public void testGetSubThemeCards() throws Exception {
+        mockMvc.perform(get("/api/subThemes/1/cards")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].description", is("KdGCard longer description to check if everything works accordingly")));
+    }
 }

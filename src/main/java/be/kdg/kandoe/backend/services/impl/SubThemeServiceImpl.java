@@ -50,7 +50,7 @@ public class SubThemeServiceImpl implements SubThemeService {
     }
 
     @Override
-    public SubTheme saveSubTheme(SubTheme subTheme,Integer userId, Integer themeId) {
+    public SubTheme saveSubTheme(SubTheme subTheme, Integer userId, Integer themeId) {
         User creator = userRepository.getOne(userId);
         Theme theme = themeService.findThemeById(themeId);
 
@@ -59,16 +59,16 @@ public class SubThemeServiceImpl implements SubThemeService {
         subTheme.setOrganisation(theme.getOrganisation());
         //subTheme = subThemeRepository.save(subTheme);
 
-        Set<SubTheme> subThemes=creator.getSubThemes();
-        if (subThemes== null){
+        Set<SubTheme> subThemes = creator.getSubThemes();
+        if (subThemes == null) {
             subThemes = new HashSet<>();
         }
         subThemes.add(subTheme);
         creator.setSubThemes(subThemes);
-       // userService.updateUser(creator);
+        // userService.updateUser(creator);
 
         Set<SubTheme> themeSubThemes = theme.getSubThemes();
-        if(themeSubThemes == null)
+        if (themeSubThemes == null)
             themeSubThemes = new HashSet<>();
         themeSubThemes.add(subTheme);
         theme.setSubThemes(themeSubThemes);
@@ -85,7 +85,7 @@ public class SubThemeServiceImpl implements SubThemeService {
 
     @Override
     public SubTheme updateSubTheme(SubTheme subTheme) {
-                     return subThemeRepository.save(subTheme);
+        return subThemeRepository.save(subTheme);
     }
 
     @Override
@@ -96,18 +96,20 @@ public class SubThemeServiceImpl implements SubThemeService {
         Set<SubTheme> subThemes = creator.getSubThemes();
         subThemes.stream().forEach(t -> {
             Hibernate.initialize(t.getCards());
-           /* if(t.getSubThemes() != null)
+          /*  if(t.getSubThemes() != null)
                 Hibernate.initialize(t.getSubThemes());*/
         });
         return creator.getSubThemes();
     }
 
     @Override
-    public List<Card> findSubThemeCards(Integer themeId) {
-        SubTheme subTheme = findSubThemeById(themeId);
+    public Set<Card> findSubThemeCards(Integer subThemeId) {
+        SubTheme subTheme = findSubThemeById(subThemeId);
 
         Hibernate.initialize(subTheme.getCards());
-        subTheme.getCards().stream().forEach(c -> Hibernate.initialize(c.getCardSessions()));
+        Set<Card> cards = subTheme.getCards();
+        cards.stream().forEach(c -> Hibernate.initialize(c.getCardSessions()));
+
         return subTheme.getCards();
     }
 }

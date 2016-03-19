@@ -60,12 +60,12 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/subTheme", ".
                         .map(function (st) { return subTheme_1.SubTheme.fromJson(st); });
                 };
                 SubThemeService.prototype.getSubTheme = function (id) {
-                    return this.securityService.get(this.path + 'themes/' + id, true)
+                    return this.securityService.get(this.path + 'subThemes/' + id, true)
                         .map(function (res) { return res.json(); })
                         .map(function (subTheme) { return subTheme_1.SubTheme.fromJson(subTheme); });
                 };
-                SubThemeService.prototype.getSubThemeCards = function (themeId) {
-                    return this.securityService.get(this.path + 'subThemes/' + themeId + '/cards', true)
+                SubThemeService.prototype.getSubThemeCards = function (subThemeId) {
+                    return this.securityService.get(this.path + 'subThemes/' + subThemeId + '/cards', true)
                         .map(function (res) { return res.json(); })
                         .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
                 };

@@ -95,10 +95,11 @@
                         <div class="col-xs-12 col-sm-6 col-lg-4" *ngFor="#subTheme of theme.subThemes">
                             <li>
                                 <div class="row">
-                                <img class="card-img-theme img-thumbnail img-responsive" alt="no image found"
+                                 <a class="hover-subTheme" [routerLink]="['/SubThemesDetail', {id:subTheme.subThemeId}]">
+                                    <img class="card-img-theme img-thumbnail img-responsive" alt="no image found"
                                      [src]="getImageSrc(subTheme.iconURL)">
                                 <div class="roboto-bold">{{subTheme.subThemeName}}</div>
-                                <div>{{subTheme.description}}</div>
+                                <div class="font-size-normal">{{subTheme.description}}</div></a>
                                 </div>
                             </li>
                         </div>

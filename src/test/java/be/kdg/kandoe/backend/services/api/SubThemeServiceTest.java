@@ -16,6 +16,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 
@@ -49,6 +50,14 @@ public class SubThemeServiceTest {
         subTheme.setSubThemeName("KdGsubUpdate");
         subThemeService.updateSubTheme(subTheme);
         assertEquals("The SubThemeName should be 'KdGsubUpdate' ",subTheme.getSubThemeName(),"KdGsubUpdate");
+
+    }
+
+    @Test
+    public void testSubThemeCards() {
+        SubTheme subTheme = subThemeService.findSubThemeByName("SubThemeKdG");
+
+        assertEquals("The length of cards should be 2' ",subTheme.getCards().size(),2);
 
     }
 

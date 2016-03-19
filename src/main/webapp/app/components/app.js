@@ -94,7 +94,7 @@ System.register(['angular2/core', 'angular2/router', "./organisations/organisati
                         { path: '/themes/addTheme', name: 'AddTheme', component: addThemeComponent_1.AddThemeComponent },
                         { path: '/themes/addSubTheme', name: 'AddSubTheme', component: addSubTheme_component_1.AddSubThemeComponent },
                         { path: '/chat', name: 'Chat', component: chatComponent_1.ChatComponent },
-                        { path: '/themes/:id/subThemesDetail', name: 'SubThemesDetail', component: subThemeDetail_component_1.SubThemeDetailComponent },
+                        { path: '/subThemesDetail/:id', name: 'SubThemesDetail', component: subThemeDetail_component_1.SubThemeDetailComponent },
                         { path: '/themes/:id/subThemes', name: 'SubThemes', component: subTheme_component_1.SubThemeComponent },
                         { path: 'themes/:id/addCard', as: 'AddCard', component: addCard_component_1.AddCardComponent },
                         { path: '/sessions/:id', as: 'SessionDetail', component: sessionDetail_component_1.SessionDetailComponent },

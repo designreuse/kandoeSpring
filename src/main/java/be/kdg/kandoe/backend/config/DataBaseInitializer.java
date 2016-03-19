@@ -18,9 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Transactional
@@ -131,15 +129,6 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             theme2 = themeService.saveTheme(theme2, mailUser.getUserId(), org2.getId());
         }
 
-        SubTheme subTheme = new SubTheme();
-        if (subThemeRepository.findOne(1) == null && mailUser.getId() != null) {
-            subTheme.setSubThemeName("SubThemeKdG");
-            subTheme.setDescription("KdG Subtheme description");
-            subTheme.setIconURL("http://www.droscher.com/gallery3/var/albums/travel/Anniversary2011/Antwerp-0021.jpg?m=1310969231.jpeg");
-            subTheme.setOrganisation(org);
-            subTheme = subThemeService.saveSubTheme(subTheme, user.getUserId(), theme.getThemeId());
-
-        }
 
         Card card = new Card();
         if (cardRepository.findCardByDescription("KdGCard longer description to check if everything works accordingly") == null) {
@@ -176,6 +165,20 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             card5.setDescription("Testcard5");
             card5.setImageURL("https://www.underconsideration.com/brandnew/archives/karel_de_grote_logo_detail.png");
             cardService.saveCard(card5, theme.getId());
+        }
+
+        SubTheme subTheme = new SubTheme();
+        if (subThemeRepository.findOne(1) == null && mailUser.getId() != null) {
+            subTheme.setSubThemeName("SubThemeKdG");
+            subTheme.setDescription("KdG Subtheme description");
+            subTheme.setIconURL("http://www.droscher.com/gallery3/var/albums/travel/Anniversary2011/Antwerp-0021.jpg?m=1310969231.jpeg");
+            subTheme.setOrganisation(org);
+            Set<Card> cardsSubTheme= new HashSet<>();
+            cardsSubTheme.add(card);
+            cardsSubTheme.add(card2);
+            subTheme.setCards(cardsSubTheme);
+            subTheme = subThemeService.saveSubTheme(subTheme, user.getUserId(), theme.getThemeId());
+
         }
 
 
@@ -345,9 +348,9 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
             sessionSubThema.setUserSessions(userSessions);
             sessionSubThema.setSize(6);
             sessionSubThema = sessionRepository.save(sessionSubThema);
-            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession,userSession2,userSessionSubThema)));
+            user.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession, userSession2, userSessionSubThema)));
             userRepository.save(user);
-            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1,userSession3,userSession1SubThema)));
+            user2.setUserSessions(new ArrayList<UserSession>(Arrays.asList(userSession1, userSession3, userSession1SubThema)));
             userSessionSubThema.setSession(sessionSubThema);
             userSession1SubThema.setSession(sessionSubThema);
             userSessionRepository.save(userSessionSubThema);
