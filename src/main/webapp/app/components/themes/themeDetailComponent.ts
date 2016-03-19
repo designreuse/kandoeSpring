@@ -120,11 +120,14 @@ export class ThemeDetailComponent implements OnInit {
                 var i = 0;
                 $("input:checked").each(function () {
                     cardIds[i] = $(this).val();
+                    console.log($(this).val());
+                    console.log(cardIds[i]);
                     i++;
                 });
 
                 this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(subt => {
-console.log(st.cards.length);
+                    console.log(subt);
+                    console.log(cardIds[0]);
                 });
 
 

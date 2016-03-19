@@ -14,6 +14,6 @@ public interface SubThemeService {
     SubTheme updateSubTheme(SubTheme subTheme);
     Set<SubTheme> findSubThemeByCreator(Integer userId);
     Set<Card> findSubThemeCards(Integer subThemeId);
-    SubTheme addCardsToSubTheme(Set<Card> cards,Integer subThemeId);
+    SubTheme addCards(Integer subThemeId,Set<Card> cards);
 
 }

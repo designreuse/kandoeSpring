@@ -129,10 +129,13 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             var i = 0;
                             $("input:checked").each(function () {
                                 cardIds[i] = $(this).val();
+                                console.log($(this).val());
+                                console.log(cardIds[i]);
                                 i++;
                             });
                             _this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(function (subt) {
-                                console.log(st.cards.length);
+                                console.log(subt);
+                                console.log(cardIds[0]);
                             });
                         }, function (error) {
                             //todo change error display

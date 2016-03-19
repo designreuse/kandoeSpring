@@ -114,22 +114,21 @@ public class SubThemeServiceImpl implements SubThemeService {
     }
 
     @Override
-    public SubTheme addCardsToSubTheme(Set<Card> cards,Integer subThemeId) {
+    public SubTheme addCards(Integer subThemeId, Set<Card> cards) {
         SubTheme subTheme = findSubThemeById(subThemeId);
 
-        Set<Card> subThemeCards = new HashSet<>();
+        Set<Card> subThemeCards = subTheme.getCards();
+        if (subThemeCards == null)
+            subThemeCards = new HashSet<>();
 
         for (Card card : cards) {
-          /* if (subTheme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
-          */   subThemeCards.add(card);
-                subThemeRepository.save(subTheme);
+            if (!subTheme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
+                subThemeCards.add(card);
 
-          /*}*/
+            }
 
         }
         subTheme.setCards(subThemeCards);
-        System.out.println(subThemeCards.size());
-        System.out.println(subTheme.getCards().size() +"lentge");
         subThemeRepository.save(subTheme);
 
         return subTheme;

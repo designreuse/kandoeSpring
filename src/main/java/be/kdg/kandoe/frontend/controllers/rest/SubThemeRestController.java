@@ -141,7 +141,8 @@ public class SubThemeRestController {
                     cards.add(mapper.map(cardDTO, Card.class));
                 }
                 SubTheme subTheme = subThemeService.findSubThemeById(subThemeId);
-                subThemeService.addCardsToSubTheme(cards, subThemeId);
+
+                subThemeService.addCards(subThemeId, cards);
                 return new ResponseEntity<SubThemeDTO>(subThemeAssembler.toResource(subTheme), HttpStatus.OK);
             }
             return new ResponseEntity<SubThemeDTO>(HttpStatus.BAD_REQUEST);
