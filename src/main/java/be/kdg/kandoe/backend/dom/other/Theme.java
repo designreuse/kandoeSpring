@@ -36,7 +36,7 @@ public class Theme implements Serializable, Identifiable<Integer> {
     private Organisation organisation;
 
     @OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
-    private List<Card> cards;
+    private Set<Card> cards;
 
     @ManyToMany(targetEntity = Tag.class)
     private List<Tag> tags;
@@ -91,11 +91,11 @@ public class Theme implements Serializable, Identifiable<Integer> {
         this.organisation = organisation;
     }
 
-    public List<Card> getCards() {
+    public Set<Card> getCards() {
         return cards;
     }
 
-    public void setCards(List<Card> cards) {
+    public void setCards(Set<Card> cards) {
         this.cards = cards;
     }
 

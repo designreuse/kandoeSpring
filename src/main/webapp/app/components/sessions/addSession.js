@@ -105,13 +105,11 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     console.log("showOrganisationUsers");
                     this.organisationService.getOrganisationOrganisers(this.currentTheme.organisation.organisationId).subscribe(function (users) {
                         users.forEach(function (u) {
-                            console.log(JSON.stringify(u));
                             _this.users.push(u);
                         });
                     });
                     this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(function (users) {
                         users.forEach(function (u) {
-                            console.log(JSON.stringify(u));
                             _this.users.push(u);
                         });
                     });
@@ -123,13 +121,11 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     console.log("showOrganisationUsers");
                     this.organisationService.getOrganisationOrganisers(this.currentSubTheme.organisation.organisationId).subscribe(function (users) {
                         users.forEach(function (u) {
-                            console.log(JSON.stringify(u));
                             _this.users.push(u);
                         });
                     });
                     this.organisationService.getOrganisationMembers(this.currentSubTheme.organisation.organisationId).subscribe(function (users) {
                         users.forEach(function (u) {
-                            console.log(JSON.stringify(u));
                             _this.users.push(u);
                         });
                     });
@@ -147,7 +143,6 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this.endDate = new Date(this.endYear + "-" + this.endMonth + "-" + this.endDay);
                     this.session.startTime = this.startDate.toISOString();
                     this.session.endTime = this.endDate.toISOString();
-                    console.log(JSON.stringify(this.session));
                     this.sessionService.createSession(this.session).subscribe(function (res) {
                         _this.router.navigate(['/LoggedInHome']);
                     }, function (error) {
@@ -197,10 +192,9 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/sessions/addSession.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, themeService_1.ThemeService, organisationService_1.OrganisationService, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, router_1.Router, themeService_1.ThemeService, organisationService_1.OrganisationService, subThemeService_1.SubThemeService])
                 ], AddSession);
                 return AddSession;
-                var _a;
             })();
             exports_1("AddSession", AddSession);
         }

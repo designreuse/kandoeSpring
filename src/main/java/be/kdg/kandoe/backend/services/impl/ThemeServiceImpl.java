@@ -133,7 +133,7 @@ public class ThemeServiceImpl implements ThemeService {
 
         Hibernate.initialize(theme.getCards());
         theme.getCards().stream().forEach(c -> Hibernate.initialize(c.getCardSessions()));
-        return theme.getCards();
+        return new ArrayList<>(theme.getCards());
     }
 
     @Override

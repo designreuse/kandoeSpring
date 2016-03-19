@@ -118,13 +118,11 @@ export class AddSession implements OnInit{
         console.log("showOrganisationUsers") ;
         this.organisationService.getOrganisationOrganisers(this.currentTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u =>{
-                console.log(JSON.stringify(u));
                 this.users.push(u);
             })
         });
         this.organisationService.getOrganisationMembers(this.currentTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u => {
-                console.log(JSON.stringify(u));
                 this.users.push(u);
             })
         });
@@ -136,13 +134,11 @@ export class AddSession implements OnInit{
         console.log("showOrganisationUsers") ;
         this.organisationService.getOrganisationOrganisers(this.currentSubTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u =>{
-                console.log(JSON.stringify(u));
                 this.users.push(u);
             })
         });
         this.organisationService.getOrganisationMembers(this.currentSubTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u => {
-                console.log(JSON.stringify(u));
                 this.users.push(u);
             })
         });
@@ -164,9 +160,6 @@ export class AddSession implements OnInit{
         this.session.startTime = this.startDate.toISOString();
         this.session.endTime = this.endDate.toISOString();
 
-
-
-        console.log(JSON.stringify(this.session)) ;
         this.sessionService.createSession(this.session).subscribe(res => {
             this.router.navigate(['/LoggedInHome']);
         }, error => {

@@ -119,32 +119,35 @@ export class SessionDetailComponent implements OnInit{
     }
 
     changePosition(i){
-        var card = this.cards[i];
-        var id = "#" + i;
-        var el = $(document).find($(id));
-        var stopId = "#play-" + this.user.userId;
-        var stopped = $(document).find($(stopId));
-        var next = null;
-        for(var j = 0; j < this.users.length; j++){
-            var u = this.users[j];
-            if(u.position == 1){
-                next = u;
+        console.log(this.session.state);
+        if(this.session.state == "IN_PROGRESS"){
+            var card = this.cards[i];
+            var id = "#" + i;
+            var el = $(document).find($(id));
+            var stopId = "#play-" + this.user.userId;
+            var stopped = $(document).find($(stopId));
+            var next = null;
+            for(var j = 0; j < this.users.length; j++){
+                var u = this.users[j];
+                if(u.position == 1){
+                    next = u;
+                }
             }
-        }
 
-        var playId = "#play-" + (u.userId);
-        var playing = $(document).find($(playId));
-        $(playing).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2000);
-        $(stopped).css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}, 2000);
-        if(card.position < (this.session.size-1) && this.canPlay) {
-            this.stompClient.send("/move", {}, JSON.stringify({'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId}));
-            $(el).load("sessionDetail.html");
-        } else if(card.position == (this.session.size-1)){
-            $(document).find("#card-element-winner").text(card.description);
-            var img = $(document).find("#card-img-winner");
-            img.attr("src", this.getImageSrc(card.imageURL));
-            var popup = $(document).find("#winner-popup");
-            $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2500);
+            var playId = "#play-" + (u.userId);
+            var playing = $(document).find($(playId));
+            $(playing).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2000);
+            $(stopped).css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}, 2000);
+            if(card.position < (this.session.size-1) && this.canPlay) {
+                this.stompClient.send("/move", {}, JSON.stringify({'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId}));
+                $(el).load("sessionDetail.html");
+            } else if(card.position == (this.session.size-1)){
+                $(document).find("#card-element-winner").text(card.description);
+                var img = $(document).find("#card-img-winner");
+                img.attr("src", this.getImageSrc(card.imageURL));
+                var popup = $(document).find("#winner-popup");
+                $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2500);
+            }
         }
     }
 
@@ -169,6 +172,11 @@ export class SessionDetailComponent implements OnInit{
         } else {
             return "./app/resources/noimgplaceholder.png";
         }
+    }
+
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
     }
 
     /*

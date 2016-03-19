@@ -161,6 +161,7 @@ public class SessionServiceImpl implements SessionService {
                 throw new SessionServiceException("You are not the creator of this theme");
 
             session.setTheme(theme);
+            session.setSubTheme(null);
             org = theme.getOrganisation();
         } else {
             SubTheme subTheme = subThemeService.findSubThemeById(subThemeId);
@@ -171,6 +172,7 @@ public class SessionServiceImpl implements SessionService {
                 throw new SessionServiceException("You are not the creator of this theme");
 
             session.setSubTheme(subTheme);
+            session.setTheme(null);
             org = subTheme.getOrganisation();
         }
 
@@ -243,6 +245,10 @@ public class SessionServiceImpl implements SessionService {
                     .findFirst().get();
             userSession.setChosenCards(true);
 
+            if(session.getUserSessions().stream().allMatch(UserSession::isChosenCards)){
+                session.setState(SessionState.IN_PROGRESS);
+            }
+
             session = sessionRepository.save(session);
             for (CardSession cardSession : cardSessions) {
                 cardSession.setSession(session);
@@ -260,31 +266,34 @@ public class SessionServiceImpl implements SessionService {
             timers.get(sessionId).cancel(false);
         }
         //todo state
-        //if (session.getState() == SessionState.IN_PROGRESS) {
-        CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
-        UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
-        System.out.println("Current UserName: " + userSession.getUser().getUsername());
-        if (userSession.getUser().getId().equals(userId)) {
-            System.out.println("the if statement succeeded");
-            cardSession.setPosition(cardSession.getPosition() + 1);
-            for (UserSession u : session.getUserSessions()) {
-                if (u.getUserPosition() == 0) {
-                    u.setUserPosition(session.getUserSessions().size() - 1);
-                } else {
-                    u.setUserPosition(u.getUserPosition() - 1);
+        if (session.getState() == SessionState.IN_PROGRESS) {
+            CardSession cardSession = session.getCardSessions().stream().filter(s -> s.getCard().getId().equals(cardId)).findFirst().get();
+            UserSession userSession = session.getUserSessions().stream().filter(s -> s.getUserPosition() == 0).findFirst().get();
+
+            if (userSession.getUser().getId().equals(userId)) {
+                cardSession.setPosition(cardSession.getPosition() + 1);
+                for (UserSession u : session.getUserSessions()) {
+                    if (u.getUserPosition() == 0) {
+                        u.setUserPosition(session.getUserSessions().size() - 1);
+                    } else {
+                        u.setUserPosition(u.getUserPosition() - 1);
+                    }
+                }
+
+                if(cardSession.getPosition() == session.getSize()-1){
+                    session.setState(SessionState.FINISHED);
                 }
             }
-        }
 
-        if (session.getMode() == SessionMode.ASYNC) {
-            Date date = new Date();
-            date.setTime(date.getTime() + (session.getPlaytime() * 1000));
-            System.out.println(date);
-            timers.put(session.getId(),taskScheduler.schedule(new RemindTask(session), date));
-        }
+            if (session.getMode() == SessionMode.ASYNC) {
+                Date date = new Date();
+                date.setTime(date.getTime() + (session.getPlaytime() * 1000));
+                System.out.println(date);
+                timers.put(session.getId(),taskScheduler.schedule(new RemindTask(session), date));
+            }
 
-        sessionRepository.save(session);
-        //}
+            sessionRepository.save(session);
+        }
     }
 
     @Override
@@ -347,8 +356,6 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean checkCanPlay(Integer sessionId, Integer userId){
         Session s = sessionRepository.findOne(sessionId);
-
-        System.out.println("CanPlay: " + s.getUserSessions().stream().filter(us -> us.getUserPosition() == 0).findFirst().get().getUser().getUsername());
 
         if(s != null){
             if(s.getUserSessions().stream().filter(u -> u.getUser().getId().equals(userId))

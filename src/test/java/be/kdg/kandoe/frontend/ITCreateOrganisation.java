@@ -13,33 +13,37 @@ public class ITCreateOrganisation {
 
     @Test
     public void testCreateOrganisation() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.get("http://localhost:9966/Kandoe");
-        driver.manage().window().maximize();
-        WebElement element = driver.findElement(By.xpath("html/body/my-kandoe/home/section[1]/div[2]/div[1]/button[1]"));
-        element.click();
-        element = driver.findElement(By.id("username"));
-        sendKeysPerCharacter(element, "ArneLauryssens");
-        element = driver.findElement(By.id("password"));
-        element.click();
-        sendKeysPerCharacter(element, "test123");
-        element = driver.findElement(By.xpath(".//*[@id='login-form']/div/button"));
-        element.click();
-        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("loggedin-home")) != null);
-        element = driver.findElement(By.linkText("ORGANISATIONS"));
-        element.click();
-        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
-        element = driver.findElement(By.xpath(".//*[@id='org-list']/div/div/ul/div/li/a"));
-        element.click();
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("html/body/my-kandoe/add-organisation/div/form/div[1]/input")));
-        element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/div[1]/input"));
-        sendKeysPerCharacter(element, "TestOrganisation");
-        element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/div[2]/input"));
-        sendKeysPerCharacter(element, "TestAddress");
-        element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/button"));
-        element.click();
-        (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
+        /*WebDriver driver = new ChromeDriver();
+        try{
+            driver.get("http://localhost:9966/Kandoe");
+            driver.manage().window().maximize();
+            WebElement element = driver.findElement(By.xpath("html/body/my-kandoe/home/section[1]/div[2]/div[1]/button[1]"));
+            element.click();
+            element = driver.findElement(By.id("username"));
+            sendKeysPerCharacter(element, "ArneLauryssens");
+            element = driver.findElement(By.id("password"));
+            element.click();
+            sendKeysPerCharacter(element, "test123");
+            element = driver.findElement(By.xpath(".//*[@id='login-form']/div/button"));
+            element.click();
+            (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("loggedin-home")) != null);
+            element = driver.findElement(By.linkText("ORGANISATIONS"));
+            element.click();
+            (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
+            element = driver.findElement(By.xpath(".//*[@id='org-list']/div/div/ul/div/li/a"));
+            element.click();
+            (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("html/body/my-kandoe/add-organisation/div/form/div[1]/input")));
+            element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/div[1]/input"));
+            sendKeysPerCharacter(element, "TestOrganisation");
+            element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/div[2]/input"));
+            sendKeysPerCharacter(element, "TestAddress");
+            element = driver.findElement(By.xpath("html/body/my-kandoe/add-organisation/div/form/button"));
+            element.click();
+            (new WebDriverWait(driver, 10)).until((WebDriver d) -> d.findElement(By.tagName("organisations")) != null);
+        } finally {
+            driver.quit();
+        }   */
     }
 
     private void sendKeysPerCharacter(WebElement element, String keys) {

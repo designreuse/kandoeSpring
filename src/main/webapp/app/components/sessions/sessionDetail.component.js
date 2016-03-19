@@ -80,6 +80,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                         _this.sessionService.checkCanPlay(_this.sessionId).subscribe(function (r) {
+                            console.log(r.json());
                             _this.canPlay = r.json();
                         });
                     });
@@ -89,6 +90,21 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     }, function (e) {
                         console.log(e.text());
                     });
+                };
+                SessionDetailComponent.prototype.getVisibility = function (userId) {
+                    var currUser = null;
+                    for (var j = 0; j < this.users.length; j++) {
+                        var u = this.users[j];
+                        if (u.userId == userId) {
+                            currUser = u;
+                        }
+                    }
+                    if (currUser.position == 0) {
+                        return ("visibility: visible");
+                    }
+                    else {
+                        return ("visibility: hidden");
+                    }
                 };
                 SessionDetailComponent.prototype.getPosition = function (i, cardId) {
                     var c = this.cards[i];
@@ -110,19 +126,35 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90 + (rotationDegree * i)) + "deg)";
                 };
                 SessionDetailComponent.prototype.changePosition = function (i) {
-                    var card = this.cards[i];
-                    var id = "#" + i;
-                    var el = $(document).find($(id));
-                    if (card.position < (this.session.size - 1) && this.canPlay) {
-                        this.stompClient.send("/move", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId }));
-                        $(el).load("index.php");
-                    }
-                    else if (card.position == (this.session.size - 1)) {
-                        $(document).find("#card-element-winner").text(card.description);
-                        var img = $(document).find("#card-img-winner");
-                        img.attr("src", this.getImageSrc(card.imageURL));
-                        var popup = $(document).find("#winner-popup");
-                        $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 1000);
+                    console.log(this.session.state);
+                    if (this.session.state == "IN_PROGRESS") {
+                        var card = this.cards[i];
+                        var id = "#" + i;
+                        var el = $(document).find($(id));
+                        var stopId = "#play-" + this.user.userId;
+                        var stopped = $(document).find($(stopId));
+                        var next = null;
+                        for (var j = 0; j < this.users.length; j++) {
+                            var u = this.users[j];
+                            if (u.position == 1) {
+                                next = u;
+                            }
+                        }
+                        var playId = "#play-" + (u.userId);
+                        var playing = $(document).find($(playId));
+                        $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
+                        $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
+                        if (card.position < (this.session.size - 1) && this.canPlay) {
+                            this.stompClient.send("/move", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId }));
+                            $(el).load("sessionDetail.html");
+                        }
+                        else if (card.position == (this.session.size - 1)) {
+                            $(document).find("#card-element-winner").text(card.description);
+                            var img = $(document).find("#card-img-winner");
+                            img.attr("src", this.getImageSrc(card.imageURL));
+                            var popup = $(document).find("#winner-popup");
+                            $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
+                        }
                     }
                 };
                 SessionDetailComponent.prototype.calculateWidthCentre = function () {
@@ -146,6 +178,10 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         return "./app/resources/noimgplaceholder.png";
                     }
                 };
+                SessionDetailComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
+                };
                 /*
                 ----------------------------------- ADD CARD ----------------------------------------
                  */
@@ -153,8 +189,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     var _this = this;
                     this.card.themeId = +this.session.theme.themeId;
                     this.cardService.createCard(this.card, this.file).subscribe(function (res) {
-                        /*var popup = document.getElementById("popup-addCard");
-                        $(popup).css("visibility", "hidden");*/
                         _this.file = null;
                         _this.session.theme.cards.push(res);
                     });
@@ -224,8 +258,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
-                    //var socket = new SockJS('/Kandoe/circleSession'); //local
-                    var socket = new SockJS('/circleSession'); // wildfly
+                    var socket = new SockJS('/Kandoe/circleSession'); //local
+                    //var socket = new SockJS('/circleSession'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {
@@ -241,19 +275,25 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                                     card = _this.cards[i];
                                 }
                             }
+                            var playId = "#play-" + resultii.nextUserId;
+                            var stopId = "#play-" + _this.user.userId;
+                            var playing = $(document).find($(playId));
+                            var stopped = $(document).find($(stopId));
+                            $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
+                            $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
                             _this.canPlay = resultii.nextUserId == _this.user.userId;
                             var id = "#" + ii;
                             var el = $(document).find($(id));
                             card.position = card.position + 1;
                             if (card.position < (_this.session.size - 1)) {
-                                $(el).load("index.php");
+                                $(el).load("sessionDetail.html");
                             }
                             else if (card.position == (_this.session.size - 1)) {
                                 $(document).find("#card-element-winner").text(card.description);
                                 var img = $(document).find("#card-img-winner");
                                 img.attr("src", _this.getImageSrc(card.imageURL));
                                 var popup = $(document).find("#winner-popup");
-                                $(popup).css("visibility", "visible");
+                                $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
                             }
                         });
                     });
@@ -277,10 +317,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink, chatComponent_1.ChatComponent],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, router_1.Router, router_1.RouteParams])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
-                var _a, _b;
             })();
             exports_1("SessionDetailComponent", SessionDetailComponent);
         }

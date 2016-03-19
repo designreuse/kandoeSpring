@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Annelies on 22/02/2016.
@@ -50,9 +52,9 @@ public class CardServiceImpl implements CardService {
         Theme theme = themeService.findThemeById(themeId);
         card.setTheme(theme);
 
-        List<Card> themeCards = theme.getCards();
+        Set<Card> themeCards = theme.getCards();
         if(themeCards == null){
-            themeCards = new ArrayList<>();
+            themeCards = new HashSet<>();
         }
         themeCards.add(card);
         theme.setCards(themeCards);

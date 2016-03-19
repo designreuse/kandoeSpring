@@ -25,6 +25,7 @@ import javax.servlet.Filter;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -105,7 +106,7 @@ public class ThemeRestControllerTest {
         mockMvc.perform(get("/api/themes/1/cards")
                 .header("Authorization", appToken))
                 .andDo(print())
-                .andExpect(jsonPath("$.[0].description", is("KdGCard longer description to check if everything works accordingly")));
+                .andExpect(jsonPath("$.[0]", notNullValue()));
     }
 
      @Test

@@ -25,9 +25,9 @@ System.register(["../card", "../users/user", "../theme", "../subTheme"], functio
                     session.sessionName = json.sessionName;
                     session.mode = json.mode;
                     session.type = json.type;
+                    session.state = json.state;
                     session.minCards = json.minCards;
                     session.maxCards = json.maxCards;
-                    //dates might not work
                     session.startTime = json.startTime;
                     session.endTime = json.endTime;
                     session.size = json.size;
