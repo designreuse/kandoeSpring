@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.config.BackendContextConfig;
+import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
@@ -16,6 +17,10 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -30,6 +35,9 @@ public class SubThemeServiceTest {
     private SubThemeService subThemeService;
     @Autowired
     private ThemeService themeService;
+
+
+
 
     @Test
     public void testSaveSubTheme() throws Exception {
@@ -48,8 +56,9 @@ public class SubThemeServiceTest {
     public void testUpdateSubTheme() throws Exception{
         SubTheme subTheme = subThemeService.findSubThemeById(1);
         subTheme.setSubThemeName("KdGsubUpdate");
+
         subThemeService.updateSubTheme(subTheme);
-        assertEquals("The SubThemeName should be 'KdGsubUpdate' ",subTheme.getSubThemeName(),"KdGsubUpdate");
+         assertEquals("The SubThemeName should be 'KdGsubUpdate' ",subTheme.getSubThemeName(),"KdGsubUpdate");
 
     }
 

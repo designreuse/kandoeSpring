@@ -75,7 +75,7 @@
 
         <div class="form-group">
             <label>Theme</label>
-            <select class="form-control" (change)="selectTheme($event)" required ngControl="theme" #theme="ngForm">
+            <select class="form-control" (change)="selectTheme($event)" ngControl="theme" #theme="ngForm">
                 <option *ngFor="#t of themes" [value]="t.themeName">{{t.themeName}}</option>
             </select>
             <div [hidden]="theme.valid" class="alert alert-danger">

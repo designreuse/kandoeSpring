@@ -64,6 +64,17 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/subTheme", ".
                         .map(function (res) { return res.json(); })
                         .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
                 };
+                SubThemeService.prototype.addCardsToSubTheme = function (cardIds, subThemeId) {
+                    var cards = [];
+                    for (var i = 0; i < cardIds.length; i++) {
+                        var c = new card_1.Card();
+                        c.cardId = cardIds[i];
+                        cards[i] = c;
+                    }
+                    return this.securityService.post(this.path + 'subThemes/' + subThemeId + '/addCards', JSON.stringify(cards), true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (subTheme) { return subTheme_1.SubTheme.fromJson(subTheme); });
+                };
                 SubThemeService = __decorate([
                     core_1.Injectable(),
                     __param(0, core_1.Inject('App.BackEndPath')), 

@@ -55,4 +55,12 @@ public interface SubThemeService {
      */
     Set<Card> findSubThemeCards(Integer subThemeId) throws SubThemeServiceException;
 
+    /**
+     * Adds cards to a subtheme
+     * @param subThemeId the id of the subtheme
+     * @param cards the cards to add
+     * @return the subtheme
+     * @throws SubThemeServiceException when the subtheme cannot be found.
+     */
+    SubTheme addCards(Integer subThemeId,Set<Card> cards) throws SubThemeServiceException;
 }

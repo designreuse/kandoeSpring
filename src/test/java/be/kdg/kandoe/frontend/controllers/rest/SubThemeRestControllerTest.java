@@ -1,4 +1,5 @@
 package be.kdg.kandoe.frontend.controllers.rest;
+
 import be.kdg.kandoe.frontend.config.RootContextConfig;
 import be.kdg.kandoe.frontend.config.WebContextConfig;
 import be.kdg.kandoe.frontend.config.security.WebSecurityConfig;
@@ -50,8 +51,7 @@ public class SubThemeRestControllerTest {
     private String appToken;
 
     @Before
-    public void setup()
-    {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(springSecurityFilterChain).build();
@@ -67,7 +67,7 @@ public class SubThemeRestControllerTest {
     }
 
     @Test
-    public void testCreateSubTheme() throws Exception{
+    public void testCreateSubTheme() throws Exception {
         JSONObject subTheme = new JSONObject();
         subTheme.put("subThemeName", "TestSubTheme");
         subTheme.put("description", "TestDescription");
@@ -92,7 +92,7 @@ public class SubThemeRestControllerTest {
         subTheme.put("subThemeName", "TestSubTheme");
         subTheme.put("description", "TestDescription");
         subTheme.put("themeId", 1);
-        subTheme.put("organisation",0);
+        subTheme.put("organisation", 0);
 
         mockMvc.perform(post("/api/subThemes")
                 .header("Authorization", appToken)
@@ -103,11 +103,21 @@ public class SubThemeRestControllerTest {
     }
 
 
-   @Test
+    @Test
     public void testGetSubThemeCards() throws Exception {
         mockMvc.perform(get("/api/subThemes/1/cards")
                 .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$.[0]", notNullValue()));
+    }
+
+    @Test
+    public void testAddCardsToSubTheme() throws Exception {
+        mockMvc.perform(post("/api/subThemes/1/addCards")
+                .header("Authorization", appToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("[{\"cardId\":\"1\"},{\"cardId\":\"3\"},{\"cardId\":\"5\"}]"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
     }
 }

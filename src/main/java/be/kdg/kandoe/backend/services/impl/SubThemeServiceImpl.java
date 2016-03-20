@@ -121,16 +121,17 @@ public class SubThemeServiceImpl implements SubThemeService {
     public SubTheme updateSubTheme(SubTheme subTheme) throws SubThemeServiceException {
         logger.info(this.getClass().toString() + ": updating subtheme " + subTheme.getId());
 
-        if(subTheme.getId() == null){
+        if (subTheme.getId() == null) {
             logger.warn(this.getClass().toString() + ": cannot update subtheme with id null");
             throw new SubThemeServiceException("Cannot update subtheme with id null");
         }
 
         SubTheme st = subThemeRepository.save(subTheme);
 
-        logger.info(this.getClass().toString() + ": updated subtheme " + subTheme.getId());
+        logger.info(this.getClass().toString() + ": subtheme updated");
         return st;
     }
+
 
     @Override
     public Set<Card> findSubThemeCards(Integer subThemeId) throws SubThemeServiceException {
@@ -149,5 +150,32 @@ public class SubThemeServiceImpl implements SubThemeService {
 
         logger.info(this.getClass().toString() + ": found cards of subtheme " + subThemeId);
         return subTheme.getCards();
+    }
+
+    @Override
+    public SubTheme addCards(Integer subThemeId, Set<Card> cards) throws SubThemeServiceException {
+        logger.info(this.getClass().toString() + ": adding cards to subtheme " + subThemeId);
+        SubTheme subTheme = null;
+        try {
+            subTheme = findSubThemeById(subThemeId);
+        } catch (SubThemeServiceException e) {
+            logger.warn(this.getClass().toString() + ": failed to add cards to subtheme because subtheme cannot be found", e);
+            throw e;
+        }
+
+        Set<Card> subThemeCards = subTheme.getCards();
+        if (subThemeCards == null)
+            subThemeCards = new HashSet<>();
+
+        for (Card card : cards) {
+            if (!subTheme.getCards().stream().anyMatch(c -> c.getCardId().equals(card.getId()))) {
+                subThemeCards.add(card);
+            }
+        }
+        subTheme.setCards(subThemeCards);
+        subThemeRepository.save(subTheme);
+
+        logger.info(this.getClass().toString() + ": added cards to subtheme " + subThemeId);
+        return subTheme;
     }
 }

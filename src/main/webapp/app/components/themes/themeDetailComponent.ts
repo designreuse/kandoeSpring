@@ -24,10 +24,10 @@ import {SubThemeService} from "../../service/subThemeService";
 
 export class ThemeDetailComponent implements OnInit {
     public theme:Theme = Theme.createEmpty();
-    private themeId: number;
-    public org:Organisation=Organisation.createEmpty();
-	private cards: Card[] = [];
-    private subTheme: SubTheme=SubTheme.createEmpty();
+    private themeId:number;
+    public org:Organisation = Organisation.createEmpty();
+    private cards:Card[] = [];
+    private subTheme:SubTheme = SubTheme.createEmpty();
     private router:Router;
     private card:Card = Card.createEmpty();
     private file:File = null;
@@ -76,7 +76,7 @@ export class ThemeDetailComponent implements OnInit {
 
 
     /*
-    ------------------------- CARD COMPONENT ------------------------------------
+     ------------------------- CARD COMPONENT ------------------------------------
      */
 
     onSubmit() {
@@ -100,42 +100,65 @@ export class ThemeDetailComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    /*var count = $("input:checked").length;
-
-    var cardIds = Array<number>();
-    var i = 0;
-    $("input:checked").each(function () {
-        cardIds[i++] = $(this).val();
-        console.log($(this).val());
-    });
-    this.subThemeService.addCards(cardIds, this.subTheme.subThemeId).subscribe(subTheme => {
-        this.subTheme = subTheme;
-        this.cards = subTheme.cards;
-        this.subTheme.chosenCards = true;
-
-    }, e => {
-        console.log(e.text());
-    });*/
 
     /*
-    --------------------- SUBTHEME COMPONENT ---------------------
+     --------------------- SUBTHEME COMPONENT ---------------------
      */
 
     onSubmitSubTheme() {
         if (this.subTheme.description) {
             this.subTheme.themeId = this.themeId;
-            this.subTheme.subThemeName = this.subTheme.description;
             this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
 
                 this.theme.subThemes.push(st);
+                this.subTheme.subThemeName = null;
                 this.subTheme.description = null;
                 this.file = null;
+
+
+                var cardIds = [];
+                var i = 0;
+                $("input:checked").each(function () {
+                    cardIds[i] = $(this).val();
+                    console.log($(this).val());
+                    console.log(cardIds[i]);
+                    i++;
+                });
+
+                this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(subt => {
+                    console.log(subt);
+                    console.log(cardIds[0]);
+                });
+
+
             }, error => {
                 //todo change error display
                 this.file = null;
                 alert(JSON.stringify(error));
             });
+
+
         }
+    }
+
+    addCardsSubTheme() {
+
+        var cardIds = Array<number>();
+        var i = 0;
+        $("input:checked").each(function () {
+            cardIds[i++] = $(this).val();
+            console.log($(this).val());
+        });
+        var newSubThemeId = this.theme.subThemes.length + 1;
+        this.subThemeService.addCardsToSubTheme(cardIds, newSubThemeId).subscribe(subTheme => {
+            this.subTheme = subTheme;
+            console.log(newSubThemeId);
+            /*   this.cards = subTheme.cards;*/
+
+        }, e => {
+            alert(e.text());
+        });
+
     }
 
     onFileChangeSubTheme($event) {
@@ -144,6 +167,7 @@ export class ThemeDetailComponent implements OnInit {
         var output = document.getElementById("subthemeImg");
         output.src = URL.createObjectURL($event.target.files[0]);
     }
+
     /*
      ------------------------------------ CSV ---------------------------
      */
@@ -152,9 +176,11 @@ export class ThemeDetailComponent implements OnInit {
         this.csvFile = $event.target.files[0];
         var el = $event.target;
         console.log(el);
-        $(el).closest(".btn-file").css({color: "#333",
-        backgroundColor: "#e6e6e6",
-        borderColor: "#adadad"});
+        $(el).closest(".btn-file").css({
+            color: "#333",
+            backgroundColor: "#e6e6e6",
+            borderColor: "#adadad"
+        });
     }
 
     onSubmitCSV() {
@@ -162,7 +188,7 @@ export class ThemeDetailComponent implements OnInit {
         console.log("File type: " + this.csvFile.type);
         this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
             (data) => {
-                for(var c in data.json()) {
+                for (var c in data.json()) {
                     console.log(c);
                     this.cards.push(c);
                 }
@@ -175,8 +201,9 @@ export class ThemeDetailComponent implements OnInit {
             }
         );
     }
+
     /*
-    --------------------------------- GENERAL ---------------------------
+     --------------------------------- GENERAL ---------------------------
      */
 
     private getImageSrc(url:string):string {

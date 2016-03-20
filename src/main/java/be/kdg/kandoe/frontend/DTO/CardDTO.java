@@ -14,7 +14,7 @@ public class CardDTO extends ResourceSupport implements Serializable {
     private String description;
 
     private String imageURL;
-    private Integer themeId;
+     private Integer themeId;
     private int position;
 
     public CardDTO() {
@@ -39,6 +39,7 @@ public class CardDTO extends ResourceSupport implements Serializable {
     public String getImageURL() {
         return this.imageURL;
     }
+
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;

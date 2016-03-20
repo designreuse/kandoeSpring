@@ -62,15 +62,19 @@ export class AddThemeComponent implements OnInit {
         });
     }
 
+    selectOrganisation($event) {
+        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
+        this.theme.organisation=organisation;
+    }
+
+    /*
+     --------------------------------- GENERAL ---------------------------
+     */
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
     }
 
-    selectOrganisation($event) {
-        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
-        this.theme.organisation=organisation;
-    }
 
 
     private getImageSrc(url:string):string {

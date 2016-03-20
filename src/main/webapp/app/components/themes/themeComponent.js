@@ -64,7 +64,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this._themeService.getUserThemes().subscribe(function (themes) {
                         _this.themes = themes;
                     });
-                    this.userService.getCurrentUser().subscribe(function (data) { _this.user = data; }, function (error) { console.log(error); });
+                    this.userService.getCurrentUser().subscribe(function (data) {
+                        _this.user = data;
+                    }, function (error) {
+                        console.log(error);
+                    });
                     for (var i = 0; i < this.themes.length; i++) {
                         this._themeService.getThemeSubThemes(this.themes[i].themeId).subscribe(function (subThemes) {
                             for (var j = 0; subThemes.length; j++) {
@@ -80,38 +84,16 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         }).show();
                     });
                 };
-                ThemeComponent.prototype.logout = function () {
-                    localStorage.removeItem("id_token");
-                    this.router.navigate(['/Home']);
-                };
-                ThemeComponent.prototype.getImageSrc = function (url) {
-                    if (url) {
-                        if (url.indexOf("http://") > -1) {
-                            return url;
-                        }
-                        else {
-                            return url.replace(/"/g, "");
-                        }
-                    }
-                    else {
-                        return "./app/resources/noimgplaceholder.png";
-                    }
-                };
+                /*
+                 --------------------- CARD COMPONENT ---------------------
+                 */
                 ThemeComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
                     var output = document.getElementById("cardimg");
                     output.src = URL.createObjectURL($event.target.files[0]);
                 };
-                ThemeComponent.prototype.onFileChangeSubTheme = function ($event) {
-                    this.file = $event.target.files[0];
-                    var output = document.getElementById("subthemeImg");
-                    output.src = URL.createObjectURL($event.target.files[0]);
-                };
                 ThemeComponent.prototype.onAddCard = function (themeId) {
                     this.card.themeId = themeId;
-                };
-                ThemeComponent.prototype.onAddSubTheme = function (themeId) {
-                    this.subTheme.themeId = themeId;
                 };
                 ThemeComponent.prototype.onSubmit = function () {
                     var _this = this;
@@ -127,6 +109,17 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         });
                     }
                 };
+                /*
+                 --------------------- SUBTHEME COMPONENT ---------------------
+                 */
+                ThemeComponent.prototype.onAddSubTheme = function (themeId) {
+                    this.subTheme.themeId = themeId;
+                };
+                ThemeComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
                 ThemeComponent.prototype.onSubmitSubTheme = function () {
                     var _this = this;
                     if (this.subTheme.description) {
@@ -140,6 +133,26 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             _this.file = null;
                             alert(error);
                         });
+                    }
+                };
+                /*
+                 --------------------------------- GENERAL ---------------------------
+                 */
+                ThemeComponent.prototype.logout = function () {
+                    localStorage.removeItem("id_token");
+                    this.router.navigate(['/Home']);
+                };
+                ThemeComponent.prototype.getImageSrc = function (url) {
+                    if (url) {
+                        if (url.indexOf("http://") > -1) {
+                            return url;
+                        }
+                        else {
+                            return url.replace(/"/g, "");
+                        }
+                    }
+                    else {
+                        return "./app/resources/noimgplaceholder.png";
                     }
                 };
                 ThemeComponent.prototype.rotateCard = function ($event) {
@@ -286,10 +299,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, cardService_1.CardService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService, router_1.RouteParams, subThemeService_1.SubThemeService])
                 ], ThemeComponent);
                 return ThemeComponent;
-                var _a, _b;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }
