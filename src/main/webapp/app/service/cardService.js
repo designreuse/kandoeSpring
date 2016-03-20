@@ -50,6 +50,17 @@ System.register(['angular2/core', "./uploadService", "../security/securityServic
                     return value.map(function (res) { return res.json(); })
                         .map(function (card) { return card_1.Card.fromJson(card); });
                 };
+                CardService.prototype.createCardForSubTheme = function (card, file) {
+                    var value;
+                    if (file) {
+                        value = this.uploadService.uploadFile(JSON.stringify(card), file, this.path + 'cards/subTheme/image');
+                    }
+                    else {
+                        value = this.securityService.post(this.path + 'cards/subTheme', JSON.stringify(card), true);
+                    }
+                    return value.map(function (res) { return res.json(); })
+                        .map(function (card) { return card_1.Card.fromJson(card); });
+                };
                 CardService.prototype.createCardFromCSV = function (themeId, csvFile) {
                     return this.uploadService.uploadCSVFile("", csvFile, this.path + "cards/" + themeId + "/csv");
                 };

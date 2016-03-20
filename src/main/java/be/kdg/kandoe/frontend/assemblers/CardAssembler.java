@@ -35,6 +35,9 @@ public class CardAssembler extends ResourceAssemblerSupport<Card, CardDTO> {
     public CardDTO toResource(Card entity) {
         CardDTO cardDTO = mapper.map(entity, CardDTO.class);
 
+        if(entity.getSubTheme() != null) {
+            cardDTO.setSubThemeId(entity.getSubTheme().getSubThemeId());
+        }
         cardDTO.setCardId(entity.getId());
 
         return cardDTO;

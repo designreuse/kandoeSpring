@@ -34,6 +34,7 @@ public class CardRestController {
     private final CardAssembler cardAssembler;
     private final MapperFacade mapper;
 
+
     @Autowired
     public CardRestController(CardService cardService, CardAssembler cardAssembler, MapperFacade mapper) {
         this.cardService = cardService;
@@ -63,7 +64,6 @@ public class CardRestController {
             return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
         }
     }
 
@@ -114,5 +114,50 @@ public class CardRestController {
         }else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @RequestMapping(value = "/subTheme",method = {RequestMethod.POST})
+    public ResponseEntity<CardDTO> createCardForSubTheme(@Valid @RequestBody CardDTO cardDTO,  @AuthenticationPrincipal User user)
+            throws CardServiceException
+    {
+        if (user != null && user.getId() != null) {
+            Card card_in = mapper.map(cardDTO, Card.class);
+            Card card_out = cardService.saveCardForSubTheme(card_in, cardDTO.getSubThemeId());
+            logger.info(this.getClass().toString() + ": adding new card " + card_out.getId());
+            System.out.println("card subthemeId: " + card_out.getSubTheme().getId());
+            return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @RequestMapping(value = "/subTheme/image", method = RequestMethod.POST)
+    public ResponseEntity<CardDTO> createCardForSubTheme(@RequestPart("body") CardDTO cardDTO,
+                                              @RequestPart("file") MultipartFile file,
+                                              @AuthenticationPrincipal User user,
+                                              HttpServletRequest request) throws CardServiceException
+    {
+        if(user != null && user.getId() != null) {
+            if(file.getContentType().split("/")[0].equals("image")){
+                Card card_in = mapper.map(cardDTO, Card.class);
+                Card card_out = cardService.saveCardForSubTheme(card_in, cardDTO.getThemeId());
+
+                String newFilename = String.format("%d.%s", card_out.getId(), file.getOriginalFilename().split("\\.")[1]);
+                String filePath = request.getServletContext().getRealPath("/resources/images/cards/");
+
+                try {
+                    FileUtils.saveFile(filePath, newFilename, file);
+                } catch (IOException e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                card_out.setImageURL("resources/images/cards/" + newFilename);
+                cardService.updateCard(card_out);
+                System.out.println("card saved with image for subtheme");
+                return new ResponseEntity<>(cardAssembler.toResource(card_out), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

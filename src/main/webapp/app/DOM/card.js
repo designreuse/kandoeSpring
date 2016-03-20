@@ -34,6 +34,9 @@ System.register(["./link", "./theme"], function(exports_1) {
                     if (json.themeId) {
                         card.themeId = json.themeId;
                     }
+                    if (json.subThemeId) {
+                        card.subThemeId = json.subThemeId;
+                    }
                     card.position = json.position;
                     return card;
                 };

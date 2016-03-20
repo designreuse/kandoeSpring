@@ -35,7 +35,19 @@ export class CardService {
             .map((card: Card) => Card.fromJson(card));
     }
 
+    public createCardForSubTheme(card: Card, file?: File): Observable<Card> {
+        var value: Observable<Response>;
+        if(file){
+            value = this.uploadService.uploadFile(JSON.stringify(card), file, this.path + 'cards/subTheme/image')
+        } else {
+            value = this.securityService.post(this.path + 'cards/subTheme', JSON.stringify(card), true);
+        }
+        return value.map(res => res.json())
+            .map((card: Card) => Card.fromJson(card));
+    }
+
     public createCardFromCSV(themeId: number, csvFile: File): Observable<Card>{
         return this.uploadService.uploadCSVFile("", csvFile, this.path + "cards/" + themeId + "/csv");
     }
+
 }

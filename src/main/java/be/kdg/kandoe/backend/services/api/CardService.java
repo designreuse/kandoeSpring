@@ -30,6 +30,15 @@ public interface CardService {
     Card saveCard(Card card, Integer themeId) throws CardServiceException;
 
     /**
+     * Creates the card and associates it with a subtheme and its theme.
+     * @param card the card to save
+     * @param subThemeId the id of the subtheme
+     * @return the created card with Id
+     * @throws CardServiceException when theme is not found
+     */
+    Card saveCardForSubTheme(Card card, Integer subThemeId) throws CardServiceException;
+
+    /**
      * Reads cards from a csv file and creates them.
      * @param csvFileName the path to the csv file
      * @param themeId the id of the theme to add the cards to

@@ -30,9 +30,9 @@ public class Card implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Theme.class)
     private Theme theme;
 
- /*   @ManyToOne(targetEntity = SubTheme.class)
+    @ManyToOne(targetEntity = SubTheme.class)
     private SubTheme subTheme;
-*/
+
     @OneToMany(targetEntity = CardSession.class)
     private List<CardSession> cardSessions;
 
@@ -72,13 +72,13 @@ public class Card implements Serializable, Identifiable<Integer> {
         this.imageURL = imageURL;
     }
 
-/*    public SubTheme getSubTheme() {
+   public SubTheme getSubTheme() {
         return subTheme;
     }
 
     public void setSubTheme(SubTheme subTheme) {
         this.subTheme = subTheme;
-    }*/
+    }
 
     public Theme getTheme() {
         return theme;

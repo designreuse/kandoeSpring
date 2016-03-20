@@ -1,23 +1,23 @@
 package be.kdg.kandoe.backend.services.impl;
 
 import be.kdg.kandoe.backend.dom.game.Card;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.persistence.api.CardRepository;
 import be.kdg.kandoe.backend.services.api.CardService;
+import be.kdg.kandoe.backend.services.api.SubThemeService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.backend.services.convertors.CsvToCardConvertor;
 import be.kdg.kandoe.backend.services.exceptions.CardServiceException;
 import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
+import be.kdg.kandoe.backend.services.exceptions.SubThemeServiceException;
 import be.kdg.kandoe.backend.services.exceptions.ThemeServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional(rollbackOn = {CardServiceException.class})
@@ -27,12 +27,14 @@ public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
     private final ThemeService themeService;
     private final CsvToCardConvertor cardConvertor;
+    private final SubThemeService subThemeService;
 
     @Autowired
-    public CardServiceImpl(CardRepository cardRepository, ThemeService themeService, CsvToCardConvertor cardConvertor) {
+    public CardServiceImpl(CardRepository cardRepository, ThemeService themeService, CsvToCardConvertor cardConvertor, SubThemeService subThemeService) {
         this.cardRepository = cardRepository;
         this.themeService = themeService;
         this.cardConvertor = cardConvertor;
+        this.subThemeService = subThemeService;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class CardServiceImpl implements CardService {
         logger.info(this.getClass().toString() + ": finding card with id " + id);
         Card c = cardRepository.findOne(id);
 
-        if(c == null){
+        if (c == null) {
             logger.warn(this.getClass().toString() + ": failed to find card with id " + id);
             throw new CardServiceException("Failed to find card with id " + id);
         }
@@ -50,7 +52,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Card saveCard(Card card, Integer themeId) throws CardServiceException{
+    public Card saveCard(Card card, Integer themeId) throws CardServiceException {
         logger.info(this.getClass().toString() + ": adding new card");
         Theme theme = null;
 
@@ -63,7 +65,7 @@ public class CardServiceImpl implements CardService {
         card.setTheme(theme);
 
         Set<Card> themeCards = theme.getCards();
-        if(themeCards == null){
+        if (themeCards == null) {
             themeCards = new HashSet<>();
         }
         themeCards.add(card);
@@ -99,7 +101,7 @@ public class CardServiceImpl implements CardService {
     public Card updateCard(Card card) throws CardServiceException {
         logger.info(this.getClass().toString() + ": updating card with id " + card.getCardId());
 
-        if(card.getCardId() == null){
+        if (card.getCardId() == null) {
             logger.warn(this.getClass().toString() + "cannot update card without an id");
             throw new CardServiceException("Cannot update card without an id");
         }
@@ -111,5 +113,52 @@ public class CardServiceImpl implements CardService {
     }
 
 
+    @Override
+    public Card saveCardForSubTheme(Card card, Integer subThemeId) throws CardServiceException {
+        logger.info(this.getClass().toString() + ": adding new card");
+        SubTheme subTheme = null;
 
+        try {
+            subTheme = subThemeService.findSubThemeById(subThemeId);
+        } catch (SubThemeServiceException e) {
+            logger.warn(this.getClass().toString() + ": trying to add a card to non existing subtheme");
+            throw new CardServiceException(e.getMessage(), e);
+        }
+        card.setTheme(subTheme.getTheme());
+        card.setSubTheme(subTheme);
+
+        Set<Card> themeCards = subTheme.getTheme().getCards();
+        boolean containsCard = false;
+        for (Card c : themeCards) {
+            if (c.getId() == card.getId()) {
+                containsCard = true;
+            }
+        }
+        if (!containsCard) {
+            themeCards.add(card);
+        }
+
+        subTheme.getTheme().setCards(themeCards);
+
+        containsCard = false;
+        Set<Card> subThemeCards = subTheme.getCards();
+        if (subThemeCards == null) {
+            subThemeCards = new HashSet<>();
+        }
+        for (Card c : subThemeCards) {
+            do {
+                if (c.getId() == card.getId()) {
+                    containsCard=true;
+                    card.setCardId(card.getCardId()+1);
+                    System.out.println("Id went up to: " + card.getId());
+                }
+            } while (containsCard);
+        }
+        subThemeCards.add(card);
+        subTheme.setCards(subThemeCards);
+
+        Card c = cardRepository.save(card);
+        logger.info(this.getClass().toString() + ": added new card " + c.getId());
+        return c;
+    }
 }
