@@ -145,7 +145,11 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
                         $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
                         if (card.position < (this.session.size - 1) && this.canPlay) {
-                            this.stompClient.send("/move", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"), 'sessionId': this.sessionId, 'cardId': card.cardId }));
+                            this.stompClient.send("/move", {}, JSON.stringify({
+                                'token': localStorage.getItem("id_token"),
+                                'sessionId': this.sessionId,
+                                'cardId': card.cardId
+                            }));
                             $(el).load("sessionDetail.html");
                         }
                         else if (card.position == (this.session.size - 1)) {
@@ -183,7 +187,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.router.navigate(['/Home']);
                 };
                 /*
-                ----------------------------------- ADD CARD ----------------------------------------
+                 ----------------------------------- ADD CARD ----------------------------------------
                  */
                 SessionDetailComponent.prototype.onAddCard = function () {
                     var _this = this;
@@ -197,7 +201,7 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.file = $event.target.files[0];
                 };
                 /*
-                ----------------------------------- CARD SELECTION ----------------------------------
+                 ----------------------------------- CARD SELECTION ----------------------------------
                  */
                 SessionDetailComponent.prototype.onSelectCard = function ($event) {
                     this.countChecked();
@@ -253,8 +257,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     carddescription.css("display", "none");
                 };
                 /*
-                -------------------------------WebSockets-------------------------------------
-                */
+                 -------------------------------WebSockets-------------------------------------
+                 */
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
@@ -263,37 +267,42 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {
-                            _this.showMessage(JSON.parse(greeting.body));
+                            var greeting = JSON.parse(greeting.body);
+                            if (greeting.sessionId == _this.sessionId) {
+                                _this.showMessage(greeting);
+                            }
                         });
                         _this.stompClient.subscribe('/topic/move', function (result) {
                             var resultii = JSON.parse(result.body);
-                            var ii;
-                            var card;
-                            for (var i = 0; i < _this.cards.length; i++) {
-                                if (_this.cards[i].cardId == resultii.cardId) {
-                                    ii = i;
-                                    card = _this.cards[i];
+                            if (resultii.sessionId == _this.sessionId) {
+                                var ii;
+                                var card;
+                                for (var i = 0; i < _this.cards.length; i++) {
+                                    if (_this.cards[i].cardId == resultii.cardId) {
+                                        ii = i;
+                                        card = _this.cards[i];
+                                    }
                                 }
-                            }
-                            var playId = "#play-" + resultii.nextUserId;
-                            var stopId = "#play-" + _this.user.userId;
-                            var playing = $(document).find($(playId));
-                            var stopped = $(document).find($(stopId));
-                            $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
-                            $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
-                            _this.canPlay = resultii.nextUserId == _this.user.userId;
-                            var id = "#" + ii;
-                            var el = $(document).find($(id));
-                            card.position = card.position + 1;
-                            if (card.position < (_this.session.size - 1)) {
-                                $(el).load("sessionDetail.html");
-                            }
-                            else if (card.position == (_this.session.size - 1)) {
-                                $(document).find("#card-element-winner").text(card.description);
-                                var img = $(document).find("#card-img-winner");
-                                img.attr("src", _this.getImageSrc(card.imageURL));
-                                var popup = $(document).find("#winner-popup");
-                                $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
+                                var playId = "#play-" + resultii.nextUserId;
+                                var stopId = "#play-" + _this.user.userId;
+                                var playing = $(document).find($(playId));
+                                var stopped = $(document).find($(stopId));
+                                $(playing).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2000);
+                                $(stopped).css({ opacity: 1.0, visibility: "hidden" }).animate({ opacity: 0.0 }, 2000);
+                                _this.canPlay = resultii.nextUserId == _this.user.userId;
+                                var id = "#" + ii;
+                                var el = $(document).find($(id));
+                                card.position = card.position + 1;
+                                if (card.position < (_this.session.size - 1)) {
+                                    $(el).load("sessionDetail.html");
+                                }
+                                else if (card.position == (_this.session.size - 1)) {
+                                    $(document).find("#card-element-winner").text(card.description);
+                                    var img = $(document).find("#card-img-winner");
+                                    img.attr("src", _this.getImageSrc(card.imageURL));
+                                    var popup = $(document).find("#winner-popup");
+                                    $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
+                                }
                             }
                         });
                     });
@@ -305,7 +314,11 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 };
                 SessionDetailComponent.prototype.sendMessage = function (message) {
                     var token = localStorage.getItem("id_token");
-                    this.stompClient.send("/chat", {}, JSON.stringify({ 'content': message, 'token': token, 'sessionId': this.sessionId }));
+                    this.stompClient.send("/chat", {}, JSON.stringify({
+                        'content': message,
+                        'token': token,
+                        'sessionId': this.sessionId
+                    }));
                 };
                 SessionDetailComponent.prototype.showMessage = function (json) {
                     this.messages.push(message_1.Message.fromJson(json));

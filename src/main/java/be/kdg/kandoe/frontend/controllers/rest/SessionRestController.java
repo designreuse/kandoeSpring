@@ -177,7 +177,7 @@ public class SessionRestController {
                 List<Message> messages = sessionService.getChatHistory(sessionId, user.getUserId());
                 List<Greeting> greetings = messages.stream().map(m -> new Greeting(m.getSender().getUsername(), m.getContent(),
                         String.valueOf(m.getDate().getHour() + ":" + m.getDate().getMinute()),
-                        m.getSender().getProfilePicture())).collect(Collectors.toList());
+                        m.getSender().getProfilePicture(),sessionId)).collect(Collectors.toList());
                 return new ResponseEntity<List<Greeting>>(greetings, HttpStatus.OK);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<List<Greeting>>(HttpStatus.BAD_REQUEST);

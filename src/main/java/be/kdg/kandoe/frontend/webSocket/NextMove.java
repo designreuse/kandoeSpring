@@ -6,10 +6,12 @@ package be.kdg.kandoe.frontend.webSocket;
 public class NextMove {
     private int cardId;
     private int currentUserId;
+    private int sessionId;
 
-    public NextMove(int cardId, int nextUserId) {
+    public NextMove(int cardId, int nextUserId,int sessionId) {
         this.cardId = cardId;
         this.currentUserId = nextUserId;
+        this.sessionId = sessionId;
     }
 
     public int getCardId() {
@@ -20,11 +22,19 @@ public class NextMove {
         this.cardId = cardId;
     }
 
-    public int getNextUserId() {
+    public int getCurrentUserId() {
         return currentUserId;
     }
 
-    public void setNextUserId(int nextUserId) {
-        this.currentUserId = nextUserId;
+    public void setCurrentUserId(int currentUserId) {
+        this.currentUserId = currentUserId;
+    }
+
+    public int getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
     }
 }

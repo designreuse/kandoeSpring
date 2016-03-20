@@ -10,12 +10,14 @@ public class Greeting {
     private String username;
     private String userpicture;
     private String date;
+    private int sessionId;
 
-    public Greeting(String username, String content, String date, String userpicture) {
+    public Greeting(String username, String content, String date, String userpicture, int sessionId) {
         this.username = username;
         this.content = content;
         this.date = date;
         this.userpicture = userpicture;
+        this.sessionId = sessionId;
     }
 
     public String getContent() {
@@ -48,5 +50,13 @@ public class Greeting {
 
     public void setUserpicture(String userpicture) {
         this.userpicture = userpicture;
+    }
+
+    public int getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
     }
 }

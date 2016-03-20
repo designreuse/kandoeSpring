@@ -42,7 +42,7 @@ public class WebSocketController {
 
                 return new Greeting(u.getUsername(), chat.getContent(),
                         String.valueOf(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()),
-                        u.getProfilePicture());
+                        u.getProfilePicture(),chat.getSessionId());
 
             } catch (SessionServiceException e) {
                 return null;
@@ -63,7 +63,7 @@ public class WebSocketController {
                 sessionService.updateCardPosition(move.getCardId(), u.getUserId(), move.getSessionId());
                 Session currentSession = sessionService.findSessionById(move.getSessionId(),u.getUserId());
                 int currentUserId = currentSession.getUserSessions().stream().filter(cu-> cu.getUserPosition()==0).findFirst().get().getUser().getUserId();
-                return new NextMove(move.getCardId(),currentUserId);
+                return new NextMove(move.getCardId(),currentUserId,move.getSessionId());
             } catch (SessionServiceException e) {
                 return null;
             }
