@@ -1,3 +1,4 @@
+<!--navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -9,7 +10,6 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOE</span></a></li>
@@ -28,6 +28,7 @@
     </div>
 </nav>
 
+<!-- eyecatcher: short introduction of kandoe -->
 <section class="jumbotron container">
     <div class="row">
         <h1>
@@ -36,6 +37,7 @@
                 class="roboto-bold">Easy</span> to use
             <br> You can <span class="roboto-bold">participate</span> with a lot of people</p>
     </div>
+    <!--sign in & register button & facebook button -->
     <div class="row">
         <div class="row">
             <button type="button" class="btn btn-home " (click)="login()">LOGIN</button>
@@ -49,14 +51,13 @@
             <span class="jumbotron-info">
                 By signing up you agree to our <a href="#">terms & conditions</a>
             </span>
-
         </div>
     </div>
 </section>
 
+<!--login section -->
 <section class="container login-section ">
     <div class="row">
-
         <form id="login-form" class="col-lg-offset-4 col-lg-4 " method="post" role="form"
               style="display: none;">
             <div class="form-pad">
@@ -73,10 +74,12 @@
             </div>
         </form>
 
+        <!--register section -->
         <register id="register-form" style="display: none"></register>
     </div>
 </section>
 
+<!--create Kandoe home page -->
 <section class="white-section container">
     <article class="content">
         <h3>Share your opinion</h3>
@@ -95,7 +98,6 @@
         </div>
         <button type="button" class="btn btn-primary" (click)="login()">CREATE A NEW <span
                 class="roboto-bold">KANDOE</span></button>
-
     </article>
 </section>
 

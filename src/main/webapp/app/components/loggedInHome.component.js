@@ -1,11 +1,9 @@
 System.register(["angular2/core", "angular2/router", "../security/TokenHelper", "../DOM/users/user", "../service/userService", "../service/sessionService", "../service/themeService"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-        switch (arguments.length) {
-            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-        }
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -56,6 +54,19 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         _this.user = u;
                     });
                 };
+                LoggedInHome.prototype.showReveal = function (i) {
+                    var id = "#" + i;
+                    var el = $(document).find($(id));
+                    el.slideToggle("slow");
+                };
+                LoggedInHome.prototype.closeReveal = function (i) {
+                    var id = "#" + i;
+                    var el = $(document).find($(id));
+                    el.slideToggle("slow");
+                };
+                /*
+                 ------------------------- GENERAL ------------------------------------
+                 */
                 LoggedInHome.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
@@ -70,16 +81,6 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         }
                     }
                 };
-                LoggedInHome.prototype.showReveal = function (i) {
-                    var id = "#" + i;
-                    var el = $(document).find($(id));
-                    el.slideToggle("slow");
-                };
-                LoggedInHome.prototype.closeReveal = function (i) {
-                    var id = "#" + i;
-                    var el = $(document).find($(id));
-                    el.slideToggle("slow");
-                };
                 LoggedInHome = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
@@ -87,10 +88,9 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/loggedInHome.html'
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, themeService_1.ThemeService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, router_1.Router, userService_1.UserService, themeService_1.ThemeService])
                 ], LoggedInHome);
                 return LoggedInHome;
-                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }

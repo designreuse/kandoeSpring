@@ -60,11 +60,14 @@ export class SubThemeDetailComponent implements OnInit {
 
     }
 
+    /*
+     ------------------------- GENERAL ------------------------------------
+     */
+
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
     }
-
 
     private getImageSrc(url:string):string {
         if (url) {
