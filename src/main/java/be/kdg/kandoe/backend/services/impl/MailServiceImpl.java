@@ -2,6 +2,9 @@ package be.kdg.kandoe.backend.services.impl;
 
 import be.kdg.kandoe.backend.services.api.MailService;
 import be.kdg.kandoe.backend.services.api.UserService;
+import be.kdg.kandoe.backend.services.exceptions.MailServiceException;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +19,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
- * Created by Jordan on 1/03/2016.
+ * An implementation of MailService over smtp using gmail.
  */
 @Service
 public class MailServiceImpl implements MailService {
+
+    private final Logger logger = Logger.getLogger(MailServiceImpl.class);
 
     @Autowired
     UserService userService;
@@ -44,36 +49,60 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendMailToUser(String recipient, String subject, String text) {
-        String recipientEmail = userService.findUserByUsername(recipient).getEmail();
+    public void sendMailToUser(String recipient, String subject, String text) throws MailServiceException {
+        String recipientEmail = null;
+        try {
+            recipientEmail = userService.findUserByUsername(recipient).getEmail();
+        } catch (UserServiceException e) {
+            logger.warn(this.getClass().toString() + ": cannot send email to user with username " + recipient, e);
+            throw new MailServiceException("Cannot send email to user with username " + recipient, e);
+        }
 
         sendMail(recipientEmail,subject,text);
     }
 
     @Override
-    public void sendMailToUsers(List<String> recipients, String subject, String text) {
+    public void sendMailToUsers(List<String> recipients, String subject, String text) throws MailServiceException {
         for (String r: recipients) {
-            String recipientEmail = userService.findUserByUsername(r).getEmail();
+            String recipientEmail = null;
+            try {
+                recipientEmail = userService.findUserByUsername(r).getEmail();
+            } catch (UserServiceException e) {
+                logger.warn(this.getClass().toString() + ": cannot send email to user with username " + r, e);
+                throw new MailServiceException("Cannot send email to user with username " + r, e);
+            }
             sendMail(recipientEmail,subject,text);
         }
     }
 
     @Override
-    public void sendMailToUserByUserId(int id, String subject, String text) {
-        String recipientEmail = userService.findUserById(id).getEmail();
+    public void sendMailToUserByUserId(int id, String subject, String text) throws MailServiceException {
+        String recipientEmail = null;
+        try {
+            recipientEmail = userService.findUserById(id).getEmail();
+        } catch (UserServiceException e) {
+            logger.warn(this.getClass().toString() + ": cannot send email to user with id " + id, e);
+            throw new MailServiceException("Cannot send email to user with id " + id, e);
+        }
 
         sendMail(recipientEmail,subject,text);
     }
 
     @Override
-    public void sendMailToUsersByUserId(List<Integer> ids, String subject, String text) {
+    public void sendMailToUsersByUserId(List<Integer> ids, String subject, String text) throws MailServiceException {
         for (Integer id: ids) {
-            String recipientEmail = userService.findUserById(id).getEmail();
+            String recipientEmail = null;
+            try {
+                recipientEmail = userService.findUserById(id).getEmail();
+            } catch (UserServiceException e) {
+                logger.warn(this.getClass().toString() + ": cannot send email to user with id " + id, e);
+                throw new MailServiceException("Cannot send email to user with id " + id, e);
+            }
             sendMail(recipientEmail,subject,text);
         }
     }
 
-    private void sendMail(String recipientEmail,String subject, String text){
+    private void sendMail(String recipientEmail,String subject, String text) throws MailServiceException {
         try {
 
             Message message = new MimeMessage(session);
@@ -86,7 +115,8 @@ public class MailServiceImpl implements MailService {
             Transport.send(message);
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            logger.warn(this.getClass().toString() + ": failed to send email");
+            throw new MailServiceException("Failed to send email", e);
         }
     }
 }

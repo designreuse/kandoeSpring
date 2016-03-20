@@ -5,9 +5,9 @@ import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.SubThemeService;
+import be.kdg.kandoe.backend.services.exceptions.SubThemeServiceException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SubThemeDTO;
-import be.kdg.kandoe.frontend.DTO.UserDTO;
 import be.kdg.kandoe.frontend.assemblers.CardAssembler;
 import be.kdg.kandoe.frontend.assemblers.SubThemeAssembler;
 import be.kdg.kandoe.frontend.util.FileUtils;
@@ -46,15 +46,9 @@ public class SubThemeRestController {
         this.mapper = mapper;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<SubThemeDTO>> getSubThemes() {
-        List<SubTheme> subThemes = subThemeService.findSubThemes();
-
-        return new ResponseEntity<>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{themeId}", method = RequestMethod.GET)
-    public ResponseEntity<SubThemeDTO> getSubThemeById(@PathVariable(value = "themeId") int themeId) {
+    public ResponseEntity<SubThemeDTO> getSubThemeById(@PathVariable(value = "themeId") int themeId)
+            throws SubThemeServiceException {
         SubTheme subTheme = subThemeService.findSubThemeById(themeId);
 
         return new ResponseEntity<>(subThemeAssembler.toResource(subTheme), HttpStatus.OK);
@@ -62,7 +56,7 @@ public class SubThemeRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<SubThemeDTO> createSubTheme(@Valid @RequestBody SubThemeDTO subThemeDTO,
-                                                      @AuthenticationPrincipal User user) {
+                                                      @AuthenticationPrincipal User user) throws SubThemeServiceException {
         if (user != null && user.getId() != null) {
             SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
 
@@ -79,14 +73,15 @@ public class SubThemeRestController {
     public ResponseEntity<SubThemeDTO> createSubTheme(@RequestPart("body") SubThemeDTO subThemeDTO,
                                                       @RequestPart("file") MultipartFile file,
                                                       @AuthenticationPrincipal User user,
-                                                      HttpServletRequest request) {
+                                                      HttpServletRequest request) throws SubThemeServiceException {
 
         if (user != null && user.getId() != null) {
             if (file.getContentType().split("/")[0].equals("image")) {
                 SubTheme subTheme_in = mapper.map(subThemeDTO, SubTheme.class);
                 SubTheme subTheme_out = subThemeService.saveSubTheme(subTheme_in, user.getUserId(), subThemeDTO.getThemeId());
 
-                String newFilename = String.format("%d.%s", subTheme_out.getId(), file.getOriginalFilename().split("\\.")[1]);
+                String newFilename = String.format("%d.%s", subTheme_out.getId(),
+                        file.getOriginalFilename().split("\\.")[1]);
                 String filePath = request.getServletContext().getRealPath("/resources/images/subThemes/");
 
                 try {
@@ -106,9 +101,10 @@ public class SubThemeRestController {
     }
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
-    public ResponseEntity<List<SubThemeDTO>> getSubThemesCurrentUser(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<SubThemeDTO>> getSubThemesCurrentUser(@AuthenticationPrincipal User user)
+            throws SubThemeServiceException {
         if (user != null) {
-            Set<SubTheme> subThemes = subThemeService.findSubThemeByCreator(user.getId());
+            Set<SubTheme> subThemes = subThemeService.findSubThemesByCreator(user.getId());
 
             return new ResponseEntity<>(subThemeAssembler.toResources(subThemes), HttpStatus.OK);
         }
@@ -117,7 +113,8 @@ public class SubThemeRestController {
 
     @RequestMapping(value = "/{subThemeId}/cards", method = RequestMethod.GET)
     public ResponseEntity<List<CardDTO>> getSubThemeCards(@AuthenticationPrincipal User user,
-                                                          @PathVariable(value = "subThemeId") Integer subThemeId) {
+                                                          @PathVariable(value = "subThemeId") Integer subThemeId)
+            throws SubThemeServiceException {
         if (user != null) {
             if (subThemeId != null) {
                 Set<Card> cards = subThemeService.findSubThemeCards(subThemeId);

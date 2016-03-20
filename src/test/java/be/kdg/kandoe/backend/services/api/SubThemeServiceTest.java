@@ -45,8 +45,8 @@ public class SubThemeServiceTest {
     }
 
     @Test
-    public void testUpdateSubTheme() {
-        SubTheme subTheme = subThemeService.findSubThemeByName("SubThemeKdG");
+    public void testUpdateSubTheme() throws Exception{
+        SubTheme subTheme = subThemeService.findSubThemeById(1);
         subTheme.setSubThemeName("KdGsubUpdate");
         subThemeService.updateSubTheme(subTheme);
         assertEquals("The SubThemeName should be 'KdGsubUpdate' ",subTheme.getSubThemeName(),"KdGsubUpdate");
@@ -54,8 +54,8 @@ public class SubThemeServiceTest {
     }
 
     @Test
-    public void testSubThemeCards() {
-        SubTheme subTheme = subThemeService.findSubThemeByName("SubThemeKdG");
+    public void testSubThemeCards() throws Exception{
+        SubTheme subTheme = subThemeService.findSubThemeById(1);
 
         assertEquals("The length of cards should be 2' ",subTheme.getCards().size(),2);
 

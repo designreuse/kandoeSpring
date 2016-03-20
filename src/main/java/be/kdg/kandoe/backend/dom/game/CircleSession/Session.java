@@ -1,7 +1,6 @@
 package be.kdg.kandoe.backend.dom.game.CircleSession;
 
 import be.kdg.kandoe.backend.dom.game.Message;
-import be.kdg.kandoe.backend.dom.game.Snapshot;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,7 +12,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Created by amy on 10/02/2016.
+ * An actual session that users can play.
+ * The size of the circle representing the session can be adjusted.
+ * It is associated with either a theme or subtheme.
+ * At the beginning of the game, cards can be chosen from the cards in the theme or subhteme.
  */
 @Entity
 public class Session implements Serializable, Identifiable<Integer> {
@@ -67,14 +69,8 @@ public class Session implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = SubTheme.class, cascade = CascadeType.ALL)
     private SubTheme subTheme;
 
-    @OneToMany(targetEntity = Snapshot.class)
-    private List<Snapshot> snapshots;
-
     @OneToMany(targetEntity = Message.class, cascade = CascadeType.ALL)
     private List<Message> chat;
-
-    @Column(name="PlayTime")
-    private int playtime;
 
     public Session() {
     }
@@ -125,14 +121,6 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setTheme(Theme theme) {
         this.theme = theme;
-    }
-
-    public List<Snapshot> getSnapshots() {
-        return snapshots;
-    }
-
-    public void setSnapshots(List<Snapshot> snapshots) {
-        this.snapshots = snapshots;
     }
 
     public List<Message> getChat() {
@@ -218,13 +206,5 @@ public class Session implements Serializable, Identifiable<Integer> {
 
     public void setSubTheme(SubTheme subTheme) {
         this.subTheme = subTheme;
-    }
-
-    public int getPlaytime() {
-        return playtime;
-    }
-
-    public void setPlaytime(int playtime) {
-        this.playtime = playtime;
     }
 }

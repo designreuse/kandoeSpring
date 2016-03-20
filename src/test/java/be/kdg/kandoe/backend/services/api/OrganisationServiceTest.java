@@ -2,6 +2,7 @@ package be.kdg.kandoe.backend.services.api;
 
 import be.kdg.kandoe.backend.config.BackendContextConfig;
 import be.kdg.kandoe.backend.dom.other.Organisation;
+import be.kdg.kandoe.backend.services.exceptions.OrganisationServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,16 @@ public class OrganisationServiceTest {
 
     @Autowired
     private OrganisationService organisationService;
+
+    @Test
+    public void testFindOrganisationById() throws Exception {
+        assertNotNull(organisationService.findOrganisationById(1));
+    }
+
+    @Test(expected = OrganisationServiceException.class)
+    public void testFindOrganisationByWrongId() throws Exception {
+        organisationService.findOrganisationById(-4);
+    }
 
     @Test
     public void testSaveOrganisation() throws Exception {

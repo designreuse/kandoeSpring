@@ -1,7 +1,7 @@
 package be.kdg.kandoe.backend.dom.game.CircleSession;
 
 /**
- * Created by amy on 10/02/2016.
+ * A session can be played synchronously or asynchronously
  */
 public enum SessionMode {
     ASYNC, SYNC

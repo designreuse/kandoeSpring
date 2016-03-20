@@ -31,10 +31,6 @@ import static org.hamcrest.Matchers.*;
 @ContextConfiguration(classes = BackendContextConfig.class)
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-/*@TestExecutionListeners(listeners={ServletTestExecutionListener.class,
-        DependencyInjectionTestExecutionListener.class,
-        DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class})*/
 public class UserServiceTest {
     @Value("fakeuser@hotmail.com")
     private String fakeUsername;
@@ -56,33 +52,18 @@ public class UserServiceTest {
         assertThat(arne, notNullValue());
     }
 
-        @Test
-        public void isNewUser() throws UserServiceException {
-                User arne = userService.findUserByUsername(realUsername);
-                assertThat(arne.isNewUser(), equalTo(true));
-        }
+    @Test
+    public void testFindUserById() throws Exception {
+        User user = userService.findUserById(1);
+        assertThat(user, notNullValue());
+    }
 
+    @Test
+    public void testFindUserByUsername() throws Exception {
+        User u = userService.findUserByUsername(realUsername);
+        assertThat(u.getUsername(), equalToIgnoringCase(realUsername));
+    }
 
-/*
-        @Test
-        public void testFindUserById() throws Exception {
-                User user = userService.findUserById(1);
-                assertThat(user, notNullValue());
-        }
-
-        @Test
-        public void testFindUserByUsername() throws Exception {
-                User clarence = userService.findUserByUsername(realUsername);
-                assertThat(clarence.getUsername(), equalToIgnoringCase(realUsername));
-        }
-
-        @Test
-        public void testFindUserByRole() throws Exception
-        {
-                List<User> users = userService.findUsersByRole(Player.class);
-                users.forEach(user -> assertThat(Role.loadRole(user, Player.class), instanceOf(Player.class)));
-        }
-*/
 
 
 /*

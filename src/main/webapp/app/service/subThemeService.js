@@ -38,11 +38,6 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/subTheme", ".
                     this.securityService = securityService;
                     this.uploadService = uploadService;
                 }
-                SubThemeService.prototype.getAllSubThemes = function () {
-                    return this.securityService.get(this.path + 'subThemes', true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (subThemes) { return subThemes.map(function (subTheme) { return subTheme_1.SubTheme.fromJson(subTheme_1.SubTheme); }); });
-                };
                 SubThemeService.prototype.getUserSubThemes = function () {
                     return this.securityService.get(this.path + 'themes/currentUser', true)
                         .map(function (res) { return res.json(); })

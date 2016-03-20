@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Represents a group of users that will be added to a session.
+ * Organisers can add members.
+ */
+
 @Entity
 public class Organisation implements Serializable, Identifiable<Integer>{
 

@@ -21,12 +21,6 @@ export class SubThemeService {
         this.uploadService = uploadService;
     }
 
-    public getAllSubThemes():Observable<SubTheme[]> {
-        return this.securityService.get(this.path + 'subThemes', true)
-            .map(res => res.json())
-            .map((subThemes:Array<SubTheme>) => subThemes.map((subTheme:SubTheme) => SubTheme.fromJson(SubTheme)));
-    }
-
     public getUserSubThemes():Observable<SubTheme[]> {
         return this.securityService.get(this.path + 'themes/currentUser', true)
             .map(res => res.json())

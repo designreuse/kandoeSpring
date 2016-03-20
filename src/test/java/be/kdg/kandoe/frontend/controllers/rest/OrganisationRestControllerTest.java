@@ -26,6 +26,9 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import javax.servlet.Filter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -60,16 +63,6 @@ public class OrganisationRestControllerTest {
     }
 
     @Test
-    public void testGetOrganisations() throws Exception {
-        System.out.println(appToken);
-
-        mockMvc.perform(get("/api/organisations")
-                .header("Authorization", appToken))
-                .andExpect(jsonPath("$").isArray())
-                .andDo(print());
-    }
-
-    @Test
     public void testGetOrganisationById() throws Exception {
 
         mockMvc.perform(get("/api/organisations/1")
@@ -78,6 +71,54 @@ public class OrganisationRestControllerTest {
                 .andExpect(jsonPath("$.organisationId", is(1)))
                 .andExpect(jsonPath("$.organiser", is(true)));
 
+    }
+
+    @Test
+    public void testGetOrganisationByCurrentUser() throws Exception {
+
+        mockMvc.perform(get("/api/organisations/currentUser")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.[0].organisationName", is("Karel De Grote")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testCreateOrganisationWithSecurity() throws Exception {
+        JSONObject orgResource = new JSONObject();
+        orgResource.put("organisationName", "KdG");
+        orgResource.put("address", "Nationalestraat 5");
+
+        HttpHeaders headers = new HttpHeaders();
+        List<String> list = new ArrayList<>();
+        list.add(appToken);
+        headers.put("Authorization", list);
+
+        System.out.println(orgResource.toString());
+        mockMvc.perform(post("/api/organisations")
+                .headers(headers)
+                .content(orgResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.organisationName", is("KdG")))
+                .andExpect(jsonPath("$.address", is("Nationalestraat 5")))
+                .andExpect(jsonPath("$.organisationId", notNullValue()))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+    @Test
+    public void testCreateOrganisationWithWrongSecurity() throws Exception {
+        JSONObject orgResource = new JSONObject();
+        orgResource.put("organisationName", "KdG");
+        orgResource.put("address", "Nationalestraat 5");
+
+        System.out.println(orgResource.toString());
+        mockMvc.perform(post("/api/organisations")
+                .header("Authorization", "testest")
+                .content(orgResource.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andDo(print());
     }
 
     @Test
@@ -184,5 +225,13 @@ public class OrganisationRestControllerTest {
                 .header("Authorization", appToken))
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    public void testGetOrganisationThemes() throws Exception {
+        mockMvc.perform(get("/api/organisations/1/themes")
+                .header("Authorization", appToken))
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].themeId", is(1)));
     }
 }

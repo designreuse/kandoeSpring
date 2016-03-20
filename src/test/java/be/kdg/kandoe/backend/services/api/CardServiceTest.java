@@ -32,7 +32,7 @@ public class CardServiceTest {
 
     @Test
     @Before
-    public void testSaveCards() {
+    public void testSaveCards() throws Exception{
         Card card = new Card("KdG Card description");
 
         cardService.saveCard(card, 1);
@@ -46,7 +46,7 @@ public class CardServiceTest {
     }
 
     @Test
-    public void testUpdateCard(){
+    public void testUpdateCard() throws Exception{
         Card card = cardService.findCardById(1);
         card.setDescription("CardUpdate");
         cardService.updateCard(card);

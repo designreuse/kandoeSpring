@@ -56,20 +56,9 @@ public class OrganisationRestController {
         this.themeAssembler = themeAssembler;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<OrganisationDTO>> getOrganisations(@AuthenticationPrincipal User user) {
-        if (user != null) {
-            List<Organisation> orgs = organisationService.findOrganisations();
-
-            return new ResponseEntity<>(organisationAssembler.toResources(orgs), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-    }
-
     @RequestMapping(value = "/{organisationId}", method = RequestMethod.GET)
     public ResponseEntity<OrganisationDTO> getOrganisationById(@PathVariable(value = "organisationId") int orgId,
-                                                               @AuthenticationPrincipal User user) {
+                                                               @AuthenticationPrincipal User user) throws OrganisationServiceException {
         Organisation org = organisationService.findOrganisationById(orgId);
 
         OrganisationDTO orgdto = organisationAssembler.toResource(org);
@@ -82,7 +71,7 @@ public class OrganisationRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<OrganisationDTO> createOrganisation(@Valid @RequestBody OrganisationDTO organisationDTO,
-                                                              @AuthenticationPrincipal User user) {
+                                                              @AuthenticationPrincipal User user) throws OrganisationServiceException {
         if (user != null && user.getId() != null) {
             Organisation org_in = mapper.map(organisationDTO, Organisation.class);
 
@@ -100,7 +89,7 @@ public class OrganisationRestController {
     public ResponseEntity<String> createOrganisation(@RequestPart("body") OrganisationDTO organisationDTO,
                                                               @RequestPart("file") MultipartFile file,
                                                               @AuthenticationPrincipal User user,
-                                                              HttpServletRequest request) {
+                                                              HttpServletRequest request) throws OrganisationServiceException {
 
         if(user != null && user.getId() != null) {
             if(file.getContentType().split("/")[0].equals("image")){
@@ -127,7 +116,7 @@ public class OrganisationRestController {
     }
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
-    public ResponseEntity<List<OrganisationDTO>> getOrganisationsCurrentUser(@AuthenticationPrincipal User user){
+    public ResponseEntity<List<OrganisationDTO>> getOrganisationsCurrentUser(@AuthenticationPrincipal User user) throws UserServiceException {
         if(user != null && user.getUsername() != null){
             List<Organisation> orgs = userService.findOrganisations(user);
             return new ResponseEntity<>(organisationAssembler.toResources(orgs), HttpStatus.OK);
@@ -164,16 +153,11 @@ public class OrganisationRestController {
     @RequestMapping(value = "/{orgId}/addMember", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> addMemberToOrganisation(@PathVariable(value = "orgId") Integer orgId,
                                                           @RequestParam(value = "mail", required = true) String mail,
-                                                          @AuthenticationPrincipal User user)
-    {
+                                                          @AuthenticationPrincipal User user) throws OrganisationServiceException {
         if(user != null){
-            try {
-                User u = organisationService.addMemberToOrganisation(orgId, mail, user.getId());
+            User u = organisationService.addMemberToOrganisation(orgId, mail, user.getId());
 
-                return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
-            } catch (OrganisationServiceException | UserServiceException e) {
-                return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
-            }
+            return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
         }
         return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
     }
@@ -181,23 +165,20 @@ public class OrganisationRestController {
     @RequestMapping(value = "/{orgId}/addOrganiser", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> addOrganiserToOrganisation(@PathVariable(value = "orgId") Integer orgId,
                                                            @RequestParam(value = "mail", required = true) String mail,
-                                                           @AuthenticationPrincipal User user)
-    {
+                                                           @AuthenticationPrincipal User user) throws OrganisationServiceException {
         if(user != null){
-            try {
-                User u = organisationService.addOrganiserToOrganisation(orgId, mail, user.getId());
+            User u = organisationService.addOrganiserToOrganisation(orgId, mail, user.getId());
 
-                return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
-            } catch (OrganisationServiceException | UserServiceException e) {
-                return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
-            }
+            return new ResponseEntity<UserDTO>(userAssembler.toResource(u), HttpStatus.OK);
         }
         return new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
     }
 
     @RequestMapping(value = "/{orgId}/themes", method = RequestMethod.GET)
     public ResponseEntity<List<ThemeDTO>> getOrganisationThemes(@AuthenticationPrincipal User user,
-                                                                @PathVariable(value = "orgId") Integer orgId){
+                                                                @PathVariable(value = "orgId") Integer orgId)
+            throws OrganisationServiceException
+    {
         if(user != null && orgId != null){
             Organisation org = organisationService.findOrganisationById(orgId);
             List<Theme> themes = org.getThemes();

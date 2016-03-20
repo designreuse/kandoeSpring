@@ -3,6 +3,7 @@ package be.kdg.kandoe.backend.services.api;
 import be.kdg.kandoe.backend.config.BackendContextConfig;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.Theme;
+import be.kdg.kandoe.backend.services.exceptions.ThemeServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,28 +29,59 @@ public class ThemeServiceTest {
     private UserService userService;
 
     @Test
+    public void testFindThemeById() throws Exception{
+        assertNotNull(themeService.findThemeById(1));
+    }
+
+    @Test(expected = ThemeServiceException.class)
+    public void testFindThemeByWrongId() throws Exception {
+        themeService.findThemeById(-1);
+    }
+
+    @Test
     public void testSaveTheme() throws Exception {
         Theme toBeSaved = new Theme("KdG");
         toBeSaved.setDescription("Dit is een KDG thema");
-        int sizeBefore = themeService.findThemes().size();
         Theme t = themeService.saveTheme(toBeSaved,1,1);
-        assertEquals(themeService.findThemes().size(),sizeBefore + 1);
-        Theme theme = themeService.findThemeByName("KdG");
 
-        assertNotNull("The new theme should have an id", theme.getId());
-        assertEquals(theme.getCreator(),userService.findUserById(1));
+        assertNotNull("The new theme should have an id", t.getId());
+        assertEquals(t.getCreator(),userService.findUserById(1));
+    }
 
-        Theme updatedTheme = theme;
-        updatedTheme.setDescription("Updated description");
-        themeService.updateTheme(updatedTheme);
-        assertEquals(updatedTheme.getDescription(),"Updated description");
+    @Test(expected = ThemeServiceException.class)
+    public void testSaveThemeWithoutDescription() throws Exception {
+        Theme t = new Theme();
+        themeService.saveTheme(t, 1, 1);
+    }
 
-        int themeId=updatedTheme.getId();
+    @Test
+    public void testUpdateTheme() throws Exception {
+        Theme theme = themeService.findThemeById(1);
 
-        sizeBefore = themeService.findThemes().size();
-        themeService.removeTheme(themeId);
-        assertNull(themeService.findThemeById(themeId));
+        String originalDescription = theme.getDescription();
+        theme.setDescription(originalDescription + "testUpdateTheme");
+        theme = themeService.updateTheme(theme);
+        assertEquals(originalDescription + "testUpdateTheme", theme.getDescription());
+    }
 
-        assertEquals(sizeBefore-1,themeService.findThemes().size());
+    @Test(expected = ThemeServiceException.class)
+    public void testUpdateThemeWithNullId() throws Exception {
+        Theme t = new Theme();
+        themeService.updateTheme(t);
+    }
+
+    @Test(expected = ThemeServiceException.class)
+    public void testFindThemesByNonExistingCreator() throws Exception {
+        themeService.findThemesByCreator(-1);
+    }
+
+    @Test(expected = ThemeServiceException.class)
+    public void testFindCardsFromNonExistingTheme() throws Exception {
+        themeService.findThemesCards(-1);
+    }
+
+    @Test(expected = ThemeServiceException.class)
+    public void testFindSubthemesFromNonExistingTheme() throws Exception {
+        themeService.findThemeSubThemes(-1);
     }
 }

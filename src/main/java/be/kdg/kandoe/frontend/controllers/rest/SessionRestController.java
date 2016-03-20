@@ -12,14 +12,12 @@ import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
 import be.kdg.kandoe.frontend.webSocket.Greeting;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
-import org.h2.command.ddl.GrantRevoke;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +77,7 @@ public class SessionRestController {
     public ResponseEntity<List<SessionDTO>> getSessionByThemeId(@PathVariable("themeId") int themeId, @AuthenticationPrincipal User user){
         if (user != null){
             try{
-                List<Session> sessions = this.sessionService.findSessionByThemeId(themeId, user.getUserId());
+                List<Session> sessions = this.sessionService.findSessionsByThemeId(themeId, user.getUserId());
                 return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
@@ -92,7 +90,7 @@ public class SessionRestController {
     public ResponseEntity<List<SessionDTO>> getSessionsBySubThemeId(@PathVariable("subThemeId") int subThemeId, @AuthenticationPrincipal User user){
         if (user != null){
             try {
-                List<Session> sessions = this.sessionService.findSessionBySubThemeId(subThemeId, user.getUserId());
+                List<Session> sessions = this.sessionService.findSessionsBySubThemeId(subThemeId, user.getUserId());
                 return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
             } catch (SessionServiceException e){
                 return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);

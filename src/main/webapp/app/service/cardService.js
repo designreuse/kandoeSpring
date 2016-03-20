@@ -34,11 +34,6 @@ System.register(['angular2/core', "./uploadService", "../security/securityServic
                     this.securityService = securityService;
                     this.uploadService = uploadService;
                 }
-                CardService.prototype.getAllCards = function () {
-                    return this.securityService.get(this.path + 'cards', true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
-                };
                 CardService.prototype.getCardById = function (id) {
                     return this.securityService.get(this.path + 'cards/' + id, true)
                         .map(function (res) { return res.json(); })

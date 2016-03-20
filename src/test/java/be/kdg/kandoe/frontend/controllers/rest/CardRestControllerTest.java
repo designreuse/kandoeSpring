@@ -57,16 +57,6 @@ public class CardRestControllerTest {
     }
 
     @Test
-    public void testGetCards() throws Exception {
-
-        mockMvc.perform(get("/api/cards")
-                .header("Authorization", appToken))
-                .andExpect(jsonPath("$").isArray())
-                .andDo(print());
-
-    }
-
-    @Test
     public void testGetCardById() throws Exception {
 
         mockMvc.perform(get("/api/cards/1")

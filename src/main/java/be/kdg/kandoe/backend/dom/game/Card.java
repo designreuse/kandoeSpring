@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by amy on 10/02/2016.
+ * Represents a card which can be used in a session.
+ * A card belongs to a theme or subtheme.
  */
 @Entity
 public class Card implements Serializable, Identifiable<Integer> {

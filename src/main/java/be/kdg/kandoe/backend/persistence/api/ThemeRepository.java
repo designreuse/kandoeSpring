@@ -5,8 +5,7 @@ import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Created by Jordan on 16/02/2016.
+ * Repository for Theme with standard crud operations.
  */
 public interface ThemeRepository extends JpaRepository<Theme, Integer> {
-    Theme findThemeByThemeName(String themeName);
 }

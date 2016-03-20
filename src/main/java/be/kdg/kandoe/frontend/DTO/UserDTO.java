@@ -1,6 +1,5 @@
 package be.kdg.kandoe.frontend.DTO;
 
-import be.kdg.kandoe.backend.dom.users.Roles.Role;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -23,8 +22,6 @@ public class UserDTO extends ResourceSupport implements Serializable {
 
     @Email
     private String email;
-
-    private List<Role.RoleType> roleTypes;
 
     private String profilePicture;
 
@@ -77,14 +74,6 @@ public class UserDTO extends ResourceSupport implements Serializable {
         this.email = email;
     }
 
-    public List<Role.RoleType> getRoleTypes() {
-        return roleTypes;
-    }
-
-    public void setRoleTypes(List<Role.RoleType> roleTypes) {
-        this.roleTypes = roleTypes;
-    }
-
     public PersonDTO getPerson() {
         return person;
     }
@@ -92,7 +81,6 @@ public class UserDTO extends ResourceSupport implements Serializable {
     public void setPerson(PersonDTO person) {
         this.person = person;
     }
-
 
     public String getProfilePicture() {
         return profilePicture;

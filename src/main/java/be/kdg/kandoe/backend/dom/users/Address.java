@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by amy on 11/02/2016.
+ * Holds the address of a person.
  */
 
 @Entity
@@ -95,5 +95,9 @@ public class Address implements Serializable, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return null;
+    }
+
+    public void setAddressid(Integer addressid) {
+        this.addressid = addressid;
     }
 }
