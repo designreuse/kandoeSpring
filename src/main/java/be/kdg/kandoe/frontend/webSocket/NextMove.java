@@ -22,12 +22,12 @@ public class NextMove {
         this.cardId = cardId;
     }
 
-    public int getCurrentUserId() {
+    public int getNextUserId() {
         return currentUserId;
     }
 
-    public void setCurrentUserId(int currentUserId) {
-        this.currentUserId = currentUserId;
+    public void setNextUserId(int nextUserId) {
+        this.currentUserId = nextUserId;
     }
 
     public int getSessionId() {
