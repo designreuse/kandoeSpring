@@ -1,21 +1,21 @@
 System.register(["angular2/core"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, core_2, core_3;
+    var core_1;
     var ChatComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-                core_2 = core_1_1;
-                core_3 = core_1_1;
             }],
         execute: function() {
             /**
@@ -24,12 +24,12 @@ System.register(["angular2/core"], function(exports_1) {
             ChatComponent = (function () {
                 function ChatComponent() {
                     this.messages = [];
+                    this.emitMessage = new core_1.EventEmitter();
                     this.message = "";
-                    this.emitMessage = new core_3.EventEmitter();
                 }
                 ChatComponent.prototype.sendMessage = function (chatElement) {
                     this.emitMessage.emit(this.message);
-                    chatElement.content = "";
+                    this.message = "";
                     chatElement.focus();
                 };
                 ChatComponent.prototype.getImageSrc = function (url) {
@@ -44,16 +44,16 @@ System.register(["angular2/core"], function(exports_1) {
                 };
                 __decorate([
                     core_1.Input(), 
-                    __metadata('design:type', Array)
-                ], ChatComponent.prototype, "messages", void 0);
+                    __metadata('design:type', Number)
+                ], ChatComponent.prototype, "sessionId");
                 __decorate([
                     core_1.Input(), 
-                    __metadata('design:type', Number)
-                ], ChatComponent.prototype, "sessionId", void 0);
+                    __metadata('design:type', Array)
+                ], ChatComponent.prototype, "messages");
                 __decorate([
-                    core_2.Output(), 
-                    __metadata('design:type', (typeof (_a = typeof core_3.EventEmitter !== 'undefined' && core_3.EventEmitter) === 'function' && _a) || Object)
-                ], ChatComponent.prototype, "emitMessage", void 0);
+                    core_1.Output(), 
+                    __metadata('design:type', (typeof (_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)
+                ], ChatComponent.prototype, "emitMessage");
                 ChatComponent = __decorate([
                     core_1.Component({
                         selector: 'chat',

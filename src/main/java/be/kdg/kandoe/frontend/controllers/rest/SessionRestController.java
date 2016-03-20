@@ -9,9 +9,12 @@ import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SessionDTO;
 import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
+import be.kdg.kandoe.frontend.webSocket.CurrentMove;
 import be.kdg.kandoe.frontend.webSocket.Greeting;
+import be.kdg.kandoe.frontend.webSocket.NextMove;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
+import org.omg.CORBA.Current;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -194,5 +197,21 @@ public class SessionRestController {
             return new ResponseEntity<Boolean>(canPlay, HttpStatus.OK);
         }
         return new ResponseEntity<Boolean>(HttpStatus.UNAUTHORIZED);
+    }
+
+
+    @RequestMapping(value = "/makeMove", method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> makeMove(@RequestBody CurrentMove move, @AuthenticationPrincipal User user) {
+        if(user!=null) {
+            try {
+                sessionService.updateCardPosition(move.getCardId(), user.getUserId(), move.getSessionId());
+                Session ses= sessionService.findSessionById(move.getSessionId(), user.getUserId());
+                return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(ses), HttpStatus.CREATED);
+
+            } catch (SessionServiceException e) {
+                return new ResponseEntity<SessionDTO>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
     }
 }
