@@ -65,9 +65,8 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                     this.themeService.createTheme(this.theme, this.file).subscribe(function (res) {
                         _this.router.navigate(['/Themes']);
                     }, function (error) {
-                        //todo change error display
                         _this.file = null;
-                        alert("something went wrong");
+                        console.log("something went wrong");
                     });
                 };
                 AddThemeComponent.prototype.selectOrganisation = function ($event) {

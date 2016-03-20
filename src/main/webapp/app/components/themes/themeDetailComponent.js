@@ -102,9 +102,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             _this.file = null;
                             _this.cards.push(c);
                         }, function (error) {
-                            //todo change error display
                             _this.file = null;
-                            alert(error);
+                            console.log(error);
                         });
                     }
                 };
@@ -138,9 +137,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                                 console.log(cardIds[0]);
                             });
                         }, function (error) {
-                            //todo change error display
                             _this.file = null;
-                            alert(JSON.stringify(error));
+                            console.log(error);
                         });
                     }
                 };

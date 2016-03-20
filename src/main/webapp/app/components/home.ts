@@ -80,8 +80,7 @@ export class Home {
                     this.router.navigate(['/LoggedInHome']);
                 },
                 error => {
-                    //todo display proper error
-                    alert(error.text());
+                    console.log(error);
                 });
     }
 
@@ -111,8 +110,7 @@ export class Home {
                             this.router.navigate(['/LoggedInHome']);
                         },
                         error => {
-                            //todo proper error display
-                            alert(error.text());
+                            console.log(error);
                         }
                     );
                 })

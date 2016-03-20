@@ -87,9 +87,8 @@ export class ThemeDetailComponent implements OnInit {
                 this.file = null;
                 this.cards.push(c);
             }, error => {
-                //todo change error display
                 this.file = null;
-                alert(error);
+                console.log(error);
             });
         }
     }
@@ -132,9 +131,8 @@ export class ThemeDetailComponent implements OnInit {
 
 
             }, error => {
-                //todo change error display
                 this.file = null;
-                alert(JSON.stringify(error));
+                console.log(error);
             });
 
 

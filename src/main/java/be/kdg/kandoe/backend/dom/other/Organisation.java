@@ -42,7 +42,6 @@ public class Organisation implements Serializable, Identifiable<Integer>{
     @OneToMany(targetEntity = Theme.class)
     private List<Theme> themes;
 
-    //TODO
     public Organisation() {
     }
 

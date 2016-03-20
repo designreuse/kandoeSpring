@@ -49,8 +49,7 @@ export class UserProfileComponent implements OnInit {
                         alert("Password changed");
                     },
                     error => {
-                        // proper error display
-                        alert(error.text());
+                        console.log(error);
                     }
                 )
             }
@@ -61,8 +60,7 @@ export class UserProfileComponent implements OnInit {
                     this.router.navigate(['/LoggedInHome'])
                 },
                 error => {
-                    //todo proper error display
-                    alert(error.text());
+                    console.log(error);
                 }
             )
         }

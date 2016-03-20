@@ -103,9 +103,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             _this.card.description = null;
                             _this.file = null;
                         }, function (error) {
-                            //todo change error display
                             _this.file = null;
-                            alert(error);
+                            console.log(error);
                         });
                     }
                 };
@@ -129,9 +128,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             _this.subTheme.description = null;
                             _this.file = null;
                         }, function (error) {
-                            //todo change error display
                             _this.file = null;
-                            alert(error);
+                            console.log(error);
                         });
                     }
                 };

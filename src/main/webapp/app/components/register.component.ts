@@ -102,8 +102,7 @@ export class RegisterComponent implements OnInit {
                     this.router.navigate(['/LoggedInHome']);
                 },
                 error => {
-                    //todo proper error display
-                    alert(error.text());
+                    console.log(error);
                 }
             );
         }

@@ -97,9 +97,8 @@ export class ThemeComponent implements OnInit {
                 this.card.description = null;
                 this.file = null;
             }, error => {
-                //todo change error display
                 this.file = null;
-                alert(error);
+                console.log(error);
             });
         }
     }
@@ -126,9 +125,8 @@ export class ThemeComponent implements OnInit {
                 this.subTheme.description = null;
                 this.file = null;
             }, error => {
-                //todo change error display
                 this.file = null;
-                alert(error);
+                console.log(error);
             });
         }
     }

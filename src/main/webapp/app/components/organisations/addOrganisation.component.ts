@@ -53,9 +53,8 @@ export class AddOrganisationComponent implements OnInit{
             this.router.navigate(['/Organisations']);
             this.file = null;
         }, error => {
-            //todo change error display
             this.file = null;
-            alert(error.text());
+            console.log(error);
         });
     }
 

@@ -56,9 +56,8 @@ export class AddThemeComponent implements OnInit {
         this.themeService.createTheme(this.theme, this.file).subscribe(res => {
             this.router.navigate(['/Themes']);
         }, error => {
-            //todo change error display
             this.file = null;
-            alert("something went wrong");
+            console.log("something went wrong");
         });
     }
 
