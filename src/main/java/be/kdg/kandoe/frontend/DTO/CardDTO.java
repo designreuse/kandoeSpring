@@ -40,7 +40,6 @@ public class CardDTO extends ResourceSupport implements Serializable {
         return this.imageURL;
     }
 
-
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }

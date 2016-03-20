@@ -55,6 +55,9 @@ export class OrganisationDetailComponent implements OnInit {
         });
     }
 
+    /*
+     ----------------------- ADD USER ---------------------------------------
+     */
     private showAddUser() {
         event.preventDefault();
         var self = event.target;
@@ -67,6 +70,18 @@ export class OrganisationDetailComponent implements OnInit {
         }
     }
 
+    private addMember() {
+        if (this.newMember) {
+            this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
+                this.members.push(u);
+                this.newMember = "";
+            })
+        }
+    }
+
+    /*
+     ----------------------- ADD ORGANISATION ---------------------------------------
+     */
     private showAddOrg() {
         event.preventDefault();
         var self = event.target;
@@ -76,15 +91,6 @@ export class OrganisationDetailComponent implements OnInit {
             $('.add-org').closest('.row').slideUp(100);
         } else {
             $('.add-org').closest('.row').slideDown(100);
-        }
-    }
-
-    private addMember() {
-        if (this.newMember) {
-            this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(u => {
-                this.members.push(u);
-                this.newMember = "";
-            })
         }
     }
 
@@ -101,6 +107,9 @@ export class OrganisationDetailComponent implements OnInit {
         }
     }
 
+    /*
+     ----------------------- GENERAL ---------------------------------------
+     */
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);

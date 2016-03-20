@@ -1,3 +1,4 @@
+<!--navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -9,13 +10,11 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
                 <li class="active" ><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
                 <li><a [routerLink]="['/Themes']">THEMES</a></li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -37,6 +36,7 @@
     </div>
 </nav>
 
+<!--header search & sort -->
 <header>
     <div class="container page-header" id="org-header">
         <h3>Organisations</h3>
@@ -61,6 +61,7 @@
 <div class="container main" id="org-list">
     <div class="row">
         <div class="page-content">
+            <!--breadcrumbs -->
             <ol class="breadcrumb">
                 <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
                 <li class="active"> Organisations</li>

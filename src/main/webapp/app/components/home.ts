@@ -49,28 +49,21 @@ export class Home {
         }
     }
 
+    /*
+     ------------------------- LOGIN ------------------------------------
+     */
+
     login() {
-      var login = document.getElementById("login-form");
-        var register = document.getElementById("register-form");
-        $('html,body').animate({
-                scrollTop: $(".login-section").offset().top},
-            'slow');
-        login.style.animationTimingFunction="ease-in-out";
-        login.style.display = "block";
-        register.style.display = "none";
-
-    }
-
-    register() {
         var login = document.getElementById("login-form");
         var register = document.getElementById("register-form");
         $('html,body').animate({
-                scrollTop: $(".login-section").offset().top},
+                scrollTop: $(".login-section").offset().top
+            },
             'slow');
-        register.style.animationTimingFunction="ease-in-out";
-        register.style.animationDuration="3s";
-        login.style.display = "none";
-        register.style.display = "block";
+        login.style.animationTimingFunction = "ease-in-out";
+        login.style.display = "block";
+        register.style.display = "none";
+
     }
 
     onSubmit() {
@@ -84,6 +77,27 @@ export class Home {
                     alert(error.text());
                 });
     }
+
+    /*
+     ------------------------- REGISTER ------------------------------------
+     */
+
+    register() {
+        var login = document.getElementById("login-form");
+        var register = document.getElementById("register-form");
+        $('html,body').animate({
+                scrollTop: $(".login-section").offset().top
+            },
+            'slow');
+        register.style.animationTimingFunction = "ease-in-out";
+        register.style.animationDuration = "3s";
+        login.style.display = "none";
+        register.style.display = "block";
+    }
+
+    /*
+     ------------------------- FACEBOOK LOGIN ------------------------------------
+     */
 
     facebook() {
         FB.login(response => {

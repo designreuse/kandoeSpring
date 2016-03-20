@@ -40,7 +40,7 @@ declare var jsColor: any;
     {path: '/themes/addTheme', name: 'AddTheme', component: AddThemeComponent},
     {path: '/chat', name: 'Chat', component: ChatComponent},
     {path: '/subThemesDetail/:id', name: 'SubThemesDetail', component: SubThemeDetailComponent},
-    {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent},
+     {path: '/sessions/:id', as: 'SessionDetail', component: SessionDetailComponent},
     {path: '/sessions/addSession', as: 'AddSession', component: AddSession}
 ])
 export class AppComponent {

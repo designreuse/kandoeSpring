@@ -1,3 +1,4 @@
+<!--navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -9,7 +10,6 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
@@ -35,22 +35,26 @@
         </div>
     </div>
 </nav>
+
+<!--header -->
 <header>
     <div class="container page-header">
         <h3>{{subTheme.subThemeName}}</h3>
     </div>
 </header>
 
-
+<!--breadcrumbs-->
 <div class="container main">
     <div class="col-lg-offset-2 col-lg-8">
         <ol class="breadcrumb">
             <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
             <li><a [routerLink]="['/Themes']">Themes</a></li>
-            <li> <a [routerLink]="['/Themes',{id: themeId}]"> Theme detail</a></li>
+            <li><a [routerLink]="['/Themes',{id: themeId}]"> Theme detail</a></li>
             <li class="active"> SubTheme Details</li>
         </ol>
     </div>
+
+    <!--subtheme image + description -->
     <div class="center-container col-lg-offset-2 col-lg-8">
         <img class="img-responsive img-thumbnail" id="org-logo" [src]="getImageSrc(subTheme.iconURL)">
     </div>
@@ -59,10 +63,11 @@
             <h3>{{subTheme.description}}</h3>
         </div>
     </div>
+
+    <!--Cards available in subtheme -->
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
-            <h4>Cards  </h4>
-
+            <h4>Cards </h4>
             <form>
                 <ul class="ul-show-cards">
                     <div class="row">
@@ -78,9 +83,7 @@
                     </div>
                     <br/>
                 </ul>
-
             </form>
-
-                </div>
+        </div>
     </div>
 </div>

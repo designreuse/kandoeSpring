@@ -48,6 +48,15 @@ export class AddThemeComponent implements OnInit {
         });
     }
 
+    selectOrganisation($event) {
+        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
+        this.theme.organisation=organisation;
+    }
+
+    /*
+     --------------------------------- ADD THEME ---------------------------
+     */
+
     onFileChange($event){
         this.file = $event.target.files[0];
     }
@@ -60,11 +69,6 @@ export class AddThemeComponent implements OnInit {
             this.file = null;
             alert("something went wrong");
         });
-    }
-
-    selectOrganisation($event) {
-        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
-        this.theme.organisation=organisation;
     }
 
     /*

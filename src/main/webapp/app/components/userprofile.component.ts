@@ -9,7 +9,7 @@ import {tokenNotExpired} from '../security/TokenHelper';
 
 @Component({
     selector: 'userprofile',
-    templateUrl:'app/components/userprofile.html'
+    templateUrl: 'app/components/userprofile.html'
 })
 
 export class UserProfileComponent implements OnInit {
@@ -55,8 +55,8 @@ export class UserProfileComponent implements OnInit {
                 )
             }
         } else {
-            console.log("user before servicecall: "+this.user.password);
-            this.userService.updateUser(this.user,this.file).subscribe(
+            console.log("user before servicecall: " + this.user.password);
+            this.userService.updateUser(this.user, this.file).subscribe(
                 (r:Response) => {
                     this.router.navigate(['/LoggedInHome'])
                 },
@@ -87,7 +87,16 @@ export class UserProfileComponent implements OnInit {
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
-    private getImageSrc(url:string): string {
+    /*
+     ------------------------- GENERAL ------------------------------------
+     */
+
+    logout() {
+        localStorage.removeItem("id_token");
+        this.router.navigate(['/Home']);
+    }
+
+    private getImageSrc(url:string):string {
         if (url) {
             if (url.indexOf("http://") > -1) {
                 return url;

@@ -57,6 +57,7 @@ export class ThemeComponent implements OnInit {
         );
 
 
+
         for (var i = 0; i < this.themes.length; i++) {
             this._themeService.getThemeSubThemes(this.themes[i].themeId).subscribe(subThemes => {
                 for (var j = 0; subThemes.length; j++) {

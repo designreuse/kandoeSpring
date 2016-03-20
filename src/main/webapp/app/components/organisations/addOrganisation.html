@@ -1,3 +1,4 @@
+<!-- navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -9,13 +10,11 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#">KAN<span>DOES</span></a></li>
                 <li class="active"><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
                 <li><a [routerLink]="['/Themes']">THEMES</a></li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -37,6 +36,7 @@
     </div>
 </nav>
 
+<!--header -->
 <header>
     <div class="container page-header">
         <h3><span class="glyphicon glyphicon-plus-sign"></span> Add new organisation</h3>
@@ -44,9 +44,8 @@
 </header>
 
 <div class="container ">
-
+    <!--add organisation form -->
     <form class="form-card col-md-8 col-sm-10 col-lg-6 col-lg-offset-3" method="post" role="form">
-
         <div class="form-group">
             <label>Name</label>
             <input type="text" placeholder="Enter organisation name" class="form-control"
@@ -60,6 +59,7 @@
             <label>Logo</label>
             <input type="file" (change)="onFileChange($event)">
         </div>
+        <!--preview organisation card -->
         <div class="items">
             <div class="item">
                 <div class="id"><p>1</p></div>
@@ -81,6 +81,6 @@
             </div>
         </div>
         <hr>
-        <button type="button" class="btn btn-wide btn-info" (click)="onSubmit()"> Create new organisation</button>
+        <button type="button" class="btn btn-wide btn-primary" (click)="onSubmit()"> Create new organisation</button>
     </form>
 </div>

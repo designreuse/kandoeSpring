@@ -65,16 +65,6 @@ export class ThemeDetailComponent implements OnInit {
         });
     }
 
-    onSelectCardsSubTheme($event) {
-        this.countChecked();
-    }
-
-    countChecked() {
-        var count = $("input:checked").length;
-        $("input:checkbox:not(:checked)").prop('disabled', false);
-    }
-
-
     /*
      ------------------------- CARD COMPONENT ------------------------------------
      */
