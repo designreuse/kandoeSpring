@@ -38,9 +38,10 @@ System.register(['rxjs/add/operator/map', "../security/securityService", 'angula
                     this.securityService = securityService;
                 }
                 SessionService.prototype.getSessionById = function (sessionId) {
-                    return this.securityService.get(this.path + 'sessions/' + sessionId, true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (session) { return session_1.Session.fromJson(session); });
+                    var el = this.securityService.get(this.path + 'sessions/' + sessionId, true)
+                        .map(function (res) { return res.json(); });
+                    console.log(JSON.stringify(el));
+                    return el.map(function (session) { return session_1.Session.fromJson(session); });
                 };
                 SessionService.prototype.getUserSessions = function () {
                     return this.securityService.get(this.path + 'sessions/currentUser', true)

@@ -116,7 +116,6 @@ export class ThemeDetailComponent implements OnInit {
 
                 this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(subt => {
                     console.log(subt);
-                    console.log(cardIds[0]);
                 });
 
 
@@ -124,8 +123,6 @@ export class ThemeDetailComponent implements OnInit {
                 this.file = null;
                 console.log(error);
             });
-
-
         }
     }
 
@@ -176,17 +173,21 @@ export class ThemeDetailComponent implements OnInit {
         console.log("File type: " + this.csvFile.type);
         this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
             (data) => {
-                for (var c in data.json()) {
+                /*for (var c in data.json()) {
                     console.log(c);
+                    this.cards.push(c);
+                }*/
+                var cardset = (data.json())
+                    .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
+                console.log(cardset);
+                for (var c in cardset){
                     this.cards.push(c);
                 }
             },
             (error) => {
                 console.log("Error uploading csv: " + error);
             },
-            () => {
-                console.log("gefefeffv")
-            }
+            () => { }
         );
     }
 

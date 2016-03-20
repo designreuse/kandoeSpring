@@ -12,8 +12,8 @@ export class Session {
     minCards: number;
     maxCards: number;
     size: number;
-    startTime: string;
-    endTime: string;
+    startTime: Date;
+    endTime: Date;
     userAddCards: boolean;
     chosenCards: boolean;
     themeId: number;
@@ -21,7 +21,7 @@ export class Session {
     users: User[];
     theme: Theme;
     subTheme:SubTheme;
-
+    isOrganiser: boolean;
 
     constructor() {
 
@@ -33,15 +33,17 @@ export class Session {
         session.sessionName = json.sessionName;
         session.mode = json.mode;
         session.type = json.type;
-        session.state = json.state;
         session.minCards = json.minCards;
         session.maxCards = json.maxCards;
-        session.startTime = json.startTime;
-        session.endTime = json.endTime;
         session.size = json.size;
         session.userAddCards = json.userAddCards;
         session.chosenCards = json.chosenCards;
         session.themeId = json.themeId;
+        session.state = json.state;
+
+        session.isOrganiser = json.organiser;
+        session.startTime = new Date(json.startTime);
+        session.endTime = new Date(json.endTime);
 
         if(json.cards) {
             session.cards = [];

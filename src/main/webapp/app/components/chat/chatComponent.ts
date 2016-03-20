@@ -18,6 +18,7 @@ export class ChatComponent{
     @Input() sessionId: number;
     @Input() messages: Message[] = [];
     @Output() emitMessage:EventEmitter<string> = new EventEmitter();
+    @Input() sessionName: string;
 
     message: string = "";
 

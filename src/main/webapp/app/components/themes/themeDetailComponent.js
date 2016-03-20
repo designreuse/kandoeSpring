@@ -127,7 +127,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                             });
                             _this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(function (subt) {
                                 console.log(subt);
-                                console.log(cardIds[0]);
                             });
                         }, function (error) {
                             _this.file = null;
@@ -176,15 +175,19 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         return;
                     console.log("File type: " + this.csvFile.type);
                     this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (data) {
-                        for (var c in data.json()) {
+                        /*for (var c in data.json()) {
                             console.log(c);
+                            this.cards.push(c);
+                        }*/
+                        var cardset = (data.json())
+                            .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
+                        console.log(cardset);
+                        for (var c in cardset) {
                             _this.cards.push(c);
                         }
                     }, function (error) {
                         console.log("Error uploading csv: " + error);
-                    }, function () {
-                        console.log("gefefeffv");
-                    });
+                    }, function () { });
                 };
                 /*
                  --------------------------------- GENERAL ---------------------------
@@ -214,9 +217,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeDetailComponent.html',
                         inputs: ['theme']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService, subThemeService_1.SubThemeService])
                 ], ThemeDetailComponent);
                 return ThemeDetailComponent;
+                var _a, _b;
             })();
             exports_1("ThemeDetailComponent", ThemeDetailComponent);
         }

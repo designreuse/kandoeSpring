@@ -91,6 +91,24 @@ public class WebSocketController {
         }
     }
 
+    @MessageMapping("/endSession")
+    @SendTo("/topic/endSession")
+    public EndSession endSession(EndSession endSession){
+
+        User u = getUserFromToken(endSession.getToken());
+        Session session = null;
+        if(u== null){
+            return null;
+        }
+        try {
+            session = sessionService.stopSession(endSession.getSessionId(), u.getUserId());
+            System.out.println(session.getSessionId());
+            return new EndSession(session.getSessionId(),endSession.getCardId());
+        } catch (SessionServiceException e) {
+            return null;
+        }
+    }
+
     private User getUserFromToken(String token){
         String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
                 .parseClaimsJws(token.replace("\"", "")).getBody().getSubject();

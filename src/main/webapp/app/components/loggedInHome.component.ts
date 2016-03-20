@@ -12,6 +12,7 @@ import {Theme} from "../DOM/theme";
 import {Card} from "../DOM/card";
 import {Organisation} from "../DOM/organisation";
 import {ThemeService} from "../service/themeService";
+import DateTimeFormat = Intl.DateTimeFormat;
 
 @CanActivate(() => tokenNotExpired())
 
@@ -26,6 +27,7 @@ export class LoggedInHome implements OnInit {
     private user:User = User.createEmpty();
     private userService:UserService;
     public sessions:Session[] = [];
+    public currDate: Date;
 
     constructor(private _sessionService:SessionService, router:Router, userService:UserService, private themeservice:ThemeService) {
         this.router = router;
@@ -36,11 +38,15 @@ export class LoggedInHome implements OnInit {
         this._sessionService.getUserSessions().subscribe((sessions:Session[])=> {
             console.log(JSON.stringify(sessions));
             this.sessions = sessions;
+            console.log(sessions[0].chosenCards);
 
         });
         this.userService.getCurrentUser().subscribe(u => {
             this.user = u;
         });
+
+        this.currDate = new Date;
+
     }
 
     showReveal(i) {

@@ -91,6 +91,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         console.log(e.text());
                     });
                 };
+                /*
+                ------------------------------------ USER PLAYING ---------------------------
+                 */
                 SessionDetailComponent.prototype.getVisibility = function (userId) {
                     var currUser = null;
                     for (var j = 0; j < this.users.length; j++) {
@@ -106,6 +109,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         return ("visibility: hidden");
                     }
                 };
+                /*
+                ------------------------------------ CIRCLE CARDS POSITIONING ---------------------------
+                 */
                 SessionDetailComponent.prototype.getPosition = function (i, cardId) {
                     var c = this.cards[i];
                     var position = this.session.size - 1 - c.position;
@@ -126,7 +132,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     return "top:" + y + "px; left: " + x + "px; transform: rotate(" + (90 + (rotationDegree * i)) + "deg)";
                 };
                 SessionDetailComponent.prototype.changePosition = function (i) {
-                    console.log(this.session.state);
                     if (this.session.state == "IN_PROGRESS") {
                         var card = this.cards[i];
                         var id = "#" + i;
@@ -166,6 +171,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     var height = document.getElementById("circlesvg").getBoundingClientRect().height;
                     return height / 2;
                 };
+                /*
+                -------------------------------- GENERAL --------------------------------
+                 */
                 SessionDetailComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -221,15 +229,6 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             cardIds[i++] = $(this).val();
                             console.log($(this).val());
                         });
-                        /*this.sessionService.addCards(cardIds, this.sessionId).subscribe(ses => {
-                            this.session = ses;
-                            this.cards = ses.cards;
-                            this.users = ses.users;
-                            this.session.chosenCards = true;
-            
-                        }, e => {
-                            console.log(e.text());
-                        });*/
                         this.session.chosenCards = true;
                         this.stompClient.send("/addCards", {}, JSON.stringify({ 'token': localStorage.getItem("id_token"),
                             'sessionId': this.sessionId, 'cardIds': cardIds }));
@@ -256,14 +255,20 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                     cardIngame.css("color", "rgb(0,0,0)");
                     carddescription.css("display", "none");
                 };
+                SessionDetailComponent.prototype.endSession = function () {
+                    var cardId = $("input:checked").val();
+                    console.log(cardId);
+                    this.stompClient.send("/endSession", {}, JSON.stringify({ 'sessionId': this.sessionId, 'cardId': cardId,
+                        'token': localStorage.getItem("id_token") }));
+                };
                 /*
                 -------------------------------WebSockets-------------------------------------
                 */
                 SessionDetailComponent.prototype.connect = function () {
                     var _this = this;
                     this.disconnect();
-                    //var socket = new SockJS('/Kandoe/circleSession'); //local
-                    var socket = new SockJS('/circleSession'); // wildfly
+                    var socket = new SockJS('/Kandoe/circleSession'); //local
+                    //var socket = new SockJS('/circleSession'); // wildfly
                     this.stompClient = Stomp.over(socket);
                     this.stompClient.connect({}, function (frame) {
                         _this.stompClient.subscribe('/topic/chat', function (greeting) {
@@ -309,6 +314,21 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                             _this.users = session.users;
                             _this.session.chosenCards = chosen;
                         });
+                        _this.stompClient.subscribe('/topic/endSession', function (result) {
+                            var json = JSON.parse(result.body);
+                            if (json.sessionId == _this.sessionId) {
+                                _this.cardService.getCardById(json.cardId).subscribe(function (card) {
+                                    $(document).find("#card-element-session-ended").text(card.description);
+                                    var img = $(document).find("#card-img-session-ended");
+                                    img.attr("src", _this.getImageSrc(card.imageURL));
+                                    $(document).find("#card-element-session-finished").text(card.description);
+                                    var img = $(document).find("#card-img-session-finished");
+                                    img.attr("src", _this.getImageSrc(card.imageURL));
+                                });
+                                var popup = $(document).find("#session-ended-popup");
+                                $(popup).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 }, 2500);
+                            }
+                        });
                     });
                 };
                 SessionDetailComponent.prototype.disconnect = function () {
@@ -323,6 +343,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                 SessionDetailComponent.prototype.showMessage = function (json) {
                     this.messages.push(message_1.Message.fromJson(json));
                 };
+                SessionDetailComponent.prototype.reloadGame = function () {
+                    location.reload();
+                };
                 SessionDetailComponent = __decorate([
                     router_1.CanActivate(function () { return TokenHelper_1.tokenNotExpired(); }),
                     core_1.Component({
@@ -330,9 +353,10 @@ System.register(['angular2/core', "../../security/TokenHelper", "angular2/router
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink, chatComponent_1.ChatComponent],
                         templateUrl: 'app/components/sessions/sessionDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, userService_1.UserService, cardService_1.CardService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object])
                 ], SessionDetailComponent);
                 return SessionDetailComponent;
+                var _a, _b;
             })();
             exports_1("SessionDetailComponent", SessionDetailComponent);
         }

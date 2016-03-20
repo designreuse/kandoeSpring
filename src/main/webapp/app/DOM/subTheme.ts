@@ -1,6 +1,7 @@
 import {Link} from "./link";
 import {Organisation} from "./organisation";
 import {Card} from './card';
+import {Theme} from "./theme";
 
 export class SubTheme{
     subThemeId:number;

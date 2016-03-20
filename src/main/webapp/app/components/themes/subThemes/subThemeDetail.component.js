@@ -53,6 +53,7 @@ System.register(["angular2/core", "angular2/router", "../../../service/themeServ
                     this.themeCards = [];
                     this.file = null;
                     this.csvFile = null;
+                    this.theme = null;
                     this.userService = userService;
                     this.router = router;
                     this.subThemeId = +routeParams.params["id"];
@@ -66,7 +67,6 @@ System.register(["angular2/core", "angular2/router", "../../../service/themeServ
                         _this.subTheme = subTheme;
                         _this.themeId = _this.subTheme.themeId;
                         _this.themeService.getThemeCards(_this.themeId).subscribe(function (cards) {
-                            console.log(cards);
                             _this.themeCards = cards;
                             console.log("themeCards have been added");
                         });
@@ -170,9 +170,10 @@ System.register(["angular2/core", "angular2/router", "../../../service/themeServ
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/themes/subThemes/subThemeDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService, themeService_1.ThemeService])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService, subThemeService_1.SubThemeService, themeService_1.ThemeService])
                 ], SubThemeDetailComponent);
                 return SubThemeDetailComponent;
+                var _a, _b;
             })();
             exports_1("SubThemeDetailComponent", SubThemeDetailComponent);
         }

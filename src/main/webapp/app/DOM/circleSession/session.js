@@ -25,15 +25,16 @@ System.register(["../card", "../users/user", "../theme", "../subTheme"], functio
                     session.sessionName = json.sessionName;
                     session.mode = json.mode;
                     session.type = json.type;
-                    session.state = json.state;
                     session.minCards = json.minCards;
                     session.maxCards = json.maxCards;
-                    session.startTime = json.startTime;
-                    session.endTime = json.endTime;
                     session.size = json.size;
                     session.userAddCards = json.userAddCards;
                     session.chosenCards = json.chosenCards;
                     session.themeId = json.themeId;
+                    session.state = json.state;
+                    session.isOrganiser = json.organiser;
+                    session.startTime = new Date(json.startTime);
+                    session.endTime = new Date(json.endTime);
                     if (json.cards) {
                         session.cards = [];
                         for (var i = 0; i < json.cards.length; i++) {

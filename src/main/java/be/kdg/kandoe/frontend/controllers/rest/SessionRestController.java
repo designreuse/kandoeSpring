@@ -50,6 +50,14 @@ public class SessionRestController {
                 Session session = this.sessionService.findSessionById(sessionId, user.getUserId());
                 SessionDTO dto = sessionAssembler.toResource(session);
 
+                if(session.getTheme() == null) {
+                    if (session.getSubTheme().getOrganisation().getOrganisers().stream().anyMatch(o -> o.getId().equals(user.getId()))) {
+                        dto.setIsOrganiser(true);
+                    }
+                } else if (session.getTheme().getOrganisation().getOrganisers().stream().anyMatch(o -> o.getId().equals(user.getId()))) {
+                    dto.setIsOrganiser(true);
+                }
+
                 session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(user.getId()))
                         .findFirst().ifPresent(userSession ->  dto.setChosenCards(userSession.isChosenCards()));
 
@@ -66,7 +74,16 @@ public class SessionRestController {
         if(user != null){
             try {
                 List<Session> sessions = this.sessionService.findSessionsCurrentUser(user.getUserId());
-                return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
+                List<SessionDTO> sessionDTOs = new ArrayList<>();
+
+                for(Session session : sessions) {
+                    SessionDTO dto = sessionAssembler.toResource(session);
+                    session.getUserSessions().stream().filter(us -> us.getUser().getId().equals(user.getId()))
+                            .findFirst().ifPresent(userSession -> dto.setChosenCards(userSession.isChosenCards()));
+                    sessionDTOs.add(dto);
+                }
+
+                return new ResponseEntity<List<SessionDTO>>(sessionDTOs, HttpStatus.OK);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
             }
@@ -171,17 +188,13 @@ public class SessionRestController {
 
     @RequestMapping(value = "/{sessionId}/chat")
     public ResponseEntity<List<Greeting>> getChatHistory(@PathVariable("sessionId") Integer sessionId,
-                                                         @AuthenticationPrincipal User user) {
+                                                         @AuthenticationPrincipal User user) throws SessionServiceException {
         if(user != null) {
-            try {
-                List<Message> messages = sessionService.getChatHistory(sessionId, user.getUserId());
-                List<Greeting> greetings = messages.stream().map(m -> new Greeting(m.getSender().getUsername(), m.getContent(),
-                        String.valueOf(m.getDate().getHour() + ":" + m.getDate().getMinute()),
-                        m.getSender().getProfilePicture(),sessionId)).collect(Collectors.toList());
-                return new ResponseEntity<List<Greeting>>(greetings, HttpStatus.OK);
-            } catch (SessionServiceException e) {
-                return new ResponseEntity<List<Greeting>>(HttpStatus.BAD_REQUEST);
-            }
+            List<Message> messages = sessionService.getChatHistory(sessionId, user.getUserId());
+            List<Greeting> greetings = messages.stream().map(m -> new Greeting(m.getSender().getUsername(), m.getContent(),
+                    String.valueOf(m.getDate().getHour() + ":" + m.getDate().getMinute()),
+                    m.getSender().getProfilePicture(), sessionId)).collect(Collectors.toList());
+            return new ResponseEntity<List<Greeting>>(greetings, HttpStatus.OK);
 
         }
         return new ResponseEntity<List<Greeting>>(HttpStatus.UNAUTHORIZED);

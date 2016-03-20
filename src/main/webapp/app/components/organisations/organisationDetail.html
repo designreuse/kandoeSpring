@@ -136,8 +136,7 @@
                                                             <button class="btn btn-default btn-collapse"
                                                                     data-parent="#accordion" href="#card-open"
                                                                     data-toggle="collapse">
-                                                                <span class="caret"></span> Show Cards
-                                                            </button>
+                                                                <span class="caret"></span> Show Cards </button>
                                                             <a class="btn btn-primary-small btn-add-inTheme"
                                                                data-toggle="modal" data-target="#add-card"
                                                                (click)="onAddCard(theme.themeId)" type="button">+</a>
@@ -162,11 +161,10 @@
                                                         <div class="btn-group btn-group-inTheme">
                                                             <button class="btn btn-default btn-collapse"
                                                                     data-parent="#accordion" href="#subTheme-open"
-                                                                    data-toggle="collapse" type="button">
-                                                                <span class="caret"></span> Show Subthemes
-                                                            </button>
+                                                                    data-toggle="collapse">
+                                                                <span class="caret"></span> Show Subthemes </button>
                                                             <a class="btn btn-primary-small btn-add-inTheme"
-                                                               data-toggle="modal" data-target="#add-subTheme"
+                                                               data-toggle="modal" data-target="#add-subTheme" type="button"
                                                                (click)="onAddSubTheme(theme.themeId)">+</a>
                                                         </div>
                                                     </div>
@@ -174,11 +172,14 @@
                                                         <ul class="padding-left-5">
                                                             <div *ngFor="#subTheme of theme.subThemes"
                                                                  class="single-card pre open-fixed-height">
-                                                                <li class="fontsize-card">
-                                                                    <img class="card-img-theme" alt="no image found"
-                                                                         [src]="getImageSrc(subTheme.iconURL)">
-                                                                    {{subTheme.description}}
-                                                                </li>
+                                                                <a class="hover-subTheme"
+                                                                   [routerLink]="['/SubThemesDetail', {id:subTheme.subThemeId}]">
+                                                                    <li class="fontsize-card">
+                                                                        <img class="card-img-theme" alt="no image found"
+                                                                             [src]="getImageSrc(subTheme.iconURL)">
+                                                                        {{subTheme.description}}
+                                                                    </li>
+                                                                </a>
                                                             </div>
                                                         </ul>
                                                     </div>

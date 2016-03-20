@@ -9,7 +9,7 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, TokenHelper_1, user_1, userService_1, sessionService_1, themeService_1;
-    var LoggedInHome;
+    var DateTimeFormat, LoggedInHome;
     return {
         setters:[
             function (core_1_1) {
@@ -49,10 +49,12 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                     this._sessionService.getUserSessions().subscribe(function (sessions) {
                         console.log(JSON.stringify(sessions));
                         _this.sessions = sessions;
+                        console.log(sessions[0].chosenCards);
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
+                    this.currDate = new Date;
                 };
                 LoggedInHome.prototype.showReveal = function (i) {
                     var id = "#" + i;
@@ -88,9 +90,10 @@ System.register(["angular2/core", "angular2/router", "../security/TokenHelper", 
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/loggedInHome.html'
                     }), 
-                    __metadata('design:paramtypes', [sessionService_1.SessionService, router_1.Router, userService_1.UserService, themeService_1.ThemeService])
+                    __metadata('design:paramtypes', [sessionService_1.SessionService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, themeService_1.ThemeService])
                 ], LoggedInHome);
                 return LoggedInHome;
+                var _a;
             })();
             exports_1("LoggedInHome", LoggedInHome);
         }

@@ -78,6 +78,9 @@ export class SessionDetailComponent implements OnInit{
         })
     }
 
+    /*
+    ------------------------------------ USER PLAYING ---------------------------
+     */
     getVisibility(userId){
         var currUser = null;
         for(var j = 0; j < this.users.length; j++){
@@ -92,6 +95,10 @@ export class SessionDetailComponent implements OnInit{
             return("visibility: hidden");
         }
     }
+
+    /*
+    ------------------------------------ CIRCLE CARDS POSITIONING ---------------------------
+     */
 
     getPosition(i, cardId ?: number){
         var c = this.cards[i];
@@ -119,7 +126,6 @@ export class SessionDetailComponent implements OnInit{
     }
 
     changePosition(i){
-        console.log(this.session.state);
         if(this.session.state == "IN_PROGRESS"){
             var card = this.cards[i];
             var id = "#" + i;
@@ -161,6 +167,10 @@ export class SessionDetailComponent implements OnInit{
         var height= document.getElementById("circlesvg").getBoundingClientRect().height;
         return height/2;
     }
+
+    /*
+    -------------------------------- GENERAL --------------------------------
+     */
 
 
     private getImageSrc(url:string): string {
@@ -222,15 +232,6 @@ export class SessionDetailComponent implements OnInit{
                 cardIds[i++] = $(this).val();
                 console.log($(this).val());
             });
-            /*this.sessionService.addCards(cardIds, this.sessionId).subscribe(ses => {
-                this.session = ses;
-                this.cards = ses.cards;
-                this.users = ses.users;
-                this.session.chosenCards = true;
-
-            }, e => {
-                console.log(e.text());
-            });*/
 
             this.session.chosenCards = true;
             this.stompClient.send("/addCards", {}, JSON.stringify({'token': localStorage.getItem("id_token"),
@@ -263,14 +264,22 @@ export class SessionDetailComponent implements OnInit{
         carddescription.css("display", "none");
     }
 
+    endSession(){
+        var cardId = $("input:checked").val();
+        console.log(cardId);
+        this.stompClient.send("/endSession", {}, JSON.stringify({'sessionId': this.sessionId,'cardId': cardId,
+            'token': localStorage.getItem("id_token")}));
+
+    }
+
     /*
     -------------------------------WebSockets-------------------------------------
     */
 
     connect() {
         this.disconnect();
-        //var socket = new SockJS('/Kandoe/circleSession'); //local
-        var socket = new SockJS('/circleSession'); // wildfly
+        var socket = new SockJS('/Kandoe/circleSession'); //local
+        //var socket = new SockJS('/circleSession'); // wildfly
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, frame => {
 
@@ -321,9 +330,26 @@ export class SessionDetailComponent implements OnInit{
                 this.cards = session.cards;
                 this.users = session.users;
                 this.session.chosenCards = chosen;
-            })
-        });
+            });
 
+            this.stompClient.subscribe('/topic/endSession', result => {
+                var json = JSON.parse(result.body);
+
+                if(json.sessionId == this.sessionId){
+                    this.cardService.getCardById(json.cardId).subscribe(card => {
+                        $(document).find("#card-element-session-ended").text(card.description);
+                        var img = $(document).find("#card-img-session-ended");
+                        img.attr("src", this.getImageSrc(card.imageURL));
+                        $(document).find("#card-element-session-finished").text(card.description);
+                        var img = $(document).find("#card-img-session-finished");
+                        img.attr("src", this.getImageSrc(card.imageURL));
+
+                    });
+                    var popup = $(document).find("#session-ended-popup");
+                    $(popup).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 2500);
+                }
+            });
+        });
     }
 
     disconnect() {
@@ -340,5 +366,9 @@ export class SessionDetailComponent implements OnInit{
 
     showMessage(json: string) {
         this.messages.push(Message.fromJson(json));
+    }
+
+    reloadGame(){
+        location.reload();
     }
 }

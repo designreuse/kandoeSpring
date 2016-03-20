@@ -29,6 +29,7 @@ public class SessionDTO extends ResourceSupport implements Serializable {
     private List<UserDTO> users;
     private ThemeDTO theme;
     private SubThemeDTO subTheme;
+    private boolean isOrganiser;
 
     public SessionDTO() {
     }
@@ -175,5 +176,13 @@ public class SessionDTO extends ResourceSupport implements Serializable {
 
     public void setSubTheme(SubThemeDTO subTheme) {
         this.subTheme = subTheme;
+    }
+
+    public boolean isOrganiser() {
+        return isOrganiser;
+    }
+
+    public void setIsOrganiser(boolean isOrganiser) {
+        this.isOrganiser = isOrganiser;
     }
 }

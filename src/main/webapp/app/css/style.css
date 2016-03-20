@@ -219,6 +219,12 @@ background: #ffb951;
     background: #24a7ea;
 }
 
+.btn-end-session{
+    margin: 10px;
+    padding: 15px;
+    text-shadow: none;
+}
+
 /*-------------- FORMS: Inputs -------------------- */
 
 form {
@@ -727,7 +733,7 @@ footer {
     overflow: auto;
 }
 
-.choose-card-subtheme{
+.img-100{
     width: 100px;
     height: 100px;
 }
@@ -758,7 +764,6 @@ footer {
     padding: 0 15px;
     width: 100%;
     float: left;
-    height: 125px;
     position: relative;
     border: solid white 3px;
     -webkit-border-radius: 8px;
@@ -800,8 +805,8 @@ footer {
 }
 
 .single-card > .card-theme-container{
-    height: 10%;
     margin: 10px 0;
+    max-height: 100px;
 }
 
 li > .row > .roboto-bold{
@@ -1084,7 +1089,7 @@ li > .row > .roboto-bold{
 ------------------------- WINNER POP-UP -------------
 */
 
-#winner-popup {
+#winner-popup, #session-ended-popup {
     position: fixed;
     top: 0;
     left: 0;
@@ -1095,22 +1100,25 @@ li > .row > .roboto-bold{
     z-index: 20;
 }
 
-#card-img-winner {
+#card-img-winner, #card-img-session-ended {
     max-width: 150px;
-    max-height: 150px;
+    min-height: 150px;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-#card-element-winner {
+#card-element-winner, #card-element-session-ended {
     margin: 20px;
+    font-style: normal;
+    color: rgb(0,0,0);
+    text-shadow: 3px 2px 10px rgba(250, 250, 250, 0.55)
 }
 
 .winner-popup-container {
     margin: 70px auto;
     padding: 10px;
-    background: #f7f7f7;
+    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(8, 8, 8, 0.25)), url(../resources/winner.jpg);
     border-radius: 5px;
     width: 50%;
     position: relative;
@@ -1121,12 +1129,13 @@ li > .row > .roboto-bold{
 .winner-text {
     color: white;
     position: relative;
-    top: 25%;
+    padding: 20px;
+    text-shadow: 3px 2px 10px rgba(0, 0, 0, 0.55);
 }
 
-.winner-text-container {
+.session-ended-text-container{
     min-height: 150px;
-    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(8, 8, 8, 0.25)), url(../resources/winner.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(8, 8, 8, 0.25)), url(../resources/sessionclosed.png);
 }
 
 /*
@@ -1186,6 +1195,7 @@ li > .row > .roboto-bold{
     background: inherit;
     left: 20px;
 }
+
 
 /*
 --------------------------------- ADD CARD -----------------------------

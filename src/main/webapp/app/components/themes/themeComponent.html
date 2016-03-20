@@ -164,11 +164,11 @@
                                                         <div class="btn-group btn-group-inTheme">
                                                             <button class="btn btn-default btn-collapse"
                                                                     data-parent="#accordion" href="#subTheme-open"
-                                                                    data-toggle="collapse" type="button">
+                                                                    data-toggle="collapse">
                                                                 <span class="caret"></span> Show Subthemes
                                                             </button>
                                                             <a class="btn btn-primary-small btn-add-inTheme"
-                                                               data-toggle="modal" data-target="#add-subTheme"
+                                                               data-toggle="modal" data-target="#add-subTheme" type="button"
                                                                (click)="onAddSubTheme(theme.themeId)">+</a>
                                                         </div>
                                                     </div>
@@ -176,11 +176,14 @@
                                                         <ul>
                                                             <div *ngFor="#subTheme of theme.subThemes"
                                                                  class="single-card pre open-fixed-height">
-                                                                <li class="fontsize-card">
-                                                                    <img class="card-img-theme" alt="no image found"
-                                                                         [src]="getImageSrc(subTheme.iconURL)">
-                                                                    {{subTheme.description}}
-                                                                </li>
+                                                                <a class="hover-subTheme"
+                                                                   [routerLink]="['/SubThemesDetail', {id:subTheme.subThemeId}]">
+                                                                    <li class="fontsize-card">
+                                                                        <img class="card-img-theme" alt="no image found"
+                                                                             [src]="getImageSrc(subTheme.iconURL)">
+                                                                        {{subTheme.description}}
+                                                                    </li>
+                                                                </a>
                                                             </div>
                                                         </ul>
                                                     </div>
@@ -193,13 +196,13 @@
                                                 data-original-title="Flip Card">
                                             <i class="fa fa-reply"></i> Back
                                         </button>
-                                        <div class="social-links text-center">
+                                        <!--<div class="social-links text-center">
                                             <a href="#facebook" class="facebook"><span
                                                     class="fa fa-facebook"></span></a>
                                             <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
                                             <a href="#google-plus" class="google-plus"><span
                                                     class="fa fa-google-plus"></span></a>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div> <!-- end back panel -->
                             </div>

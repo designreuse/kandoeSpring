@@ -39,9 +39,14 @@
 <header>
     <div class="container page-header" id="org-header">
         <h3>{{session.sessionName}}</h3>
+        <div *ngIf="session.isOrganiser && session.state == 'IN_PROGRESS'" class="center-container">
+            <a class="btn btn-primary btn-end-session" data-toggle="modal" data-target="#pick-winning-card">
+            END SESSION
+            </a>
+        </div>
     </div>
 </header>
-<div class="container main" *ngIf="session.chosenCards">
+<div class="container main" *ngIf="session.chosenCards && session.state == 'IN_PROGRESS'">
     <div class="row">
         <div class="col-md-offset-2">
             <ul class="list-unstyled">
@@ -93,10 +98,9 @@
             </div>
         </div>
         <div class="chat -ingame col-sm-12 col-md-2">
-			<chat [sessionId]="sessionId" (emitMessage)="sendMessage($event)" [messages]="messages"></chat>
+			<chat [sessionId]="sessionId" [sessionName]="session.sessionName" (emitMessage)="sendMessage($event)" [messages]="messages"></chat>
         </div>
     </div>
-    
 </div>
 
 <!--
@@ -108,8 +112,23 @@
         <div class="winner-text-container">
             <h2 class="winner-text"> THE CHOSEN ONE</h2>
         </div>
-        <img id="card-img-winner" class="img-responsive img-rounded"/>
-        <h4 id="card-element-winner"></h4>
+        <img id="card-img-winner" class="img-responsive img-rounded img-thumbnail"/>
+        <h3 id="card-element-winner"></h3>
+    </div>
+</div>
+
+<!--
+---------------------------------- SCREEN IF SESSION IS CLOSED BY ORGANISER-------------------------
+-->
+
+<div id="session-ended-popup" class="container-popup">
+    <div class="winner-popup-container center-container">
+        <div class="session-ended-text-container">
+            <h2 class="winner-text"> SESSION ENDED <span class="glyphicon glyphicon-thumbs-down"></span></h2>
+            <h3>Chosen card</h3>
+        </div>
+        <img id="card-img-session-ended" class="img-responsive img-rounded img-thumbnail"/>
+        <h3 id="card-element-session-ended"></h3>
     </div>
 </div>
 
@@ -169,4 +188,119 @@
     </div>
 </div>
 
+<!--
+---------------------------------- SCREEN WHILE WAITING-------------------------
+-->
 
+<div class="container main" *ngIf="session.chosenCards && session.state == 'CREATED'">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div class="center-container">
+                <h3>Other users are still picking</h3>
+                <h4>Remember, patience is a virtue!</h4>
+
+                <h3>Play a game</h3>
+                <h4>if you're not feeling virtuous</h4>
+                <div id="game">
+                    <a id="gameover" (click)="reloadGame()"></a>
+                    <div id="timer"><div id="progress"></div></div>
+                    <div id="map">
+                        <div id="mask_1" class="mask"></div>
+                        <div id="mask_2" class="mask"></div>
+                        <div id="mask_3" class="mask"></div>
+                        <div id="mask_4" class="mask"></div>
+                        <div id="mask_5" class="mask"></div>
+                        <div id="mask_6" class="mask"></div>
+                        <div id="mask_7" class="mask"></div>
+                    </div>
+                    <div id="enemy">
+                        <input type="radio" name="enemy_1"  id="enemy_1"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_2"  id="enemy_2"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_3"  id="enemy_3"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_4"  id="enemy_4"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_5"  id="enemy_5"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_6"  id="enemy_6"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_7"  id="enemy_7"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_8"  id="enemy_8"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_9"  id="enemy_9"  class="enemys"><div class="effect"></div>
+                        <input type="radio" name="enemy_10" id="enemy_10" class="enemys"><div class="effect"></div>
+                    </div>
+                    <div id="score_board">
+                        <div id="score_wrap">
+                            <div id="score">
+                                <input type="radio" name="enemy_1"  id="score_1"  class="score" checked>
+                                <input type="radio" name="enemy_2"  id="score_2"  class="score" checked>
+                                <input type="radio" name="enemy_3"  id="score_3"  class="score" checked>
+                                <input type="radio" name="enemy_4"  id="score_4"  class="score" checked>
+                                <input type="radio" name="enemy_5"  id="score_5"  class="score" checked>
+                                <input type="radio" name="enemy_6"  id="score_6"  class="score" checked>
+                                <input type="radio" name="enemy_7"  id="score_7"  class="score" checked>
+                                <input type="radio" name="enemy_8"  id="score_8"  class="score" checked>
+                                <input type="radio" name="enemy_9"  id="score_9"  class="score" checked>
+                                <input type="radio" name="enemy_10" id="score_10" class="score" checked>
+                                <div class="score" id="score_11"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+---------------------------------- FINISHED GAME SCREEN -------------------------
+-->
+
+<div class="container main" *ngIf="session.state == 'FINISHED'">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div class="center-container">
+                <h3>FINITO!</h3>
+                <img src="http://emojipedia-us.s3.amazonaws.com/cache/bd/b7/bdb709fa1cb924b66c97eef7843452ba.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+------------------------------------- popup pickCard ------------------------------
+-->
+
+<div id="pick-winning-card" class="modal fade containerpopup" role="dialog">
+<!-- Modal -->
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+
+        <div class="modal-header noborder">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <header class="popup-header">
+            <div class="container page-headercard">
+                    <h4>Add new card</h4>
+            </div>
+            </header>
+        </div>
+        <div class="container popup-main nopaddingleft bottomfixes">
+            <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                <div class="row">
+                    <div class="modal-body bottomfixes">
+                        <div class="col-xs-6 " *ngFor="#card of cards">
+                            <input type="radio" [attr.id]="card.cardId" [value]="card.cardId">
+                            <img class="img-100" alt="no image found"
+                            [src]="getImageSrc(card.imageURL)">
+                            <p class="choose-subtheme-description"> {{card.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer noborder nopaddingtop">
+            <button type="button" class="btn btn-lg btn-wide btn-primary" data-dismiss="modal"
+            (click)="endSession()">Pick winning card
+            </button>
+        </div>
+    </div>
+</div>
+</div>

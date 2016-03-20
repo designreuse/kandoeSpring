@@ -61,22 +61,19 @@
     <div class="row">
         <div class="center-container col-lg-offset-2 col-lg-8">
             <h3>{{subTheme.description}}</h3>
-        </div>
-        <div class="col-sm-9 col-md-10">
-            <div class="btn-primary-small-container">
-                <a class="btn btn-primary-small pull-right" data-toggle="modal" data-target="#add-subTheme"> +
-                    Add </a>
-            </div>
+                <div class="btn-primary-small-container">
+                    <a class="btn btn-primary-small" data-toggle="modal" data-target="#add-subTheme"> +
+                        Add cards from Theme </a>
+                </div>
         </div>
     </div>
-
 
     <!--Cards available in subtheme -->
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
             <div class="row">
                 <div class="col-sm-2">
-                    <h4>Cards</h4>
+                    <h3>Cards</h3>
                 </div>
                 <div class="col-sm-9 col-md-10">
                     <span class="btn-group pull-right btn-primary-small-container">
@@ -93,7 +90,7 @@
                         <div class="col-xs-12 col-sm-6 col-lg-4 single-card" *ngFor="#card of subThemeCards">
                             <li class="card-theme-container">
                                 <div class="row">
-                                    <img class="card-img-theme img-thumbnail img-responsive" alt="no image found"
+                                    <img class="img-100 card-img-theme img-thumbnail img-responsive" alt="no image found"
                                          [src]="getImageSrc(card.imageURL)">
                                     <div class="fontsize-card">{{card.description}}</div>
                                 </div>
@@ -187,7 +184,7 @@
                                     <br>
                                     <div class="col-xs-6 " *ngFor="#card of themeCards">
                                         <input type="checkbox" [attr.id]="card.cardId" [value]="card.cardId">
-                                        <img class="choose-card-subtheme" alt="no image found"
+                                        <img class="choose-card-subtheme img-100" alt="no image found"
                                              [src]="getImageSrc(card.imageURL)">
                                         <p class="choose-subtheme-description"> {{card.description}}</p>
                                     </div>

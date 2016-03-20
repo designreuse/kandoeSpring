@@ -20,9 +20,11 @@ export class SessionService {
     }
 
     public getSessionById(sessionId:number):Observable<Session> {
-        return this.securityService.get(this.path + 'sessions/' + sessionId, true)
-            .map(res => res.json())
-            .map((session:Session) => Session.fromJson(session));
+
+        var el = this.securityService.get(this.path + 'sessions/' + sessionId, true)
+            .map(res => res.json());
+        console.log(JSON.stringify(el));
+            return el.map((session:Session) => Session.fromJson(session));
     }
 
     public getUserSessions():Observable<Session[]> {

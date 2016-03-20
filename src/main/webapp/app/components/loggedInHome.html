@@ -61,7 +61,6 @@
                     </div>
                 </div>
                 <div *ngFor="#session of sessions; #i = index" class="kandoe-session-card-container col-sm-12 col-md-4">
-
                     <!--Cards theme object -->
                     <div class="kandoe-session-card">
                         <div class="kandoe-session-card-image">
@@ -87,13 +86,23 @@
                         <!-- kandoe-session-card content -->
                         <div class="row nopadding-nomargin">
                             <div class="kandoe-session-card-action col-sm-12">
-                                <div class="padding-left-5 col-sm-7"><label><span
-                                        class="glyphicon glyphicon-time"></span> END <p class="no-bold">
+                                <div *ngIf="session.state == 'IN_PROGRESS'" class="padding-left-5 col-sm-7"><label><span
+                                        class="glyphicon glyphicon-time"></span> ENDS <p class="no-bold">
                                     {{session.endTime}}</p></label></div>
+                                <div *ngIf="session.state == 'FINISHED'" class="padding-left-5 col-sm-7"><label><span
+                                        class="glyphicon glyphicon-time"></span> FINISHED <p class="no-bold">
+                                    {{session.endTime}}</p></label></div> 
+                                <div *ngIf="session.state == 'CREATED'" class="padding-left-5 col-sm-7"><label><span
+                                        class="glyphicon glyphicon-time"></span> BEGINS
+                                    <p *ngIf="session.startTime > currDate" class="no-bold">
+                                    {{session.startTime}}</p>
+                                    <p *ngIf="session.startTime <= currDate && session.chosenCards" class="no-bold">
+                                        when cards are chosen</p>
+                                </label></div>
                                 <div class="padding-left-5 col-sm-3"><label>TYPE<p class="no-bold">
                                     {{session.type}}</p></label></div>
                                 <div class="padding-left-5 col-sm-2">
-                                    <button type="button" [routerLink]="['/SessionDetail', {id:session.sessionId}]"
+                                    <button *ngIf="(session.state == 'CREATED' && !session.chosenCards) || session.state == 'IN_PROGRESS' || session.state == 'FINISHED'" type="button" [routerLink]="['/SessionDetail', {id:session.sessionId}]"
                                             class="btn btn-custom pull-right"><span
                                             class="glyphicon glyphicon-chevron-right"></span></button>
                                 </div>

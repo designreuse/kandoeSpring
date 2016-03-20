@@ -38,6 +38,7 @@ export class SubThemeDetailComponent implements OnInit {
     private themeCards:Card[] = [];
     private file:File = null;
     private csvFile:File = null;
+    private theme:Theme = null;
 
     constructor( router:Router, userService:UserService,
                 routeParams:RouteParams, cardService:CardService, subThemeService:SubThemeService,themeService:ThemeService) {
@@ -54,7 +55,6 @@ export class SubThemeDetailComponent implements OnInit {
             this.subTheme = subTheme;
             this.themeId=this.subTheme.themeId;
             this.themeService.getThemeCards(this.themeId).subscribe(cards => {
-                console.log(cards);
                 this.themeCards = cards;
                 console.log("themeCards have been added");
             });
