@@ -67,6 +67,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         _this.user = u;
                     });
                 };
+                /*
+                 ----------------------- ADD USER ---------------------------------------
+                 */
                 OrganisationDetailComponent.prototype.showAddUser = function () {
                     event.preventDefault();
                     var self = event.target;
@@ -78,6 +81,18 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         $('.add-user').closest('.row').slideDown(100);
                     }
                 };
+                OrganisationDetailComponent.prototype.addMember = function () {
+                    var _this = this;
+                    if (this.newMember) {
+                        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
+                            _this.members.push(u);
+                            _this.newMember = "";
+                        });
+                    }
+                };
+                /*
+                 ----------------------- ADD ORGANISATION ---------------------------------------
+                 */
                 OrganisationDetailComponent.prototype.showAddOrg = function () {
                     event.preventDefault();
                     var self = event.target;
@@ -87,15 +102,6 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     }
                     else {
                         $('.add-org').closest('.row').slideDown(100);
-                    }
-                };
-                OrganisationDetailComponent.prototype.addMember = function () {
-                    var _this = this;
-                    if (this.newMember) {
-                        this.organisationService.addMemberToOrganisation(this.orgId, this.newMember).subscribe(function (u) {
-                            _this.members.push(u);
-                            _this.newMember = "";
-                        });
                     }
                 };
                 OrganisationDetailComponent.prototype.addOrganiser = function () {
@@ -111,6 +117,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         });
                     }
                 };
+                /*
+                 ----------------------- GENERAL ---------------------------------------
+                 */
                 OrganisationDetailComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
@@ -146,10 +155,9 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/organisations/organisationDetail.html'
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams, userService_1.UserService, router_1.Router])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
-                var _a, _b;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }

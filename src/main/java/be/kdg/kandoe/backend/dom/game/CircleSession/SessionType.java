@@ -1,7 +1,7 @@
 package be.kdg.kandoe.backend.dom.game.CircleSession;
 
 /**
- * Created by amy on 7/03/2016.
+ * Whether the session is to solve a problem or to find ideas.
  */
 public enum SessionType {
     PROBLEM, IDEA

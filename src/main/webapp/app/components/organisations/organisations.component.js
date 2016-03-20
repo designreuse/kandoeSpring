@@ -54,6 +54,9 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                         }).show();
                     });
                 };
+                /*
+                 ------------------------- GENERAL -------------------------------------
+                 */
                 OrganisationsComponent.prototype.getImageSrc = function (url) {
                     if (url) {
                         if (url.indexOf("http://") > -1) {
@@ -72,8 +75,8 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                     this._router.navigate(['/Home']);
                 };
                 /*
-                --------------------------------------------------------------
-                --------------------- SORT FUNCTIONS -------------------------
+                 --------------------------------------------------------------
+                 --------------------- SORT FUNCTIONS -------------------------
                  --------------------------------------------------------------
                  */
                 OrganisationsComponent.prototype.sortName = function () {
@@ -204,10 +207,9 @@ System.register(['angular2/core', "angular2/router", "../../security/TokenHelper
                         templateUrl: 'app/components/organisations/organisations.html',
                         inputs: ['organisations']
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, userService_1.UserService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, userService_1.UserService, router_1.Router])
                 ], OrganisationsComponent);
                 return OrganisationsComponent;
-                var _a;
             })();
             exports_1("OrganisationsComponent", OrganisationsComponent);
         }

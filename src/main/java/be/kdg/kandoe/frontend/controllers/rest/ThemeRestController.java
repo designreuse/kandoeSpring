@@ -4,8 +4,8 @@ import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import be.kdg.kandoe.backend.dom.users.User;
-import be.kdg.kandoe.backend.services.api.OrganisationService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
+import be.kdg.kandoe.backend.services.exceptions.ThemeServiceException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SubThemeDTO;
 import be.kdg.kandoe.frontend.DTO.ThemeDTO;
@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.io.IOException;
 import java.util.List;
 
@@ -54,15 +53,8 @@ public class ThemeRestController {
         this.mapper = mapper;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ThemeDTO>> getThemes(){
-        List<Theme> themes = themeService.findThemes();
-
-        return new ResponseEntity<>(themeAssembler.toResources(themes), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{themeId}", method = RequestMethod.GET)
-    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable(value = "themeId") int themeId){
+    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable(value = "themeId") int themeId) throws ThemeServiceException {
         Theme theme = themeService.findThemeById(themeId);
 
         return new ResponseEntity<>(themeAssembler.toResource(theme), HttpStatus.OK);
@@ -70,7 +62,7 @@ public class ThemeRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ThemeDTO> createTheme(@Valid @RequestBody ThemeDTO themeDTO,
-                                                @AuthenticationPrincipal User user) {
+                                                @AuthenticationPrincipal User user) throws ThemeServiceException {
         if (user != null && user.getId() != null) {
             if(themeDTO.getOrganisation() != null){
                 Theme theme_in = mapper.map(themeDTO, Theme.class);
@@ -90,7 +82,7 @@ public class ThemeRestController {
     public ResponseEntity<String> createTheme(@RequestPart("body") ThemeDTO themeDTO,
                                                      @RequestPart("file") MultipartFile file,
                                                      @AuthenticationPrincipal User user,
-                                                     HttpServletRequest request) {
+                                                     HttpServletRequest request) throws ThemeServiceException {
 
         if(user != null && user.getId() != null) {
             if(themeDTO.getOrganisation() != null){
@@ -120,9 +112,9 @@ public class ThemeRestController {
     }
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
-    public ResponseEntity<List<ThemeDTO>> getThemesCurrentUser(@AuthenticationPrincipal User user){
+    public ResponseEntity<List<ThemeDTO>> getThemesCurrentUser(@AuthenticationPrincipal User user) throws ThemeServiceException {
         if(user != null){
-            List<Theme> themes = themeService.findThemeByCreator(user.getId());
+            List<Theme> themes = themeService.findThemesByCreator(user.getId());
 
             return new ResponseEntity<>(themeAssembler.toResources(themes), HttpStatus.OK);
         }
@@ -132,10 +124,10 @@ public class ThemeRestController {
 
     @RequestMapping(value = "/{themeId}/cards", method = RequestMethod.GET)
     public ResponseEntity<List<CardDTO>> getThemeCards(@AuthenticationPrincipal User user,
-                                                       @PathVariable(value = "themeId") Integer themeId) {
+                                                       @PathVariable(value = "themeId") Integer themeId) throws ThemeServiceException {
         if(user != null){
             if(themeId != null){
-                List<Card> cards = themeService.findThemeCards(themeId);
+                List<Card> cards = themeService.findThemesCards(themeId);
                 return new ResponseEntity<List<CardDTO>>(cardAssembler.toResources(cards), HttpStatus.OK);
             }
             return new ResponseEntity<List<CardDTO>>(HttpStatus.BAD_REQUEST);
@@ -145,7 +137,7 @@ public class ThemeRestController {
 
     @RequestMapping(value = "/{themeId}/subThemes", method = RequestMethod.GET)
     public ResponseEntity<List<SubThemeDTO>> getThemeSubThemes(@AuthenticationPrincipal User user,
-                                                       @PathVariable(value = "themeId") Integer themeId) {
+                                                       @PathVariable(value = "themeId") Integer themeId) throws ThemeServiceException {
         if(user != null){
             if(themeId != null){
                 List<SubTheme> subThemes = themeService.findThemeSubThemes(themeId);

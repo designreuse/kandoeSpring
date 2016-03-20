@@ -4,7 +4,7 @@ import be.kdg.kandoe.backend.dom.game.CircleSession.Session;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Created by amy on 7/03/2016.
+ * Repository for Session with standard crud operations
  */
 public interface SessionRepository extends JpaRepository<Session, Integer> {
 

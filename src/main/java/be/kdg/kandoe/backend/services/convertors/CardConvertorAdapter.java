@@ -6,25 +6,16 @@ import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
 import java.util.Collection;
 
 /**
- * Conversions from a String or a file to a certain format
+ * Conversions from a String or a file to a Card
  */
 public interface CardConvertorAdapter {
 
     /**
      *
-     * @param file : a file containing multiple values to be converted into a Message object
-     * @return This conversion method returns a collection of Message objects
+     * @param file : a file containing multiple values to be converted into a Card object
+     * @return This conversion method returns a collection of Card objects
      * @throws ConvertorException
      */
 
     Collection<Card> toCards(String file) throws ConvertorException;
-
-    /**
-     *
-     * @param string
-     * @return This conversion method converts the given String into a Message object
-     * @throws ConvertorException
-     */
-
-    Card toCard(String string) throws ConvertorException;
 }

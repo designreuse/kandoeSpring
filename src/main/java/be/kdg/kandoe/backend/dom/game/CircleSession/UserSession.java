@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by amy on 23/02/2016.
+ * Represents a user in a session.
+ * Holds the position of the user in that session. The user can play when the position is 0.
  */
 
 @Entity

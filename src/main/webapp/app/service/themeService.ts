@@ -25,12 +25,6 @@ export class ThemeService {
         this.uploadService = uploadService;
     }
 
-    public getAllThemes():Observable<Theme[]> {
-        return this.securityService.get(this.path + 'themes', true)
-            .map(res => res.json())
-            .map((themes:Array<Theme>) => themes.map((theme:Theme) => Theme.fromJson(theme)));
-    }
-
     public getUserThemes():Observable<Theme[]> {
         return this.securityService.get(this.path + 'themes/currentUser', true)
             .map(res => res.json())

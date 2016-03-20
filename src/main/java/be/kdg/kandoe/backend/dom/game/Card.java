@@ -1,6 +1,7 @@
 package be.kdg.kandoe.backend.dom.game;
 
 import be.kdg.kandoe.backend.dom.game.CircleSession.CardSession;
+import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
 import org.springframework.hateoas.Identifiable;
 
@@ -9,7 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by amy on 10/02/2016.
+ * Represents a card which can be used in a session.
+ * A card belongs to a theme or subtheme.
  */
 @Entity
 public class Card implements Serializable, Identifiable<Integer> {
@@ -28,6 +30,9 @@ public class Card implements Serializable, Identifiable<Integer> {
     @ManyToOne(targetEntity = Theme.class)
     private Theme theme;
 
+ /*   @ManyToOne(targetEntity = SubTheme.class)
+    private SubTheme subTheme;
+*/
     @OneToMany(targetEntity = CardSession.class)
     private List<CardSession> cardSessions;
 
@@ -66,6 +71,14 @@ public class Card implements Serializable, Identifiable<Integer> {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+/*    public SubTheme getSubTheme() {
+        return subTheme;
+    }
+
+    public void setSubTheme(SubTheme subTheme) {
+        this.subTheme = subTheme;
+    }*/
 
     public Theme getTheme() {
         return theme;

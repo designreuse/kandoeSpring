@@ -11,7 +11,8 @@ import java.util.Set;
 
 
 /**
- * Created by amy on 10/02/2016.
+ * A subtheme of a theme.
+ * Cards can be chosen from the cards available in the theme.
  */
 @Entity
 public class SubTheme implements Serializable, Identifiable<Integer> {
@@ -43,7 +44,6 @@ public class SubTheme implements Serializable, Identifiable<Integer> {
 
     public SubTheme() {
     }
-
 
     public String getSubThemeName() {
         return subThemeName;

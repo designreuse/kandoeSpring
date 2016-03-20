@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by amy on 11/02/2016.
+ * Holds the personal details of a user.
  */
 
 @Entity
@@ -66,5 +66,13 @@ public class Person implements Serializable, Identifiable<Integer> {
     @Override
     public Integer getId() {
         return personid;
+    }
+
+    public Integer getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(Integer personid) {
+        this.personid = personid;
     }
 }

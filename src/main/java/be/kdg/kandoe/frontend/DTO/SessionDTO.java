@@ -29,7 +29,6 @@ public class SessionDTO extends ResourceSupport implements Serializable {
     private List<UserDTO> users;
     private ThemeDTO theme;
     private SubThemeDTO subTheme;
-    private int playtime;
 
     public SessionDTO() {
     }
@@ -176,13 +175,5 @@ public class SessionDTO extends ResourceSupport implements Serializable {
 
     public void setSubTheme(SubThemeDTO subTheme) {
         this.subTheme = subTheme;
-    }
-
-    public int getPlaytime() {
-        return playtime;
-    }
-
-    public void setPlaytime(int playtime) {
-        this.playtime = playtime;
     }
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Created by amy on 10/02/2016.
+ * Represents a message users can send to each other in a session.
  */
 @Entity
 public class Message implements Serializable, Identifiable<Integer>{

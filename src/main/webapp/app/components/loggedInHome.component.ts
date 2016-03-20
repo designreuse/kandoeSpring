@@ -1,6 +1,3 @@
-/**
- * Created by Arne on 16/02/2016.
- */
 import {Component, OnInit} from "angular2/core";
 import {RegisterComponent} from "./register.component";
 import {OrganisationsComponent} from "./organisations/organisations.component.ts";
@@ -46,6 +43,21 @@ export class LoggedInHome implements OnInit {
         });
     }
 
+    showReveal(i) {
+        var id = "#" + i;
+        var el = $(document).find($(id));
+        el.slideToggle("slow");
+    }
+
+    closeReveal(i) {
+        var id = "#" + i;
+        var el = $(document).find($(id));
+        el.slideToggle("slow");
+    }
+    /*
+     ------------------------- GENERAL ------------------------------------
+     */
+
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
@@ -59,17 +71,5 @@ export class LoggedInHome implements OnInit {
                 return url.replace(/"/g, "");
             }
         }
-    }
-
-    showReveal(i) {
-        var id = "#" + i;
-        var el = $(document).find($(id));
-        el.slideToggle("slow");
-    }
-
-    closeReveal(i) {
-        var id = "#" + i;
-        var el = $(document).find($(id));
-        el.slideToggle("slow");
     }
 }

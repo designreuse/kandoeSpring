@@ -50,16 +50,8 @@ public class UserRestController {
         this.userAssembler = userAssembler;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<UserDTO>> findUsers(){
-        List<User> users = userService.findUsers();
-
-        return new ResponseEntity<>(userAssembler.toResources(users), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<UserDTO> findUserById(@PathVariable int userId)
-    {
+    public ResponseEntity<UserDTO> findUserById(@PathVariable int userId) throws UserServiceException {
         logger.info(this.getClass().toString() + ":" + userId);
         User user = userService.findUserById(userId);
         UserDTO userDTO = userAssembler.toResource(user);
@@ -97,8 +89,7 @@ public class UserRestController {
     }
 
     @RequestMapping(value ="/updateUser", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO>  updateUser(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User user)
-    {
+    public ResponseEntity<UserDTO>  updateUser(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User user) throws UserServiceException {
         if(user != null){
             User userIn = userService.findUserById(user.getId());
             mapperFacade.map(userDTO, userIn);
@@ -128,12 +119,12 @@ public class UserRestController {
     public ResponseEntity<String> updateUser(@RequestPart("body") UserDTO userDTO,
                                                      @RequestPart("file") MultipartFile file,
                                                      @AuthenticationPrincipal User user,
-                                                     HttpServletRequest request) {
+                                                     HttpServletRequest request) throws UserServiceException {
 
         if(user != null && user.getId() != null) {
             if(file.getContentType().split("/")[0].equals("image")){
-                User user_in = mapperFacade.map(userDTO, User.class);
-                user_in.setPassword(userService.findUserById(user_in.getId()).getPassword());
+                User user_in = userService.findUserById(user.getId());
+                mapperFacade.map(userDTO, user_in);
 
                 String newFilename = String.format("%d.%s", user_in.getId(), file.getOriginalFilename().split("\\.")[1]);
                 String filePath = request.getServletContext().getRealPath("/resources/images/users/");

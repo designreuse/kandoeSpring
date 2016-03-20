@@ -41,11 +41,6 @@ System.register(['rxjs/add/operator/map', "../DOM/organisation", 'angular2/core'
                     this.securityService = securityService;
                     this.uploadService = uploadService;
                 }
-                OrganisationService.prototype.getAllOrganisations = function () {
-                    return this.securityService.get(this.path + 'organisations', true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (organisations) { return organisations.map(function (organisation) { return organisation_1.Organisation.fromJson(organisation); }); });
-                };
                 OrganisationService.prototype.getUserOrganisations = function () {
                     return this.securityService.get(this.path + 'organisations/currentUser', true)
                         .map(function (res) { return res.json(); })

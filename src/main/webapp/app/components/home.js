@@ -67,24 +67,18 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                         });
                     }
                 }
+                /*
+                 ------------------------- LOGIN ------------------------------------
+                 */
                 Home.prototype.login = function () {
                     var login = document.getElementById("login-form");
                     var register = document.getElementById("register-form");
                     $('html,body').animate({
-                        scrollTop: $(".login-section").offset().top }, 'slow');
+                        scrollTop: $(".login-section").offset().top
+                    }, 'slow');
                     login.style.animationTimingFunction = "ease-in-out";
                     login.style.display = "block";
                     register.style.display = "none";
-                };
-                Home.prototype.register = function () {
-                    var login = document.getElementById("login-form");
-                    var register = document.getElementById("register-form");
-                    $('html,body').animate({
-                        scrollTop: $(".login-section").offset().top }, 'slow');
-                    register.style.animationTimingFunction = "ease-in-out";
-                    register.style.animationDuration = "3s";
-                    login.style.display = "none";
-                    register.style.display = "block";
                 };
                 Home.prototype.onSubmit = function () {
                     var _this = this;
@@ -93,10 +87,26 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                         localStorage.setItem("id_token", res.text());
                         _this.router.navigate(['/LoggedInHome']);
                     }, function (error) {
-                        //todo display proper error
-                        alert(error.text());
+                        console.log(error);
                     });
                 };
+                /*
+                 ------------------------- REGISTER ------------------------------------
+                 */
+                Home.prototype.register = function () {
+                    var login = document.getElementById("login-form");
+                    var register = document.getElementById("register-form");
+                    $('html,body').animate({
+                        scrollTop: $(".login-section").offset().top
+                    }, 'slow');
+                    register.style.animationTimingFunction = "ease-in-out";
+                    register.style.animationDuration = "3s";
+                    login.style.display = "none";
+                    register.style.display = "block";
+                };
+                /*
+                 ------------------------- FACEBOOK LOGIN ------------------------------------
+                 */
                 Home.prototype.facebook = function () {
                     var _this = this;
                     FB.login(function (response) {
@@ -119,8 +129,7 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                                     localStorage.setItem("id_token", res.text());
                                     _this.router.navigate(['/LoggedInHome']);
                                 }, function (error) {
-                                    //todo proper error display
-                                    alert(error.text());
+                                    console.log(error);
                                 });
                             });
                         }
@@ -137,10 +146,9 @@ System.register(["angular2/core", "./register.component", "angular2/router", "..
                     }),
                     core_1.Injectable(),
                     __param(3, core_1.Inject('App.BackEndPath')), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, securityService_1.SecurityService, String])
+                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService, securityService_1.SecurityService, String])
                 ], Home);
                 return Home;
-                var _a;
             })();
             exports_1("Home", Home);
         }

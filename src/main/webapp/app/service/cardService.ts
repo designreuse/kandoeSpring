@@ -18,13 +18,6 @@ export class CardService {
         this.uploadService = uploadService;
     }
 
-    public getAllCards() : Observable<Card[]>{
-        return this.securityService.get(this.path + 'cards',true)
-            .map(res => res.json())
-            .map((cards:Array<Card>) => cards.map((card:Card) => Card.fromJson(card)));
-    }
-
-
     public getCardById(id: number): Observable<Card> {
         return this.securityService.get(this.path + 'cards/' + id, true)
             .map(res => res.json())

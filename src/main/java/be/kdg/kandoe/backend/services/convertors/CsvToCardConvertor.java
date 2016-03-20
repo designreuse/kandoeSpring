@@ -10,10 +10,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by amy on 22/02/2016.
- */
-
 @Component
 public class CsvToCardConvertor implements CardConvertorAdapter {
     private Logger logger = Logger.getLogger(CsvToCardConvertor.class);
@@ -23,7 +19,7 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
 
     @Override
     public List<Card> toCards(String csvFileName) throws ConvertorException {
-
+        logger.info(this.getClass().toString() + ": converting csv file to collection of cards");
         List<Card> cards = new ArrayList<>();
 
         try {
@@ -33,15 +29,14 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
             int line = 0;
             List<String> headers = new ArrayList<>(2);
 
-
             String text = null;
             while ((text = csvReader.readLine()) != null) {
-                int index = 0;
                 if (line == 0) { // Header row
                     String[] values = text.split(";");
                     for(String col : values) {
                         if (!values[0].equals("Description")) {
                             ConvertorException ex = new ConvertorException("No header values");
+                            logger.warn(this.getClass().toString() + ": No header values in the csv file");
                             throw ex;
                         }
 
@@ -75,8 +70,6 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
                     } else {
                         card = new Card(description);
                     }
-                    System.out.println(card.getDescription());
-                    System.out.println(card.getImageURL());
                     cards.add(card);
                 }
                 line++;
@@ -86,11 +79,8 @@ public class CsvToCardConvertor implements CardConvertorAdapter {
             throw new ConvertorException("Conversion from file " + csvFileName + " to collection of Card objects failed", ex);
         }
 
+        logger.info(this.getClass().toString() + ": Converted csv file to collection of cards");
         return cards;
     }
 
-    @Override
-    public Card toCard(String string) throws ConvertorException {
-        return null;
-    }
 }

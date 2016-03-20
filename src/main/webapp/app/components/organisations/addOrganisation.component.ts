@@ -36,11 +36,6 @@ export class AddOrganisationComponent implements OnInit{
 
     }
 
-    logout() {
-        localStorage.removeItem("id_token");
-        this.router.navigate(['/Home']);
-    }
-
     onFileChange($event) {
         this.file = $event.target.files[0];
 
@@ -48,16 +43,28 @@ export class AddOrganisationComponent implements OnInit{
         output.src = URL.createObjectURL($event.target.files[0]);
     }
 
+    /*
+     ----------------------- ADD ORGANISATION ---------------------------------------
+     */
+
     onSubmit() {
         this.organisationService.createOrganisation(this.organisation, this.file).subscribe(res => {
             this.router.navigate(['/Organisations']);
             this.file = null;
         }, error => {
-            //todo change error display
             this.file = null;
-            alert(error.text());
+            console.log(error);
         });
     }
+
+    /*
+     ----------------------- GENERAL ---------------------------------------
+     */
+
+    logout() {
+    localStorage.removeItem("id_token");
+    this.router.navigate(['/Home']);
+}
 
     private getImageSrc(url:string): string {
         if (url) {

@@ -20,12 +20,6 @@ export class OrganisationService{
         this.uploadService = uploadService;
     }
 
-    public getAllOrganisations() : Observable<Organisation[]>{
-        return this.securityService.get(this.path + 'organisations',true)
-            .map(res => res.json())
-            .map((organisations:Array<Organisation>) => organisations.map((organisation:Organisation) => Organisation.fromJson(organisation)));
-    }
-
     public getUserOrganisations() : Observable<Organisation[]>{
         return this.securityService.get(this.path + 'organisations/currentUser', true)
             .map(res => res.json())

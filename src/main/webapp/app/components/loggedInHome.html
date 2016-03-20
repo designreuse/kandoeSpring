@@ -1,3 +1,4 @@
+<!--navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
     <div class="container container-fluid">
         <div class="navbar-header ">
@@ -9,13 +10,11 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-
         <div class="collapse  navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">KAN<span>DOES</span></a></li>
                 <li><a [routerLink]="['/Organisations']">ORGANISATIONS</a></li>
                 <li><a [routerLink]="['/Themes']">THEMES</a></li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -37,6 +36,7 @@
     </div>
 </nav>
 
+<!--header -->
 <header>
     <div class="container page-header">
         <h3>My Kandoes</h3>
@@ -46,9 +46,9 @@
 <div class="container main">
     <div class="row">
         <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+            <!--breadcrumbs -->
             <ol class="breadcrumb">
-                <li><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
-                <li class="active">Themes</li>
+                <li class="active"><a [routerLink]="['/LoggedInHome']"> Kandoes</a></li>
             </ol>
             <div class="searchable-container" id="sort-list">
                 <div class="kandoe-session-card-container col-sm-12 col-md-4">
@@ -63,11 +63,8 @@
                 <div *ngFor="#session of sessions; #i = index" class="kandoe-session-card-container col-sm-12 col-md-4">
 
                     <!--Cards theme object -->
-
-
                     <div class="kandoe-session-card">
                         <div class="kandoe-session-card-image">
-
                             <div *ngIf="session.subTheme==null">
                                 <img [src]="getImageSrc(session.theme.iconURL)" class="img-responsive">
                                 <div class="caption post-content">
@@ -86,7 +83,8 @@
                             <button type="button" class="btn btn-custom pull-right show-btn" data-rel="1" aria-label="Left Align" (click)="showReveal(i)">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
-                        </div><!-- kandoe-session-card content -->
+                        </div>
+                        <!-- kandoe-session-card content -->
                         <div class="row nopadding-nomargin">
                             <div class="kandoe-session-card-action col-sm-12">
                                 <div class="padding-left-5 col-sm-7"><label><span

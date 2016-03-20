@@ -4,8 +4,6 @@ import be.kdg.kandoe.backend.dom.game.CircleSession.UserSession;
 import be.kdg.kandoe.backend.dom.other.Organisation;
 import be.kdg.kandoe.backend.dom.other.SubTheme;
 import be.kdg.kandoe.backend.dom.other.Theme;
-import be.kdg.kandoe.backend.dom.users.Roles.Role;
-import org.hibernate.annotations.Fetch;
 import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +16,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by amy on 10/02/2016.
+ * Represents a user that can log in.
+ * Can be a facebook account.
+ * The username is used to log in.
+ * The username and email have to be unique.
+ * Every user is associated with a Person.
  */
 
 @Entity
@@ -38,21 +40,15 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
-    @Column(name= "NewUser", nullable = false)
-    private boolean newUser;
-
     @Column(name="ProfilePicture")
     private String profilePicture;
 
-@Column(name= "FacebookAccount", nullable = false)
+    @Column(name= "FacebookAccount", nullable = false)
     private boolean facebookAccount;
+
     @OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PersonId", nullable = false)
     private Person person;
-
-    @OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<Role> roles;
 
     @ManyToMany(targetEntity = Organisation.class)
     @JoinTable(name = "org_users", joinColumns = @JoinColumn(name = "UserId"), inverseJoinColumns = @JoinColumn(name = "OrganisationId"))
@@ -74,28 +70,12 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     public User()
     {
         this.person = new Person();
-        this.newUser = true;
     }
 
-    public User(String username, String password, String email, Person person, List<Role> roles, List<Organisation> organisations, List<Theme> themes, List<UserSession> userSessions) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.person = person;
-        this.roles = roles;
-        this.organisations = organisations;
-        this.themes = themes;
-        this.subThemes=subThemes;
-        this.userSessions = userSessions;
-        this.newUser = true;
-    }
-
-    public User(Person p, String username, String password, List<Role> identities) {
+    public User(Person p, String username, String password) {
         this.person = p;
         this.username = username;
         this.password = password;
-        this.roles = identities;
-        this.newUser = true;
     }
 
     public Integer getUserId() {
@@ -114,9 +94,6 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        if(roles != null) {
-            roles.forEach(role -> authorities.addAll(role.getAuthorities()));
-        }
         return authorities;
     }
 
@@ -161,28 +138,12 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
         this.email = email;
     }
 
-    public boolean isNewUser() {
-        return newUser;
-    }
-
-    public void setNewUser(boolean newUser) {
-        this.newUser = newUser;
-    }
-
     public Person getPerson() {
         return person;
     }
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 
     public List<Organisation> getOrganisations() {
@@ -232,7 +193,6 @@ public class User implements Serializable, UserDetails, Identifiable<Integer>{
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
-
 
     @Override
     public Integer getId() {

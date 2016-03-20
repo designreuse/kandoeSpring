@@ -48,6 +48,15 @@ export class AddThemeComponent implements OnInit {
         });
     }
 
+    selectOrganisation($event) {
+        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
+        this.theme.organisation=organisation;
+    }
+
+    /*
+     --------------------------------- ADD THEME ---------------------------
+     */
+
     onFileChange($event){
         this.file = $event.target.files[0];
     }
@@ -56,21 +65,19 @@ export class AddThemeComponent implements OnInit {
         this.themeService.createTheme(this.theme, this.file).subscribe(res => {
             this.router.navigate(['/Themes']);
         }, error => {
-            //todo change error display
             this.file = null;
-            alert("something went wrong");
+            console.log("something went wrong");
         });
     }
 
+    /*
+     --------------------------------- GENERAL ---------------------------
+     */
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
     }
 
-    selectOrganisation($event) {
-        var organisation = this.currentOrganisations.find(org => org.organisationName===$event.target.value);
-        this.theme.organisation=organisation;
-    }
 
 
     private getImageSrc(url:string):string {

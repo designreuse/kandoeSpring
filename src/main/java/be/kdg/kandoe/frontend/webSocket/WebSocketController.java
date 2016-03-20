@@ -5,7 +5,11 @@ import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.SessionService;
 import be.kdg.kandoe.backend.services.api.UserService;
 import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
+import be.kdg.kandoe.backend.services.exceptions.UserServiceException;
+import be.kdg.kandoe.frontend.DTO.SessionDTO;
+import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
 import io.jsonwebtoken.Jwts;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -19,21 +23,22 @@ import java.time.LocalDateTime;
 @Controller
 public class WebSocketController {
 
+    private final Logger logger = Logger.getLogger(WebSocketController.class);
     private final UserService userService;
     private final SessionService sessionService;
+    private final SessionAssembler sessionAssembler;
 
     @Autowired
-    public WebSocketController(UserService userService, SessionService sessionService) {
+    public WebSocketController(UserService userService, SessionService sessionService, SessionAssembler sessionAssembler) {
         this.userService = userService;
         this.sessionService = sessionService;
+        this.sessionAssembler = sessionAssembler;
     }
 
     @MessageMapping("/chat")
     @SendTo("/topic/chat")
     public Greeting processChat(HelloMessage chat) {
-        String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
-                .parseClaimsJws(chat.getToken().replace("\"", "")).getBody().getSubject();
-        User u = userService.findUserByUsername(username);
+        User u = getUserFromToken(chat.getToken());
 
         if (u != null) {
             try {
@@ -54,9 +59,7 @@ public class WebSocketController {
     @MessageMapping("/move")
     @SendTo("/topic/move")
     public NextMove processMove(CurrentMove move) {
-        String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
-                .parseClaimsJws(move.getToken().replace("\"", "")).getBody().getSubject();
-        User u = userService.findUserByUsername(username);
+        User u = getUserFromToken(move.getToken());
 
         if (u != null) {
             try {
@@ -67,6 +70,34 @@ public class WebSocketController {
             } catch (SessionServiceException e) {
                 return null;
             }
+        }
+        return null;
+    }
+
+    @MessageMapping("/addCards")
+    @SendTo("/topic/addCards")
+    public SessionDTO addCardsToSession(Cards cards){
+
+        User u = getUserFromToken(cards.getToken());
+
+        if(u == null)
+            return null;
+
+        try {
+            Session session = sessionService.addCardIdsToSession(cards.getSessionId(), cards.getCardIds(), u.getId());
+            return sessionAssembler.toResource(session);
+        } catch (SessionServiceException e) {
+            return null;
+        }
+    }
+
+    private User getUserFromToken(String token){
+        String username = Jwts.parser().setSigningKey("teamiip2kdgbe")
+                .parseClaimsJws(token.replace("\"", "")).getBody().getSubject();
+        try {
+            return userService.findUserByUsername(username);
+        } catch (UserServiceException e) {
+            logger.warn(this.getClass().toString() + ": failed to find user from token", e);
         }
         return null;
     }

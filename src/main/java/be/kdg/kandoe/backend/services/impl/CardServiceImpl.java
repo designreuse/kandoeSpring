@@ -6,7 +6,10 @@ import be.kdg.kandoe.backend.persistence.api.CardRepository;
 import be.kdg.kandoe.backend.services.api.CardService;
 import be.kdg.kandoe.backend.services.api.ThemeService;
 import be.kdg.kandoe.backend.services.convertors.CsvToCardConvertor;
+import be.kdg.kandoe.backend.services.exceptions.CardServiceException;
 import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
+import be.kdg.kandoe.backend.services.exceptions.ThemeServiceException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +19,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Annelies on 22/02/2016.
- */
-
 @Service
-@Transactional
+@Transactional(rollbackOn = {CardServiceException.class})
 public class CardServiceImpl implements CardService {
 
-
+    private final Logger logger = Logger.getLogger(CardServiceImpl.class);
     private final CardRepository cardRepository;
     private final ThemeService themeService;
     private final CsvToCardConvertor cardConvertor;
@@ -37,19 +36,30 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Card findCardById(int id) {
-        return cardRepository.findOne(id);
+    public Card findCardById(int id) throws CardServiceException {
+        logger.info(this.getClass().toString() + ": finding card with id " + id);
+        Card c = cardRepository.findOne(id);
+
+        if(c == null){
+            logger.warn(this.getClass().toString() + ": failed to find card with id " + id);
+            throw new CardServiceException("Failed to find card with id " + id);
+        }
+
+        logger.info(this.getClass().toString() + ": found card with id " + id);
+        return c;
     }
 
     @Override
-    public Card findCardByDescription(String description) {
-        return cardRepository.findCardByDescription(description);
-    }
+    public Card saveCard(Card card, Integer themeId) throws CardServiceException{
+        logger.info(this.getClass().toString() + ": adding new card");
+        Theme theme = null;
 
-    @Override
-
-    public Card saveCard(Card card, Integer themeId) {
-        Theme theme = themeService.findThemeById(themeId);
+        try {
+            theme = themeService.findThemeById(themeId);
+        } catch (ThemeServiceException e) {
+            logger.warn(this.getClass().toString() + ": trying to add a card to non existing theme");
+            throw new CardServiceException(e.getMessage(), e);
+        }
         card.setTheme(theme);
 
         Set<Card> themeCards = theme.getCards();
@@ -59,23 +69,45 @@ public class CardServiceImpl implements CardService {
         themeCards.add(card);
         theme.setCards(themeCards);
 
-        return cardRepository.save(card);
+        Card c = cardRepository.save(card);
+        logger.info(this.getClass().toString() + ": added new card " + c.getId());
+        return c;
     }
 
     @Override
-    public List<Card> findCards() {
-        return cardRepository.findAll();
+    public List<Card> createCardsfromCSV(String csvFileName, Integer themeId) throws CardServiceException {
+        logger.info(this.getClass().toString() + ": creating cards from csv");
+        List<Card> cards_in = null;
+        try {
+            cards_in = cardConvertor.toCards(csvFileName);
+        } catch (ConvertorException e) {
+            logger.warn(this.getClass().toString() + ": failed to create cards from csv");
+            throw new CardServiceException("Failed to create cards from csv", e);
+        }
+        List<Card> cards_out = new ArrayList<>();
+
+        for (Card card : cards_in) {
+            card = saveCard(card, themeId);
+            cards_out.add(card);
+        }
+
+        logger.info(this.getClass().toString() + ": created cards from csv");
+        return cards_out;
     }
 
     @Override
-    public List<Card> createCardsfromCSV(String csvFileName) throws ConvertorException {
-       return cardConvertor.toCards(csvFileName);
+    public Card updateCard(Card card) throws CardServiceException {
+        logger.info(this.getClass().toString() + ": updating card with id " + card.getCardId());
 
-    }
+        if(card.getCardId() == null){
+            logger.warn(this.getClass().toString() + "cannot update card without an id");
+            throw new CardServiceException("Cannot update card without an id");
+        }
 
-    @Override
-    public Card updateCard(Card card) {
-        return cardRepository.save(card);
+        Card c = cardRepository.save(card);
+
+        logger.info(this.getClass().toString() + ": updated card with id " + card.getCardId());
+        return c;
     }
 
 

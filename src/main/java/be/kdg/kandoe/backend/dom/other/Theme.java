@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by amy on 10/02/2016.
+ * Represents a theme sessions will be created about.
+ * Cards can be added to a theme. Can have multiple subthemes.
  */
 @Entity
 public class Theme implements Serializable, Identifiable<Integer> {
@@ -37,9 +38,6 @@ public class Theme implements Serializable, Identifiable<Integer> {
 
     @OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
     private Set<Card> cards;
-
-    @ManyToMany(targetEntity = Tag.class)
-    private List<Tag> tags;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User creator;
@@ -97,14 +95,6 @@ public class Theme implements Serializable, Identifiable<Integer> {
 
     public void setCards(Set<Card> cards) {
         this.cards = cards;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
     }
 
     public User getCreator() {

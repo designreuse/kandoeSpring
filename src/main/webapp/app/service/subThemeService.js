@@ -38,11 +38,6 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/subTheme", ".
                     this.securityService = securityService;
                     this.uploadService = uploadService;
                 }
-                SubThemeService.prototype.getAllSubThemes = function () {
-                    return this.securityService.get(this.path + 'subThemes', true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (subThemes) { return subThemes.map(function (subTheme) { return subTheme_1.SubTheme.fromJson(subTheme_1.SubTheme); }); });
-                };
                 SubThemeService.prototype.getUserSubThemes = function () {
                     return this.securityService.get(this.path + 'themes/currentUser', true)
                         .map(function (res) { return res.json(); })
@@ -68,6 +63,17 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/subTheme", ".
                     return this.securityService.get(this.path + 'subThemes/' + subThemeId + '/cards', true)
                         .map(function (res) { return res.json(); })
                         .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
+                };
+                SubThemeService.prototype.addCardsToSubTheme = function (cardIds, subThemeId) {
+                    var cards = [];
+                    for (var i = 0; i < cardIds.length; i++) {
+                        var c = new card_1.Card();
+                        c.cardId = cardIds[i];
+                        cards[i] = c;
+                    }
+                    return this.securityService.post(this.path + 'subThemes/' + subThemeId + '/addCards', JSON.stringify(cards), true)
+                        .map(function (res) { return res.json(); })
+                        .map(function (subTheme) { return subTheme_1.SubTheme.fromJson(subTheme); });
                 };
                 SubThemeService = __decorate([
                     core_1.Injectable(),

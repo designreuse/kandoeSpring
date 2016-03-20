@@ -61,6 +61,9 @@ System.register(["angular2/core", "angular2/router", "../../../security/TokenHel
                     });
                     this.userService.getCurrentUser().subscribe(function (data) { _this.user = data; }, function (error) { console.log(error); });
                 };
+                /*
+                 ------------------------- GENERAL ------------------------------------
+                 */
                 SubThemeDetailComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
@@ -85,10 +88,9 @@ System.register(["angular2/core", "angular2/router", "../../../security/TokenHel
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/themes/subThemes/subThemeDetail.html',
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, (typeof (_b = typeof router_2.RouteParams !== 'undefined' && router_2.RouteParams) === 'function' && _b) || Object, cardService_1.CardService, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [router_1.Router, userService_1.UserService, router_2.RouteParams, cardService_1.CardService, subThemeService_1.SubThemeService])
                 ], SubThemeDetailComponent);
                 return SubThemeDetailComponent;
-                var _a, _b;
             })();
             exports_1("SubThemeDetailComponent", SubThemeDetailComponent);
         }

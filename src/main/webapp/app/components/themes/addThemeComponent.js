@@ -57,6 +57,13 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                         _this.user = u;
                     });
                 };
+                AddThemeComponent.prototype.selectOrganisation = function ($event) {
+                    var organisation = this.currentOrganisations.find(function (org) { return org.organisationName === $event.target.value; });
+                    this.theme.organisation = organisation;
+                };
+                /*
+                 --------------------------------- ADD THEME ---------------------------
+                 */
                 AddThemeComponent.prototype.onFileChange = function ($event) {
                     this.file = $event.target.files[0];
                 };
@@ -65,18 +72,16 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                     this.themeService.createTheme(this.theme, this.file).subscribe(function (res) {
                         _this.router.navigate(['/Themes']);
                     }, function (error) {
-                        //todo change error display
                         _this.file = null;
-                        alert("something went wrong");
+                        console.log("something went wrong");
                     });
                 };
+                /*
+                 --------------------------------- GENERAL ---------------------------
+                 */
                 AddThemeComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
-                };
-                AddThemeComponent.prototype.selectOrganisation = function ($event) {
-                    var organisation = this.currentOrganisations.find(function (org) { return org.organisationName === $event.target.value; });
-                    this.theme.organisation = organisation;
                 };
                 AddThemeComponent.prototype.getImageSrc = function (url) {
                     if (url) {
@@ -95,10 +100,9 @@ System.register(['angular2/core', "../../security/TokenHelper", "../../service/t
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/themes/addTheme.html',
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, organisationService_1.OrganisationService, userService_1.UserService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, organisationService_1.OrganisationService, userService_1.UserService])
                 ], AddThemeComponent);
                 return AddThemeComponent;
-                var _a;
             })();
             exports_1("AddThemeComponent", AddThemeComponent);
         }

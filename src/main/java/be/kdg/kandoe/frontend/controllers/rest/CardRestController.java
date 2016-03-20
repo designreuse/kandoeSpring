@@ -3,6 +3,7 @@ package be.kdg.kandoe.frontend.controllers.rest;
 import be.kdg.kandoe.backend.dom.game.Card;
 import be.kdg.kandoe.backend.dom.users.User;
 import be.kdg.kandoe.backend.services.api.CardService;
+import be.kdg.kandoe.backend.services.exceptions.CardServiceException;
 import be.kdg.kandoe.backend.services.exceptions.ConvertorException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.assemblers.CardAssembler;
@@ -40,47 +41,10 @@ public class CardRestController {
         this.mapper = mapper;
     }
 
-    @RequestMapping(method = {RequestMethod.GET})
-    public ResponseEntity<List<CardDTO>> getCards(@AuthenticationPrincipal User user) {
-        if (user != null) {
-            List<Card> cards = this.cardService.findCards();
-            return new ResponseEntity<>(this.cardAssembler.toResources(cards), HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-    }
-
-    @RequestMapping(value = "/{themeId}/csv", method = {RequestMethod.POST})
-    public ResponseEntity<List<CardDTO>> createCardsFromCSV(@PathVariable("themeId") int themeId,
-                                                            @RequestPart("csvFile") MultipartFile file,
-                                                            @AuthenticationPrincipal User user,
-                                                            HttpServletRequest request) throws IOException {
-        if (user != null) {
-            List<Card> cards = null;
-
-            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            String newFileName = String.format("%s.%s", file.getName(), extension);
-            String path = request.getServletContext().getRealPath(String.format("/resources/csv/%d", themeId));
-
-            path = FileUtils.saveFile(path, newFileName, file);
-
-            try {
-                cards = this.cardService.createCardsfromCSV(path);
-                for(Card c : cards){
-                    Card card_out = cardService.saveCard(c, themeId);
-                    logger.info(this.getClass().toString() + ": adding new card " + card_out.getId());
-                }
-            } catch (ConvertorException e) {
-                e.printStackTrace();
-            }
-            return new ResponseEntity<>(this.cardAssembler.toResources(cards), HttpStatus.CREATED);
-        }else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-    }
-
     @RequestMapping(value = {"/{cardId}"},method = {RequestMethod.GET})
-    public ResponseEntity<CardDTO> getCardById(@PathVariable("cardId") int cardId, @AuthenticationPrincipal User user) {
+    public ResponseEntity<CardDTO> getCardById(@PathVariable("cardId") int cardId, @AuthenticationPrincipal User user)
+            throws CardServiceException
+    {
         if(user != null){
             Card card = this.cardService.findCardById(cardId);
             return new ResponseEntity<>(cardAssembler.toResource(card), HttpStatus.OK);
@@ -89,7 +53,9 @@ public class CardRestController {
     }
 
     @RequestMapping(method = {RequestMethod.POST})
-    public ResponseEntity<CardDTO> createCard(@Valid @RequestBody CardDTO cardDTO,  @AuthenticationPrincipal User user) {
+    public ResponseEntity<CardDTO> createCard(@Valid @RequestBody CardDTO cardDTO,  @AuthenticationPrincipal User user)
+            throws CardServiceException
+    {
         if (user != null && user.getId() != null) {
             Card card_in = mapper.map(cardDTO, Card.class);
             Card card_out = cardService.saveCard(card_in, cardDTO.getThemeId());
@@ -105,8 +71,8 @@ public class CardRestController {
     public ResponseEntity<CardDTO> createCard(@RequestPart("body") CardDTO cardDTO,
                                                      @RequestPart("file") MultipartFile file,
                                                      @AuthenticationPrincipal User user,
-                                                     HttpServletRequest request) {
-
+                                                     HttpServletRequest request) throws CardServiceException
+    {
         if(user != null && user.getId() != null) {
             if(file.getContentType().split("/")[0].equals("image")){
                 Card card_in = mapper.map(cardDTO, Card.class);
@@ -128,5 +94,25 @@ public class CardRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/{themeId}/csv", method = {RequestMethod.POST})
+    public ResponseEntity<List<CardDTO>> createCardsFromCSV(@PathVariable("themeId") int themeId,
+                                                            @RequestPart("csvFile") MultipartFile file,
+                                                            @AuthenticationPrincipal User user,
+                                                            HttpServletRequest request) throws IOException, CardServiceException {
+        if (user != null) {
+            List<Card> cards = null;
+
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            String newFileName = String.format("%s.%s", file.getName(), extension);
+            String path = request.getServletContext().getRealPath(String.format("/resources/csv/%d", themeId));
+
+            path = FileUtils.saveFile(path, newFileName, file);
+            cards = this.cardService.createCardsfromCSV(path, themeId);
+            return new ResponseEntity<>(this.cardAssembler.toResources(cards), HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

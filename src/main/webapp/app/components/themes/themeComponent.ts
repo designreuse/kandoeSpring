@@ -48,9 +48,14 @@ export class ThemeComponent implements OnInit {
             this.themes = themes;
         });
         this.userService.getCurrentUser().subscribe(
-            (data) => { this.user = data; },
-            (error) => { console.log(error) }
+            (data) => {
+                this.user = data;
+            },
+            (error) => {
+                console.log(error)
+            }
         );
+
 
 
         for (var i = 0; i < this.themes.length; i++) {
@@ -71,6 +76,68 @@ export class ThemeComponent implements OnInit {
         });
     }
 
+    /*
+     --------------------- CARD COMPONENT ---------------------
+     */
+
+    onFileChange($event) {
+        this.file = $event.target.files[0];
+
+        var output = document.getElementById("cardimg");
+        output.src = URL.createObjectURL($event.target.files[0]);
+    }
+
+    onAddCard(themeId:number) {
+        this.card.themeId = themeId;
+    }
+
+    onSubmit() {
+        if (this.card.description) {
+            this.cardService.createCard(this.card, this.file).subscribe(card => {
+                this.themes.find(th => th.themeId == card.themeId).cards.push(card);
+                this.card.description = null;
+                this.file = null;
+            }, error => {
+                this.file = null;
+                console.log(error);
+            });
+        }
+    }
+
+    /*
+     --------------------- SUBTHEME COMPONENT ---------------------
+     */
+    onAddSubTheme(themeId:number) {
+        this.subTheme.themeId = themeId;
+    }
+
+    onFileChangeSubTheme($event) {
+        this.file = $event.target.files[0];
+
+        var output = document.getElementById("subthemeImg");
+        output.src = URL.createObjectURL($event.target.files[0]);
+    }
+
+    onSubmitSubTheme() {
+        if (this.subTheme.description) {
+            this.subTheme.subThemeName = this.subTheme.description;
+            this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
+                this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
+                this.subTheme.description = null;
+                this.file = null;
+            }, error => {
+                this.file = null;
+                console.log(error);
+            });
+        }
+    }
+
+
+    /*
+     --------------------------------- GENERAL ---------------------------
+     */
+
+
     logout() {
         localStorage.removeItem("id_token");
         this.router.navigate(['/Home']);
@@ -85,58 +152,6 @@ export class ThemeComponent implements OnInit {
             }
         } else {
             return "./app/resources/noimgplaceholder.png";
-        }
-    }
-
-    onFileChange($event) {
-        this.file = $event.target.files[0];
-
-        var output = document.getElementById("cardimg");
-        output.src = URL.createObjectURL($event.target.files[0]);
-    }
-
-    onFileChangeSubTheme($event) {
-        this.file = $event.target.files[0];
-
-        var output = document.getElementById("subthemeImg");
-        output.src = URL.createObjectURL($event.target.files[0]);
-    }
-
-
-    onAddCard(themeId:number) {
-        this.card.themeId = themeId;
-    }
-
-    onAddSubTheme(themeId:number) {
-        this.subTheme.themeId = themeId;
-    }
-
-    onSubmit() {
-        if (this.card.description) {
-            this.cardService.createCard(this.card, this.file).subscribe(card => {
-                this.themes.find(th => th.themeId == card.themeId).cards.push(card);
-                this.card.description = null;
-                this.file = null;
-            }, error => {
-                //todo change error display
-                this.file = null;
-                alert(error);
-            });
-        }
-    }
-
-    onSubmitSubTheme() {
-        if (this.subTheme.description) {
-            this.subTheme.subThemeName = this.subTheme.description;
-            this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
-                this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
-                this.subTheme.description = null;
-                this.file = null;
-            }, error => {
-                //todo change error display
-                this.file = null;
-                alert(error);
-            });
         }
     }
 

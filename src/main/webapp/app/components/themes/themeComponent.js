@@ -64,7 +64,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this._themeService.getUserThemes().subscribe(function (themes) {
                         _this.themes = themes;
                     });
-                    this.userService.getCurrentUser().subscribe(function (data) { _this.user = data; }, function (error) { console.log(error); });
+                    this.userService.getCurrentUser().subscribe(function (data) {
+                        _this.user = data;
+                    }, function (error) {
+                        console.log(error);
+                    });
                     for (var i = 0; i < this.themes.length; i++) {
                         this._themeService.getThemeSubThemes(this.themes[i].themeId).subscribe(function (subThemes) {
                             for (var j = 0; subThemes.length; j++) {
@@ -80,6 +84,58 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         }).show();
                     });
                 };
+                /*
+                 --------------------- CARD COMPONENT ---------------------
+                 */
+                ThemeComponent.prototype.onFileChange = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                ThemeComponent.prototype.onAddCard = function (themeId) {
+                    this.card.themeId = themeId;
+                };
+                ThemeComponent.prototype.onSubmit = function () {
+                    var _this = this;
+                    if (this.card.description) {
+                        this.cardService.createCard(this.card, this.file).subscribe(function (card) {
+                            _this.themes.find(function (th) { return th.themeId == card.themeId; }).cards.push(card);
+                            _this.card.description = null;
+                            _this.file = null;
+                        }, function (error) {
+                            _this.file = null;
+                            console.log(error);
+                        });
+                    }
+                };
+                /*
+                 --------------------- SUBTHEME COMPONENT ---------------------
+                 */
+                ThemeComponent.prototype.onAddSubTheme = function (themeId) {
+                    this.subTheme.themeId = themeId;
+                };
+                ThemeComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                ThemeComponent.prototype.onSubmitSubTheme = function () {
+                    var _this = this;
+                    if (this.subTheme.description) {
+                        this.subTheme.subThemeName = this.subTheme.description;
+                        this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
+                            _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
+                            _this.subTheme.description = null;
+                            _this.file = null;
+                        }, function (error) {
+                            _this.file = null;
+                            console.log(error);
+                        });
+                    }
+                };
+                /*
+                 --------------------------------- GENERAL ---------------------------
+                 */
                 ThemeComponent.prototype.logout = function () {
                     localStorage.removeItem("id_token");
                     this.router.navigate(['/Home']);
@@ -95,51 +151,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     }
                     else {
                         return "./app/resources/noimgplaceholder.png";
-                    }
-                };
-                ThemeComponent.prototype.onFileChange = function ($event) {
-                    this.file = $event.target.files[0];
-                    var output = document.getElementById("cardimg");
-                    output.src = URL.createObjectURL($event.target.files[0]);
-                };
-                ThemeComponent.prototype.onFileChangeSubTheme = function ($event) {
-                    this.file = $event.target.files[0];
-                    var output = document.getElementById("subthemeImg");
-                    output.src = URL.createObjectURL($event.target.files[0]);
-                };
-                ThemeComponent.prototype.onAddCard = function (themeId) {
-                    this.card.themeId = themeId;
-                };
-                ThemeComponent.prototype.onAddSubTheme = function (themeId) {
-                    this.subTheme.themeId = themeId;
-                };
-                ThemeComponent.prototype.onSubmit = function () {
-                    var _this = this;
-                    if (this.card.description) {
-                        this.cardService.createCard(this.card, this.file).subscribe(function (card) {
-                            _this.themes.find(function (th) { return th.themeId == card.themeId; }).cards.push(card);
-                            _this.card.description = null;
-                            _this.file = null;
-                        }, function (error) {
-                            //todo change error display
-                            _this.file = null;
-                            alert(error);
-                        });
-                    }
-                };
-                ThemeComponent.prototype.onSubmitSubTheme = function () {
-                    var _this = this;
-                    if (this.subTheme.description) {
-                        this.subTheme.subThemeName = this.subTheme.description;
-                        this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
-                            _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
-                            _this.subTheme.description = null;
-                            _this.file = null;
-                        }, function (error) {
-                            //todo change error display
-                            _this.file = null;
-                            alert(error);
-                        });
                     }
                 };
                 ThemeComponent.prototype.rotateCard = function ($event) {
@@ -286,10 +297,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, cardService_1.CardService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService, router_1.RouteParams, subThemeService_1.SubThemeService])
                 ], ThemeComponent);
                 return ThemeComponent;
-                var _a, _b;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }

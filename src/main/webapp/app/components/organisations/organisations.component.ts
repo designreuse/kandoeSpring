@@ -1,6 +1,3 @@
-/**
- * Created by michaelkees on 12/02/16.
- */
 import {Component, OnInit} from 'angular2/core'
 import {Router, RouterLink, ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Organisation} from "../../DOM/organisation";
@@ -21,11 +18,11 @@ import {Person} from "../../DOM/users/person";
 
 export class OrganisationsComponent implements OnInit {
     public organisations:Organisation[] = [];
-    private user: User = User.createEmpty();
-    private userService: UserService;
+    private user:User = User.createEmpty();
+    private userService:UserService;
 
     constructor(private _organisationService:OrganisationService, private _userService:UserService, private _router:Router) {
-        this.userService=_userService;
+        this.userService = _userService;
     }
 
     ngOnInit() {
@@ -42,7 +39,10 @@ export class OrganisationsComponent implements OnInit {
         });
     }
 
-    private getImageSrc(url:string): string {
+    /*
+     ------------------------- GENERAL -------------------------------------
+     */
+    private getImageSrc(url:string):string {
         if (url) {
             if (url.indexOf("http://") > -1) {
                 return url;
@@ -53,14 +53,15 @@ export class OrganisationsComponent implements OnInit {
             return "./app/resources/noimgplaceholder.png";
         }
     }
+
     logout() {
         localStorage.removeItem("id_token");
         this._router.navigate(['/Home']);
     }
 
     /*
-    --------------------------------------------------------------
-    --------------------- SORT FUNCTIONS -------------------------
+     --------------------------------------------------------------
+     --------------------- SORT FUNCTIONS -------------------------
      --------------------------------------------------------------
      */
     sortName() {

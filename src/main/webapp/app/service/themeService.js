@@ -44,11 +44,6 @@ System.register(['rxjs/add/operator/map', 'angular2/core', "../DOM/theme", "../D
                     this.securityService = securityService;
                     this.uploadService = uploadService;
                 }
-                ThemeService.prototype.getAllThemes = function () {
-                    return this.securityService.get(this.path + 'themes', true)
-                        .map(function (res) { return res.json(); })
-                        .map(function (themes) { return themes.map(function (theme) { return theme_1.Theme.fromJson(theme); }); });
-                };
                 ThemeService.prototype.getUserThemes = function () {
                     return this.securityService.get(this.path + 'themes/currentUser', true)
                         .map(function (res) { return res.json(); })

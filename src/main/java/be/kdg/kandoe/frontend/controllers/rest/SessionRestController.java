@@ -9,17 +9,17 @@ import be.kdg.kandoe.backend.services.exceptions.SessionServiceException;
 import be.kdg.kandoe.frontend.DTO.CardDTO;
 import be.kdg.kandoe.frontend.DTO.SessionDTO;
 import be.kdg.kandoe.frontend.assemblers.SessionAssembler;
+import be.kdg.kandoe.frontend.webSocket.CurrentMove;
 import be.kdg.kandoe.frontend.webSocket.Greeting;
+import be.kdg.kandoe.frontend.webSocket.NextMove;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
-import org.h2.command.ddl.GrantRevoke;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +79,7 @@ public class SessionRestController {
     public ResponseEntity<List<SessionDTO>> getSessionByThemeId(@PathVariable("themeId") int themeId, @AuthenticationPrincipal User user){
         if (user != null){
             try{
-                List<Session> sessions = this.sessionService.findSessionByThemeId(themeId, user.getUserId());
+                List<Session> sessions = this.sessionService.findSessionsByThemeId(themeId, user.getUserId());
                 return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
             } catch (SessionServiceException e) {
                 return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
@@ -92,7 +92,7 @@ public class SessionRestController {
     public ResponseEntity<List<SessionDTO>> getSessionsBySubThemeId(@PathVariable("subThemeId") int subThemeId, @AuthenticationPrincipal User user){
         if (user != null){
             try {
-                List<Session> sessions = this.sessionService.findSessionBySubThemeId(subThemeId, user.getUserId());
+                List<Session> sessions = this.sessionService.findSessionsBySubThemeId(subThemeId, user.getUserId());
                 return new ResponseEntity<List<SessionDTO>>(sessionAssembler.toResources(sessions), HttpStatus.OK);
             } catch (SessionServiceException e){
                 return new ResponseEntity<List<SessionDTO>>(HttpStatus.BAD_REQUEST);
@@ -196,5 +196,17 @@ public class SessionRestController {
             return new ResponseEntity<Boolean>(canPlay, HttpStatus.OK);
         }
         return new ResponseEntity<Boolean>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/makeMove", method = RequestMethod.POST)
+    public ResponseEntity<SessionDTO> makeMove(@RequestBody CurrentMove move, @AuthenticationPrincipal User user)
+            throws SessionServiceException {
+        if(user!=null) {
+            sessionService.updateCardPosition(move.getCardId(), user.getUserId(), move.getSessionId());
+            Session ses= sessionService.findSessionById(move.getSessionId(), user.getUserId());
+            return new ResponseEntity<SessionDTO>(sessionAssembler.toResource(ses), HttpStatus.CREATED);
+
+        }
+        return new ResponseEntity<SessionDTO>(HttpStatus.UNAUTHORIZED);
     }
 }

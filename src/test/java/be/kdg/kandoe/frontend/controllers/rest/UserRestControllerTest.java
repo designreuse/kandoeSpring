@@ -62,16 +62,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void testGetAllUsers() throws Exception
-    {
-        String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";
-
-        mockMvc.perform(get("/api/users").header("Authorization", token)).
-                andExpect(status().is2xxSuccessful()).
-                andDo(print());
-    }
-
-    @Test
     public void testFindUserById() throws Exception
     {
         String token = "Bearer \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcm5lTGF1cnlzc2VucyIsImZhY2Vib29rQWNjb3VudCI6ZmFsc2V9.GKZ6dGYUb6VSgY0jOl4CDqa0Tpx-piuTRMknMzwiYYE\"";

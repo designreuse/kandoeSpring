@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by amy on 10/02/2016.
+ * Represents a card used in a session.
+ * Holds the position on the circle in that session. Starts at 0.
  */
 @Entity
 public class CardSession implements Serializable, Identifiable<Integer> {
@@ -71,6 +72,4 @@ public class CardSession implements Serializable, Identifiable<Integer> {
     public void setSession(Session session) {
         this.session = session;
     }
-
-
 }
