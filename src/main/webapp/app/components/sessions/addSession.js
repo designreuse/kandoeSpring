@@ -69,13 +69,13 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                         _this.session.theme = _this.currentTheme;
                         _this.showUsersOrganisation();
                     });
-                    this.subThemeService.getUserSubThemes().subscribe(function (subThemes) {
-                        _this.subThemes = subThemes;
-                        _this.session.subTheme.subThemeId = subThemes[0].subThemeId;
-                        _this.currentSubTheme = subThemes[0];
-                        _this.cards = _this.currentSubTheme.cards;
-                        _this.session.subTheme = _this.currentSubTheme;
-                    });
+                    /*this.subThemeService.getUserSubThemes().subscribe((subThemes:SubTheme[])=> {
+                        this.subThemes = subThemes;
+                        this.session.subTheme.subThemeId = subThemes[0].subThemeId;
+                        this.currentSubTheme = subThemes[0];
+                        this.cards = this.currentSubTheme.cards;
+                        this.session.subTheme = this.currentSubTheme;
+                    });*/
                     this._userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
                     });
@@ -90,6 +90,11 @@ System.register(['angular2/core', "../../DOM/circleSession/session", "../../serv
                     this.session.theme = this.currentTheme;
                     this.session.themeId = this.currentTheme.themeId;
                     this.showUsersOrganisation();
+                    this.subThemes = this.currentTheme.subThemes;
+                    this.session.subTheme.subThemeId = this.currentTheme.subThemes[0].subThemeId;
+                    this.currentSubTheme = this.currentTheme.subThemes[0];
+                    this.cards = this.currentSubTheme.cards;
+                    this.session.subTheme = this.currentSubTheme;
                 };
                 AddSession.prototype.selectSubTheme = function ($event) {
                     this.currentSubTheme = this.subThemes.find(function (st) { return st.subThemeName === $event.target.value; });

@@ -73,15 +73,16 @@ export class AddSession implements OnInit{
             this.session.theme = this.currentTheme;
 
             this.showUsersOrganisation()
+
         });
 
-        this.subThemeService.getUserSubThemes().subscribe((subThemes:SubTheme[])=> {
+        /*this.subThemeService.getUserSubThemes().subscribe((subThemes:SubTheme[])=> {
             this.subThemes = subThemes;
             this.session.subTheme.subThemeId = subThemes[0].subThemeId;
             this.currentSubTheme = subThemes[0];
             this.cards = this.currentSubTheme.cards;
             this.session.subTheme = this.currentSubTheme;
-        });
+        });*/
 
         this._userService.getCurrentUser().subscribe(u => {
             this.user = u;
@@ -101,6 +102,12 @@ export class AddSession implements OnInit{
         this.session.theme = this.currentTheme;
         this.session.themeId = this.currentTheme.themeId;
         this.showUsersOrganisation();
+
+        this.subThemes = this.currentTheme.subThemes;
+        this.session.subTheme.subThemeId = this.currentTheme.subThemes[0].subThemeId;
+        this.currentSubTheme = this.currentTheme.subThemes[0];
+        this.cards = this.currentSubTheme.cards;
+        this.session.subTheme = this.currentSubTheme;
     }
 
     selectSubTheme($event) {
