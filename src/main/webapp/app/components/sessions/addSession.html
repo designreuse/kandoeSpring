@@ -100,17 +100,19 @@
             <button class="btn btn-transparent" data-toggle="collapse" data-target="#card-open">
                 <span class="caret"></span> Show Cards
             </button>
-            <div id="card-open" class="collapse well">
-                <div *ngFor="#card of cards; #i = index" class="card-ingame-container">
-                    <li class="card-ingame-list center-container" (mouseover)="showFullDescription(i)"
-                        (mouseout)="hideFullDescription(i)">
-                        <h4 class="card-ingame-nr">{{i+1}}</h4>
-                        <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-ingame-img img-thumbnail">
-                        <div class="hover-description-container">
-                            <div class="card-ingame-hover-description" [attr.id]="i">{{card.description}}</div>
-                        </div>
-                    </li>
-                </div>
+            <div id="card-open" class="collapse">
+                <ul class="list-unstyled">
+                    <div *ngFor="#card of cards; #i = index" class="card-ingame-container">
+                        <li class="card-ingame-list center-container" (mouseover)="showFullDescription(i)"
+                            (mouseout)="hideFullDescription(i)">
+                            <h4 class="card-ingame-nr">{{i+1}}</h4>
+                            <img [src]="getImageSrc(card.imageURL)" class="img-75 img-responsive img-thumbnail">
+                            <div class="hover-description-container">
+                                <div class="card-ingame-hover-description" [attr.id]="i">{{card.description}}</div>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
             </div>
         </div>
 

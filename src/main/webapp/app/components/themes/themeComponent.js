@@ -176,8 +176,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var items = $("#sort-list li.items").get();
                     if ($(".filter-Name").hasClass("filter-A")) {
                         items.sort(function (a, b) {
-                            var keyA = $(a).find("h2.title").text();
-                            var keyB = $(b).find("h2.title").text();
+                            var keyA = $(a).find("h3.name").text();
+                            var keyB = $(b).find("h3.name").text();
                             if (keyA < keyB)
                                 return -1;
                             if (keyA > keyB)
@@ -193,8 +193,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     }
                     else if ($(".filter-Name").hasClass("filter-Z")) {
                         items.sort(function (a, b) {
-                            var keyA = $(a).find("h2.title").text();
-                            var keyB = $(b).find("h2.title").text();
+                            var keyA = $(a).find("h3.name").text();
+                            var keyB = $(b).find("h3.name").text();
                             if (keyA > keyB)
                                 return -1;
                             if (keyA < keyB)
@@ -209,46 +209,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         $(".filter-Name").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet-alt").addClass("glyphicon-sort-by-alphabet");
                     }
                 };
-                ThemeComponent.prototype.sortId = function () {
-                    $(".filter-Name").removeClass("active");
-                    $(".filter-ID").addClass("active");
-                    $(".filter-Desc").removeClass("active");
-                    var items = $("#sort-list li.items").get();
-                    if ($(".filter-ID").hasClass("filter-A")) {
-                        items.sort(function (a, b) {
-                            var keyA = $(a).find(".id").text();
-                            var keyB = $(b).find(".id").text();
-                            if (keyA < keyB)
-                                return -1;
-                            if (keyA > keyB)
-                                return 1;
-                            return 0;
-                        });
-                        var ul = $("#sort-list");
-                        $.each(items, function (i, li) {
-                            ul.append(li);
-                        });
-                        $(".filter-ID").removeClass("filter-A").addClass("filter-Z");
-                        $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order").addClass("glyphicon-sort-by-order-alt");
-                    }
-                    else if ($(".filter-ID").hasClass("filter-Z")) {
-                        items.sort(function (a, b) {
-                            var keyA = $(a).find(".id").text();
-                            var keyB = $(b).find(".id").text();
-                            if (keyA > keyB)
-                                return -1;
-                            if (keyA < keyB)
-                                return 1;
-                            return 0;
-                        });
-                        var ul = $("#sort-list");
-                        $.each(items, function (i, li) {
-                            ul.append(li);
-                        });
-                        $(".filter-ID").removeClass("filter-Z").addClass("filter-A");
-                        $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order-alt").addClass("glyphicon-sort-by-order");
-                    }
-                };
                 ThemeComponent.prototype.sortDesc = function () {
                     $(".filter-Name").removeClass("active");
                     $(".filter-ID").removeClass("active");
@@ -256,8 +216,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var items = $("#sort-list li.items").get();
                     if ($(".filter-Desc").hasClass("filter-A")) {
                         items.sort(function (a, b) {
-                            var keyA = $(a).find("p.desc").text();
-                            var keyB = $(b).find("p.desc").text();
+                            var keyA = $(a).find("p.description").text();
+                            var keyB = $(b).find("p.description").text();
                             if (keyA < keyB)
                                 return -1;
                             if (keyA > keyB)
@@ -273,8 +233,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     }
                     else if ($(".filter-Desc").hasClass("filter-Z")) {
                         items.sort(function (a, b) {
-                            var keyA = $(a).find("p.desc").text();
-                            var keyB = $(b).find("p.desc").text();
+                            var keyA = $(a).find("p.description").text();
+                            var keyB = $(b).find("p.description").text();
                             if (keyA > keyB)
                                 return -1;
                             if (keyA < keyB)
@@ -297,9 +257,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         templateUrl: 'app/components/themes/themeComponent.html',
                         inputs: ['themes']
                     }), 
-                    __metadata('design:paramtypes', [themeService_1.ThemeService, router_1.Router, userService_1.UserService, cardService_1.CardService, router_1.RouteParams, subThemeService_1.SubThemeService])
+                    __metadata('design:paramtypes', [themeService_1.ThemeService, (typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, userService_1.UserService, cardService_1.CardService, (typeof (_b = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _b) || Object, subThemeService_1.SubThemeService])
                 ], ThemeComponent);
                 return ThemeComponent;
+                var _a, _b;
             })();
             exports_1("ThemeComponent", ThemeComponent);
         }

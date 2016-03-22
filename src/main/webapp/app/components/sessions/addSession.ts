@@ -70,7 +70,6 @@ export class AddSession implements OnInit{
             this.session.themeId = themes[0].themeId;
             this.currentTheme = themes[0];
             this.cards = this.currentTheme.cards;
-            this.users = this.session.users;
             this.session.theme = this.currentTheme;
 
             this.showUsersOrganisation()
@@ -81,7 +80,6 @@ export class AddSession implements OnInit{
             this.session.subTheme.subThemeId = subThemes[0].subThemeId;
             this.currentSubTheme = subThemes[0];
             this.cards = this.currentSubTheme.cards;
-            this.users = this.session.users;
             this.session.subTheme = this.currentSubTheme;
         });
 
@@ -118,6 +116,7 @@ export class AddSession implements OnInit{
         console.log("showOrganisationUsers") ;
         this.organisationService.getOrganisationOrganisers(this.currentTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u =>{
+                console.log(u);
                 this.users.push(u);
             })
         });
@@ -131,7 +130,7 @@ export class AddSession implements OnInit{
 
     showUsersOrganisationSubTheme(){
         this.users = [];
-        console.log("showOrganisationUsers") ;
+        console.log("showSubThemeUsers") ;
         this.organisationService.getOrganisationOrganisers(this.currentSubTheme.organisation.organisationId).subscribe(users => {
             users.forEach(u =>{
                 this.users.push(u);

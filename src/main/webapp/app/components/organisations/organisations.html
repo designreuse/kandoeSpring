@@ -87,7 +87,6 @@
                     </li>
 
                     <div *ngFor="#organisation of organisations; #i = index" id="sort-list">
-
                         <li class="items">
                             <a [routerLink]="['/OrganisationDetail', {id:organisation.organisationId}]">
                                 <div class="id"><p>{{i+1}}</p></div>

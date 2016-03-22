@@ -45,8 +45,6 @@
                 <div class="input-group">
                     <input id="input-search" class="form-control border-radius" placeholder="Search themes...">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default filter filter-ID filter-A" (click)="sortId()">
-                            <span class="glyphicon glyphicon-sort-by-order"> ID</span></button>
                         <button type="button" class="btn btn-default filter filter-Name filter-A" (click)="sortName()">
                             <span class="glyphicon glyphicon-sort-by-alphabet"> Name</span></button>
                         <button type="button" class="btn btn-default filter filter-Desc filter-A" (click)="sortDesc()">
@@ -92,7 +90,7 @@
                             </div>
                         </div>
                     </li>
-                    <li *ngFor="#theme of themes; #i = index" class="col-sm-12 col-md-4">
+                    <li *ngFor="#theme of themes; #i = index" class="col-sm-12 col-md-4 items">
                         <!-- THEMECARD -->
                         <div class="themeCard-container manual-flip">
                             <div class="themeCard">
@@ -131,12 +129,12 @@
                                     <div class="themeContent nopaddingleft">
                                         <div class="mainContent center-container">
                                             <!--SHOW CARDS-->
-                                            <div class="panel-group" id="accordion">
+                                            <div class="panel-group" [attr.id]="'accordion-'+i">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <div class="btn-group btn-group-inTheme">
                                                             <button class="btn btn-default btn-collapse"
-                                                                    data-parent="#accordion" href="#card-open"
+                                                                    [attr.data-parent]="'#accordion-'+i" [attr.href]="'#card-open-'+i"
                                                                     data-toggle="collapse">
                                                                 <span class="caret"></span> Show Cards
                                                             </button>
@@ -145,7 +143,7 @@
                                                                (click)="onAddCard(theme.themeId)" type="button">+</a>
                                                         </div>
                                                     </div>
-                                                    <div id="card-open" class="panel-collapse collapse in">
+                                                    <div [attr.id]="'card-open-'+i" class="panel-collapse collapse in">
                                                         <ul>
                                                             <div *ngFor="#card of theme.cards"
                                                                  class="single-card pre open-fixed-height">
@@ -163,7 +161,7 @@
                                                     <div class="panel-heading">
                                                         <div class="btn-group btn-group-inTheme">
                                                             <button class="btn btn-default btn-collapse"
-                                                                    data-parent="#accordion" href="#subTheme-open"
+                                                                    [attr.data-parent]="'#accordion-'+i" [attr.href]="'#subTheme-open-'+i"
                                                                     data-toggle="collapse">
                                                                 <span class="caret"></span> Show Subthemes
                                                             </button>
@@ -172,7 +170,7 @@
                                                                (click)="onAddSubTheme(theme.themeId)">+</a>
                                                         </div>
                                                     </div>
-                                                    <div id="subTheme-open" class="panel-collapse collapse">
+                                                    <div [attr.id]="'subTheme-open-'+i" class="panel-collapse collapse">
                                                         <ul>
                                                             <div *ngFor="#subTheme of theme.subThemes"
                                                                  class="single-card pre open-fixed-height">

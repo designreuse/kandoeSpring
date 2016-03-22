@@ -180,8 +180,8 @@ export class ThemeComponent implements OnInit {
 
         if ($(".filter-Name").hasClass("filter-A")) {
             items.sort(function (a, b) {
-                var keyA = $(a).find("h2.title").text();
-                var keyB = $(b).find("h2.title").text();
+                var keyA = $(a).find("h3.name").text();
+                var keyB = $(b).find("h3.name").text();
 
                 if (keyA < keyB) return -1;
                 if (keyA > keyB) return 1;
@@ -196,8 +196,8 @@ export class ThemeComponent implements OnInit {
             $(".filter-Name").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet").addClass("glyphicon-sort-by-alphabet-alt");
         } else if ($(".filter-Name").hasClass("filter-Z")) {
             items.sort(function (a, b) {
-                var keyA = $(a).find("h2.title").text();
-                var keyB = $(b).find("h2.title").text();
+                var keyA = $(a).find("h3.name").text();
+                var keyB = $(b).find("h3.name").text();
 
                 if (keyA > keyB) return -1;
                 if (keyA < keyB) return 1;
@@ -213,48 +213,6 @@ export class ThemeComponent implements OnInit {
         }
     }
 
-    sortId() {
-        $(".filter-Name").removeClass("active");
-        $(".filter-ID").addClass("active");
-        $(".filter-Desc").removeClass("active");
-
-        var items = $("#sort-list li.items").get();
-
-        if ($(".filter-ID").hasClass("filter-A")) {
-            items.sort(function (a, b) {
-                var keyA = $(a).find(".id").text();
-                var keyB = $(b).find(".id").text();
-
-                if (keyA < keyB) return -1;
-                if (keyA > keyB) return 1;
-                return 0;
-            });
-            var ul = $("#sort-list");
-            $.each(items, function (i, li) {
-                ul.append(li);
-            });
-
-            $(".filter-ID").removeClass("filter-A").addClass("filter-Z");
-            $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order").addClass("glyphicon-sort-by-order-alt");
-        } else if ($(".filter-ID").hasClass("filter-Z")) {
-            items.sort(function (a, b) {
-                var keyA = $(a).find(".id").text();
-                var keyB = $(b).find(".id").text();
-
-                if (keyA > keyB) return -1;
-                if (keyA < keyB) return 1;
-                return 0;
-            });
-            var ul = $("#sort-list");
-            $.each(items, function (i, li) {
-                ul.append(li);
-            });
-
-            $(".filter-ID").removeClass("filter-Z").addClass("filter-A");
-            $(".filter-ID").find(".glyphicon").removeClass("glyphicon-sort-by-order-alt").addClass("glyphicon-sort-by-order");
-        }
-    }
-
     sortDesc() {
         $(".filter-Name").removeClass("active");
         $(".filter-ID").removeClass("active");
@@ -264,8 +222,8 @@ export class ThemeComponent implements OnInit {
 
         if ($(".filter-Desc").hasClass("filter-A")) {
             items.sort(function (a, b) {
-                var keyA = $(a).find("p.desc").text();
-                var keyB = $(b).find("p.desc").text();
+                var keyA = $(a).find("p.description").text();
+                var keyB = $(b).find("p.description").text();
 
                 if (keyA < keyB) return -1;
                 if (keyA > keyB) return 1;
@@ -280,8 +238,8 @@ export class ThemeComponent implements OnInit {
             $(".filter-Desc").find(".glyphicon").removeClass("glyphicon-sort-by-alphabet").addClass("glyphicon-sort-by-alphabet-alt");
         } else if ($(".filter-Desc").hasClass("filter-Z")) {
             items.sort(function (a, b) {
-                var keyA = $(a).find("p.desc").text();
-                var keyB = $(b).find("p.desc").text();
+                var keyA = $(a).find("p.description").text();
+                var keyB = $(b).find("p.description").text();
 
                 if (keyA > keyB) return -1;
                 if (keyA < keyB) return 1;
