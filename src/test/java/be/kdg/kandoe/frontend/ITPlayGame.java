@@ -72,32 +72,32 @@ public class ITPlayGame {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
         element = driver.findElement(By.id("name"));
         sendKeysPerCharacter("Selenium add card to session");
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[2]/div/div/div/button"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[2]/div/div/div/button"));
         element.click();
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input")));
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input"));
+                By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input")));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input"));
         JavascriptExecutor js = (JavascriptExecutor)driver;
         js.executeScript("arguments[0].click();", element);
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[2]/div/div[3]/input"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[2]/div/div[3]/input"));
         js.executeScript("arguments[0].click();", element);
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[3]/div/div[3]/input"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[3]/div/div[3]/input"));
         js.executeScript("arguments[0].click();", element);
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[2]/div/button"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[2]/div/button"));
         element.click();
         logout();
 
         login("SenneWens", "test123");
         goToSession();
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input")));
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input"));
+                By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input")));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[1]/div/div[3]/input"));
         js.executeScript("arguments[0].click();", element);
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[2]/div/div[3]/input"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[2]/div/div[3]/input"));
         js.executeScript("arguments[0].click();", element);
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[1]/div/div[1]/ul/li[4]/div/div[3]/input"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[1]/div/div[1]/ul/li[4]/div/div[3]/input"));
         js.executeScript("arguments[0].click();", element);
-        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[2]/div[2]/div/button"));
+        element = driver.findElement(By.xpath("html/body/my-kandoe/session-detail/div[3]/div[2]/div/button"));
         element.click();
         logout();
 
