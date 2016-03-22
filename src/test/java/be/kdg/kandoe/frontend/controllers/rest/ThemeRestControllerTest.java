@@ -98,7 +98,7 @@ public class ThemeRestControllerTest {
         mockMvc.perform(get("/api/themes/currentUser")
                 .header("Authorization", appToken))
                 .andDo(print())
-                .andExpect(jsonPath("$.[0].themeName", is("KdGTheme")));
+                .andExpect(jsonPath("$.[0].themeName", is("KdG students")));
     }
 
     @Test
@@ -114,6 +114,6 @@ public class ThemeRestControllerTest {
         mockMvc.perform(get("/api/themes/1/subThemes")
                 .header("Authorization", appToken))
                 .andDo(print())
-                .andExpect(jsonPath("$.[0].subThemeName", is("SubThemeKdG")));
+                .andExpect(jsonPath("$.[0].subThemeName", is("Health")));
     }
 }

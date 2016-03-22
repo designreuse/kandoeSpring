@@ -176,9 +176,9 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     console.log("File type: " + this.csvFile.type);
                     this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(function (data) {
                         /*for (var c in data.json()) {
-                            console.log(c);
-                            this.cards.push(c);
-                        }*/
+                         console.log(c);
+                         this.cards.push(c);
+                         }*/
                         var cardset = (data.json())
                             .map(function (cards) { return cards.map(function (card) { return card_1.Card.fromJson(card); }); });
                         console.log(cardset);
@@ -187,7 +187,8 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                         }
                     }, function (error) {
                         console.log("Error uploading csv: " + error);
-                    }, function () { });
+                    }, function () {
+                    });
                 };
                 /*
                  --------------------------------- GENERAL ---------------------------

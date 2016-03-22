@@ -63,7 +63,7 @@ public class SubThemeRestControllerTest {
         mockMvc.perform(get("/api/subThemes/currentUser")
                 .header("Authorization", appToken))
                 .andDo(print())
-                .andExpect(jsonPath("$.[0].subThemeName", is("SubThemeKdG")));
+                .andExpect(jsonPath("$.[0].subThemeName", is("Health")));
     }
 
     @Test

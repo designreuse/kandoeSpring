@@ -37,7 +37,6 @@ export class ThemeComponent implements OnInit {
                 cardService:CardService, routeParams:RouteParams, subThemeService:SubThemeService) {
         this.userService = _userService;
         this.router = router;
-        this.themeId = +routeParams.params["id"];
         this.cardService = cardService;
         this.subThemeService = subThemeService;
     }
@@ -46,6 +45,10 @@ export class ThemeComponent implements OnInit {
     ngOnInit() {
         this._themeService.getUserThemes().subscribe((themes:Theme[])=> {
             this.themes = themes;
+            for(var i=0;i<themes.length;i++){
+            this._themeService.getThemeCards(themes[i].themeId).subscribe(cards => {
+                this.cards = cards;
+            });}
         });
         this.userService.getCurrentUser().subscribe(
             (data) => {
@@ -120,10 +123,10 @@ export class ThemeComponent implements OnInit {
 
     onSubmitSubTheme() {
         if (this.subTheme.description) {
-            this.subTheme.subThemeName = this.subTheme.description;
             this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(st => {
                 this.themes.find(th => th.themeId == st.themeId).subThemes.push(st);
                 this.subTheme.description = null;
+                this.subTheme.subThemeName = null;
                 this.file = null;
             }, error => {
                 this.file = null;

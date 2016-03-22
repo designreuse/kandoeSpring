@@ -5,10 +5,11 @@ export class Organisation {
     organisationName:string;
     address:string;
     logoUrl:string;
-    organiser: boolean;
+    organiser:boolean;
     links:Link[];
+    themeId:number;
 
-    constructor(){
+    constructor() {
 
     }
 
@@ -19,13 +20,14 @@ export class Organisation {
         organisation.organisationName = json.organisationName;
         organisation.address = json.address;
         organisation.logoUrl = json.logoURL;
+        organisation.themeId = json.themeId;
 
-        if(json.organiser){
+        if (json.organiser) {
             organisation.organiser = json.organiser;
         }
 
-        if(json.links){
-            for (var i = 0; i < json.links.length; i++){
+        if (json.links) {
+            for (var i = 0; i < json.links.length; i++) {
                 organisation.links[i] = Link.fromJson(json.links[i]);
             }
         }
@@ -34,7 +36,7 @@ export class Organisation {
         return organisation;
     }
 
-    static createEmpty(): Organisation {
+    static createEmpty():Organisation {
         var org = new Organisation();
         return org;
     }

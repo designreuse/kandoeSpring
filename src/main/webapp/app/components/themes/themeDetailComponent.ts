@@ -174,20 +174,21 @@ export class ThemeDetailComponent implements OnInit {
         this.cardService.createCardFromCSV(this.themeId, this.csvFile).subscribe(
             (data) => {
                 /*for (var c in data.json()) {
-                    console.log(c);
-                    this.cards.push(c);
-                }*/
+                 console.log(c);
+                 this.cards.push(c);
+                 }*/
                 var cardset = (data.json())
-                    .map((cards: Array<Card>) => cards.map((card: Card) => Card.fromJson(card)));
+                    .map((cards:Array<Card>) => cards.map((card:Card) => Card.fromJson(card)));
                 console.log(cardset);
-                for (var c in cardset){
+                for (var c in cardset) {
                     this.cards.push(c);
                 }
             },
             (error) => {
                 console.log("Error uploading csv: " + error);
             },
-            () => { }
+            () => {
+            }
         );
     }
 

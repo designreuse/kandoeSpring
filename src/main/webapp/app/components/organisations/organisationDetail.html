@@ -144,7 +144,7 @@
                                                     </div>
                                                     <div id="card-open" class="panel-collapse collapse in">
                                                         <ul class="padding-left-5">
-                                                            <div *ngFor="#card of theme.cards"
+                                                            <div *ngFor="#card of cards"
                                                                  class="single-card pre open-fixed-height">
                                                                 <li class="fontsize-card">
                                                                     <img class="card-img-theme" alt="no image found"
@@ -170,7 +170,7 @@
                                                     </div>
                                                     <div id="subTheme-open" class="panel-collapse collapse">
                                                         <ul class="padding-left-5">
-                                                            <div *ngFor="#subTheme of theme.subThemes"
+                                                            <div *ngFor="#subTheme of subThemes"
                                                                  class="single-card pre open-fixed-height">
                                                                 <a class="hover-subTheme"
                                                                    [routerLink]="['/SubThemesDetail', {id:subTheme.subThemeId}]">
@@ -283,6 +283,134 @@
                         </li>
                     </div>
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- popup addCard-->
+<div id="add-card" class="modal fade containerpopup" role="dialog">
+    <!-- Modal -->
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header noborder">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <header class="popup-header">
+                    <div class="container page-headercard">
+                        <h4>Add new card</h4>
+                    </div>
+                </header>
+            </div>
+            <div class="container popup-main nopaddingleft bottomfixes">
+                <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                    <div class="row">
+                        <div class="modal-body bottomfixes">
+                            <!-- popup addCard input fields-->
+                            <form method="post" role="form">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input type="text" placeholder="Enter card description" class="form-control"
+                                           id="popupcard"
+                                           [(ngModel)]="card.description">
+                                </div>
+                                <div class="form-group">
+                                    <label>Logo</label>
+                                    <input type="file" (change)="onFileChange($event)">
+                                </div>
+                                <div class="row">
+                                    <div class="center-container ">
+                                        <div class="col-sm-offset-3 col-sm-8">
+                                            <div class="session-card">
+                                                <img src="./app/resources/noimgplaceholder.png" id="cardimg"/>
+                                                <p class="session-card-description">{{card.description}} <br/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer noborder nopaddingtop">
+                <button type="button" class="btn btn-lg btn-wide btn-primary" data-dismiss="modal"
+                        (click)="onSubmit()">Add new card
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- popup addsubTheme-->
+<div id="add-subTheme" class="modal fade containerpopup" role="dialog">
+    <!-- Modal -->
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header noborder">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <header class="popup-header">
+                    <div class="container page-headercard">
+                        <h4>Add new Subtheme</h4>
+                    </div>
+                </header>
+            </div>
+            <div class="container popup-main nopaddingleft bottomfixes">
+                <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                    <div class="row">
+                        <div class="modal-body bottomfixes">
+                            <!--popup form input fields -->
+                            <form method="post" role="form">
+                                <div class="form-group">
+                                    <label>Subtheme Name</label>
+                                    <input type="text" placeholder="Enter subtheme name" class="form-control"
+                                           [(ngModel)]="subTheme.subThemeName">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input type="text" placeholder="Enter subtheme description" class="form-control"
+                                           [(ngModel)]="subTheme.description">
+                                </div>
+                                <div class="form-group">
+                                    <label>Logo</label>
+                                    <input type="file" (change)="onFileChangeSubTheme($event)">
+                                </div>
+                                <div class="row">
+                                    <div class="center-container ">
+                                        <div class="col-sm-offset-3 col-sm-8">
+                                            <div class="session-card">
+                                                <img src="./app/resources/noimgplaceholder.png" id="subthemeImg"/>
+                                                <p class="session-card-description">{{subTheme.description}} <br/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Choose cards list -->
+                                <div class="form-group">
+                                    <label style="margin-left: 10px;">Cards</label>
+                                    <br>
+                                    <div class="col-xs-6 " *ngFor="#card of cards">
+                                        <input type="checkbox" [attr.id]="card.cardId" [value]="card.cardId">
+                                        <img class="img-100" alt="no image found"
+                                             [src]="getImageSrc(card.imageURL)">
+                                        <p class="choose-subtheme-description"> {{card.description}}</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer noborder nopaddingtop">
+                <button type="button" class="btn btn-lg btn-wide btn-primary" data-dismiss="modal"
+                        (click)="onSubmitSubTheme()">Add new Subtheme
+                </button>
             </div>
         </div>
     </div>

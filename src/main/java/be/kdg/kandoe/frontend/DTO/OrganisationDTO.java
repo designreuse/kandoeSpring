@@ -19,6 +19,8 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     private String logoURL;
 
+    private int themeId;
+
     private boolean isOrganiser;
 
     private int countUsers;
@@ -64,6 +66,14 @@ public class OrganisationDTO extends ResourceSupport implements Serializable{
 
     public boolean isOrganiser() {
         return isOrganiser;
+    }
+
+    public int getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(int themeId) {
+        this.themeId = themeId;
     }
 
     public void setIsOrganiser(boolean isOrganiser) {

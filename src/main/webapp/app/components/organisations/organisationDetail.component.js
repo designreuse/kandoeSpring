@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../../DOM/organisation", "../../service/organisationService", "angular2/router", "../../security/TokenHelper", "../../DOM/users/user", "../../service/userService"], function(exports_1) {
+System.register(['angular2/core', "../../DOM/organisation", "../../service/organisationService", "angular2/router", "../../security/TokenHelper", "../../DOM/users/user", "../../service/userService", "../../DOM/theme", "../../service/cardService", "../../DOM/card", "../../service/themeService", "../../service/subThemeService", "../../DOM/subTheme"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, organisation_1, organisationService_1, router_1, TokenHelper_1, user_1, userService_1;
+    var core_1, organisation_1, organisationService_1, router_1, TokenHelper_1, user_1, userService_1, theme_1, cardService_1, card_1, themeService_1, subThemeService_1, subTheme_1;
     var OrganisationDetailComponent;
     return {
         setters:[
@@ -32,21 +32,50 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
             },
             function (userService_1_1) {
                 userService_1 = userService_1_1;
+            },
+            function (theme_1_1) {
+                theme_1 = theme_1_1;
+            },
+            function (cardService_1_1) {
+                cardService_1 = cardService_1_1;
+            },
+            function (card_1_1) {
+                card_1 = card_1_1;
+            },
+            function (themeService_1_1) {
+                themeService_1 = themeService_1_1;
+            },
+            function (subThemeService_1_1) {
+                subThemeService_1 = subThemeService_1_1;
+            },
+            function (subTheme_1_1) {
+                subTheme_1 = subTheme_1_1;
             }],
         execute: function() {
             OrganisationDetailComponent = (function () {
-                function OrganisationDetailComponent(orgService, routeParams, userService, router) {
+                function OrganisationDetailComponent(orgService, routeParams, subThemeService, themeService, cardService, userService, router) {
                     this.router = router;
                     this.organisation = organisation_1.Organisation.createEmpty();
                     this.organisers = [];
                     this.members = [];
                     this.themes = [];
+                    this.theme = theme_1.Theme.createEmpty();
+                    this.cards = [];
+                    this.card = card_1.Card.createEmpty();
+                    this.subTheme = subTheme_1.SubTheme.createEmpty();
+                    this.subThemes = [];
                     this.newMember = "";
                     this.newOrganiser = "";
                     this.user = user_1.User.createEmpty();
+                    this.file = null;
                     this.organisationService = orgService;
                     this.orgId = +routeParams.params["id"];
                     this.userService = userService;
+                    this.cardService = cardService;
+                    this.themeService = themeService;
+                    this.subThemeService = subThemeService;
+                    this.organisation = orgService.getOrganisationById(this.orgId);
+                    this.themeId = this.organisation.themeId;
                 }
                 OrganisationDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -62,6 +91,14 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     });
                     this.organisationService.getOrganisationThemes(this.orgId).subscribe(function (themes) {
                         _this.themes = themes;
+                        for (var i = 0; i < themes.length; i++) {
+                            _this.themeService.getThemeCards(themes[i].themeId).subscribe(function (cards) {
+                                _this.cards = cards;
+                            });
+                            _this.themeService.getThemeSubThemes(themes[i].themeId).subscribe(function (subThemes) {
+                                _this.subThemes = subThemes;
+                            });
+                        }
                     });
                     this.userService.getCurrentUser().subscribe(function (u) {
                         _this.user = u;
@@ -118,6 +155,86 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                     }
                 };
                 /*
+                 ------------------------- CARD COMPONENT ------------------------------------
+                 */
+                OrganisationDetailComponent.prototype.onSubmit = function () {
+                    var _this = this;
+                    if (this.card.description) {
+                        this.card.themeId = this.themeId;
+                        this.cardService.createCard(this.card, this.file).subscribe(function (c) {
+                            _this.card.description = null;
+                            _this.file = null;
+                            _this.cards.push(c);
+                        }, function (error) {
+                            _this.file = null;
+                            console.log(error);
+                        });
+                    }
+                };
+                OrganisationDetailComponent.prototype.onFileChange = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("cardimg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                OrganisationDetailComponent.prototype.onAddCard = function (themeId) {
+                    this.card.themeId = themeId;
+                    this.themeId = themeId;
+                };
+                /*
+                 --------------------- SUBTHEME COMPONENT ---------------------
+                 */
+                OrganisationDetailComponent.prototype.onAddSubTheme = function (themeId) {
+                    this.subTheme.themeId = themeId;
+                    this.themeId = themeId;
+                };
+                OrganisationDetailComponent.prototype.onSubmitSubTheme = function () {
+                    var _this = this;
+                    if (this.subTheme.description) {
+                        this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
+                            _this.theme.subThemes.push(st);
+                            _this.subTheme.subThemeName = null;
+                            _this.subTheme.description = null;
+                            _this.file = null;
+                            var cardIds = [];
+                            var i = 0;
+                            $("input:checked").each(function () {
+                                cardIds[i] = $(this).val();
+                                console.log($(this).val());
+                                console.log(cardIds[i]);
+                                i++;
+                            });
+                            _this.subThemeService.addCardsToSubTheme(cardIds, st.subThemeId).subscribe(function (subt) {
+                                console.log(subt);
+                            });
+                        }, function (error) {
+                            _this.file = null;
+                            console.log(error);
+                        });
+                    }
+                };
+                OrganisationDetailComponent.prototype.addCardsSubTheme = function () {
+                    var _this = this;
+                    var cardIds = Array();
+                    var i = 0;
+                    $("input:checked").each(function () {
+                        cardIds[i++] = $(this).val();
+                        console.log($(this).val());
+                    });
+                    var newSubThemeId = this.theme.subThemes.length + 1;
+                    this.subThemeService.addCardsToSubTheme(cardIds, newSubThemeId).subscribe(function (subTheme) {
+                        _this.subTheme = subTheme;
+                        console.log(newSubThemeId);
+                        /*   this.cards = subTheme.cards;*/
+                    }, function (e) {
+                        alert(e.text());
+                    });
+                };
+                OrganisationDetailComponent.prototype.onFileChangeSubTheme = function ($event) {
+                    this.file = $event.target.files[0];
+                    var output = document.getElementById("subthemeImg");
+                    output.src = URL.createObjectURL($event.target.files[0]);
+                };
+                /*
                  ----------------------- GENERAL ---------------------------------------
                  */
                 OrganisationDetailComponent.prototype.logout = function () {
@@ -155,9 +272,10 @@ System.register(['angular2/core', "../../DOM/organisation", "../../service/organ
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink],
                         templateUrl: 'app/components/organisations/organisationDetail.html'
                     }), 
-                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, router_1.RouteParams, userService_1.UserService, router_1.Router])
+                    __metadata('design:paramtypes', [organisationService_1.OrganisationService, (typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, subThemeService_1.SubThemeService, themeService_1.ThemeService, cardService_1.CardService, userService_1.UserService, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
                 ], OrganisationDetailComponent);
                 return OrganisationDetailComponent;
+                var _a, _b;
             })();
             exports_1("OrganisationDetailComponent", OrganisationDetailComponent);
         }

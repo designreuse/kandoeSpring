@@ -55,7 +55,6 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     this.card = card_1.Card.createEmpty();
                     this.userService = _userService;
                     this.router = router;
-                    this.themeId = +routeParams.params["id"];
                     this.cardService = cardService;
                     this.subThemeService = subThemeService;
                 }
@@ -63,6 +62,11 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                     var _this = this;
                     this._themeService.getUserThemes().subscribe(function (themes) {
                         _this.themes = themes;
+                        for (var i = 0; i < themes.length; i++) {
+                            _this._themeService.getThemeCards(themes[i].themeId).subscribe(function (cards) {
+                                _this.cards = cards;
+                            });
+                        }
                     });
                     this.userService.getCurrentUser().subscribe(function (data) {
                         _this.user = data;
@@ -122,10 +126,10 @@ System.register(["angular2/core", "angular2/router", "../../service/themeService
                 ThemeComponent.prototype.onSubmitSubTheme = function () {
                     var _this = this;
                     if (this.subTheme.description) {
-                        this.subTheme.subThemeName = this.subTheme.description;
                         this.subThemeService.createSubTheme(this.subTheme, this.file).subscribe(function (st) {
                             _this.themes.find(function (th) { return th.themeId == st.themeId; }).subThemes.push(st);
                             _this.subTheme.description = null;
+                            _this.subTheme.subThemeName = null;
                             _this.file = null;
                         }, function (error) {
                             _this.file = null;

@@ -16,6 +16,7 @@ System.register(["./link"], function(exports_1) {
                     organisation.organisationName = json.organisationName;
                     organisation.address = json.address;
                     organisation.logoUrl = json.logoURL;
+                    organisation.themeId = json.themeId;
                     if (json.organiser) {
                         organisation.organiser = json.organiser;
                     }
