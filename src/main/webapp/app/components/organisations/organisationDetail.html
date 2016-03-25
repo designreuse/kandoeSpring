@@ -39,7 +39,7 @@
 <header>
     <div class="page-header-img-preview">
         <div class="container page-header">
-            <img class="img-responsive img-circle" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
+            <img class="img-responsive" id="org-logo" [src]="getImageSrc(organisation.logoUrl)">
             <h3>{{organisation.organisationName}}</h3>
         </div>
     </div>
@@ -235,7 +235,7 @@
                     <div *ngFor="#organiser of organisers">
                         <li class="list-group-item">
                             <div class="col-xs-12 col-sm-3">
-                                <img [src]="getImageSrc(organiser.profilePicture)" class="img-responsive img-circle"/>
+                                <img [src]="getImageSrc(organiser.profilePicture)" class="img-75 img-responsive img-circle"/>
                             </div>
                             <div class="col-xs-12 col-sm-9">
                                 <span class="username">{{ organiser.username }}</span><br/>
@@ -273,7 +273,7 @@
                         <li class="list-group-item">
                             <div class="col-xs-12 col-sm-3">
                                 <img [src]="getImageSrc(member.profilePicture)" alt="profile picture"
-                                     class="img-responsive img-circle"/>
+                                     class="img-75 img-responsive img-circle"/>
                             </div>
                             <div class="col-xs-12 col-sm-9">
                                 <span class="username">{{ member.username }}</span><br/>

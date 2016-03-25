@@ -143,6 +143,7 @@
             <h3>Pick existing cards</h3>
             <div class="panel panel-default">
                 <ul class="list-group">
+                    <div *ngIf="session.subTheme==null">
                     <li *ngFor="#card of session.theme.cards" class="list-group-item card-before-game">
                         <div class="row">
                             <div class="col-xs-2">
@@ -157,6 +158,23 @@
                             </div>
                         </div>
                     </li>
+                    </div>
+                    <div *ngIf="session.subTheme!=null">
+                        <li *ngFor="#card of session.subTheme.cards" class="list-group-item card-before-game">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <img [src]="getImageSrc(card.imageURL)" class="img-responsive card-before-game-img img-thumbnail">
+                                </div>
+                                <div class="col-xs-8">
+                                    <span>{{card.description}}</span>
+                                </div>
+                                <div class="col-xs-2 material-switch pull-right">
+                                    <input [attr.id]="card.cardId" type="checkbox" [value]="card.cardId" (change)="onSelectCard($event)"/>
+                                    <label [attr.for]="card.cardId" class="label-primary"></label>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
                 </ul>
             </div>
             <div *ngIf="session.userAddCards">

@@ -31,6 +31,7 @@ System.register(["../card", "../users/user", "../theme", "../subTheme"], functio
                     session.userAddCards = json.userAddCards;
                     session.chosenCards = json.chosenCards;
                     session.themeId = json.themeId;
+                    session.subThemeId = json.subThemeId;
                     session.state = json.state;
                     session.isOrganiser = json.organiser;
                     session.startTime = new Date(json.startTime);

@@ -17,6 +17,7 @@ export class Session {
     userAddCards: boolean;
     chosenCards: boolean;
     themeId: number;
+    subThemeId: number;
     cards: Card[];
     users: User[];
     theme: Theme;
@@ -39,6 +40,7 @@ export class Session {
         session.userAddCards = json.userAddCards;
         session.chosenCards = json.chosenCards;
         session.themeId = json.themeId;
+        session.subThemeId = json.subThemeId;
         session.state = json.state;
 
         session.isOrganiser = json.organiser;

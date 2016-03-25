@@ -22,6 +22,12 @@ body {
     background: repeating-linear-gradient(45deg, #F9F9F9, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 5px);
 }
 
+.img-responsive{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 h2 {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
